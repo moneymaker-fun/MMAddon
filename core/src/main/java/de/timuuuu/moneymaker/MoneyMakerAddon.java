@@ -7,8 +7,7 @@ import de.timuuuu.moneymaker.listener.BroadcastListener;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.DisconnectListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
-import de.timuuuu.moneymaker.webserver.WebAPI;
-import de.timuuuu.moneymaker.webserver.WebServer;
+import de.timuuuu.moneymaker.utils.ChatClient;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
@@ -32,8 +31,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.moneyMakerMainActivity = new MoneyMakerMainActivity(this);
 
-    WebServer.startService(this);
-
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener());
     this.registerListener(new DisconnectListener());
@@ -46,12 +43,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.logger().info("Enabled the Addon");
 
-    WebAPI.postAddonStatistics(this, true);
-
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      WebAPI.postAddonStatistics(this, false);
-      WebServer.stopService();
-    }));
+    ChatClient.connect(this);
   }
 
   @Override

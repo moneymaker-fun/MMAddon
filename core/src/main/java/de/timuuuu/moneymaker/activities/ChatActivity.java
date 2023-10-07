@@ -1,10 +1,13 @@
 package de.timuuuu.moneymaker.activities;
 
-import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
-import de.timuuuu.moneymaker.webserver.WebAPI;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
@@ -22,11 +25,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalList
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.labyconnect.LabyConnectSession;
 import net.labymod.api.util.concurrent.task.Task;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @AutoActivity
 @Link("chat.lss")
@@ -131,8 +129,6 @@ public class ChatActivity extends Activity {
         message);
 
     addChatMessage(chatMessage);
-
-    WebAPI.postMessage(chatMessage);
 
     //JsonObject object = new JsonObject();
     //object.add("chatMessage", chatMessage.toJson());
