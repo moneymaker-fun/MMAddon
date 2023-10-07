@@ -18,7 +18,7 @@ import net.labymod.api.Laby;
 
 public class ChatClient {
 
-  private static final String SERVER_IP = "78.31.64.201";
+  private static final String SERVER_IP = "chat.moneymaker.fun";
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;

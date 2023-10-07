@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker;
 
+import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
@@ -9,6 +10,7 @@ import de.timuuuu.moneymaker.listener.DisconnectListener;
 import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.utils.ChatClient;
+import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
@@ -47,6 +49,12 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.logger().info("Enabled the Addon");
 
     new ChatClient().connect();
+
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      if(configuration().getExportOnShutdown().get()) {
+        BoosterActivity.writeLinkedListToCSV();
+      }
+    }));
   }
 
   @Override
@@ -72,14 +80,14 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().notificationController().push(builder.build());
   }
 
-  public void pushNotification(Component title, Component text, Component buttonText, Runnable buttonAction) {
+  public static void pushNotification(Component title, Component text, Component buttonText,
+      Runnable buttonAction) {
     Notification.Builder builder = Notification.builder()
         .title(title)
         .text(text)
         .icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png")))
         .addButton(NotificationButton.of(buttonText, buttonAction))
         .type(Type.ADVANCEMENT);
-    labyAPI().notificationController().push(builder.build());
+    Laby.labyAPI().notificationController().push(builder.build());
   }
-
 }
