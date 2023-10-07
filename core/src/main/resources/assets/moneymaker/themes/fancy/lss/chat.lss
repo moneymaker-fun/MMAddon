@@ -45,6 +45,11 @@
     bottom: 25%;
     left: 30;
     right: 30;
+
+    .blocked {
+    background-color: red;
+    }
+
   }
 
   .chat-error {

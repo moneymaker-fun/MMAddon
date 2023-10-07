@@ -7,6 +7,8 @@ import de.timuuuu.moneymaker.listener.BroadcastListener;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.DisconnectListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
+import de.timuuuu.moneymaker.webserver.WebAPI;
+import de.timuuuu.moneymaker.webserver.WebServer;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
@@ -24,15 +26,13 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public MoneyMakerMainActivity moneyMakerMainActivity;
 
-  private static MoneyMakerAddon instance;
-
   @Override
   protected void enable() {
     this.registerSettingCategory();
 
-    instance = this;
-
     this.moneyMakerMainActivity = new MoneyMakerMainActivity(this);
+
+    WebServer.startService(this);
 
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener());
@@ -45,15 +45,18 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new BoosterCountWidget(this));
 
     this.logger().info("Enabled the Addon");
+
+    WebAPI.postAddonStatistics(this, true);
+
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      WebAPI.postAddonStatistics(this, false);
+      WebServer.stopService();
+    }));
   }
 
   @Override
   protected Class<MoneyMakerConfiguration> configurationClass() {
     return MoneyMakerConfiguration.class;
-  }
-
-  public static MoneyMakerAddon getInstance() {
-    return instance;
   }
 
   public void pushNotification(Component title, Component text) {
