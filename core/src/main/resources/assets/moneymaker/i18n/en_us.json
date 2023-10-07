@@ -1,0 +1,33 @@
+{
+  "labymod": {
+    "hudWidgetCategory": {
+      "moneymaker": {
+        "name": "MoneyMaker",
+        "description": "Widgets for MoneyMaker"
+      }
+    }
+  },
+  "moneymaker": {
+    "settings": {
+      "name": "ExampleAddon",
+      "enabled": {
+        "name": "Enabled"
+      }
+    },
+    "ui": {
+      "booster": {
+        "title": {
+          "name": "List of farmed boosters"
+        }
+      },
+      "lol": {
+
+      }
+    },
+    "hudWidget": {
+      "booster_count": {
+        "name": "Booster-Count"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.booster-title {
+  alignment-x: center;
+}
+
+.booster-sort-button {
+  width: fit-content;
+}
+
+.booster-container {
+
+}

@@ -1,0 +1,33 @@
+{
+  "labymod": {
+    "hudWidgetCategory": {
+      "moneymaker": {
+        "name": "MoneyMaker",
+        "description": "Widgets für MoneyMaker"
+      }
+    }
+  },
+  "moneymaker": {
+    "settings": {
+      "name": "ExampleAddon",
+      "enabled": {
+        "name": "Enabled"
+      }
+    },
+    "ui": {
+      "booster": {
+        "title": {
+          "name": "Liste der gefarmten Booster"
+        }
+      },
+      "secret": {
+        "toggleJoinMessageTitle": "Join Nachrichten"
+      }
+    },
+    "hudWidget": {
+      "booster_count": {
+        "name": "Booster-Count"
+      }
+    }
+  }
+}
