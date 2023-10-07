@@ -17,6 +17,7 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
+import java.io.IOException;
 
 @AddonMain
 public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
@@ -43,7 +44,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.logger().info("Enabled the Addon");
 
-    ChatClient.connect(this);
+    new ChatClient(this).connect();
   }
 
   @Override

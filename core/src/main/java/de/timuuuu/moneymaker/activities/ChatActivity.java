@@ -1,8 +1,14 @@
 package de.timuuuu.moneymaker.activities;
 
+import com.google.gson.JsonParser;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,46 +61,46 @@ public class ChatActivity extends Activity {
     ScrollWidget chatScroll = new ScrollWidget(chatList, new ListSession<>());
     chatContainer.addChild(chatScroll);
 
-
     DivWidget onlineContainer = new DivWidget();
     onlineContainer.addId("online-container");
 
     DivWidget inputContainer = new DivWidget();
     inputContainer.addId("input-container");
 
-    //if(AddonSettings.playingOn.contains("MoneyMaker")) {
-      chatInput = new TextFieldWidget();
-      chatInput.addId("chat-input");
-      chatInput.submitButton().set(true);
-      chatInput.maximalLength(250);
+    chatInput = new TextFieldWidget();
+    chatInput.addId("chat-input");
+    chatInput.submitButton().set(true);
+    chatInput.maximalLength(250);
 
-      chatInput.submitHandler(message -> {
-        this.submitMessage();
-      });
+    chatInput.submitHandler(message -> {
+      this.submitMessage();
+    });
 
-      inputContainer.addChild(chatInput);
-    /*} else {
-      ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.not-connected");
-      componentWidget.addId("chat-error");
-      inputContainer.addChild(componentWidget);
-    }*/
+    inputContainer.addChild(chatInput);
 
     this.document.addChild(chatContainer);
     this.document.addChild(onlineContainer);
     this.document.addChild(inputContainer);
 
-  }
+    // Start a thread to listen for incoming messages from the server
+    new Thread(() -> {
+      try {
+        Socket socket = new Socket("78.31.64.201", 12345); // Replace with your server IP and port
+        BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-  public void addChatMessage(MoneyChatMessage chatMessage) {
-    if(chatMessages == null) return;
-    if(chatMessage == null) return;
-    Component component = Component.text("§e" + chatMessage.time())
-        .append(Component.icon(Icon.head(chatMessage.uuid())))
-        .append(Component.text("§b" + chatMessage.userName() + "§8: §7" + chatMessage.message()));
-    ComponentWidget messageWidget = ComponentWidget.component(component);
-    messageWidget.addId("chat-message");
-    chatMessages.add(messageWidget);
-    this.reload();
+        String serverMessage;
+        while ((serverMessage = serverIn.readLine()) != null) {
+          // Handle the received message (e.g., display it in your chat interface)
+          MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(new JsonParser().parse(serverMessage).getAsJsonObject()); // Implement this method
+          addChatMessage(chatMessage);
+        }
+
+        socket.close(); // Close the socket when done
+      } catch (IOException e) {
+        e.printStackTrace();
+        // Handle connection error
+      }
+    }).start();
   }
 
   private void submitMessage() {
@@ -105,8 +111,16 @@ public class ChatActivity extends Activity {
       this.chatInput.addId("blocked");
       this.labyAPI.minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
 
-      // Send the message to the chat server (Java chat client)
-      sendToServer(message);
+      // Send the message to the chat server
+      try {
+        Socket socket = new Socket("78.31.64.201", 12345); // Replace with your server IP and port
+        PrintWriter serverOut = new PrintWriter(socket.getOutputStream(), true);
+        serverOut.println(message);
+        socket.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+        // Handle connection error
+      }
 
       this.chatInput.setText("");
       this.labyAPI.minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
@@ -118,10 +132,21 @@ public class ChatActivity extends Activity {
     }
   }
 
-  private void sendToServer(String message) {
+  public void addChatMessage(MoneyChatMessage chatMessage) {
+    if(chatMessages == null) return;
+    if(chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
+    Component component = Component.text("§e" + time + "  ")
+        .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 15))
+        .append(Component.text("  §b" + chatMessage.userName() + "§8: §7" + chatMessage.message()));
+    ComponentWidget messageWidget = ComponentWidget.component(component);
+    messageWidget.addId("chat-message");
+    chatMessages.add(messageWidget);
+    this.reload();
+  }
+
+  private void sendToServer(String message) {
     MoneyChatMessage chatMessage = new MoneyChatMessage(
-        time,
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message);

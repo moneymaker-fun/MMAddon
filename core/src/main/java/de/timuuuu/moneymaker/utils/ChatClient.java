@@ -13,15 +13,21 @@ public class ChatClient {
   private static final String SERVER_IP = "78.31.64.201";
   private static final int SERVER_PORT = 12345;
 
-  private static Socket socket;
+  private static MoneyMakerAddon addon;
 
-  public static void connect(MoneyMakerAddon addon) {
-    try (
-        Socket socket = new Socket(SERVER_IP, SERVER_PORT);
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-    ) {
-      ChatClient.socket = socket;
+  public ChatClient(MoneyMakerAddon addon) {
+    ChatClient.addon = addon;
+  }
+
+  private static Socket socket = null;
+
+  public void connect() {
+    try {
+      socket = new Socket(SERVER_IP, SERVER_PORT);
+      socket.setKeepAlive(true);
+      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       System.out.println("Connected to the chat server.");
+
       Thread receivingThread = new Thread(() -> {
         try {
           String message;
@@ -34,6 +40,7 @@ public class ChatClient {
         }
       });
       receivingThread.start();
+
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -41,7 +48,12 @@ public class ChatClient {
 
   public static void sendMessage(MoneyChatMessage chatMessage) {
     if(socket == null) return;
-    try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+    if(socket.isClosed()) {
+      addon.pushNotification(Component.text("Chat-Client"), Component.text("Socket is closed."));
+      return;
+    }
+    try {
+      PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
       out.println(chatMessage.toJson());
     } catch (IOException e) {
       e.printStackTrace();
