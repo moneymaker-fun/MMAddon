@@ -7,7 +7,6 @@ public class Booster {
 
   private static LinkedList<Booster> boosterguilist = new LinkedList<>();
 
-
   public static AtomicInteger sessionBoost = new AtomicInteger(0);
 
   public static void insertBooster(int boost, int time) {
@@ -67,7 +66,7 @@ public class Booster {
     String boosterTime;
     int tempTime = this.time;
     if (tempTime == 60 || tempTime == 90 || tempTime == 120 || tempTime == 180
-        || tempTime == 360 || tempTime == 480 || tempTime == 720) {
+        || tempTime == 360 || tempTime == 480 || tempTime == 720 || tempTime == 1440) {
       if (tempTime == 60) {
         boosterTime = "1 Stunde";
       } else if (tempTime == 90) {

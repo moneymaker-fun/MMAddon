@@ -1,0 +1,5 @@
+.chat-title {
+  alignment-x: center;
+  text-color: green;
+  font-size: 1.5;
+}

@@ -21,7 +21,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static final HudWidgetCategory CATEGORY = new HudWidgetCategory("moneymaker");
 
-  public MoneyMakerMainActivity moneymakerMainAcivity;
+  public MoneyMakerMainActivity moneyMakerMainActivity;
 
   private static MoneyMakerAddon instance;
 
@@ -31,7 +31,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     instance = this;
 
-    this.moneymakerMainAcivity = new MoneyMakerMainActivity(this);
+    this.moneyMakerMainActivity = new MoneyMakerMainActivity(this);
 
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener());

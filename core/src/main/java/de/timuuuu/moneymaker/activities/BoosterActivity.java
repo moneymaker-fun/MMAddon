@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
@@ -44,12 +45,11 @@ public class BoosterActivity extends Activity {
 
   private boolean orderAscending = true;
 
-
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
 
-    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.booster.title.name");
+    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.booster.title");
     titleWidget.addId("booster-title");
     this.document.addChild(titleWidget);
 
@@ -68,7 +68,7 @@ public class BoosterActivity extends Activity {
       AddonSettings.id.decrementAndGet();
       if (AddonSettings.id.get() == 0) {
         System.out.println("Freigeschaltet");
-        MoneyMakerAddon.getInstance().moneymakerMainAcivity.registerSecret();
+        this.addon.moneyMakerMainActivity.registerSecret();
       }
     });
 
@@ -87,57 +87,39 @@ public class BoosterActivity extends Activity {
     DivWidget container = new DivWidget();
     container.addId("booster-container");
 
+    LinkedList<Booster> list = new LinkedList<>();
+
     if (this.orderAscending) {
       for (int j = Booster.getBoosterguilist().size() - 1; j >= 0; j--) {
-
         Booster booster = Booster.getBoosterguilist().get(j);
-        String boosterMessage = "§6" + booster.getAmnt() + " §7✗ §e" + booster.getBoost() + "%";
-
-        String boosterTime;
-        int tempTime = booster.getTime();
-        if (tempTime == 60 || tempTime == 90 || tempTime == 120 || tempTime == 180
-            || tempTime == 360 || tempTime == 480 || tempTime == 720) {
-          if (tempTime == 60) {
-            boosterTime = "1 Stunde";
-          } else if (tempTime == 90) {
-            boosterTime = "90 Minuten";
-          } else {
-            boosterTime = (booster.getTime() / 60) + " Stunden";
-          }
-        } else {
-          boosterTime = booster.getTime() + " Minuten";
-        }
-
-        ComponentWidget widget = ComponentWidget.text(boosterMessage + " §8┃ §7" + boosterTime);
-        widget.addId("booster-entry");
-        listWidget.addChild(widget);
+        list.add(booster);
       }
     } else {
-      for (int j = 0; j < Booster.getBoosterguilist().size(); j++) {
-
-        Booster booster = Booster.getBoosterguilist().get(j);
-        String boosterMessage = "§6" + booster.getAmnt() + " §7✗ §e" + booster.getBoost() + "%";
-
-        String boosterTime;
-        int tempTime = booster.getTime();
-        if (tempTime == 60 || tempTime == 90 || tempTime == 120 || tempTime == 180
-            || tempTime == 360 || tempTime == 480 || tempTime == 720) {
-          if (tempTime == 60) {
-            boosterTime = "1 Stunde";
-          } else if (tempTime == 90) {
-            boosterTime = "90 Minuten";
-          } else {
-            boosterTime = (booster.getTime() / 60) + " Stunden";
-          }
-        } else {
-          boosterTime = booster.getTime() + " Minuten";
-        }
-
-        ComponentWidget widget = ComponentWidget.text(boosterMessage + " §8┃ §7" + boosterTime);
-        widget.addId("booster-entry");
-        listWidget.addChild(widget);
-      }
+      list.addAll(Booster.getBoosterguilist());
     }
+
+    list.forEach(booster -> {
+      String boosterMessage = "§6" + booster.getAmnt() + " §7✗ §e" + booster.getBoost() + "%";
+
+      String boosterTime;
+      int tempTime = booster.getTime();
+      if (tempTime == 60 || tempTime == 90 || tempTime == 120 || tempTime == 180
+          || tempTime == 360 || tempTime == 480 || tempTime == 720 || tempTime == 1440) {
+        if (tempTime == 60) {
+          boosterTime = "1 Stunde";
+        } else if (tempTime == 90) {
+          boosterTime = "90 Minuten";
+        } else {
+          boosterTime = (booster.getTime() / 60) + " Stunden";
+        }
+      } else {
+        boosterTime = booster.getTime() + " Minuten";
+      }
+
+      ComponentWidget widget = ComponentWidget.text(boosterMessage + " §8┃ §7" + boosterTime);
+      widget.addId("booster-entry");
+      listWidget.addChild(widget);
+    });
 
     ScrollWidget scrollWidget = new ScrollWidget(listWidget, new ListSession<>());
     container.addChild(scrollWidget);

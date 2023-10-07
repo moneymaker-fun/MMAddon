@@ -16,9 +16,10 @@
     },
     "ui": {
       "booster": {
-        "title": {
-          "name": "Liste der gefarmten Booster"
-        }
+        "title": "Liste der gefarmten Booster"
+      },
+      "chat": {
+        "title": "MoneyMaker Addon Chat"
       },
       "secret": {
         "toggleJoinMessageTitle": "Join Nachrichten"

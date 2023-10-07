@@ -12,7 +12,7 @@ public class MoneyMakerNavigationElement extends ScreenNavigationElement {
   MoneyMakerAddon addon;
 
   public MoneyMakerNavigationElement(MoneyMakerAddon addon) {
-    super(addon.moneymakerMainAcivity);
+    super(addon.moneyMakerMainActivity);
     this.addon = addon;
   }
 

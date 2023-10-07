@@ -16,12 +16,13 @@
     },
     "ui": {
       "booster": {
-        "title": {
-          "name": "List of farmed boosters"
-        }
+        "title": "List of farmed boosters"
       },
-      "lol": {
-
+      "chat": {
+        "title": "MoneyMaker Addon Chat"
+      },
+      "secret": {
+        "toggleJoinMessageTitle": "Join Messages"
       }
     },
     "hudWidget": {
