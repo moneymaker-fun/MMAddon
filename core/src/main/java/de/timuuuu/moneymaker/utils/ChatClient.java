@@ -16,61 +16,61 @@ public class ChatClient {
   private static final int SERVER_PORT = 12345;
 
   private static MoneyMakerAddon addon;
+  private static Socket socket;
+  private static PrintWriter serverOut;
 
   public ChatClient(MoneyMakerAddon addon) {
     ChatClient.addon = addon;
   }
 
   public void connect() {
-    new Thread(() -> {
-      try {
-        Socket socket = new Socket(SERVER_IP, SERVER_PORT);
-        BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+    try {
+      socket = new Socket(SERVER_IP, SERVER_PORT);
+      serverOut = new PrintWriter(socket.getOutputStream(), true);
 
-        String serverMessage;
-        while ((serverMessage = serverIn.readLine()) != null) {
-          addon.logger().info(serverMessage);
+      new Thread(() -> {
+        try {
+          BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-          JsonElement element = JsonParser.parseString(serverMessage);
-          if(element.isJsonObject()) {
-            MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(element.getAsJsonObject()); // Implement this method
-            new ChatActivity().addChatMessage(chatMessage);
+          String serverMessage;
+          while ((serverMessage = serverIn.readLine()) != null) {
+            addon.logger().info(serverMessage);
+
+            JsonElement element = JsonParser.parseString(serverMessage);
+            if (element.isJsonObject()) {
+              MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(element.getAsJsonObject());
+              new ChatActivity().addChatMessage(chatMessage); // Use the ChatActivity instance to add the message
+            }
           }
 
+          socket.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+          // Handle connection error
         }
-
-        socket.close(); // Close the socket when done
-      } catch (IOException e) {
-        e.printStackTrace();
-        // Handle connection error
-      }
-    }).start();
-  }
-
-  public static void sendMessage(MoneyChatMessage chatMessage) {
-    try {
-      Socket socket = new Socket(SERVER_IP, SERVER_PORT); // Replace with your server IP and port
-      PrintWriter serverOut = new PrintWriter(socket.getOutputStream(), true);
-      serverOut.println(chatMessage.toJson());
-      socket.close();
+      }).start();
     } catch (IOException e) {
       e.printStackTrace();
       // Handle connection error
     }
   }
 
-  /*public static void sendMessage(MoneyChatMessage chatMessage) {
-    if(socket == null) return;
-    if(socket.isClosed()) {
-      addon.pushNotification(Component.text("Chat-Client"), Component.text("Socket is closed."));
-      return;
+  public static void sendMessage(MoneyChatMessage chatMessage) {
+    if (serverOut != null) {
+      serverOut.println(chatMessage.toJson());
+    } else {
+      // Handle the case when the socket is not initialized or the connection is lost
     }
+  }
+
+  // Add a method to close the socket when needed
+  public static void closeSocket() {
     try {
-      PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-      out.println(chatMessage.toJson());
+      if (socket != null && !socket.isClosed()) {
+        socket.close();
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }*/
-
+  }
 }

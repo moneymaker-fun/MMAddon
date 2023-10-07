@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.util.concurrent.task.Task;
+import de.timuuuu.moneymaker.utils.ChatClient;
 
 @AutoActivity
 @Link("chat.lss")
@@ -30,14 +30,15 @@ public class ChatActivity extends Activity {
   private MoneyMakerAddon addon;
 
   private TextFieldWidget chatInput;
-   private static List<ComponentWidget> chatMessages;
+  private static List<ComponentWidget> chatMessages;
 
   public ChatActivity(MoneyMakerAddon addon) {
     this.addon = addon;
     chatMessages = new ArrayList<>();
   }
 
-  public ChatActivity() {}
+  public ChatActivity() {
+  }
 
   @Override
   public void initialize(Parent parent) {
@@ -85,10 +86,10 @@ public class ChatActivity extends Activity {
     if (!message.isEmpty()) {
       this.chatInput.setEditable(false);
       this.chatInput.addId("blocked");
-      this.labyAPI.minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
+      this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
       this.sendToServer(message);
       this.chatInput.setText("");
-      this.labyAPI.minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
+      this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
       Task.builder(() -> {
         this.chatInput.setEditable(true);
         this.chatInput.removeId("blocked");
@@ -98,8 +99,8 @@ public class ChatActivity extends Activity {
   }
 
   public void addChatMessage(MoneyChatMessage chatMessage) {
-    if(chatMessages == null) return;
-    if(chatMessage == null) return;
+    if (chatMessages == null) return;
+    if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     Component component = Component.text("§e" + time + "  ")
         .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 10))
@@ -119,5 +120,4 @@ public class ChatActivity extends Activity {
     addChatMessage(chatMessage);
     ChatClient.sendMessage(chatMessage);
   }
-
 }
