@@ -10,7 +10,7 @@ version = "1.0.0"
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
 labyMod {
-    defaultPackageName = "de.timuuuu" //change this to your main package name (used by all modules)
+    defaultPackageName = "de.timuuuu.moneymaker" //change this to your main package name (used by all modules)
     addonInfo {
         namespace = "moneymaker"
         displayName = "MoneyMaker"

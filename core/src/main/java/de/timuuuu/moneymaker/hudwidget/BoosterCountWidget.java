@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.hudwidget;
 
-import de.timuuuu.moneymaker.ExampleAddon;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
 import net.labymod.api.client.component.Component;
@@ -11,12 +11,12 @@ import net.labymod.api.client.resources.ResourceLocation;
 
 public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
-  private ExampleAddon addon;
+  private MoneyMakerAddon addon;
 
-  public BoosterCountWidget(ExampleAddon addon) {
+  public BoosterCountWidget(MoneyMakerAddon addon) {
     super("booster_count");
     this.addon = addon;
-    this.bindCategory(ExampleAddon.CATEGORY);
+    this.bindCategory(MoneyMakerAddon.CATEGORY);
     this.setIcon(Icon.texture(ResourceLocation.create("minecraft", "textures/item/experience_bottle.png")));
   }
 

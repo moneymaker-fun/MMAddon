@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.activities;
 
-import de.timuuuu.moneymaker.ExampleAddon;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
@@ -8,13 +8,14 @@ import net.labymod.api.client.gui.screen.activity.types.TabbedActivity;
 import net.labymod.api.client.gui.screen.widget.widgets.navigation.tab.DefaultComponentTab;
 
 @AutoActivity
-public class MoneymakerMainAcivity extends TabbedActivity {
+public class MoneyMakerMainActivity extends TabbedActivity {
 
-  private ExampleAddon addon;
+  private MoneyMakerAddon addon;
 
-  public MoneymakerMainAcivity(ExampleAddon addon) {
+  public MoneyMakerMainActivity(MoneyMakerAddon addon) {
     this.addon = addon;
-    this.register("moneymaker_booster", new DefaultComponentTab(Component.text("Booster"), new BoosterActivity(this.addon)));
+    this.register("moneymaker_booster", new DefaultComponentTab(Component.text("Booster"), new BoosterActivity(addon)));
+    this.register("moneymaker_chat", new DefaultComponentTab(Component.text("Chat"), new ChatActivity(addon)));
   }
 
   public void registerSecret() {

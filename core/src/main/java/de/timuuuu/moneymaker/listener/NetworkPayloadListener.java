@@ -3,7 +3,7 @@ package de.timuuuu.moneymaker.listener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import de.timuuuu.moneymaker.ExampleAddon;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import java.util.UUID;
 import net.labymod.api.Laby;
@@ -16,9 +16,9 @@ import net.labymod.serverapi.protocol.payload.io.PayloadReader;
 
 public class NetworkPayloadListener {
 
-  private final ExampleAddon addon;
+  private final MoneyMakerAddon addon;
 
-  public NetworkPayloadListener(ExampleAddon addon) {
+  public NetworkPayloadListener(MoneyMakerAddon addon) {
     this.addon = addon;
   }
 

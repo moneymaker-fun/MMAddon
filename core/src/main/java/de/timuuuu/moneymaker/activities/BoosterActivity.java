@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.activities;
 
-import de.timuuuu.moneymaker.ExampleAddon;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
 import java.io.File;
@@ -30,8 +30,8 @@ import net.labymod.api.util.ListOrder;
 @Link("activity.lss")
 public class BoosterActivity extends Activity {
 
-  ExampleAddon addon;
-  public BoosterActivity(ExampleAddon addon) {
+  MoneyMakerAddon addon;
+  public BoosterActivity(MoneyMakerAddon addon) {
     this.addon = addon;
     Booster.insertBooster(40, 50);
     Booster.insertBooster(100, 90);
@@ -68,7 +68,7 @@ public class BoosterActivity extends Activity {
       AddonSettings.id.decrementAndGet();
       if (AddonSettings.id.get() == 0) {
         System.out.println("Freigeschaltet");
-        ExampleAddon.getInstance().moneymakerMainAcivity.registerSecret();
+        MoneyMakerAddon.getInstance().moneymakerMainAcivity.registerSecret();
       }
     });
 

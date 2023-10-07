@@ -1,17 +1,17 @@
 package de.timuuuu.moneymaker.activities.navigation;
 
-import de.timuuuu.moneymaker.ExampleAddon;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.navigation.elements.ScreenNavigationElement;
 import net.labymod.api.client.resources.ResourceLocation;
 
-public class MoneymakerNavigationElement extends ScreenNavigationElement {
+public class MoneyMakerNavigationElement extends ScreenNavigationElement {
 
-  ExampleAddon addon;
+  MoneyMakerAddon addon;
 
-  public MoneymakerNavigationElement(ExampleAddon addon) {
+  public MoneyMakerNavigationElement(MoneyMakerAddon addon) {
     super(addon.moneymakerMainAcivity);
     this.addon = addon;
   }

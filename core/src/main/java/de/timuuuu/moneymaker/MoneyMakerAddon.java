@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker;
 
-import de.timuuuu.moneymaker.activities.MoneymakerMainAcivity;
-import de.timuuuu.moneymaker.activities.navigation.MoneymakerNavigationElement;
+import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
+import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.DisconnectListener;
@@ -17,13 +17,13 @@ import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
 
 @AddonMain
-public class ExampleAddon extends LabyAddon<ExampleConfiguration> {
+public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static final HudWidgetCategory CATEGORY = new HudWidgetCategory("moneymaker");
 
-  public MoneymakerMainAcivity moneymakerMainAcivity;
+  public MoneyMakerMainActivity moneymakerMainAcivity;
 
-  private static ExampleAddon instance;
+  private static MoneyMakerAddon instance;
 
   @Override
   protected void enable() {
@@ -31,13 +31,13 @@ public class ExampleAddon extends LabyAddon<ExampleConfiguration> {
 
     instance = this;
 
-    this.moneymakerMainAcivity = new MoneymakerMainAcivity(this);
+    this.moneymakerMainAcivity = new MoneyMakerMainActivity(this);
 
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener());
     this.registerListener(new DisconnectListener());
 
-    labyAPI().navigationService().register("moneymaker_main_ui", new MoneymakerNavigationElement(this));
+    labyAPI().navigationService().register("moneymaker_main_ui", new MoneyMakerNavigationElement(this));
 
     labyAPI().hudWidgetRegistry().categoryRegistry().register(CATEGORY);
     labyAPI().hudWidgetRegistry().register(new BoosterCountWidget(this));
@@ -46,11 +46,11 @@ public class ExampleAddon extends LabyAddon<ExampleConfiguration> {
   }
 
   @Override
-  protected Class<ExampleConfiguration> configurationClass() {
-    return ExampleConfiguration.class;
+  protected Class<MoneyMakerConfiguration> configurationClass() {
+    return MoneyMakerConfiguration.class;
   }
 
-  public static ExampleAddon getInstance() {
+  public static MoneyMakerAddon getInstance() {
     return instance;
   }
 
