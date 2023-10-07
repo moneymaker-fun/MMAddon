@@ -6,6 +6,18 @@
   font-size: 1.5;
 }
 
+.chat-status {
+  font-size: 0.8;
+  top: 10;
+  left: 20;
+}
+
+.chat-online-text {
+  font-size: 0.8;
+  top: 10;
+  right: 12%;
+}
+
 Scroll {
    top: 10;
    left: 10;
@@ -13,6 +25,15 @@ Scroll {
    height: 90%;
 
    .booster-entry {
+     top: 30;
+     left: 20;
+     height: 15;
+     width: 100%;
+     tiles-per-line: 5;
+     tile-height: 130;
+   }
+
+   .online-entry {
      top: 30;
      left: 20;
      height: 15;
@@ -67,11 +88,11 @@ Scroll {
 
   .chat-input {
     bottom: 25%;
-    left: 30;
-    right: 30;
+    left: 20;
+    right: 20;
 
     .blocked {
-    background-color: red;
+      background-color: red;
     }
 
   }

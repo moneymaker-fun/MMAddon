@@ -9,9 +9,22 @@
   },
   "moneymaker": {
     "settings": {
-      "name": "ExampleAddon",
+      "name": "MoneyMaker",
       "enabled": {
         "name": "Enabled"
+      },
+      "chatNotification": {
+        "name": "Chat Benachrichtigung",
+        "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
+      },
+      "chatNotificationSound": {
+        "name": "Chat Benachrichtigungston",
+        "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"
+      },
+      "header": {
+        "chat": {
+          "name": "Addon Chat Einstellungen"
+        }
       }
     },
     "ui": {
@@ -20,7 +33,12 @@
       },
       "chat": {
         "title": "MoneyMaker Addon Chat",
-        "not-connected": "Bitte verbinde dich mit MoneyMaker um den Chat zu nutzen."
+        "not-connected": "Bitte verbinde dich mit MoneyMaker um den Chat zu nutzen.",
+        "online": "§bAktuell Online",
+        "server": {
+          "online": "§aChat-Server ist online",
+          "offline": "§cChat-Server ist offline"
+        }
       },
       "secret": {
         "toggleJoinMessageTitle": "Join Nachrichten"

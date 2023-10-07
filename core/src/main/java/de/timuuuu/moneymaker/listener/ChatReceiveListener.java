@@ -1,6 +1,5 @@
 package de.timuuuu.moneymaker.listener;
 
-import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
 import net.labymod.api.event.Priority;
 import net.labymod.api.event.Subscribe;

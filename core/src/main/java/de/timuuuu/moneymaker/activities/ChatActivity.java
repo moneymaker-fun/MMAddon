@@ -1,6 +1,8 @@
 package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +23,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.util.concurrent.task.Task;
-import de.timuuuu.moneymaker.utils.ChatClient;
 
 @AutoActivity
 @Link("chat.lss")
@@ -30,14 +31,10 @@ public class ChatActivity extends Activity {
   private MoneyMakerAddon addon;
 
   private TextFieldWidget chatInput;
-  private static List<ComponentWidget> chatMessages;
+  private static List<ComponentWidget> chatMessages = new ArrayList<>();
 
   public ChatActivity(MoneyMakerAddon addon) {
     this.addon = addon;
-    chatMessages = new ArrayList<>();
-  }
-
-  public ChatActivity() {
   }
 
   @Override
@@ -47,6 +44,12 @@ public class ChatActivity extends Activity {
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title");
     titleWidget.addId("chat-title");
     this.document.addChild(titleWidget);
+
+    ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline"));
+    statusWidget.addId("chat-status");
+    this.document.addChild(statusWidget);
+
+    // Chat Container
 
     DivWidget chatContainer = new DivWidget();
     chatContainer.addId("chat-container");
@@ -58,8 +61,32 @@ public class ChatActivity extends Activity {
     ScrollWidget chatScroll = new ScrollWidget(chatList, new ListSession<>());
     chatContainer.addChild(chatScroll);
 
+    // Online Container
+
+    ComponentWidget onlineTextWidget = ComponentWidget.i18n("moneymaker.ui.chat.online");
+    onlineTextWidget.addId("chat-online-text");
+    this.document.addChild(onlineTextWidget);
+
     DivWidget onlineContainer = new DivWidget();
     onlineContainer.addId("online-container");
+
+    VerticalListWidget<ComponentWidget> onlineList = new VerticalListWidget<>().addId("online-list");
+
+    AddonSettings.playerStatus.keySet().forEach(uuid -> {
+      MoneyChatMessage playerData = AddonSettings.playerStatus.get(uuid);
+      if(playerData.message().equals("MoneyMaker")) {
+        Component component = Component.icon(Icon.head(uuid, true, false), 10)
+            .append(Component.text(" §e" + playerData.userName()));
+        ComponentWidget componentWidget = ComponentWidget.component(component);
+        componentWidget.addId("online-entry");
+        onlineList.addChild(componentWidget);
+      }
+    });
+
+    ScrollWidget onlineScroll = new ScrollWidget(onlineList, new ListSession<>());
+    onlineContainer.addChild(onlineScroll);
+
+    // Input Container
 
     DivWidget inputContainer = new DivWidget();
     inputContainer.addId("input-container");
@@ -68,10 +95,7 @@ public class ChatActivity extends Activity {
     chatInput.addId("chat-input");
     chatInput.submitButton().set(true);
     chatInput.maximalLength(250);
-
-    chatInput.submitHandler(message -> {
-      this.submitMessage();
-    });
+    chatInput.submitHandler(message -> this.submitMessage());
 
     inputContainer.addChild(chatInput);
 
@@ -116,8 +140,6 @@ public class ChatActivity extends Activity {
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message);
-
-    addChatMessage(chatMessage);
-    ChatClient.sendMessage(chatMessage);
+    ChatClient.sendChatMessage(chatMessage);
   }
 }

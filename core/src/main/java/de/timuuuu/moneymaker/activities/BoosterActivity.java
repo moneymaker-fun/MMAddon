@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
@@ -135,32 +136,20 @@ public class BoosterActivity extends Activity {
 
   private void writeLinkedListToCSV() {
     try {
-      // Create a new SimpleDateFormat object with the desired format
       String time = new SimpleDateFormat("dd_MM_yy-HH_mm").format(new Date());
-
-      // Öffnen Sie die CSV-Datei in einem Schreibmodus
       File file = new File("BoosterExport_"+time+".csv");
       FileWriter writer = new FileWriter(file);
 
-
-      // Verwenden Sie einen `for`-Loop, um die Elemente der LinkedList zu durchlaufen
       writer.write("Anzahl;Booster;Zeit\n\n");
       for (Booster entry : Booster.getBoosterguilist()) {
-        // Schreiben Sie den Wert des Elements als neue Zeile in die CSV-Datei
         writer.write(entry.toExport() + "\n");
       }
-      // Schließen Sie die Datei
       writer.close();
-      openGameFolder();
+      this.addon.pushNotification(Component.text("Booster-Export"), Component.text("Die Übersicht der gefarmten Booster wurde gespeichert"), Component.text("Ordner öffnen"), () -> {
+        OperatingSystem.getPlatform().openFile(new File(this.addon.labyAPI().labyModLoader().getGameDirectory().toFile().getPath()));
+      });
     } catch (IOException exception) {
       exception.printStackTrace();
     }
-  }
-
-  private void openGameFolder (){
-    String folderPath = this.addon.labyAPI().labyModLoader().getGameDirectory().toFile().getPath();
-    // Create a File object for the folder
-    File folder = new File(folderPath);
-    OperatingSystem.getPlatform().openFile(folder);
   }
 }

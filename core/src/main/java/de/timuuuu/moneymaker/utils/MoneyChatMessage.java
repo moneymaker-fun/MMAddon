@@ -38,23 +38,11 @@ public class MoneyChatMessage {
     return uuid;
   }
 
-  public void uuid(UUID uuid) {
-    this.uuid = uuid;
-  }
-
   public String userName() {
     return userName;
   }
 
-  public void userName(String userName) {
-    this.userName = userName;
-  }
-
   public String message() {
     return message;
-  }
-
-  public void message(String message) {
-    this.message = message;
   }
 }

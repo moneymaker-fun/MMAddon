@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import java.util.UUID;
+import de.timuuuu.moneymaker.utils.ChatClient;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
@@ -48,6 +49,11 @@ public class NetworkPayloadListener {
 
             if (obj.has("hasGame")) {
               AddonSettings.playingOn = obj.get("game_mode").getAsString();
+              JsonObject data = new JsonObject();
+              data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+              data.addProperty("userName", this.addon.labyAPI().getName());
+              data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? "MoneyMaker" : "Other");
+              ChatClient.sendMessage("playerStatus", data);
             }
           }
 

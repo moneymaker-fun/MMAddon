@@ -15,7 +15,7 @@ public class MoneyMakerMainActivity extends TabbedActivity {
   public MoneyMakerMainActivity(MoneyMakerAddon addon) {
     this.addon = addon;
     this.register("moneymaker_booster", new DefaultComponentTab(Component.text("Booster"), new BoosterActivity(addon)));
-    this.register("moneymaker_chat", new DefaultComponentTab(Component.text("Chat"), new ChatActivity(addon)));
+    this.register("moneymaker_chat", new DefaultComponentTab(Component.text("Chat"), addon.chatActivity));
   }
 
   public void registerSecret() {

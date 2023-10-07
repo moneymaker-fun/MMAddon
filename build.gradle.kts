@@ -9,6 +9,10 @@ version = "1.0.0"
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
 labyMod {
     defaultPackageName = "de.timuuuu.moneymaker" //change this to your main package name (used by all modules)
     addonInfo {
@@ -22,6 +26,14 @@ labyMod {
 
     minecraft {
         registerVersions(
+                "1.8.9",
+                "1.12.2",
+                "1.16.5",
+                "1.17.1",
+                "1.18.2",
+                "1.19.2",
+                "1.19.3",
+                "1.19.4",
                 "1.20.1",
                 "1.20.2"
         ) { version, provider ->
@@ -36,7 +48,7 @@ labyMod {
     }
 
     addonDev {
-        productionRelease()
+        snapshotRelease()
     }
 }
 
