@@ -33,7 +33,7 @@
       },
       "chat": {
         "title": "MoneyMaker Addon Chat",
-        "not-connected": "Please connect to MoneyMaker to use the chat.",
+        "server-offline": "The Chat-Server is currently offline.",
         "online": "§bCurrently online",
         "server": {
           "online": "§aChat-Server is online",

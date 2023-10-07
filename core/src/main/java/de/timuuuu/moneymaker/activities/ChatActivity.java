@@ -91,13 +91,19 @@ public class ChatActivity extends Activity {
     DivWidget inputContainer = new DivWidget();
     inputContainer.addId("input-container");
 
-    chatInput = new TextFieldWidget();
-    chatInput.addId("chat-input");
-    chatInput.submitButton().set(true);
-    chatInput.maximalLength(250);
-    chatInput.submitHandler(message -> this.submitMessage());
+    if(ChatClient.online) {
+      chatInput = new TextFieldWidget();
+      chatInput.addId("chat-input");
+      chatInput.submitButton().set(true);
+      chatInput.maximalLength(250);
+      chatInput.submitHandler(message -> this.submitMessage());
 
-    inputContainer.addChild(chatInput);
+      inputContainer.addChild(chatInput);
+    } else {
+      ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.server-offline");
+      componentWidget.addId("chat-error");
+      inputContainer.addChild(componentWidget);
+    }
 
     this.document.addChild(chatContainer);
     this.document.addChild(onlineContainer);
@@ -132,6 +138,10 @@ public class ChatActivity extends Activity {
     ComponentWidget messageWidget = ComponentWidget.component(component);
     messageWidget.addId("chat-message");
     chatMessages.add(messageWidget);
+    reloadScreen();
+  }
+
+  public void reloadScreen() {
     this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
   }
 

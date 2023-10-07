@@ -20,6 +20,7 @@ public class DisconnectListener {
     AddonSettings.playingOn = "Hauptmenü";
     JsonObject data = new JsonObject();
     data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+    data.addProperty("userName", this.addon.labyAPI().getName());
     data.addProperty("server", "OFFLINE");
     ChatClient.sendMessage("playerStatus", data);
   }

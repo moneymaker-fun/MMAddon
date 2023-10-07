@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -74,20 +75,29 @@ public class ChatClient {
 
           socket.close();
         } catch (IOException e) {
-          e.printStackTrace();
+          if(online) {
+            MoneyMakerAddon.instance().chatActivity.reloadScreen();
+          }
           online = false;
           // Handle connection error
         }
       }).start();
     } catch (IOException e) {
       e.printStackTrace();
+      if(online) {
+        MoneyMakerAddon.instance().chatActivity.reloadScreen();
+      }
       online = false;
       // Handle connection error
     }
   }
 
   public static void sendChatMessage(MoneyChatMessage chatMessage) {
-    if(serverOut == null) return;
+    if(serverOut == null) {
+      online = false;
+      MoneyMakerAddon.instance().chatActivity.reloadScreen();
+      return;
+    }
     JsonObject object = new JsonObject();
     object.add("chatMessage", chatMessage.toJson());
     serverOut.println(object);

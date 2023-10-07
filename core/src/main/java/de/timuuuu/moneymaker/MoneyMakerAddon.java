@@ -29,9 +29,13 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   public MoneyMakerMainActivity moneyMakerMainActivity;
   public ChatActivity chatActivity;
 
+  private static MoneyMakerAddon instance;
+
   @Override
   protected void enable() {
     this.registerSettingCategory();
+
+    instance = this;
 
     this.chatActivity = new ChatActivity(this);
     this.moneyMakerMainActivity = new MoneyMakerMainActivity(this);
@@ -60,6 +64,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   @Override
   protected Class<MoneyMakerConfiguration> configurationClass() {
     return MoneyMakerConfiguration.class;
+  }
+
+  public static MoneyMakerAddon instance() {
+    return instance;
   }
 
   public void pushNotification(Component title, Component text) {
