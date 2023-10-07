@@ -8,6 +8,7 @@ import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import java.util.UUID;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 
 public class MoneyAddonListener {
@@ -36,7 +37,8 @@ public class MoneyAddonListener {
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
       if(this.addon.configuration().chatNotification().get()) {
         this.addon.pushNotification(
-            Component.text("§aNeue Chat Nachricht"), Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()));
+            Component.text("§aNeue Chat Nachricht"), Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
+            Icon.head(chatMessage.uuid()));
       }
       if(this.addon.configuration().chatNotificationSound().get()) {
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);

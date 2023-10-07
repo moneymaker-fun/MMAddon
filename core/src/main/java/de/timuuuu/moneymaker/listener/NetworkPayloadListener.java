@@ -10,6 +10,7 @@ import de.timuuuu.moneymaker.utils.ChatClient;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
+import net.labymod.api.event.client.network.server.ServerLoginEvent;
 import net.labymod.api.event.client.network.server.SubServerSwitchEvent;
 import net.labymod.api.util.io.web.request.WebResolver;
 import net.labymod.serverapi.protocol.payload.exception.PayloadReaderException;
@@ -26,6 +27,19 @@ public class NetworkPayloadListener {
   private boolean switched = false;
 
   @Subscribe
+  public void onServerLogin(ServerLoginEvent event) {
+    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
+        event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
+      AddonSettings.gommeConnected = true;
+
+      JsonObject object = new JsonObject();
+      object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+      ChatClient.sendMessage("retrievePlayerData", object);
+
+    }
+  }
+
+  @Subscribe
   public void onSwitch(SubServerSwitchEvent event) {
     switched = true;
   }
@@ -34,6 +48,7 @@ public class NetworkPayloadListener {
   public void onNetworkPayload(NetworkPayloadEvent event) {
     if(event.identifier().getNamespace().equals("labymod3") & event.identifier().getPath().equals("main")) {
       try {
+        if(!AddonSettings.gommeConnected) return;
         PayloadReader reader = new PayloadReader(event.getPayload());
         String messageKey = reader.readString();
         String messageContent = reader.readString();
@@ -49,11 +64,14 @@ public class NetworkPayloadListener {
 
             if (obj.has("hasGame")) {
               AddonSettings.playingOn = obj.get("game_mode").getAsString();
+
               JsonObject data = new JsonObject();
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
               data.addProperty("userName", this.addon.labyAPI().getName());
               data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? "MoneyMaker" : "Other");
+              data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               ChatClient.sendMessage("playerStatus", data);
+
             }
           }
 

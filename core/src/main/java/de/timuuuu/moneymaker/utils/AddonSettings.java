@@ -13,4 +13,6 @@ public class AddonSettings {
 
   public static HashMap<UUID, MoneyChatMessage> playerStatus = new HashMap<>();
 
+  public static boolean gommeConnected = false;
+
 }

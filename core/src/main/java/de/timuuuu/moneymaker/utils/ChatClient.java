@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -49,6 +50,11 @@ public class ChatClient {
               if(object.has("playerStatus") && object.get("playerStatus").isJsonObject()) {
                 JsonObject data = object.get("playerStatus").getAsJsonObject();
                 Laby.fireEvent(new MoneyPlayerStatusEvent(UUID.fromString(data.get("uuid").getAsString()), data.get("userName").getAsString(), data.get("server").getAsString()));
+              }
+
+              if(object.has("retrievedPlayerData")) {
+                JsonObject data = object.get("retrievedPlayerData").getAsJsonObject();
+                System.out.println(data);
               }
 
             }

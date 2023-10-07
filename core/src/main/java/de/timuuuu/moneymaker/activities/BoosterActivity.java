@@ -31,15 +31,9 @@ import net.labymod.api.models.OperatingSystem;
 public class BoosterActivity extends Activity {
 
   MoneyMakerAddon addon;
+
   public BoosterActivity(MoneyMakerAddon addon) {
     this.addon = addon;
-    Booster.insertBooster(40, 50);
-    Booster.insertBooster(100, 90);
-    Booster.insertBooster(80, 60);
-    Booster.insertBooster(40, 45);
-    Booster.insertBooster(40, 50);
-    Booster.insertBooster(80, 10);
-    Booster.insertBooster(80, 1440);
   }
 
   private boolean orderAscending = true;
