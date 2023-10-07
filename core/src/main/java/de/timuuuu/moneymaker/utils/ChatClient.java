@@ -54,7 +54,19 @@ public class ChatClient {
 
               if(object.has("retrievedPlayerData")) {
                 JsonObject data = object.get("retrievedPlayerData").getAsJsonObject();
-                System.out.println(data);
+                if(data.has("uuid") & data.has("players")) {
+                  if(Laby.labyAPI().getUniqueId().toString().equals(data.get("uuid").getAsString())) {
+                    System.out.println(data);
+                    if(data.get("players").isJsonArray()) {
+                      JsonArray array = data.get("players").getAsJsonArray();
+                      for(int i  = 0; i < array.size(); i++) {
+                        JsonObject playerData = array.get(i).getAsJsonObject();
+                        UUID uuid = UUID.fromString(playerData.get("uuid").getAsString());
+                        AddonSettings.playerStatus.put(uuid, new MoneyChatMessage(uuid, playerData.get("userName").getAsString(), playerData.get("server").getAsString()));
+                      }
+                    }
+                  }
+                }
               }
 
             }
