@@ -1,7 +1,8 @@
 package de.timuuuu.moneymaker.utils;
 
+import com.google.gson.JsonParser;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import net.labymod.api.client.component.Component;
+import de.timuuuu.moneymaker.activities.ChatActivity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,34 +20,40 @@ public class ChatClient {
     ChatClient.addon = addon;
   }
 
-  private static Socket socket = null;
-
   public void connect() {
-    try {
-      socket = new Socket(SERVER_IP, SERVER_PORT);
-      socket.setKeepAlive(true);
-      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      System.out.println("Connected to the chat server.");
+    new Thread(() -> {
+      try {
+        Socket socket = new Socket("78.31.64.201", 12345); // Replace with your server IP and port
+        BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-      Thread receivingThread = new Thread(() -> {
-        try {
-          String message;
-          while ((message = in.readLine()) != null) {
-            addon.logger().info("Server: " + message);
-            addon.pushNotification(Component.text("Server Response"), Component.text(message));
-          }
-        } catch (IOException e) {
-          e.printStackTrace();
+        String serverMessage;
+        while ((serverMessage = serverIn.readLine()) != null) {
+          // Handle the received message (e.g., display it in your chat interface)
+          MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(new JsonParser().parse(serverMessage).getAsJsonObject()); // Implement this method
+          new ChatActivity().addChatMessage(chatMessage);
         }
-      });
-      receivingThread.start();
 
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+        socket.close(); // Close the socket when done
+      } catch (IOException e) {
+        e.printStackTrace();
+        // Handle connection error
+      }
+    }).start();
   }
 
   public static void sendMessage(MoneyChatMessage chatMessage) {
+    try {
+      Socket socket = new Socket(SERVER_IP, SERVER_PORT); // Replace with your server IP and port
+      PrintWriter serverOut = new PrintWriter(socket.getOutputStream(), true);
+      serverOut.println(chatMessage.toJson());
+      socket.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+      // Handle connection error
+    }
+  }
+
+  /*public static void sendMessage(MoneyChatMessage chatMessage) {
     if(socket == null) return;
     if(socket.isClosed()) {
       addon.pushNotification(Component.text("Chat-Client"), Component.text("Socket is closed."));
@@ -58,6 +65,6 @@ public class ChatClient {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
+  }*/
 
 }

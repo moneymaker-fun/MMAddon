@@ -1,14 +1,8 @@
 package de.timuuuu.moneymaker.activities;
 
-import com.google.gson.JsonParser;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -42,6 +36,8 @@ public class ChatActivity extends Activity {
     this.addon = addon;
     chatMessages = new ArrayList<>();
   }
+
+  public ChatActivity() {}
 
   @Override
   public void initialize(Parent parent) {
@@ -81,26 +77,6 @@ public class ChatActivity extends Activity {
     this.document.addChild(chatContainer);
     this.document.addChild(onlineContainer);
     this.document.addChild(inputContainer);
-
-    // Start a thread to listen for incoming messages from the server
-    new Thread(() -> {
-      try {
-        Socket socket = new Socket("78.31.64.201", 12345); // Replace with your server IP and port
-        BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-        String serverMessage;
-        while ((serverMessage = serverIn.readLine()) != null) {
-          // Handle the received message (e.g., display it in your chat interface)
-          MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(new JsonParser().parse(serverMessage).getAsJsonObject()); // Implement this method
-          addChatMessage(chatMessage);
-        }
-
-        socket.close(); // Close the socket when done
-      } catch (IOException e) {
-        e.printStackTrace();
-        // Handle connection error
-      }
-    }).start();
   }
 
   private void submitMessage() {
@@ -110,18 +86,7 @@ public class ChatActivity extends Activity {
       this.chatInput.setEditable(false);
       this.chatInput.addId("blocked");
       this.labyAPI.minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
-
-      // Send the message to the chat server
-      try {
-        Socket socket = new Socket("78.31.64.201", 12345); // Replace with your server IP and port
-        PrintWriter serverOut = new PrintWriter(socket.getOutputStream(), true);
-        serverOut.println(message);
-        socket.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-        // Handle connection error
-      }
-
+      this.sendToServer(message);
       this.chatInput.setText("");
       this.labyAPI.minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
       Task.builder(() -> {
@@ -142,7 +107,7 @@ public class ChatActivity extends Activity {
     ComponentWidget messageWidget = ComponentWidget.component(component);
     messageWidget.addId("chat-message");
     chatMessages.add(messageWidget);
-    this.reload();
+    this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
   }
 
   private void sendToServer(String message) {
