@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
@@ -33,13 +34,13 @@ public class BoosterActivity extends Activity {
   MoneyMakerAddon addon;
   public BoosterActivity(MoneyMakerAddon addon) {
     this.addon = addon;
-    Booster.insertBooster(40, 50);
-    Booster.insertBooster(100, 90);
-    Booster.insertBooster(80, 60);
-    Booster.insertBooster(40, 45);
-    Booster.insertBooster(40, 50);
+    Booster.insertBooster(40, 15);
+    Booster.insertBooster(100, 30);
     Booster.insertBooster(80, 10);
-    Booster.insertBooster(80, 1440);
+    Booster.insertBooster(40, 180);
+    Booster.insertBooster(40, 60);
+    Booster.insertBooster(300, 30);
+    Booster.insertBooster(10, 720);
   }
 
   private boolean orderAscending = true;
@@ -122,7 +123,7 @@ public class BoosterActivity extends Activity {
     ButtonWidget exportBtnWidget = ButtonWidget.text("Export als CSV");
     exportBtnWidget.alignmentX().set(WidgetAlignment.CENTER);
     exportBtnWidget.addId("exportBtn");
-    exportBtnWidget.setPressable(this::writeLinkedListToCSV);
+    exportBtnWidget.setPressable(BoosterActivity::writeLinkedListToCSV);
 
     container.addChild(exportBtnWidget);
 
@@ -134,7 +135,7 @@ public class BoosterActivity extends Activity {
     super.render(stack, mouse, tickDelta);
   }
 
-  private void writeLinkedListToCSV() {
+  public static void writeLinkedListToCSV() {
     try {
       String time = new SimpleDateFormat("dd_MM_yy-HH_mm").format(new Date());
       File file = new File("BoosterExport_"+time+".csv");
@@ -145,8 +146,8 @@ public class BoosterActivity extends Activity {
         writer.write(entry.toExport() + "\n");
       }
       writer.close();
-      this.addon.pushNotification(Component.text("Booster-Export"), Component.text("Die Übersicht der gefarmten Booster wurde gespeichert"), Component.text("Ordner öffnen"), () -> {
-        OperatingSystem.getPlatform().openFile(new File(this.addon.labyAPI().labyModLoader().getGameDirectory().toFile().getPath()));
+      MoneyMakerAddon.pushNotification(Component.text("Booster-Export"), Component.text("Die Übersicht der gefarmten Booster wurde gespeichert"), Component.text("Ordner öffnen"), () -> {
+        OperatingSystem.getPlatform().openFile(new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile().getPath()));
       });
     } catch (IOException exception) {
       exception.printStackTrace();

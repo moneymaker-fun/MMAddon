@@ -20,6 +20,8 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> chatNotificationSound = new ConfigProperty<>(true);
 
+  private final ConfigProperty<Boolean> exportOnShutdown = new ConfigProperty<>(false);
+
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
@@ -31,5 +33,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> chatNotificationSound() {
     return chatNotificationSound;
+  }
+
+  public ConfigProperty<Boolean> getExportOnShutdown() {
+    return exportOnShutdown;
   }
 }
