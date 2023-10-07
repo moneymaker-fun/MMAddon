@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.ChatActivity;
@@ -23,14 +24,19 @@ public class ChatClient {
   public void connect() {
     new Thread(() -> {
       try {
-        Socket socket = new Socket("78.31.64.201", 12345); // Replace with your server IP and port
+        Socket socket = new Socket(SERVER_IP, SERVER_PORT);
         BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String serverMessage;
         while ((serverMessage = serverIn.readLine()) != null) {
-          // Handle the received message (e.g., display it in your chat interface)
-          MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(new JsonParser().parse(serverMessage).getAsJsonObject()); // Implement this method
-          new ChatActivity().addChatMessage(chatMessage);
+          addon.logger().info(serverMessage);
+
+          JsonElement element = JsonParser.parseString(serverMessage);
+          if(element.isJsonObject()) {
+            MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(element.getAsJsonObject()); // Implement this method
+            new ChatActivity().addChatMessage(chatMessage);
+          }
+
         }
 
         socket.close(); // Close the socket when done

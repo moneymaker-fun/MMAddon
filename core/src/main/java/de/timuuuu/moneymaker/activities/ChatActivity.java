@@ -102,7 +102,7 @@ public class ChatActivity extends Activity {
     if(chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     Component component = Component.text("§e" + time + "  ")
-        .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 15))
+        .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 10))
         .append(Component.text("  §b" + chatMessage.userName() + "§8: §7" + chatMessage.message()));
     ComponentWidget messageWidget = ComponentWidget.component(component);
     messageWidget.addId("chat-message");
