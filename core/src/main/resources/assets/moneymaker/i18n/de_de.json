@@ -19,7 +19,8 @@
         "title": "Liste der gefarmten Booster"
       },
       "chat": {
-        "title": "MoneyMaker Addon Chat"
+        "title": "MoneyMaker Addon Chat",
+        "not-connected": "Bitte verbinde dich mit MoneyMaker um den Chat zu nutzen."
       },
       "secret": {
         "toggleJoinMessageTitle": "Join Nachrichten"

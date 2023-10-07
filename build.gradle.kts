@@ -16,7 +16,7 @@ labyMod {
         displayName = "MoneyMaker"
         author = "Timuuuu"
         description = "Adds some features to the MoneyMaker IdleGame on GommeHD.net"
-        minecraftVersion = "1.20<*"
+        minecraftVersion = "*"
         version = System.getenv().getOrDefault("VERSION", "0.0.1")
     }
 

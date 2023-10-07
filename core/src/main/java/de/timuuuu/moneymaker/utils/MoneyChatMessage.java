@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
+import com.google.gson.JsonObject;
 import java.util.UUID;
 
 public class MoneyChatMessage {
@@ -14,6 +15,27 @@ public class MoneyChatMessage {
     this.uuid = uuid;
     this.userName = userName;
     this.message = message;
+  }
+
+  public static MoneyChatMessage fromJson(JsonObject object) {
+    if(object.has("uuid")) {
+      return new MoneyChatMessage(
+          object.get("time").getAsString(),
+          UUID.fromString(object.get("uuid").getAsString()),
+          object.get("userName").getAsString(),
+          object.get("message").getAsString()
+          );
+    }
+    return null;
+  }
+
+  public JsonObject toJson() {
+    JsonObject object = new JsonObject();
+    object.addProperty("time", this.time);
+    object.addProperty("uuid", this.uuid.toString());
+    object.addProperty("userName", this.userName);
+    object.addProperty("message", this.message);
+    return object;
   }
 
   public String time() {

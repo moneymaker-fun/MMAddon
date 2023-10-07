@@ -19,7 +19,8 @@
         "title": "List of farmed boosters"
       },
       "chat": {
-        "title": "MoneyMaker Addon Chat"
+        "title": "MoneyMaker Addon Chat",
+        "not-connected": "Please connect to MoneyMaker to use the chat."
       },
       "secret": {
         "toggleJoinMessageTitle": "Join Messages"

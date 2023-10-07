@@ -65,14 +65,11 @@ public class Booster {
   public String toExport() {
     String boosterTime;
     int tempTime = this.time;
-    if (tempTime == 60 || tempTime == 90 || tempTime == 120 || tempTime == 180
-        || tempTime == 360 || tempTime == 480 || tempTime == 720 || tempTime == 1440) {
-      if (tempTime == 60) {
-        boosterTime = "1 Stunde";
-      } else if (tempTime == 90) {
+    if (tempTime > 59) {
+      if (tempTime == 90) {
         boosterTime = "90 Minuten";
       } else {
-        boosterTime = (this.time / 60) + " Stunden";
+        boosterTime = (this.time / 60) + " Stunde/n";
       }
     } else {
       boosterTime = this.time + " Minuten";

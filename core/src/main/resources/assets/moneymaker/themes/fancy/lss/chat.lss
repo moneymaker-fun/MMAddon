@@ -5,3 +5,53 @@
   text-color: green;
   font-size: 1.5;
 }
+
+.chat-container {
+  top: 20;
+  bottom: 50;
+  left: 20;
+  width: 68%;
+  filter: blur(25);
+  border-radius: 15 0 0 0;
+  border-thickness: 5;
+  border-color: var(--background-color-border);
+  background-color: var(--background-color);
+}
+
+.online-container {
+  top: 20;
+  bottom: 50;
+  width: 25%;
+  right: 20;
+  filter: blur(25);
+  border-radius: 0 15 0 0;
+  border-thickness: 5;
+  border-color: var(--background-color-border);
+  background-color: var(--background-color);
+}
+
+.input-container {
+  bottom: 0;
+  left: 20;
+  right: 20;
+  height: 40;
+  filter: blur(25);
+  border-radius: 0 0 15 15;
+  border-thickness: 5;
+  border-color: var(--background-color-border);
+  background-color: var(--background-color);
+
+  .chat-input {
+    bottom: 25%;
+    left: 30;
+    right: 30;
+  }
+
+  .chat-error {
+    bottom: 25%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.5;
+  }
+
+}

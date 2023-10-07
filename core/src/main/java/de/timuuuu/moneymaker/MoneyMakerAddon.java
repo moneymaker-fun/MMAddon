@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker;
 import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
+import de.timuuuu.moneymaker.listener.BroadcastListener;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.DisconnectListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
@@ -36,6 +37,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener());
     this.registerListener(new DisconnectListener());
+    this.registerListener(new BroadcastListener(this));
 
     labyAPI().navigationService().register("moneymaker_main_ui", new MoneyMakerNavigationElement(this));
 

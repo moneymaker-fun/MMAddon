@@ -24,8 +24,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
-import net.labymod.api.util.ListOrder;
-
 
 @AutoActivity
 @Link("activity.lss")
@@ -74,7 +72,6 @@ public class BoosterActivity extends Activity {
 
     VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>();
     listWidget.addId("booster-list");
-    listWidget.listOrder().set(ListOrder.NORMAL);
 
     ButtonWidget sortButton = ButtonWidget.text("§6Sortierung " + (orderAscending ? "§b⬆" : "§b⬇"));
     sortButton.setPressable(() -> {
@@ -103,14 +100,11 @@ public class BoosterActivity extends Activity {
 
       String boosterTime;
       int tempTime = booster.getTime();
-      if (tempTime == 60 || tempTime == 90 || tempTime == 120 || tempTime == 180
-          || tempTime == 360 || tempTime == 480 || tempTime == 720 || tempTime == 1440) {
-        if (tempTime == 60) {
-          boosterTime = "1 Stunde";
-        } else if (tempTime == 90) {
+      if (tempTime > 59) {
+        if (tempTime == 90) {
           boosterTime = "90 Minuten";
         } else {
-          boosterTime = (booster.getTime() / 60) + " Stunden";
+          boosterTime = (booster.getTime() / 60) + " Stunde/n";
         }
       } else {
         boosterTime = booster.getTime() + " Minuten";

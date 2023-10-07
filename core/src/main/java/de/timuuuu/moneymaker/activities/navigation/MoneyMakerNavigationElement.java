@@ -31,8 +31,9 @@ public class MoneyMakerNavigationElement extends ScreenNavigationElement {
     return Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"));
   }
 
-  @Override
+  /*@Override
   public boolean isVisible() {
     return AddonSettings.playingOn.contains("MoneyMaker");
-  }
+  }*/
+
 }
