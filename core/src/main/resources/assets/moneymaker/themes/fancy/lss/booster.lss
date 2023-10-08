@@ -8,7 +8,7 @@
 
 .booster-subTitle {
   alignment-x: center;
-  top: 20;
+  top: 25;
   font-size: 1.2;
 }
 

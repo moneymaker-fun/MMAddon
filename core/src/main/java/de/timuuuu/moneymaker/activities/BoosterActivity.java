@@ -131,7 +131,7 @@ public class BoosterActivity extends Activity {
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);
       }
     });
-    secretButton.addId("secretButton-button");
+    secretButton.addId("secret-button");
     this.document.addChild(secretButton);
     //Feedback Button
     ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");

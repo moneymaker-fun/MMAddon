@@ -4,12 +4,13 @@
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
+  top:0;
 }
 
 .chat-reconnect-button {
   width: fit-content;
   top: 8;
-  left: 90;
+  left: 95;
   padding: 1 5 1 5;
   height: 10;
   background-color: red !important;
@@ -117,9 +118,10 @@ Scroll {
 }
 
 .feedback-button {
-  top:0;
+  top:2;
   right:20;
   width: fit-content;
+  height:15;
   padding-left: 3;
   padding-right: 3;
 }

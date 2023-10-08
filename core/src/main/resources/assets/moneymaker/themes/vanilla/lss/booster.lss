@@ -79,3 +79,13 @@ Scroll {
   padding-left: 3;
   padding-right: 3;
 }
+
+.secret-button {
+  bottom:6;
+  left:0;
+  width: 1;
+  height: 7;
+  opacity:0.05;
+  opacity:0.05;
+  border-radius:0;
+}
