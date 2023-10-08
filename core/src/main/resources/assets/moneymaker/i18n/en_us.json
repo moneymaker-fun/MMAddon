@@ -41,7 +41,8 @@
         }
       },
       "secret": {
-        "toggleJoinMessageTitle": "Join Messages"
+        "toggleJoinMessageTitle": "Join Messages",
+        "exportOnShutdownTitle": "Export on shutdown"
       }
     },
     "hudWidget": {
