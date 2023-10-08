@@ -8,7 +8,9 @@ import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 
+@SpriteSlot()
 public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
   private MoneyMakerAddon addon;
@@ -17,7 +19,6 @@ public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
     super("booster_count");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(Icon.texture(ResourceLocation.create("minecraft", "textures/item/experience_bottle.png")));
   }
 
   @Override
@@ -37,7 +38,8 @@ public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public Icon createPlaceholderIcon() {
-    return Icon.texture(ResourceLocation.create("minecraft", "textures/item/experience_bottle.png"));
+    //return Icon.texture(ResourceLocation.create("minecraft", "textures/item/experience_bottle.png"));
+    return Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 0);
   }
 
 }
