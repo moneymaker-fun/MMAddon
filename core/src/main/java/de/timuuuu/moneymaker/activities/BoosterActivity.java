@@ -10,7 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
+import net.labymod.api.Constants.Resources;
 import net.labymod.api.Laby;
+import net.labymod.api.client.Minecraft;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
@@ -28,7 +30,7 @@ import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
 
 @AutoActivity
-@Link("activity.lss")
+@Link("booster.lss")
 public class BoosterActivity extends Activity {
 
   MoneyMakerAddon addon;
@@ -63,14 +65,6 @@ public class BoosterActivity extends Activity {
     ComponentWidget author = ComponentWidget.text("§eAddon by Timuuuu");
     author.addId("booster-author");
     this.document.addChild(author);
-
-    author.setPressable(() -> {
-      AddonSettings.id.decrementAndGet();
-      if (AddonSettings.id.get() == 0) {
-        System.out.println("Freigeschaltet");
-        this.addon.moneyMakerMainActivity.registerSecret();
-      }
-    });
 
     VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>();
     listWidget.addId("booster-list");
@@ -126,6 +120,26 @@ public class BoosterActivity extends Activity {
     exportBtnWidget.setPressable(BoosterActivity::writeLinkedListToCSV);
 
     container.addChild(exportBtnWidget);
+
+    //Toggle secret
+    ButtonWidget secretButton = ButtonWidget.text("");
+    secretButton.setActionListener(() -> {
+      AddonSettings.id.decrementAndGet();
+      if (AddonSettings.id.get() == 0) {
+        System.out.println("Freigeschaltet");
+        this.addon.moneyMakerMainActivity.registerSecret();
+        this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);
+      }
+    });
+    secretButton.addId("secretButton-button");
+    this.document.addChild(secretButton);
+    //Feedback Button
+    ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
+    feedbackButton.setPressable(() -> {
+      OperatingSystem.getPlatform().openUrl("https://forms.gle/rWteNnvwqC5Q9Pz76");
+    });
+    feedbackButton.addId("feedback-button");
+    this.document.addChild(feedbackButton);
 
     this.document.addChild(container);
   }

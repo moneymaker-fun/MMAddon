@@ -26,6 +26,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.models.OperatingSystem;
 import net.labymod.api.util.concurrent.task.Task;
 
 @AutoActivity
@@ -152,6 +153,14 @@ public class ChatActivity extends Activity {
     this.document.addChild(chatContainer);
     this.document.addChild(onlineContainer);
     this.document.addChild(inputContainer);
+
+    //Feedback Button
+    ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
+    feedbackButton.setPressable(() -> {
+      OperatingSystem.getPlatform().openUrl("https://forms.gle/rWteNnvwqC5Q9Pz76");
+    });
+    feedbackButton.addId("feedback-button");
+    this.document.addChild(feedbackButton);
   }
 
   private void submitMessage() {
