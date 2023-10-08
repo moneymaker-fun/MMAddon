@@ -4,11 +4,14 @@ import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
+import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
+import de.timuuuu.moneymaker.hudwidget.BreakGoalWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.DisconnectListener;
 import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
+import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
@@ -48,11 +51,14 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new ChatReceiveListener(this));
     this.registerListener(new DisconnectListener(this));
     this.registerListener(new MoneyAddonListener(this));
+    this.registerListener(new ScoreBoardListener(this));
 
     labyAPI().navigationService().register("moneymaker_main_ui", new MoneyMakerNavigationElement(this));
 
     labyAPI().hudWidgetRegistry().categoryRegistry().register(CATEGORY);
     labyAPI().hudWidgetRegistry().register(new BoosterCountWidget(this));
+    labyAPI().hudWidgetRegistry().register(new BlockSessionWidget(this));
+    labyAPI().hudWidgetRegistry().register(new BreakGoalWidget(this));
 
     this.logger().info("Enabled the Addon");
 
