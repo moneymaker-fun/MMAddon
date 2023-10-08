@@ -18,6 +18,11 @@ public class DisconnectListener {
   @Subscribe
   public void onDisconnect(ServerDisconnectEvent event){
     AddonSettings.playingOn = "Hauptmenü";
+    AddonSettings.breakGoalEnabled = false;
+    AddonSettings.sessionBlocks = 0;
+    AddonSettings.breakGoal = 0;
+    AddonSettings.breakGoalBlocks = 0;
+
     JsonObject data = new JsonObject();
     data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
     data.addProperty("userName", this.addon.labyAPI().getName());

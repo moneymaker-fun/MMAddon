@@ -28,6 +28,15 @@
       }
     },
     "ui": {
+      "start": {
+        "title": "MoneyMaker Hauptmenü",
+        "break-goal": {
+          "title": "Abbau Ziel",
+          "description": "Soll die Funktion für das Abbau Ziel aktiviert sein?",
+          "input-title": "Abbau Ziel eingeben",
+          "input-description": "Gebe dein Abbau Ziel ein, welches du erreichen willst."
+        }
+      },
       "booster": {
         "title": "Liste der gefarmten Booster"
       },
@@ -50,6 +59,12 @@
     "hudWidget": {
       "booster_count": {
         "name": "Booster-Count"
+      },
+      "block_session": {
+        "name": "Blöcke/Sitzung"
+      },
+      "break_goal": {
+        "name": "Abbau Ziel"
       }
     }
   }

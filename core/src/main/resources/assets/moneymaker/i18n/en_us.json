@@ -28,6 +28,15 @@
       }
     },
     "ui": {
+      "start": {
+        "title": "MoneyMaker Main Menu",
+        "break-goal": {
+          "title": "Break Goal",
+          "description": "Should the break goal function be activated?",
+          "input-title": "Enter Break Goal",
+          "input-description": "Enter the Break Goal you want to achieve."
+        }
+      },
       "booster": {
         "title": "List of farmed boosters"
       },
@@ -50,6 +59,12 @@
     "hudWidget": {
       "booster_count": {
         "name": "Booster-Count"
+      },
+      "block_session": {
+        "name": "Blocks/Session"
+      },
+      "break_goal": {
+        "name": "Break Goal"
       }
     }
   }
