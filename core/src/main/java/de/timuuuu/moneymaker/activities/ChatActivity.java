@@ -5,12 +5,12 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
+import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
@@ -25,7 +25,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
-import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.OperatingSystem;
 import net.labymod.api.util.concurrent.task.Task;
 
@@ -110,18 +109,8 @@ public class ChatActivity extends Activity {
       MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
       if(moneyPlayer.server().contains("MoneyMaker")) {
         String color = moneyPlayer.staff() ? "§c" : "§e";
-
-        Icon onlineStatus;
-        if(!moneyPlayer.afk()) {
-          onlineStatus = Icon.sprite16(ResourceLocation.create("moneymaker", "textures/ui/chat.png"), 0, 0);
-        } else {
-          onlineStatus = Icon.sprite16(ResourceLocation.create("moneymaker", "textures/ui/chat.png"), 1, 0);
-        }
-
         Component component = Component.icon(Icon.head(uuid, true, false), 10)
-            .append(Component.text(" " + color + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " ")
-                .append(Component.icon(onlineStatus))
-            );
+            .append(Component.text(" " + color + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
         ComponentWidget componentWidget = ComponentWidget.component(component);
         componentWidget.addId("online-entry");
         onlineList.addChild(componentWidget);

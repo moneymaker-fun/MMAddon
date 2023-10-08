@@ -20,9 +20,9 @@ import net.labymod.api.client.component.Component;
 
 public class ChatClient {
 
-  private static final String SERVER_IP = "chat.moneymaker.fun";
-  private static final String BACKUP_SERVER_IP = "moneychat.mistercore.de";
-  private static String USE_SERVER_IP = SERVER_IP;
+  public static final String SERVER_IP = "chat.moneymaker.fun";
+  public static final String BACKUP_SERVER_IP = "moneychat.mistercore.de";
+  public static String USE_SERVER_IP = SERVER_IP;
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
@@ -66,7 +66,7 @@ public class ChatClient {
                 UUID uuid = UUID.fromString(data.get("uuid").getAsString());
                 Laby.fireEvent(new MoneyPlayerStatusEvent(
                     uuid,
-                    new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("afk").getAsBoolean(), data.get("addonVersion").getAsString(), data.get("staffMember").getAsBoolean())
+                    new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), data.get("staffMember").getAsBoolean())
                 ));
               }
 
@@ -83,7 +83,6 @@ public class ChatClient {
                             uuid,
                             playerData.get("userName").getAsString(),
                             playerData.get("server").getAsString(),
-                            playerData.get("afk").getAsBoolean(),
                             playerData.get("addonVersion").getAsString(),
                             playerData.get("staffMember").getAsBoolean()
                         ));
