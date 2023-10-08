@@ -64,7 +64,7 @@ public class Secret extends Activity {
     SwitchWidget chatReconnectSwitch = SwitchWidget.create(value -> {
       this.addon.configuration().chatReconnectButton().set(value);
     }).addId("chat-reconnect-switch");
-    exportOnShutdownSwitch.setValue(this.addon.configuration().chatReconnectButton().get());
+    chatReconnectSwitch.setValue(this.addon.configuration().chatReconnectButton().get());
     this.document.addChild(chatReconnectSwitch);
 
   }
