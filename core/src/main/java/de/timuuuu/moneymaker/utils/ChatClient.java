@@ -28,6 +28,12 @@ public class ChatClient {
   private static Socket socket;
   private static PrintWriter serverOut;
 
+  private static MoneyMakerAddon addon;
+
+  public ChatClient(MoneyMakerAddon addon) {
+    ChatClient.addon = addon;
+  }
+
   public void connect() {
     try {
       socket = new Socket(USE_SERVER_IP, SERVER_PORT);
@@ -52,7 +58,11 @@ public class ChatClient {
 
               if(object.has("playerStatus") && object.get("playerStatus").isJsonObject()) {
                 JsonObject data = object.get("playerStatus").getAsJsonObject();
-                Laby.fireEvent(new MoneyPlayerStatusEvent(UUID.fromString(data.get("uuid").getAsString()), data.get("userName").getAsString(), data.get("server").getAsString()));
+                UUID uuid = UUID.fromString(data.get("uuid").getAsString());
+                Laby.fireEvent(new MoneyPlayerStatusEvent(
+                    uuid,
+                    new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), data.get("staffMember").getAsBoolean())
+                ));
               }
 
               if(object.has("retrievedPlayerData")) {
@@ -65,7 +75,13 @@ public class ChatClient {
                       for(int i  = 0; i < array.size(); i++) {
                         JsonObject playerData = array.get(i).getAsJsonObject();
                         UUID uuid = UUID.fromString(playerData.get("uuid").getAsString());
-                        AddonSettings.playerStatus.put(uuid, new MoneyChatMessage(uuid, playerData.get("userName").getAsString(), playerData.get("server").getAsString()));
+                        AddonSettings.playerStatus.put(uuid, new MoneyPlayer(
+                            uuid,
+                            playerData.get("userName").getAsString(),
+                            playerData.get("server").getAsString(),
+                            playerData.get("addonVersion").getAsString(),
+                            playerData.get("staffMember").getAsBoolean()
+                        ));
                       }
                     }
                   }
@@ -78,7 +94,7 @@ public class ChatClient {
           socket.close();
         } catch (IOException e) {
           if(online) {
-            MoneyMakerAddon.instance().chatActivity.reloadScreen();
+            addon.chatActivity.reloadScreen();
           }
           online = false;
           // Handle connection error
@@ -87,13 +103,13 @@ public class ChatClient {
     } catch (IOException e) {
       if(USE_SERVER_IP.equals(BACKUP_SERVER_IP)) {
         if(online) {
-          MoneyMakerAddon.instance().chatActivity.reloadScreen();
+          addon.chatActivity.reloadScreen();
         }
         online = false;
       } else {
         USE_SERVER_IP = BACKUP_SERVER_IP;
         connect();
-        MoneyMakerAddon.instance().logger().info("Using BackUp Server as Chat Backend!");
+        addon.logger().info("Using BackUp Server as Chat Backend!");
       }
       // Handle connection error
     }
@@ -102,7 +118,7 @@ public class ChatClient {
   public static void sendChatMessage(MoneyChatMessage chatMessage) {
     if(serverOut == null) {
       online = false;
-      MoneyMakerAddon.instance().chatActivity.reloadScreen();
+      addon.chatActivity.reloadScreen();
       return;
     }
     JsonObject object = new JsonObject();

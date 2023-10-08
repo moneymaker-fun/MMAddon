@@ -6,6 +6,7 @@ import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import java.util.UUID;
+import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
@@ -22,9 +23,9 @@ public class MoneyAddonListener {
   @Subscribe
   public void onPlayerStatusUpdate(MoneyPlayerStatusEvent event) {
     UUID uuid = event.uuid();
-    String server = event.server();
-    if(!server.equals("OFFLINE")) {
-      AddonSettings.playerStatus.put(uuid, new MoneyChatMessage(uuid, event.userName(), server));
+    MoneyPlayer player = event.player();
+    if(!player.server().equals("OFFLINE")) {
+      AddonSettings.playerStatus.put(uuid, player);
     } else {
       AddonSettings.playerStatus.remove(uuid);
     }

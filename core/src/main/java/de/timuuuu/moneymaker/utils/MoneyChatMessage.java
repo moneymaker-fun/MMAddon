@@ -8,11 +8,13 @@ public class MoneyChatMessage {
   private UUID uuid;
   private String userName;
   private String message;
+  private boolean staff;
 
-  public MoneyChatMessage(UUID uuid, String userName, String message) {
+  public MoneyChatMessage(UUID uuid, String userName, String message, boolean staff) {
     this.uuid = uuid;
     this.userName = userName;
     this.message = message;
+    this.staff = staff;
   }
 
   public static MoneyChatMessage fromJson(JsonObject object) {
@@ -20,7 +22,8 @@ public class MoneyChatMessage {
       return new MoneyChatMessage(
           UUID.fromString(object.get("uuid").getAsString()),
           object.get("userName").getAsString(),
-          object.get("message").getAsString()
+          object.get("message").getAsString(),
+          object.has("staffMember") && object.get("staffMember").getAsBoolean()
           );
     }
     return null;
@@ -44,5 +47,9 @@ public class MoneyChatMessage {
 
   public String message() {
     return message;
+  }
+
+  public boolean staff() {
+    return staff;
   }
 }

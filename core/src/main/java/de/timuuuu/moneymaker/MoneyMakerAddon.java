@@ -52,7 +52,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.logger().info("Enabled the Addon");
 
-    new ChatClient().connect();
+    new ChatClient(this).connect();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       if(configuration().getExportOnShutdown().get()) {

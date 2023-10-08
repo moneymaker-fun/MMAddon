@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
@@ -73,10 +74,11 @@ public class ChatActivity extends Activity {
     VerticalListWidget<ComponentWidget> onlineList = new VerticalListWidget<>().addId("online-list");
 
     AddonSettings.playerStatus.keySet().forEach(uuid -> {
-      MoneyChatMessage playerData = AddonSettings.playerStatus.get(uuid);
-      if(playerData.message().contains("MoneyMaker")) {
+      MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
+      if(moneyPlayer.server().contains("MoneyMaker")) {
+        String color = moneyPlayer.staff() ? "§c" : "§e";
         Component component = Component.icon(Icon.head(uuid, true, false), 10)
-            .append(Component.text(" §e" + playerData.userName() + " §8- §b" + playerData.message().replace("MoneyMaker", "")));
+            .append(Component.text(" " + color + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "")));
         ComponentWidget componentWidget = ComponentWidget.component(component);
         componentWidget.addId("online-entry");
         onlineList.addChild(componentWidget);
@@ -132,9 +134,10 @@ public class ChatActivity extends Activity {
     if (chatMessages == null) return;
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
+    String color = chatMessage.staff() ? "§8[§cStaff§8] §c" : "§b";
     Component component = Component.text("§e" + time + "  ")
         .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 10))
-        .append(Component.text("  §b" + chatMessage.userName() + "§8: §7" + chatMessage.message()));
+        .append(Component.text(" " + color + chatMessage.userName() + "§8: §7" + chatMessage.message()));
     ComponentWidget messageWidget = ComponentWidget.component(component);
     messageWidget.addId("chat-message");
     chatMessages.add(messageWidget);
@@ -149,7 +152,8 @@ public class ChatActivity extends Activity {
     MoneyChatMessage chatMessage = new MoneyChatMessage(
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
-        message);
+        message,
+        false);
     ChatClient.sendChatMessage(chatMessage);
   }
 }

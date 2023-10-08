@@ -11,7 +11,7 @@ public class AddonSettings {
   public static AtomicInteger id = new AtomicInteger(5);
   public static boolean showJoins = false;
 
-  public static HashMap<UUID, MoneyChatMessage> playerStatus = new HashMap<>();
+  public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
 
   public static boolean gommeConnected = false;
 
