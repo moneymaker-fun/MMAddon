@@ -20,6 +20,8 @@ import net.labymod.api.Laby;
 public class ChatClient {
 
   private static final String SERVER_IP = "chat.moneymaker.fun";
+  private static final String BACKUP_SERVER_IP = "moneychat.mistercore.de";
+  private static String USE_SERVER_IP = SERVER_IP;
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
@@ -28,7 +30,7 @@ public class ChatClient {
 
   public void connect() {
     try {
-      socket = new Socket(SERVER_IP, SERVER_PORT);
+      socket = new Socket(USE_SERVER_IP, SERVER_PORT);
       serverOut = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
       online = true;
 
@@ -83,11 +85,16 @@ public class ChatClient {
         }
       }).start();
     } catch (IOException e) {
-      e.printStackTrace();
-      if(online) {
-        MoneyMakerAddon.instance().chatActivity.reloadScreen();
+      if(USE_SERVER_IP.equals(BACKUP_SERVER_IP)) {
+        if(online) {
+          MoneyMakerAddon.instance().chatActivity.reloadScreen();
+        }
+        online = false;
+      } else {
+        USE_SERVER_IP = BACKUP_SERVER_IP;
+        connect();
+        MoneyMakerAddon.instance().logger().info("Using BackUp Server as Chat Backend!");
       }
-      online = false;
       // Handle connection error
     }
   }
