@@ -68,7 +68,7 @@ public class NetworkPayloadListener {
               JsonObject data = new JsonObject();
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
               data.addProperty("userName", this.addon.labyAPI().getName());
-              data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? "MoneyMaker" : "Other");
+              data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               ChatClient.sendMessage("playerStatus", data);
 

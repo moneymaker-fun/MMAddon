@@ -74,9 +74,9 @@ public class ChatActivity extends Activity {
 
     AddonSettings.playerStatus.keySet().forEach(uuid -> {
       MoneyChatMessage playerData = AddonSettings.playerStatus.get(uuid);
-      if(playerData.message().equals("MoneyMaker")) {
+      if(playerData.message().contains("MoneyMaker")) {
         Component component = Component.icon(Icon.head(uuid, true, false), 10)
-            .append(Component.text(" §e" + playerData.userName()));
+            .append(Component.text(" §e" + playerData.userName() + " §8- §b" + playerData.message().replace("MoneyMaker", "")));
         ComponentWidget componentWidget = ComponentWidget.component(component);
         componentWidget.addId("online-entry");
         onlineList.addChild(componentWidget);
