@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
-import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
@@ -11,16 +10,15 @@ import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
-import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
 
 @AutoActivity
 @Link("secret.lss")
-public class Secret extends Activity {
+public class SecretActivity extends Activity {
 
   MoneyMakerAddon addon;
   
-  public Secret(MoneyMakerAddon addon) {
+  public SecretActivity(MoneyMakerAddon addon) {
     this.addon = addon;
   }
 
