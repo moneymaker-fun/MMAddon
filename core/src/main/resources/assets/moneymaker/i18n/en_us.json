@@ -37,12 +37,14 @@
         "online": "§bCurrently online",
         "server": {
           "online": "§aChat-Server is online",
-          "offline": "§cChat-Server is offline"
+          "offline": "§cChat-Server is offline",
+          "reconnect-button": "Reconnect"
         }
       },
       "secret": {
         "toggleJoinMessageTitle": "Join Messages",
-        "exportOnShutdownTitle": "Export on shutdown"
+        "exportOnShutdownTitle": "Export on shutdown",
+        "chat-reconnect": "Chat Reconnect Button"
       }
     },
     "hudWidget": {

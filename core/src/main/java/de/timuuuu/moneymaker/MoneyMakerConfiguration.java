@@ -22,6 +22,8 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   private final ConfigProperty<Boolean> exportOnShutdown = new ConfigProperty<>(false);
 
+  private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
+
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
@@ -35,7 +37,11 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return chatNotificationSound;
   }
 
-  public ConfigProperty<Boolean> getExportOnShutdown() {
+  public ConfigProperty<Boolean> exportOnShutdown() {
     return exportOnShutdown;
+  }
+
+  public ConfigProperty<Boolean> chatReconnectButton() {
+    return chatReconnectButton;
   }
 }

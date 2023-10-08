@@ -26,6 +26,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static final HudWidgetCategory CATEGORY = new HudWidgetCategory("moneymaker");
 
+  public ChatClient chatClient;
+
   public MoneyMakerMainActivity moneyMakerMainActivity;
   public ChatActivity chatActivity;
 
@@ -40,6 +42,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.chatActivity = new ChatActivity(this);
     this.moneyMakerMainActivity = new MoneyMakerMainActivity(this);
 
+    this.chatClient = new ChatClient(this);
+
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener());
     this.registerListener(new DisconnectListener(this));
@@ -52,10 +56,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.logger().info("Enabled the Addon");
 
-    new ChatClient(this).connect();
+    this.chatClient.connect(false);
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      if(configuration().getExportOnShutdown().get()) {
+      if(configuration().exportOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV();
       }
     }));

@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.activities;
 
+import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatClient;
@@ -20,9 +21,11 @@ import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
+import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.util.concurrent.task.Task;
 
 @AutoActivity
@@ -49,6 +52,35 @@ public class ChatActivity extends Activity {
     ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline"));
     statusWidget.addId("chat-status");
     this.document.addChild(statusWidget);
+
+    if(/*!ChatClient.online && */this.addon.configuration().chatReconnectButton().get()) {
+      ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
+      reconnectButton.addId("chat-reconnect-button");
+      reconnectButton.setPressable(() -> {
+        this.addon.chatClient.closeSocket();
+        reconnectButton.setEnabled(false);
+          Task.builder(() -> {
+            reconnectButton.setEnabled(true);
+            this.addon.chatClient.connect(true);
+            if(ChatClient.online) {
+
+              JsonObject data = new JsonObject();
+              data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+              data.addProperty("userName", this.addon.labyAPI().getName());
+              data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
+              data.addProperty("afk", false);
+              data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+              ChatClient.sendMessage("playerStatus", data);
+
+              JsonObject object = new JsonObject();
+              object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+              ChatClient.sendMessage("retrievePlayerData", object);
+            }
+
+          }).delay(5, TimeUnit.SECONDS).build().execute();
+      });
+      this.document.addChild(reconnectButton);
+    }
 
     // Chat Container
 
@@ -77,8 +109,18 @@ public class ChatActivity extends Activity {
       MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
       if(moneyPlayer.server().contains("MoneyMaker")) {
         String color = moneyPlayer.staff() ? "§c" : "§e";
+
+        Icon onlineStatus;
+        if(!moneyPlayer.afk()) {
+          onlineStatus = Icon.sprite16(ResourceLocation.create("moneymaker", "textures/ui/chat.png"), 0, 0);
+        } else {
+          onlineStatus = Icon.sprite16(ResourceLocation.create("moneymaker", "textures/ui/chat.png"), 1, 0);
+        }
+
         Component component = Component.icon(Icon.head(uuid, true, false), 10)
-            .append(Component.text(" " + color + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "")));
+            .append(Component.text(" " + color + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " ")
+                .append(Component.icon(onlineStatus))
+            );
         ComponentWidget componentWidget = ComponentWidget.component(component);
         componentWidget.addId("online-entry");
         onlineList.addChild(componentWidget);

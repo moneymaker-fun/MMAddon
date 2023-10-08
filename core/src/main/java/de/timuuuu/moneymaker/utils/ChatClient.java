@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import net.labymod.api.Laby;
+import net.labymod.api.client.component.Component;
 
 public class ChatClient {
 
@@ -34,11 +35,15 @@ public class ChatClient {
     ChatClient.addon = addon;
   }
 
-  public void connect() {
+  public void connect(boolean reconnect) {
     try {
       socket = new Socket(USE_SERVER_IP, SERVER_PORT);
       serverOut = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
       online = true;
+      if(reconnect) {
+        addon.chatActivity.reloadScreen();
+        addon.pushNotification(Component.text("Chat-Server"), Component.text("§aErfolgreich zum Server verbunden."));
+      }
 
       new Thread(() -> {
         try {
@@ -61,7 +66,7 @@ public class ChatClient {
                 UUID uuid = UUID.fromString(data.get("uuid").getAsString());
                 Laby.fireEvent(new MoneyPlayerStatusEvent(
                     uuid,
-                    new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), data.get("staffMember").getAsBoolean())
+                    new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("afk").getAsBoolean(), data.get("addonVersion").getAsString(), data.get("staffMember").getAsBoolean())
                 ));
               }
 
@@ -69,7 +74,6 @@ public class ChatClient {
                 JsonObject data = object.get("retrievedPlayerData").getAsJsonObject();
                 if(data.has("uuid") & data.has("players")) {
                   if(Laby.labyAPI().getUniqueId().toString().equals(data.get("uuid").getAsString())) {
-                    System.out.println(data);
                     if(data.get("players").isJsonArray()) {
                       JsonArray array = data.get("players").getAsJsonArray();
                       for(int i  = 0; i < array.size(); i++) {
@@ -79,6 +83,7 @@ public class ChatClient {
                             uuid,
                             playerData.get("userName").getAsString(),
                             playerData.get("server").getAsString(),
+                            playerData.get("afk").getAsBoolean(),
                             playerData.get("addonVersion").getAsString(),
                             playerData.get("staffMember").getAsBoolean()
                         ));
@@ -106,9 +111,12 @@ public class ChatClient {
           addon.chatActivity.reloadScreen();
         }
         online = false;
+        if(reconnect) {
+          addon.pushNotification(Component.text("Chat-Server"), Component.text("§cKeine Verbindung zum Chat-Server möglich."));
+        }
       } else {
         USE_SERVER_IP = BACKUP_SERVER_IP;
-        connect();
+        connect(false);
         addon.logger().info("Using BackUp Server as Chat Backend!");
       }
       // Handle connection error
@@ -134,7 +142,7 @@ public class ChatClient {
   }
 
   // Add a method to close the socket when needed
-  /*public static void closeSocket() {
+  public void closeSocket() {
     try {
       if (socket != null && !socket.isClosed()) {
         socket.close();
@@ -142,5 +150,5 @@ public class ChatClient {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }*/
+  }
 }

@@ -22,6 +22,8 @@ public class DisconnectListener {
     data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
     data.addProperty("userName", this.addon.labyAPI().getName());
     data.addProperty("server", "OFFLINE");
+    data.addProperty("afk", false);
+    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
     ChatClient.sendMessage("playerStatus", data);
   }
 
