@@ -20,6 +20,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> chatNotificationSound = new ConfigProperty<>(true);
 
+  @SwitchSetting
+  private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(true);
+
   private final ConfigProperty<Boolean> exportOnShutdown = new ConfigProperty<>(false);
 
   private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
@@ -43,5 +46,8 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> chatReconnectButton() {
     return chatReconnectButton;
+  }
+  public ConfigProperty<Boolean> shortBoosterMessage() {
+    return shortBoosterMessage;
   }
 }

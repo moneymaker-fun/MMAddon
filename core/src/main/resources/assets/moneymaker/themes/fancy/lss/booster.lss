@@ -72,3 +72,20 @@ Scroll {
   padding-left: 3;
   padding-right: 3;
 }
+
+.secretButton-button {
+  bottom:0;
+  left:0;
+  width: 7;
+  height: 7;
+  opacity:0.2;
+  border-radius:0.1;
+}
+
+.feedback-button {
+  top:0;
+  right:20;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+}
