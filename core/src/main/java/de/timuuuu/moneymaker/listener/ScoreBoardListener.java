@@ -17,7 +17,7 @@ public class ScoreBoardListener {
   }
 
   @Subscribe
-  public void on(ScoreboardScoreUpdateEvent event) {
+  public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
     if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() & AddonSettings.playingOn.contains(MoneyScore.BROKEN_BLOCKS.neededServer())) {
       String raw = event.score().getName().substring(2).replace(".", "");
