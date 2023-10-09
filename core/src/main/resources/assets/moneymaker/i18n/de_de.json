@@ -25,6 +25,9 @@
         "name": "Booster Nachrichten kürzen"
       },
       "header": {
+        "general": {
+          "name": "Allgemeine Einstellungen"
+        },
         "chat": {
           "name": "Addon Chat Einstellungen"
         }

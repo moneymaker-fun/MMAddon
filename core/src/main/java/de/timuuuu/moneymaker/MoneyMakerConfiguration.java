@@ -12,6 +12,11 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
+  @SettingSection(value = "general", center = true)
+
+  @SwitchSetting
+  private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(true);
+
   @SettingSection(value = "chat", center = true)
 
   @SwitchSetting
@@ -19,9 +24,6 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @SwitchSetting
   private final ConfigProperty<Boolean> chatNotificationSound = new ConfigProperty<>(true);
-
-  @SwitchSetting
-  private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(true);
 
   private final ConfigProperty<Boolean> exportOnShutdown = new ConfigProperty<>(false);
 

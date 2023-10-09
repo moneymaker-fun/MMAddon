@@ -25,6 +25,9 @@
         "name": "Short Booster Messages"
       },
       "header": {
+        "general": {
+          "name": "General Settings"
+        },
         "chat": {
           "name": "Addon Chat Settings"
         }
