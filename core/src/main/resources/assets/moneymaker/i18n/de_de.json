@@ -21,6 +21,9 @@
         "name": "Chat Benachrichtigungston",
         "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"
       },
+      "shortBoosterMessage": {
+        "name": "Booster Nachrichten kürzen"
+      },
       "header": {
         "chat": {
           "name": "Addon Chat Einstellungen"

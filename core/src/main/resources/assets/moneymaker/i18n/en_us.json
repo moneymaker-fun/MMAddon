@@ -21,6 +21,9 @@
         "name": "Chat Notification Sounds",
         "description": "Receive a notification tone for new messages via the Addon Chat"
       },
+      "shortBoosterMessage": {
+        "name": "Short Booster Messages"
+      },
       "header": {
         "chat": {
           "name": "Addon Chat Settings"
