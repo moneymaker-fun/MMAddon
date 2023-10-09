@@ -20,7 +20,7 @@ public class ScoreBoardListener {
   public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
     if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() & AddonSettings.playingOn.contains(MoneyScore.BROKEN_BLOCKS.neededServer())) {
-      String raw = event.score().getName().substring(2).replace(".", "");
+      String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "");
       try {
         int blocks = Integer.parseInt(raw);
         if(AddonSettings.brokenBlocks == 0) {
