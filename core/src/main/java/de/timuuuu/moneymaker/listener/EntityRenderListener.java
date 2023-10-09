@@ -47,12 +47,5 @@ public class EntityRenderListener {
     }
 
   }
-  public boolean isWorker(FloatVector3 location) {
-    if(location.getX() == 2.5) return true; //Gold & Event1 Mine Worker
-    else if(location.getX() == 5.5) return true; //Gold & Event1 Mine Debris
-    //Todo:  else if () {
-
-    return false;
-  }
 
 }
