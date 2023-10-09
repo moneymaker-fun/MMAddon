@@ -23,6 +23,8 @@ public class DisconnectListener {
     AddonSettings.breakGoal = 0;
     AddonSettings.breakGoalBlocks = 0;
     AddonSettings.balance = "";
+    AddonSettings.nextWorkerCost = "";
+    AddonSettings.debrisCost = "";
 
     JsonObject data = new JsonObject();
     data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());

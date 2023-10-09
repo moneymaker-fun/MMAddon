@@ -74,6 +74,15 @@
       },
       "balance": {
         "name": "Kontostand"
+      },
+      "worker_count": {
+        "name": "Arbeiter Anzahl"
+      },
+      "debris_price": {
+        "name": "Geröll Preis anzeigen"
+      },
+      "worker_price": {
+        "name": "Arbeitsplatz Preis anzeigen"
       }
     }
   }

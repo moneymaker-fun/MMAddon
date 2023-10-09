@@ -74,6 +74,15 @@
       },
       "balance": {
         "name": "Balance"
+      },
+      "worker_count": {
+        "name": "Worker Count"
+      },
+      "debris_price": {
+        "name": "Show Debris Price"
+      },
+      "worker_price": {
+        "name": "Show Miner Price"
       }
     }
   }

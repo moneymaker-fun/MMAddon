@@ -17,7 +17,7 @@ public class AddonSettings {
 
   public static boolean gommeConnected = false;
 
-  public static String balance = "";
+  public static String balance = "X";
 
   public static int brokenBlocks = 0;
   public static int sessionBlocks = 0;
@@ -25,5 +25,10 @@ public class AddonSettings {
   public static boolean breakGoalEnabled = false;
   public static int breakGoal = 0;
   public static int breakGoalBlocks = 0;
+
+  public static int workerCount = 0;
+
+  public static String nextWorkerCost = "X";
+  public static String debrisCost = "X";
 
 }

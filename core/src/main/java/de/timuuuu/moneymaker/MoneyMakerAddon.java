@@ -8,12 +8,17 @@ import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
 import de.timuuuu.moneymaker.hudwidget.BreakGoalWidget;
+import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
+import de.timuuuu.moneymaker.hudwidget.WorkerCountWidget;
+import de.timuuuu.moneymaker.hudwidget.WorkerPriceWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.DisconnectListener;
+import de.timuuuu.moneymaker.listener.EntityRenderListener;
 import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.utils.ChatClient;
+import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
@@ -53,6 +58,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new DisconnectListener(this));
     this.registerListener(new MoneyAddonListener(this));
     this.registerListener(new ScoreBoardListener(this));
+    this.registerListener(new EntityRenderListener(this));
+
+    CurrencyUtil.setUnits();
 
     labyAPI().navigationService().register("moneymaker_main_ui", new MoneyMakerNavigationElement(this));
 
@@ -61,6 +69,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new BlockSessionWidget(this));
     labyAPI().hudWidgetRegistry().register(new BreakGoalWidget(this));
     labyAPI().hudWidgetRegistry().register(new BalanceWidget(this));
+    labyAPI().hudWidgetRegistry().register(new WorkerCountWidget(this));
+    labyAPI().hudWidgetRegistry().register(new DebrisPriceWidget(this));
+    labyAPI().hudWidgetRegistry().register(new WorkerPriceWidget(this));
 
     this.logger().info("Enabled the Addon");
 
