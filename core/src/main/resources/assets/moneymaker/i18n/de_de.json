@@ -65,6 +65,9 @@
       },
       "break_goal": {
         "name": "Abbau Ziel"
+      },
+      "balance": {
+        "name": "Kontostand"
       }
     }
   }

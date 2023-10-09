@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.ChatUtil;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.event.Subscribe;
@@ -17,8 +18,8 @@ public class ScoreBoardListener {
 
   @Subscribe
   public void on(ScoreboardScoreUpdateEvent event) {
-    if(!AddonSettings.playingOn.contains("Farming")) return;
-    if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.getValue()) {
+    if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
+    if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() & AddonSettings.playingOn.contains(MoneyScore.BROKEN_BLOCKS.neededServer())) {
       String raw = event.score().getName().substring(2).replace(".", "");
       try {
         int blocks = Integer.parseInt(raw);
@@ -39,20 +40,32 @@ public class ScoreBoardListener {
         }
       } catch (NumberFormatException ignored) {}
     }
+
+    if(event.score().getValue() == MoneyScore.BALANCE.score() & AddonSettings.playingOn.contains(MoneyScore.BALANCE.neededServer())) {
+      AddonSettings.balance = ChatUtil.stripColor(event.score().getName());
+    }
+
   }
 
   public enum MoneyScore {
 
-    BROKEN_BLOCKS(3);
+    BROKEN_BLOCKS(3, "Farming"),
+    BALANCE(12, "MoneyMaker");
 
-    private final int value;
+    private final int score;
+    private final String neededServer;
 
-    MoneyScore(int value) {
-      this.value = value;
+    MoneyScore(int score, String neededServer) {
+      this.score = score;
+      this.neededServer = neededServer;
     }
 
-    public int getValue() {
-      return value;
+    public int score() {
+      return score;
+    }
+
+    public String neededServer() {
+      return neededServer;
     }
   }
 

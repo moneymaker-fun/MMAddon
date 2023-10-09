@@ -13,7 +13,11 @@ public class AddonSettings {
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
 
+
+
   public static boolean gommeConnected = false;
+
+  public static String balance = "";
 
   public static int brokenBlocks = 0;
   public static int sessionBlocks = 0;

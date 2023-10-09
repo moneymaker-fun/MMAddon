@@ -22,6 +22,7 @@ public class DisconnectListener {
     AddonSettings.sessionBlocks = 0;
     AddonSettings.breakGoal = 0;
     AddonSettings.breakGoalBlocks = 0;
+    AddonSettings.balance = "";
 
     JsonObject data = new JsonObject();
     data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());

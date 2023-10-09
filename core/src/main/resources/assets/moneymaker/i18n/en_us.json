@@ -65,6 +65,9 @@
       },
       "break_goal": {
         "name": "Break Goal"
+      },
+      "balance": {
+        "name": "Balance"
       }
     }
   }

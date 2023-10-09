@@ -4,6 +4,7 @@ import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
+import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
 import de.timuuuu.moneymaker.hudwidget.BreakGoalWidget;
@@ -59,6 +60,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new BoosterCountWidget(this));
     labyAPI().hudWidgetRegistry().register(new BlockSessionWidget(this));
     labyAPI().hudWidgetRegistry().register(new BreakGoalWidget(this));
+    labyAPI().hudWidgetRegistry().register(new BalanceWidget(this));
 
     this.logger().info("Enabled the Addon");
 
