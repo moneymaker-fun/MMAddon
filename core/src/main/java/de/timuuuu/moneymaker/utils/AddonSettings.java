@@ -14,6 +14,20 @@ public class AddonSettings {
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
 
 
+  public static void resetValues() {
+    playingOn = "Hauptmenü";
+    gommeConnected = false;
+    balance = "X";
+    brokenBlocks = 0;
+    sessionBlocks = 0;
+    breakGoalEnabled = false;
+    breakGoal = 0;
+    breakGoalBlocks = 0;
+    workerCount = 0;
+    nextWorkerCost = "X";
+    debrisCost = "X";
+  }
+
 
   public static boolean gommeConnected = false;
 
