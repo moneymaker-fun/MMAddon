@@ -42,7 +42,7 @@ public class ChatClient {
       online = true;
       if(reconnect) {
         addon.chatActivity.reloadScreen();
-        addon.pushNotification(Component.text("Chat-Server"), Component.text("§aErfolgreich zum Server verbunden."));
+        addon.pushNotification(Component.text("Chat-Server"), !USE_SERVER_IP.equals(BACKUP_SERVER_IP) ? Component.text("§aErfolgreich zum Server verbunden.") : Component.text("§aErfolgreich zum Backup-Server verbunden."));
       }
 
       new Thread(() -> {
