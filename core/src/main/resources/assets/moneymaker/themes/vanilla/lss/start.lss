@@ -1,0 +1,38 @@
+.start-title {
+  alignment-x: center;
+  text-color: green;
+  font-size: 1.5;
+}
+
+.feedback-button {
+  top:0;
+  right:20;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+}
+
+.break-goal-title {
+  text-color: yellow;
+  left: 50;
+  top: 30;
+}
+
+.break-goal-switch {
+  left: 50;
+  top: 40;
+  height: 14;
+  width: 25;
+}
+
+.break-goal-input-title {
+  left: 50;
+  top: 60;
+}
+
+.break-goal-input {
+  left: 50;
+  top: 70;
+  width: 60;
+  submit-button: true;
+}
