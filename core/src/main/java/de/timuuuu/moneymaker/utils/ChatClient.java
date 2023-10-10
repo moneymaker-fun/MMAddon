@@ -21,8 +21,6 @@ import net.labymod.api.client.component.Component;
 public class ChatClient {
 
   public static final String SERVER_IP = "chat.moneymaker.fun";
-  public static final String BACKUP_SERVER_IP = "moneychat.mistercore.de";
-  public static String USE_SERVER_IP = SERVER_IP;
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
@@ -37,12 +35,12 @@ public class ChatClient {
 
   public void connect(boolean reconnect) {
     try {
-      socket = new Socket(USE_SERVER_IP, SERVER_PORT);
+      socket = new Socket(SERVER_IP, SERVER_PORT);
       serverOut = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
       online = true;
       if(reconnect) {
         addon.chatActivity.reloadScreen();
-        addon.pushNotification(Component.text("Chat-Server"), !USE_SERVER_IP.equals(BACKUP_SERVER_IP) ? Component.text("§aErfolgreich zum Server verbunden.") : Component.text("§aErfolgreich zum Backup-Server verbunden."));
+        addon.pushNotification(Component.text("Chat-Server"), Component.text("§aErfolgreich zum Server verbunden."));
       }
 
       new Thread(() -> {
@@ -105,19 +103,10 @@ public class ChatClient {
         }
       }).start();
     } catch (IOException e) {
-      if(USE_SERVER_IP.equals(BACKUP_SERVER_IP)) {
-        if(online) {
-          addon.chatActivity.reloadScreen();
-        }
         online = false;
         if(reconnect) {
           addon.pushNotification(Component.text("Chat-Server"), Component.text("§cKeine Verbindung zum Chat-Server möglich."));
         }
-      } else {
-        USE_SERVER_IP = BACKUP_SERVER_IP;
-        connect(false);
-        addon.logger().info("Using BackUp Server as Chat Backend!");
-      }
       // Handle connection error
     }
   }
