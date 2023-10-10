@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.v1_20_1.mixins;
+package de.timuuuu.moneymaker.v1_16_5.mixins;
 
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import java.util.ArrayList;
@@ -30,16 +30,16 @@ public class SwordTickMixin {
   private void moneymaker$tick(InsertInfo ci) {
     Player player = Minecraft.getInstance().player;
     if(player != null) {
-      ItemStack itemStack = player.getInventory().getItem(0);
+      ItemStack itemStack = player.inventory.getItem(0);
       if(itemStack != ItemStack.EMPTY) {
         CompoundTag compoundTag = itemStack.getOrCreateTagElement("display");
-        String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
+        String name = compoundTag.getString("Name");
         List<String> loreList = new ArrayList<>();
-        ListTag listTag = compoundTag.getList(ItemStack.TAG_LORE, 8);
+        ListTag listTag = compoundTag.getList("Lore", 8);
         for(int i = 0; i != listTag.size(); i++) {
           loreList.add(listTag.getString(i));
         }
-        Laby.fireEvent(new SwordTickEvent(name, loreList, "1.20"));
+        Laby.fireEvent(new SwordTickEvent(name, loreList, "1.16"));
       }
     }
   }

@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.v1_20_1.mixins;
+package de.timuuuu.moneymaker.v1_19_2.mixins;
 
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class SwordTickMixin {
         for(int i = 0; i != listTag.size(); i++) {
           loreList.add(listTag.getString(i));
         }
-        Laby.fireEvent(new SwordTickEvent(name, loreList, "1.20"));
+        Laby.fireEvent(new SwordTickEvent(name, loreList, "1.19.2"));
       }
     }
   }

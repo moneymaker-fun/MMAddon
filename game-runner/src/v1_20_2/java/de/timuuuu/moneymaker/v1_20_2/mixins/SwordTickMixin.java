@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.v1_20_1.mixins;
+package de.timuuuu.moneymaker.v1_20_2.mixins;
 
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import java.util.ArrayList;

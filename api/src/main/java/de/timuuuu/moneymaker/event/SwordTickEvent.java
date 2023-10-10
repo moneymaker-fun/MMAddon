@@ -7,10 +7,12 @@ public class SwordTickEvent implements Event {
 
   private String displayName;
   private List<String> loreList;
+  private String gameVersion;
 
-  public SwordTickEvent(String displayName, List<String> loreList) {
+  public SwordTickEvent(String displayName, List<String> loreList, String gameVersion) {
     this.displayName = displayName;
     this.loreList = loreList;
+    this.gameVersion = gameVersion;
   }
 
   public String getDisplayName() {
@@ -19,5 +21,9 @@ public class SwordTickEvent implements Event {
 
   public List<String> getLoreList() {
     return loreList;
+  }
+
+  public String getGameVersion() {
+    return gameVersion;
   }
 }
