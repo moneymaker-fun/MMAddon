@@ -9,6 +9,7 @@ import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
 import de.timuuuu.moneymaker.hudwidget.BreakGoalWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
+import de.timuuuu.moneymaker.hudwidget.SwordStatsWidget;
 import de.timuuuu.moneymaker.hudwidget.WorkerCountWidget;
 import de.timuuuu.moneymaker.hudwidget.WorkerPriceWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
@@ -72,6 +73,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new WorkerCountWidget(this));
     labyAPI().hudWidgetRegistry().register(new DebrisPriceWidget(this));
     labyAPI().hudWidgetRegistry().register(new WorkerPriceWidget(this));
+    labyAPI().hudWidgetRegistry().register(new SwordStatsWidget(this));
 
     this.logger().info("Enabled the Addon");
 

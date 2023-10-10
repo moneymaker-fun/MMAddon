@@ -83,6 +83,12 @@
       },
       "worker_price": {
         "name": "Arbeitsplatz Preis anzeigen"
+      },
+      "sword_stats": {
+        "name": "Schwert Statistiken",
+        "showIcons": {
+          "name": "Mit Icons anzeigen"
+        }
       }
     }
   }

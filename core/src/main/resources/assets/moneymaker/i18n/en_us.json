@@ -83,6 +83,12 @@
       },
       "worker_price": {
         "name": "Show Miner Price"
+      },
+      "sword_stats": {
+        "name": "Sword Statistics",
+        "showIcons": {
+          "name": "Show with icons"
+        }
       }
     }
   }
