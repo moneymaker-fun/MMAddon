@@ -22,7 +22,7 @@ import net.labymod.api.util.concurrent.task.Task;
 
 public class ChatClient {
 
-  public static final String SERVER_IP = "moneychat.mistercore.de"; // Default: chat.moneymaker.fun
+  public static final String SERVER_IP = "chat.moneymaker.fun"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
