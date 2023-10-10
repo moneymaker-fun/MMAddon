@@ -150,17 +150,18 @@ public class ChatActivity extends Activity {
     String message = this.chatInput.getText();
     message = message.trim();
     if (!message.isEmpty()) {
-      this.chatInput.setEditable(false);
-      this.chatInput.addId("blocked");
-      this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
-      this.sendToServer(message);
-      this.chatInput.setText("");
-      this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
-      Task.builder(() -> {
-        this.chatInput.setEditable(true);
-        this.chatInput.removeId("blocked");
-        this.reload();
-      }).delay(3, TimeUnit.SECONDS).build().execute();
+      if(this.sendToServer(message)) {
+        this.chatInput.setEditable(false);
+        this.chatInput.addId("blocked");
+        this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
+        this.chatInput.setText("");
+        this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
+        Task.builder(() -> {
+          this.chatInput.setEditable(true);
+          this.chatInput.removeId("blocked");
+          this.reload();
+        }).delay(3, TimeUnit.SECONDS).build().execute();
+      }
     }
   }
 
@@ -182,12 +183,12 @@ public class ChatActivity extends Activity {
     this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
   }
 
-  private void sendToServer(String message) {
+  private boolean sendToServer(String message) {
     MoneyChatMessage chatMessage = new MoneyChatMessage(
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message,
         false);
-    ChatClient.sendChatMessage(chatMessage);
+    return ChatClient.sendChatMessage(chatMessage);
   }
 }
