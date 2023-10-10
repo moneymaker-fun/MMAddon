@@ -5,7 +5,6 @@ import de.timuuuu.moneymaker.utils.AddonSettings;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.entity.EntityRenderEvent;
-import net.labymod.api.util.math.vector.FloatVector3;
 
 public class EntityRenderListener {
 
