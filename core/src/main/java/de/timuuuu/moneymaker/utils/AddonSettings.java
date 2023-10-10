@@ -49,7 +49,8 @@ public class AddonSettings {
 
   public static String swordRanking = "X";
   public static String swordMobs = "X";
-
+  public static int mobKills = 0;
+  public static int sessionKills = 0;
 
   // Util
 

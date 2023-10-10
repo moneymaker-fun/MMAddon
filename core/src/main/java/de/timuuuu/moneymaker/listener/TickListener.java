@@ -107,6 +107,17 @@ public class TickListener {
         } catch (JsonSyntaxException ignored) {}
       }
 
+      if(!AddonSettings.swordMobs.equals("X")) {
+        try {
+          int mobKills = Integer.parseInt(AddonSettings.swordMobs);
+          if(AddonSettings.mobKills == 0) {
+            AddonSettings.mobKills = mobKills;
+          } else {
+            AddonSettings.sessionKills = mobKills - AddonSettings.mobKills;
+          }
+        } catch (NumberFormatException ignored) {}
+      }
+
     }
 
     /*
