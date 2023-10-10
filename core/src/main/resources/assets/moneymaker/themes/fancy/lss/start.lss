@@ -6,9 +6,22 @@
   font-size: 1.5;
 }
 
+.start-container {
+  top: 20;
+  bottom: 20;
+  left: 20;
+  right: 20;
+  filter: blur(25);
+  border-radius: 15;
+  border-thickness: 5;
+  border-color: var(--background-color-border);
+  background-color: var(--background-color);
+}
+
 .feedback-button {
   top:0;
   right:20;
+  height: 20;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;

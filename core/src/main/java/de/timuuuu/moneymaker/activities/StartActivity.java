@@ -10,6 +10,7 @@ import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.render.matrix.Stack;
@@ -34,10 +35,13 @@ public class StartActivity extends Activity {
     titleWidget.addId("start-title");
     this.document.addChild(titleWidget);
 
+    DivWidget container = new DivWidget();
+    container.addId("start-container");
+
     ComponentWidget breakGoalTitle = ComponentWidget.i18n("moneymaker.ui.start.break-goal.title");
     breakGoalTitle.addId("break-goal-title");
     breakGoalTitle.setHoverComponent(Component.translatable("moneymaker.ui.start.break-goal.description"));
-    this.document.addChild(breakGoalTitle);
+    container.addChild(breakGoalTitle);
 
     SwitchWidget breakGoalSwitch = SwitchWidget.create(value -> {
       AddonSettings.breakGoalEnabled = value;
@@ -48,20 +52,22 @@ public class StartActivity extends Activity {
     }).addId("break-goal-switch");
     breakGoalSwitch.setValue(AddonSettings.breakGoalEnabled);
     breakGoalSwitch.setHoverComponent(Component.translatable("moneymaker.ui.start.break-goal.description"));
-    this.document.addChild(breakGoalSwitch);
+    container.addChild(breakGoalSwitch);
 
     if(AddonSettings.breakGoalEnabled) {
       ComponentWidget breakGoalInputTitle = ComponentWidget.i18n("moneymaker.ui.start.break-goal.input-title");
       breakGoalInputTitle.addId("break-goal-input-title");
       breakGoalInputTitle.setHoverComponent(Component.translatable("moneymaker.ui.start.break-goal.input-description"));
-      this.document.addChild(breakGoalInputTitle);
+      container.addChild(breakGoalInputTitle);
 
       TextFieldWidget breakGoalInput = new TextFieldWidget();
       breakGoalInput.addId("break-goal-input");
       //breakGoalInput.validator(this::validateInput);
       breakGoalInput.submitHandler(this::submitInput);
-      this.document.addChild(breakGoalInput);
+      container.addChild(breakGoalInput);
     }
+
+    this.document.addChild(container);
 
   }
 
