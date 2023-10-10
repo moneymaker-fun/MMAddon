@@ -69,11 +69,11 @@ public class NetworkPayloadListener {
 
               if(AddonSettings.playingOn.contains("Farming") && gameMode.contains("Mine")) {
                 if(AddonSettings.sessionBlocks > 0) {
-                  MoneyMakerAddon.pushNotification(Component.text("§bFarminghöhle verlassen"), Component.text("§7Möchtest du den Block- und Boosterzähler zurücksetzen?"),
+                  MoneyMakerAddon.pushNotification(Component.text("§bFarminghöhle verlassen"), Component.text("§7Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?"),
                       Component.text("Zurücksetzen"), () -> {
                         AddonSettings.sessionBlocks = 0;
                         Booster.sessionBoost.set(0);
-                        this.addon.pushNotification(Component.text("§bFarminghöhle verlassen"), Component.text("§eDein Block- und Boosterzähler wurde zurückgesetzt."));
+                        this.addon.pushNotification(Component.text("§bFarminghöhle verlassen"), Component.text("§eDein Block-, Kill- und Boosterzähler wurde zurückgesetzt."));
                       });
                 }
               }
