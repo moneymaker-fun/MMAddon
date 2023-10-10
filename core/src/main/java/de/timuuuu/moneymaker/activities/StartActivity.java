@@ -2,7 +2,9 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
@@ -10,7 +12,7 @@ import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
-import java.util.function.Predicate;
+import net.labymod.api.client.render.matrix.Stack;
 
 @AutoActivity
 @Link("start.lss")
@@ -25,6 +27,8 @@ public class StartActivity extends Activity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
+
+    Util.addFeedbackButton(this.document);
 
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title");
     titleWidget.addId("start-title");
@@ -80,4 +84,9 @@ public class StartActivity extends Activity {
     return false;
   }
 
+  @Override
+  public void render(Stack stack, MutableMouse mouse, float tickDelta) {
+    super.render(stack, mouse, tickDelta);
+    Util.drawAuthor(this.labyAPI, this.bounds(), stack);
+  }
 }

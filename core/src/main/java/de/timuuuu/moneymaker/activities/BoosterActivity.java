@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.activities;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
+import de.timuuuu.moneymaker.utils.Util;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,7 +13,6 @@ import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.Laby;
-import net.labymod.api.client.Minecraft;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
@@ -48,16 +48,14 @@ public class BoosterActivity extends Activity {
     titleWidget.addId("booster-title");
     this.document.addChild(titleWidget);
 
+    Util.addFeedbackButton(this.document);
+
     AtomicInteger boost = new AtomicInteger(0);
     Booster.getBoosterguilist().forEach(booster -> boost.getAndAdd(booster.getBoost()));
 
     ComponentWidget subTitleWidget = ComponentWidget.text("§eGesamt: §6" + boost.get() + "%");
     subTitleWidget.addId("booster-subTitle");
     this.document.addChild(subTitleWidget);
-
-    ComponentWidget author = ComponentWidget.text("§eAddon by Timuuuu");
-    author.addId("booster-author");
-    this.document.addChild(author);
 
     VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>();
     listWidget.addId("booster-list");
@@ -126,13 +124,6 @@ public class BoosterActivity extends Activity {
     });
     secretButton.addId("secret-button");
     this.document.addChild(secretButton);
-    //Feedback Button
-    ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
-    feedbackButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://forms.gle/rWteNnvwqC5Q9Pz76");
-    });
-    feedbackButton.addId("feedback-button");
-    this.document.addChild(feedbackButton);
 
     this.document.addChild(container);
   }
@@ -140,6 +131,7 @@ public class BoosterActivity extends Activity {
   @Override
   public void render(Stack stack, MutableMouse mouse, float tickDelta) {
     super.render(stack, mouse, tickDelta);
+    Util.drawAuthor(this.labyAPI, this.bounds(), stack);
   }
 
   public static void writeLinkedListToCSV() {

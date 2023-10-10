@@ -2,15 +2,16 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
-import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
-import net.labymod.api.models.OperatingSystem;
+import net.labymod.api.client.render.matrix.Stack;
 
 @AutoActivity
 @Link("secret.lss")
@@ -29,6 +30,8 @@ public class SecretActivity extends Activity {
     ComponentWidget titleWidget = ComponentWidget.text("Super secret settings");
     titleWidget.addId("booster-title");
     this.document.addChild(titleWidget);
+
+    Util.addFeedbackButton(this.document);
 
     DivWidget container = new DivWidget();
     container.addId("secret-container");
@@ -66,14 +69,11 @@ public class SecretActivity extends Activity {
     }).addId("chat-reconnect-switch");
     chatReconnectSwitch.setValue(this.addon.configuration().chatReconnectButton().get());
     this.document.addChild(chatReconnectSwitch);
-
-    //Feedback Button
-    ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
-    feedbackButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://forms.gle/rWteNnvwqC5Q9Pz76");
-    });
-    feedbackButton.addId("feedback-button");
-    this.document.addChild(feedbackButton);
   }
 
+  @Override
+  public void render(Stack stack, MutableMouse mouse, float tickDelta) {
+    super.render(stack, mouse, tickDelta);
+    Util.drawAuthor(this.labyAPI, this.bounds(), stack);
+  }
 }
