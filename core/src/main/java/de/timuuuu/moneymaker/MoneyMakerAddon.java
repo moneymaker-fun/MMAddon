@@ -18,6 +18,7 @@ import de.timuuuu.moneymaker.listener.EntityRenderListener;
 import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
+import de.timuuuu.moneymaker.listener.TickListener;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Laby;
@@ -60,6 +61,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new MoneyAddonListener(this));
     this.registerListener(new ScoreBoardListener(this));
     this.registerListener(new EntityRenderListener(this));
+    this.registerListener(new TickListener(this));
 
     CurrencyUtil.setUnits();
 
