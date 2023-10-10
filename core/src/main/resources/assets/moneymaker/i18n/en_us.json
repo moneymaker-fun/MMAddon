@@ -13,6 +13,12 @@
       "enabled": {
         "name": "Enabled"
       },
+      "shortBoosterMessage": {
+        "name": "Short Booster Messages"
+      },
+      "hideWorkerUpdateMessage": {
+        "name": "Hide Worker Upgrade Message"
+      },
       "chatNotification": {
         "name": "Chat Notifications",
         "description": "Receive notification of new messages via the Addon Chat"
@@ -20,9 +26,6 @@
       "chatNotificationSound": {
         "name": "Chat Notification Sounds",
         "description": "Receive a notification tone for new messages via the Addon Chat"
-      },
-      "shortBoosterMessage": {
-        "name": "Short Booster Messages"
       },
       "header": {
         "general": {

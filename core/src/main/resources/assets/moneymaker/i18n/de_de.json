@@ -13,6 +13,12 @@
       "enabled": {
         "name": "Enabled"
       },
+      "shortBoosterMessage": {
+        "name": "Booster Nachrichten kürzen"
+      },
+      "hideWorkerUpdateMessage": {
+        "name": "Upgrade Nachrichten von Arbeitern verstecken"
+      },
       "chatNotification": {
         "name": "Chat Benachrichtigung",
         "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
@@ -20,9 +26,6 @@
       "chatNotificationSound": {
         "name": "Chat Benachrichtigungston",
         "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"
-      },
-      "shortBoosterMessage": {
-        "name": "Booster Nachrichten kürzen"
       },
       "header": {
         "general": {

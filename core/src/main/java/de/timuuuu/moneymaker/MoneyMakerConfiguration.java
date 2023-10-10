@@ -17,6 +17,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(true);
 
+  @SwitchSetting
+  private final ConfigProperty<Boolean> hideWorkerUpdateMessage = new ConfigProperty<>(false);
+
   @SettingSection(value = "chat", center = true)
 
   @SwitchSetting
@@ -25,13 +28,22 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> chatNotificationSound = new ConfigProperty<>(true);
 
-  private final ConfigProperty<Boolean> exportOnShutdown = new ConfigProperty<>(false);
 
-  private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
+
+
+  // Settings Getters
 
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
+  }
+
+  public ConfigProperty<Boolean> shortBoosterMessage() {
+    return shortBoosterMessage;
+  }
+
+  public ConfigProperty<Boolean> hideWorkerUpdateMessage() {
+    return hideWorkerUpdateMessage;
   }
 
   public ConfigProperty<Boolean> chatNotification() {
@@ -42,14 +54,18 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return chatNotificationSound;
   }
 
+
+  // Internal Settings
+
+  private final ConfigProperty<Boolean> exportOnShutdown = new ConfigProperty<>(false);
+
+  private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
+
   public ConfigProperty<Boolean> exportOnShutdown() {
     return exportOnShutdown;
   }
 
   public ConfigProperty<Boolean> chatReconnectButton() {
     return chatReconnectButton;
-  }
-  public ConfigProperty<Boolean> shortBoosterMessage() {
-    return shortBoosterMessage;
   }
 }

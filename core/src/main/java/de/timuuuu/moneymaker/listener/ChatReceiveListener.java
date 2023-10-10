@@ -18,9 +18,16 @@ public class ChatReceiveListener {
   @Subscribe(Priority.LATEST)
   public void onChatReceive(ChatReceiveEvent event) {
     String plain = event.chatMessage().getOriginalPlainText();
-    if (!AddonSettings.gommeConnected)
-      return;
+    if (!AddonSettings.playingOn.contains("MoneyMaker")) return;
+
     if (plain.startsWith("[MoneyMaker]")) {
+
+      if(this.addon.configuration().hideWorkerUpdateMessage().get()) {
+        if(plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) {
+          event.setCancelled(true);
+        }
+      }
+
       if (addon.configuration().shortBoosterMessage().get()) {
         if (plain.contains("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"))
           event.setCancelled(true);
@@ -43,6 +50,7 @@ public class ChatReceiveListener {
           time *= 60;
         Booster.insertBooster(boost, time);
       }
+
     }
   }
 }
