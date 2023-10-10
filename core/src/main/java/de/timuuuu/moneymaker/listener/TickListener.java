@@ -55,8 +55,6 @@ public class TickListener {
         return;
       }
 
-      event.getLoreList().forEach(lore -> this.addon.logger().info(lore));
-
       if(rankingLine.contains("Ranking: ")) {
         try {
           JsonObject loreObject = JsonParser.parseString(rankingLine).getAsJsonObject();
