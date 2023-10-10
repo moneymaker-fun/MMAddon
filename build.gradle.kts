@@ -18,7 +18,7 @@ labyMod {
     addonInfo {
         namespace = "moneymaker"
         displayName = "MoneyMaker"
-        author = "Timuuuu"
+        author = "Timuuuu, MisterCore"
         description = "Adds some features to the MoneyMaker IdleGame on GommeHD.net"
         minecraftVersion = "*"
         version = System.getenv().getOrDefault("VERSION", "0.0.1")
