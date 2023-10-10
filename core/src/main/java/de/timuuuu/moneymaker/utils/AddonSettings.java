@@ -26,6 +26,8 @@ public class AddonSettings {
     workerCount = 0;
     nextWorkerCost = "X";
     debrisCost = "X";
+    debrisNotifySent = false;
+    workerNotifySent = false;
   }
 
 
