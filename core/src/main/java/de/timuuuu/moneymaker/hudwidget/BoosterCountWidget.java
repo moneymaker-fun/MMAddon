@@ -33,7 +33,7 @@ public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("MoneyMaker") && Booster.sessionBoost.get() > 0;
+    return AddonSettings.playingOn.contains("Farming") && Booster.sessionBoost.get() > 0;
   }
 
   @Override

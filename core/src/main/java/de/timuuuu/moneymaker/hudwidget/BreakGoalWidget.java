@@ -32,7 +32,7 @@ public class BreakGoalWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("MoneyMaker") && AddonSettings.breakGoalEnabled && AddonSettings.breakGoal > 0;
+    return AddonSettings.playingOn.contains("Farming") && AddonSettings.breakGoalEnabled && AddonSettings.breakGoal > 0;
   }
 
   @Override

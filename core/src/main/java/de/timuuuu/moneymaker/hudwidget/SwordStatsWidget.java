@@ -52,10 +52,10 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
 
   private void updateLines() {
     this.rankLine.updateAndFlush(AddonSettings.swordRanking);
-    this.rankLine.setState(AddonSettings.playingOn.contains("MoneyMaker") && !AddonSettings.swordRanking.equals("X") ? State.VISIBLE : State.HIDDEN);
+    this.rankLine.setState(AddonSettings.playingOn.contains("Farming") && !AddonSettings.swordRanking.equals("X") ? State.VISIBLE : State.HIDDEN);
 
     this.mobsLine.updateAndFlush(AddonSettings.swordMobs);
-    this.mobsLine.setState(AddonSettings.playingOn.contains("MoneyMaker") && !AddonSettings.swordMobs.equals("X") ? State.VISIBLE : State.HIDDEN);
+    this.mobsLine.setState(AddonSettings.playingOn.contains("Farming") && !AddonSettings.swordMobs.equals("X") ? State.VISIBLE : State.HIDDEN);
   }
 
 
