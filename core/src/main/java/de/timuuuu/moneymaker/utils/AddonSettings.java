@@ -48,4 +48,10 @@ public class AddonSettings {
   public static String swordRanking = "X";
   public static String swordMobs = "X";
 
+
+  // Util
+
+  public static boolean workerNotifySent = false;
+  public static boolean debrisNotifySent = false;
+
 }

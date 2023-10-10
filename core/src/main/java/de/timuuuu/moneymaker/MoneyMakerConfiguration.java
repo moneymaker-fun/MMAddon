@@ -20,6 +20,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> hideWorkerUpdateMessage = new ConfigProperty<>(false);
 
+  @SwitchSetting
+  private final ConfigProperty<Boolean> notifyOnMoneyReached = new ConfigProperty<>(false);
+
   @SettingSection(value = "chat", center = true)
 
   @SwitchSetting
@@ -44,6 +47,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> hideWorkerUpdateMessage() {
     return hideWorkerUpdateMessage;
+  }
+
+  public ConfigProperty<Boolean> notifyOnMoneyReached() {
+    return notifyOnMoneyReached;
   }
 
   public ConfigProperty<Boolean> chatNotification() {

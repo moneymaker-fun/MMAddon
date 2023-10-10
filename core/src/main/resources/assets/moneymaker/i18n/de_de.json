@@ -19,6 +19,9 @@
       "hideWorkerUpdateMessage": {
         "name": "Upgrade Nachrichten von Arbeitern verstecken"
       },
+      "notifyOnMoneyReached": {
+        "name": "Benachrichtigung wenn Geld für Arbeiter/Geröll erreicht"
+      },
       "chatNotification": {
         "name": "Chat Benachrichtigung",
         "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"

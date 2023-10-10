@@ -53,9 +53,11 @@ public class ChatReceiveListener {
 
       if(plain.contains("[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet")) {
         AddonSettings.nextWorkerCost = "X";
+        AddonSettings.workerNotifySent = false;
       }
       if (plain.startsWith("[MoneyMaker] Das geröll wird in") && plain.contains("entfernt")) {
         AddonSettings.debrisCost = "X";
+        AddonSettings.debrisNotifySent = false;
       }
 
     }
