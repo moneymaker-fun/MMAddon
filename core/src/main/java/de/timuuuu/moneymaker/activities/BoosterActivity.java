@@ -36,13 +36,6 @@ public class BoosterActivity extends Activity {
   MoneyMakerAddon addon;
   public BoosterActivity(MoneyMakerAddon addon) {
     this.addon = addon;
-    Booster.insertBooster(40, 15);
-    Booster.insertBooster(100, 30);
-    Booster.insertBooster(80, 10);
-    Booster.insertBooster(40, 180);
-    Booster.insertBooster(40, 60);
-    Booster.insertBooster(300, 30);
-    Booster.insertBooster(10, 720);
   }
 
   private boolean orderAscending = true;
