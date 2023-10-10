@@ -14,13 +14,15 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.util.concurrent.task.Task;
 
 public class ChatClient {
 
-  public static final String SERVER_IP = "chat.moneymaker.fun";
+  public static final String SERVER_IP = "moneychat.mistercore.de"; // Default: chat.moneymaker.fun
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
@@ -106,37 +108,68 @@ public class ChatClient {
         online = false;
         if(reconnect) {
           addon.pushNotification(Component.text("Chat-Server"), Component.text("§cKeine Verbindung zum Chat-Server möglich."));
+          addon.chatActivity.reloadScreen();
         }
       // Handle connection error
     }
   }
 
-  public static void sendChatMessage(MoneyChatMessage chatMessage) {
-    if(serverOut == null) {
+  public static boolean isPortOpen(String host, int port) {
+    try (Socket socket = new Socket(host, port)) {
+      return true;
+    } catch (IOException ignored) {
+      return false;
+    }
+  }
+
+  public void heartBeat() {
+    Task.builder(() -> {
+      boolean status = isPortOpen(SERVER_IP, SERVER_PORT);
+      if(!status && online) {
+        addon.chatActivity.reloadScreen();
+        addon.pushNotification(Component.text("Chat-Server"), Component.text("§cVerbindung zum Chat-Server verloren."));
+      }
+      if(status & !online) {
+        connect(true);
+      }
+      online = status;
+    }).repeat(1, TimeUnit.MINUTES).build().execute();
+  }
+
+  /*private boolean sendHeartBeat() {
+    if(serverOut == null) return false;
+    JsonObject object = new JsonObject();
+    object.addProperty("uuid", Laby.labyAPI().getUniqueId().toString());
+    JsonObject data = new JsonObject();
+    data.add("heartBeat", object);
+    serverOut.println(data);
+    return true;
+  }*/
+
+  public static boolean sendChatMessage(MoneyChatMessage chatMessage) {
+    if(serverOut == null || socket.isClosed()) {
       online = false;
       addon.chatActivity.reloadScreen();
-      return;
+      return false;
     }
     JsonObject object = new JsonObject();
     object.add("chatMessage", chatMessage.toJson());
     serverOut.println(object);
+    return true;
   }
 
   public static void sendMessage(String channel, JsonObject object) {
-    if(serverOut == null) return;
+    if(serverOut == null || socket.isClosed()) return;
     JsonObject data = new JsonObject();
     data.add(channel, object);
     serverOut.println(data);
   }
 
-  // Add a method to close the socket when needed
   public void closeSocket() {
     try {
       if (socket != null && !socket.isClosed()) {
         socket.close();
       }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    } catch (IOException ignored) {}
   }
 }
