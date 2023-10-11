@@ -8,8 +8,11 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.render.font.text.TextRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
+import java.util.HashMap;
 
 public class Util {
+
+  public static HashMap<String, MoneyTimer> timers = new HashMap<>();
 
   public static void addFeedbackButton(Document document) {
     ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");

@@ -3,7 +3,9 @@ package de.timuuuu.moneymaker;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
+import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
+import de.timuuuu.moneymaker.commands.TimerCommand;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
@@ -42,6 +44,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public MoneyMakerMainActivity moneyMakerMainActivity;
   public ChatActivity chatActivity;
+  public StartActivity startActivity;
 
   private static MoneyMakerAddon instance;
 
@@ -51,10 +54,13 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     instance = this;
 
+    this.startActivity = new StartActivity(this);
     this.chatActivity = new ChatActivity(this);
     this.moneyMakerMainActivity = new MoneyMakerMainActivity(this);
 
     this.chatClient = new ChatClient(this);
+
+    this.registerCommand(new TimerCommand(this));
 
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener(this));

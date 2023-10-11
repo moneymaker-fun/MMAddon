@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.widgets.TimerWidget;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
@@ -9,10 +10,13 @@ import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
+import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.render.matrix.Stack;
 
 @AutoActivity
@@ -31,15 +35,13 @@ public class StartActivity extends Activity {
 
     Util.addFeedbackButton(this.document);
 
-    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title");
-    titleWidget.addId("start-title");
+    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title").addId("start-title");
     this.document.addChild(titleWidget);
 
     DivWidget container = new DivWidget();
     container.addId("start-container");
 
-    ComponentWidget breakGoalTitle = ComponentWidget.i18n("moneymaker.ui.start.break-goal.title");
-    breakGoalTitle.addId("break-goal-title");
+    ComponentWidget breakGoalTitle = ComponentWidget.i18n("moneymaker.ui.start.break-goal.title").addId("break-goal-title");
     breakGoalTitle.setHoverComponent(Component.translatable("moneymaker.ui.start.break-goal.description"));
     container.addChild(breakGoalTitle);
 
@@ -55,17 +57,31 @@ public class StartActivity extends Activity {
     container.addChild(breakGoalSwitch);
 
     if(AddonSettings.breakGoalEnabled) {
-      ComponentWidget breakGoalInputTitle = ComponentWidget.i18n("moneymaker.ui.start.break-goal.input-title");
-      breakGoalInputTitle.addId("break-goal-input-title");
+      ComponentWidget breakGoalInputTitle = ComponentWidget.i18n("moneymaker.ui.start.break-goal.input-title").addId("break-goal-input-title");
       breakGoalInputTitle.setHoverComponent(Component.translatable("moneymaker.ui.start.break-goal.input-description"));
       container.addChild(breakGoalInputTitle);
 
-      TextFieldWidget breakGoalInput = new TextFieldWidget();
-      breakGoalInput.addId("break-goal-input");
+      TextFieldWidget breakGoalInput = new TextFieldWidget().addId("break-goal-input");
       //breakGoalInput.validator(this::validateInput);
       breakGoalInput.submitHandler(this::submitInput);
       container.addChild(breakGoalInput);
     }
+
+    ComponentWidget timerTitle = ComponentWidget.text("Aktuell laufende Timer").addId("timer-title");
+
+    container.addChild(timerTitle);
+
+    DivWidget timerContainer = new DivWidget().addId("timer-container");
+
+    VerticalListWidget<TimerWidget> timerList = new VerticalListWidget<>().addId("timer-list");
+    Util.timers.values().forEach(timer -> {
+      timerList.addChild(new TimerWidget(this.addon, timer));
+    });
+
+    ScrollWidget scrollWidget = new ScrollWidget(timerList, new ListSession<>());
+    timerContainer.addChild(scrollWidget);
+
+    container.addChild(timerContainer);
 
     this.document.addChild(container);
 
@@ -95,4 +111,9 @@ public class StartActivity extends Activity {
     super.render(stack, mouse, tickDelta);
     Util.drawAuthor(this.labyAPI, this.bounds(), stack);
   }
+
+  public void reloadScreen() {
+    this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
+  }
+
 }
