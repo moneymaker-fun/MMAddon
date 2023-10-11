@@ -22,19 +22,6 @@ public class Util {
 
   public static void drawAuthor(LabyAPI labyAPI, Bounds bounds, Stack stack) {
     TextRenderer textRenderer = labyAPI.renderPipeline().textRenderer();
-    //ResourceRenderer resourceRenderer = labyAPI.renderPipeline().resourceRenderer();
-
-    /*resourceRenderer.head()
-        .player(UUID.fromString("308893af-77af-4706-ac8a-1c4830038108"))
-        .size(16)
-        .pos(5, bounds.getHeight() -17)
-        .render(stack);
-
-    resourceRenderer.head()
-        .player(UUID.fromString("966b5d5e-2577-4ab7-987a-89bfa59da74a"))
-        .size(16)
-        .pos(25, bounds.getHeight() -17)
-        .render(stack);*/
 
     textRenderer.text("§7Addon-Version§8: §e" + MoneyMakerAddon.instance().addonInfo().getVersion())
         .scale(0.8f)
