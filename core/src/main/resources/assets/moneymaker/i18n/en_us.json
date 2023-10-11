@@ -19,6 +19,9 @@
       "hideWorkerUpdateMessage": {
         "name": "Hide Worker Upgrade Message"
       },
+      "hideTeleportMessage": {
+        "name": "Hide Teleport Messages"
+      },
       "notifyOnMoneyReached": {
         "name": "Notification when money for workers/debris reached"
       },

@@ -22,8 +22,14 @@ public class ChatReceiveListener {
 
     if (plain.startsWith("[MoneyMaker]")) {
 
-      if(this.addon.configuration().hideWorkerUpdateMessage().get()) {
-        if(plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) {
+      if(plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) {
+        if(this.addon.configuration().hideWorkerUpdateMessage().get()) {
+          event.setCancelled(true);
+        }
+      }
+
+      if(plain.contains("[MoneyMaker] Du wurdest teleportiert") & plain.contains("teleportiert")) {
+        if(this.addon.configuration().hideTeleportMessage().get()) {
           event.setCancelled(true);
         }
       }

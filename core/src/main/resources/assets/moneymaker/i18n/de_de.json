@@ -19,6 +19,9 @@
       "hideWorkerUpdateMessage": {
         "name": "Upgrade Nachrichten von Arbeitern verstecken"
       },
+      "hideTeleportMessage": {
+        "name": "Teleport Nachrichten verstecken"
+      },
       "notifyOnMoneyReached": {
         "name": "Benachrichtigung wenn Geld für Arbeiter/Geröll erreicht"
       },
