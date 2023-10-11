@@ -38,7 +38,7 @@ public class EntityRenderListener {
       }
     }
 
-    if(entityName.contains("Minen-Arbeitsplätze")) {
+    if(entityName.contains("Minen-Arbeitsplätze") & entityName.contains("/")) {
       int count = Integer.parseInt(entityName.split("/")[0]);
       if(AddonSettings.workerCount != count) {
         AddonSettings.workerCount = count;
