@@ -32,7 +32,7 @@ public class TimerWidget extends HorizontalListWidget {
       this.addon.startActivity.reloadScreen();
     });
     this.addEntry(cancelButton);
-    this.addEntry(ComponentWidget.text("§8[§e" + this.timer.minutes() + "§8] §e" + this.timer.name()).addId("timer-name"));
+    this.addEntry(ComponentWidget.text("§8[§e" + this.timer.minutes() + "m§8] §e" + this.timer.name()).addId("timer-name"));
   }
 
 }
