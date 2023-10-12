@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.ChatUtil;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.entity.EntityRenderEvent;
@@ -16,11 +17,12 @@ public class EntityRenderListener {
 
   @Subscribe
   public void onRender(EntityRenderEvent event) {
-    if(!event.entity().toString().startsWith("ArmorStand")) return;
-    if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
     Entity entity = event.entity();
+    if(!entity.toString().contains("ArmorStand")) return;
+    if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
 
-    String entityName = event.entity().toString().split("'")[1];
+    String entityName = ChatUtil.stripColor(event.entity().toString().split("'")[1]);
+    if(entityName.equals("Armor Stand")) return;
 
     if(entityName.contains("Kosten: ")) {
       String costs = entityName.replace("Kosten: ","");
@@ -42,6 +44,13 @@ public class EntityRenderListener {
       int count = Integer.parseInt(entityName.split("/")[0]);
       if(AddonSettings.workerCount != count) {
         AddonSettings.workerCount = count;
+      }
+    }
+
+    if(entityName.contains("Geröll entfernen ")) {
+      String time = entityName.replace("Geröll entfernen ", "");
+      if(AddonSettings.debrisTimerString.equals("X")) {
+        AddonSettings.debrisTimerString = time;
       }
     }
 
