@@ -1,11 +1,10 @@
 package de.timuuuu.moneymaker.utils;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
+import de.timuuuu.moneymaker.events.ChatServerMessageReceiveEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,9 +12,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.util.concurrent.task.Task;
@@ -55,43 +52,7 @@ public class ChatClient {
             JsonElement element = JsonParser.parseString(serverMessage);
             if (element.isJsonObject()) {
               JsonObject object = element.getAsJsonObject();
-
-              if(object.has("chatMessage") && object.get("chatMessage").isJsonObject()) {
-                MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(object.get("chatMessage").getAsJsonObject());
-                Laby.fireEvent(new MoneyChatReceiveEvent(chatMessage));
-              }
-
-              if(object.has("playerStatus") && object.get("playerStatus").isJsonObject()) {
-                JsonObject data = object.get("playerStatus").getAsJsonObject();
-                UUID uuid = UUID.fromString(data.get("uuid").getAsString());
-                Laby.fireEvent(new MoneyPlayerStatusEvent(
-                    uuid,
-                    new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), data.get("staffMember").getAsBoolean())
-                ));
-              }
-
-              if(object.has("retrievedPlayerData")) {
-                JsonObject data = object.get("retrievedPlayerData").getAsJsonObject();
-                if(data.has("uuid") & data.has("players")) {
-                  if(Laby.labyAPI().getUniqueId().toString().equals(data.get("uuid").getAsString())) {
-                    if(data.get("players").isJsonArray()) {
-                      JsonArray array = data.get("players").getAsJsonArray();
-                      for(int i  = 0; i < array.size(); i++) {
-                        JsonObject playerData = array.get(i).getAsJsonObject();
-                        UUID uuid = UUID.fromString(playerData.get("uuid").getAsString());
-                        AddonSettings.playerStatus.put(uuid, new MoneyPlayer(
-                            uuid,
-                            playerData.get("userName").getAsString(),
-                            playerData.get("server").getAsString(),
-                            playerData.get("addonVersion").getAsString(),
-                            playerData.get("staffMember").getAsBoolean()
-                        ));
-                      }
-                    }
-                  }
-                }
-              }
-
+              Laby.fireEvent(new ChatServerMessageReceiveEvent(object));
             }
           }
 
