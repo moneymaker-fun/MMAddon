@@ -10,6 +10,7 @@ import net.labymod.api.client.render.font.text.TextRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class Util {
 
@@ -39,6 +40,11 @@ public class Util {
 
   public static boolean isDev(String uuid) {
     return uuid.equals("308893af-77af-4706-ac8a-1c4830038108") || uuid.equals("966b5d5e-2577-4ab7-987a-89bfa59da74a");
+  }
+
+  public static boolean isStaff(UUID uuid) {
+    if(!AddonSettings.playerStatus.containsKey(uuid)) return false;
+    return AddonSettings.playerStatus.get(uuid).staff();
   }
 
 }

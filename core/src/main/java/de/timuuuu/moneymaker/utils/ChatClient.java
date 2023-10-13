@@ -110,11 +110,12 @@ public class ChatClient {
     return true;
   }
 
-  public void sendMessage(String channel, JsonObject object) {
-    if(serverOut == null || socket.isClosed()) return;
+  public boolean sendMessage(String channel, JsonObject object) {
+    if(serverOut == null || socket.isClosed()) return false;
     JsonObject data = new JsonObject();
     data.add(channel, object);
     serverOut.println(data);
+    return true;
   }
 
   public void sendLaunchData(String uuid, String userName) {
@@ -156,4 +157,30 @@ public class ChatClient {
   public Socket socket() {
     return socket;
   }
+
+
+  public enum ChatAction {
+    CLEAR("CLEAR");
+
+    private String name;
+
+    ChatAction(String name) {
+      this.name = name;
+    }
+
+    public String getName() {
+      return name;
+    }
+  }
+
+  public static ChatAction actionByName(String name) {
+    ChatAction action = null;
+    for(ChatAction chatActions : ChatAction.values()) {
+      if(chatActions.getName().equals(name)) {
+        action = chatActions;
+      }
+    }
+    return action;
+  }
+
 }

@@ -7,6 +7,8 @@ import de.timuuuu.moneymaker.events.ChatServerMessageReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.ChatClient;
+import de.timuuuu.moneymaker.utils.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import net.labymod.api.Laby;
@@ -28,6 +30,19 @@ public class ChatServerListener {
     if(message.has("chatMessage") && message.get("chatMessage").isJsonObject()) {
       MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(message.get("chatMessage").getAsJsonObject());
       Laby.fireEvent(new MoneyChatReceiveEvent(chatMessage));
+    }
+
+    if(message.has("chatAction") && message.get("chatAction").isJsonObject()) {
+      JsonObject data = message.get("chatAction").getAsJsonObject();
+      if(ChatClient.actionByName(data.get("action").getAsString()) != null) {
+
+        switch (ChatClient.actionByName(data.get("action").getAsString())) {
+
+          case CLEAR -> this.addon.chatActivity.clearChat();
+
+        }
+
+      }
     }
 
     if(message.has("playerStatus") && message.get("playerStatus").isJsonObject()) {

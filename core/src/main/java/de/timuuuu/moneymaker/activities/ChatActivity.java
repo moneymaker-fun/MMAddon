@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatClient;
+import de.timuuuu.moneymaker.utils.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import de.timuuuu.moneymaker.utils.Util;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
@@ -150,6 +152,12 @@ public class ChatActivity extends Activity {
     String message = this.chatInput.getText();
     message = message.trim();
     if (!message.isEmpty()) {
+      if(message.equalsIgnoreCase("/clear") & Util.isStaff(this.labyAPI.getUniqueId())) {
+        if(!this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.CLEAR)) {
+          this.addCustomChatMessage("§cBefehl konnte nicht ausgeführt werden. §7(Nur für dich sichtbar)");
+        }
+        return;
+      }
       if(this.sendToServer(message)) {
         this.chatInput.setEditable(false);
         this.chatInput.addId("blocked");
@@ -184,6 +192,26 @@ public class ChatActivity extends Activity {
     reloadScreen();
   }
 
+  public void clearChat() {
+    if(chatMessages == null) return;
+    chatMessages.clear();
+    String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
+    ComponentWidget messageWidget = ComponentWidget.text("§e" + time + " §4Der Chat wurde geleert.");
+    messageWidget.addId("chat-message");
+    chatMessages.add(messageWidget);
+    reloadScreen();
+  }
+
+  public void addCustomChatMessage(String chatMessage) {
+    if (chatMessages == null) return;
+    if (chatMessage == null) return;
+    String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
+    ComponentWidget messageWidget = ComponentWidget.text(time + chatMessage);
+    messageWidget.addId("chat-message");
+    chatMessages.add(messageWidget);
+    reloadScreen();
+  }
+
   public void reloadScreen() {
     this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
   }
@@ -196,4 +224,12 @@ public class ChatActivity extends Activity {
         false);
     return this.addon.chatClient.sendChatMessage(chatMessage);
   }
+
+  private boolean sendChatAction(UUID executor, ChatAction action) {
+    JsonObject object = new JsonObject();
+    object.addProperty("action", action.getName());
+    object.addProperty("executor", executor.toString());
+    return this.addon.chatClient.sendMessage("chatAction", object);
+  }
+
 }
