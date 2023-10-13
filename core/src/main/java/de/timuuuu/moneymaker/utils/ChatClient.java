@@ -143,7 +143,6 @@ public class ChatClient {
     if(serverOut == null || socket.isClosed()) return;
     JsonObject object = new JsonObject();
     object.addProperty("data", "remove");
-    object.addProperty("userName", addon.labyAPI().getName());
     object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
     JsonObject data = new JsonObject();
     data.add("addonStatistics", object);
