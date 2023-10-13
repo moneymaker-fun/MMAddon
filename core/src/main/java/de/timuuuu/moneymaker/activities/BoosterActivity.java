@@ -108,7 +108,7 @@ public class BoosterActivity extends Activity {
     ButtonWidget exportBtnWidget = ButtonWidget.text("Export als CSV");
     exportBtnWidget.alignmentX().set(WidgetAlignment.CENTER);
     exportBtnWidget.addId("exportBtn");
-    exportBtnWidget.setPressable(BoosterActivity::writeLinkedListToCSV);
+    exportBtnWidget.setPressable(() -> writeLinkedListToCSV(false));
 
     container.addChild(exportBtnWidget);
 
@@ -134,7 +134,13 @@ public class BoosterActivity extends Activity {
     Util.drawAuthor(this.labyAPI, this.bounds(), stack);
   }
 
-  public static void writeLinkedListToCSV() {
+  public static void writeLinkedListToCSV(boolean quit) {
+    if(Booster.getBoosterguilist().isEmpty()) {
+      if(!quit) {
+        MoneyMakerAddon.instance().pushNotification(Component.text("Booster-Export"), Component.text("§cEs sind keine Booster zum exportieren vorhanden."));
+      }
+      return;
+    }
     try {
       String time = new SimpleDateFormat("dd_MM_yy-HH_mm").format(new Date());
       File file = new File("BoosterExport_"+time+".csv");

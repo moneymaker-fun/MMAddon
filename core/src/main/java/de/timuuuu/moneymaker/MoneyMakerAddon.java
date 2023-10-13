@@ -111,7 +111,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       if(configuration().exportOnShutdown().get()) {
-        BoosterActivity.writeLinkedListToCSV();
+        BoosterActivity.writeLinkedListToCSV(true);
       }
       JsonObject data = new JsonObject();
       data.addProperty("uuid", this.labyAPI().getUniqueId().toString());
