@@ -5,6 +5,9 @@ import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
+import de.timuuuu.moneymaker.badges.MoneyIconTag;
+import de.timuuuu.moneymaker.badges.MoneyTabBadge;
+import de.timuuuu.moneymaker.badges.MoneyTextTag;
 import de.timuuuu.moneymaker.commands.TimerCommand;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
@@ -28,6 +31,7 @@ import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
@@ -86,6 +90,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new WorkerPriceWidget(this));
     labyAPI().hudWidgetRegistry().register(new SwordStatsWidget(this));
     labyAPI().hudWidgetRegistry().register(new KillCountWidget(this));
+
+    labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag());
+    labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag());
+    Laby.references().badgeRegistry().register("moneymaker_tab_icon", net.labymod.api.client.entity.player.badge.PositionType.LEFT_TO_NAME, new MoneyTabBadge());
 
     this.logger().info("Enabled the Addon");
 

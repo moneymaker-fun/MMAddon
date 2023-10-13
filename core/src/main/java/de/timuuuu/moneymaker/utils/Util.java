@@ -36,4 +36,8 @@ public class Util {
         .render(stack);
   }
 
+  public static boolean isDev(String uuid) {
+    return uuid.equals("308893af-77af-4706-ac8a-1c4830038108") || uuid.equals("966b5d5e-2577-4ab7-987a-89bfa59da74a");
+  }
+
 }
