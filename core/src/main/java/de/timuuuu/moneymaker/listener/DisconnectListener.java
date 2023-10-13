@@ -25,7 +25,7 @@ public class DisconnectListener {
     data.addProperty("server", "OFFLINE");
     data.addProperty("afk", false);
     data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    ChatClient.sendMessage("playerStatus", data);
+    this.addon.chatClient.sendMessage("playerStatus", data);
   }
 
 }

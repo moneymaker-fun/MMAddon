@@ -98,6 +98,9 @@
         "showIcons": {
           "name": "Show with icons"
         }
+      },
+      "kill_counter": {
+        "name": "Mob Kill Counter"
       }
     }
   }

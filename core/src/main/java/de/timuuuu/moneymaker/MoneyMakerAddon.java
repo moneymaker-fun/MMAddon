@@ -39,6 +39,9 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
+import net.labymod.api.util.concurrent.task.Task;
+import net.labymod.api.util.concurrent.task.TaskBuilder;
+import java.util.concurrent.TimeUnit;
 
 @AddonMain
 public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
@@ -100,6 +103,11 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.chatClient.connect(false);
     this.chatClient.heartBeat();
     this.chatClient.sendLaunchData(this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());
+    Task.builder(() -> {
+      if(this.chatClient.socket().isClosed()) {
+        this.chatClient.connect(false);
+      }
+    }).delay(5, TimeUnit.SECONDS).build().execute();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       if(configuration().exportOnShutdown().get()) {

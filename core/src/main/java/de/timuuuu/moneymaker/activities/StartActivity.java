@@ -49,6 +49,7 @@ public class StartActivity extends Activity {
       AddonSettings.breakGoalEnabled = value;
       if(!value) {
         AddonSettings.breakGoal = 0;
+        AddonSettings.breakGoalBlocks = 0;
       }
       this.reload();
     }).addId("break-goal-switch");

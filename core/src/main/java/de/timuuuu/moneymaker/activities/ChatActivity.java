@@ -72,11 +72,11 @@ public class ChatActivity extends Activity {
               data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
               data.addProperty("afk", false);
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              ChatClient.sendMessage("playerStatus", data);
+              this.addon.chatClient.sendMessage("playerStatus", data);
 
               JsonObject object = new JsonObject();
               object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-              ChatClient.sendMessage("retrievePlayerData", object);
+              this.addon.chatClient.sendMessage("retrievePlayerData", object);
             }
 
           }).delay(5, TimeUnit.SECONDS).build().execute();
@@ -194,6 +194,6 @@ public class ChatActivity extends Activity {
         this.addon.labyAPI().getName(),
         message,
         false);
-    return ChatClient.sendChatMessage(chatMessage);
+    return this.addon.chatClient.sendChatMessage(chatMessage);
   }
 }

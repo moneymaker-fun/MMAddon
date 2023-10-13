@@ -36,7 +36,7 @@ public class NetworkPayloadListener {
 
       JsonObject object = new JsonObject();
       object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      ChatClient.sendMessage("retrievePlayerData", object);
+      this.addon.chatClient.sendMessage("retrievePlayerData", object);
 
     }
   }
@@ -86,7 +86,7 @@ public class NetworkPayloadListener {
               data.addProperty("server", gameMode.contains("MoneyMaker") ? gameMode : "Other");
               data.addProperty("afk", false);
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              ChatClient.sendMessage("playerStatus", data);
+              this.addon.chatClient.sendMessage("playerStatus", data);
 
             }
           }

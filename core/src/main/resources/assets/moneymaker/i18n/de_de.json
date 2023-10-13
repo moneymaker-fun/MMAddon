@@ -98,6 +98,9 @@
         "showIcons": {
           "name": "Mit Icons anzeigen"
         }
+      },
+      "kill_counter": {
+        "name": "Mob Kill Zähler"
       }
     }
   }

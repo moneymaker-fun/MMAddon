@@ -23,7 +23,7 @@ public class ChatClient {
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
-  private static Socket socket;
+  private Socket socket;
   private static PrintWriter serverOut;
 
   private static MoneyMakerAddon addon;
@@ -98,7 +98,7 @@ public class ChatClient {
     }).repeat(1, TimeUnit.MINUTES).build().execute();
   }
 
-  public static boolean sendChatMessage(MoneyChatMessage chatMessage) {
+  public boolean sendChatMessage(MoneyChatMessage chatMessage) {
     if(serverOut == null || socket.isClosed()) {
       online = false;
       addon.chatActivity.reloadScreen();
@@ -110,7 +110,7 @@ public class ChatClient {
     return true;
   }
 
-  public static void sendMessage(String channel, JsonObject object) {
+  public void sendMessage(String channel, JsonObject object) {
     if(serverOut == null || socket.isClosed()) return;
     JsonObject data = new JsonObject();
     data.add(channel, object);
@@ -151,5 +151,9 @@ public class ChatClient {
         socket.close();
       }
     } catch (IOException ignored) {}
+  }
+
+  public Socket socket() {
+    return socket;
   }
 }
