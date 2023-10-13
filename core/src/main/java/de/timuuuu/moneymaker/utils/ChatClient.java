@@ -134,6 +134,7 @@ public class ChatClient {
     object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
     object.addProperty("addonVersion", addon.addonInfo().getVersion());
     object.addProperty("gameVersion", addon.labyAPI().minecraft().getVersion());
+    object.addProperty("development", addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment());
     JsonObject data = new JsonObject();
     data.add("addonStatistics", object);
     serverOut.println(data);

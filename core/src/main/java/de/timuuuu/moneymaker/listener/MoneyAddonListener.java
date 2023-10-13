@@ -11,6 +11,7 @@ import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.session.SessionUpdateEvent;
 
 public class MoneyAddonListener {
 
@@ -18,6 +19,13 @@ public class MoneyAddonListener {
 
   public MoneyAddonListener(MoneyMakerAddon addon) {
     this.addon = addon;
+  }
+
+  @Subscribe
+  public void onSessionUpdate(SessionUpdateEvent event) {
+    this.addon.chatClient.sendQuitData();
+    this.addon.chatClient.sendLaunchData();
+    AddonSettings.resetValues();
   }
 
   @Subscribe
