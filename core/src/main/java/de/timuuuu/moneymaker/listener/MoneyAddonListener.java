@@ -23,8 +23,8 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
-    this.addon.chatClient.sendQuitData();
-    this.addon.chatClient.sendLaunchData();
+    this.addon.chatClient.sendQuitData(event.previousSession().getUniqueId().toString());
+    this.addon.chatClient.sendLaunchData(event.newSession().getUniqueId().toString(), event.newSession().getUsername());
     AddonSettings.resetValues();
   }
 

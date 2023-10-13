@@ -19,7 +19,7 @@ import net.labymod.api.util.concurrent.task.Task;
 
 public class ChatClient {
 
-  public static final String SERVER_IP = "chat.moneymaker.fun"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
+  public static final String SERVER_IP = "moneychat.mistercore.de"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
@@ -62,7 +62,7 @@ public class ChatClient {
             addon.chatActivity.reloadScreen();
           }
           online = false;
-          // Handle connection error
+          e.printStackTrace();
         }
       }).start();
     } catch (IOException e) {
@@ -71,6 +71,7 @@ public class ChatClient {
           addon.pushNotification(Component.text("Chat-Server"), Component.text("§cKeine Verbindung zum Chat-Server möglich."));
           addon.chatActivity.reloadScreen();
         }
+        e.printStackTrace();
       // Handle connection error
     }
   }
@@ -97,16 +98,6 @@ public class ChatClient {
     }).repeat(1, TimeUnit.MINUTES).build().execute();
   }
 
-  /*private boolean sendHeartBeat() {
-    if(serverOut == null) return false;
-    JsonObject object = new JsonObject();
-    object.addProperty("uuid", Laby.labyAPI().getUniqueId().toString());
-    JsonObject data = new JsonObject();
-    data.add("heartBeat", object);
-    serverOut.println(data);
-    return true;
-  }*/
-
   public static boolean sendChatMessage(MoneyChatMessage chatMessage) {
     if(serverOut == null || socket.isClosed()) {
       online = false;
@@ -126,12 +117,16 @@ public class ChatClient {
     serverOut.println(data);
   }
 
-  public void sendLaunchData() {
-    if(serverOut == null || socket.isClosed()) return;
+  public void sendLaunchData(String uuid, String userName) {
+    //if(serverOut == null || socket.isClosed()) return;
+    if(socket.isClosed()) {
+      addon.logger().info("Socket is closed.");
+      return;
+    }
     JsonObject object = new JsonObject();
     object.addProperty("data", "add");
-    object.addProperty("userName", addon.labyAPI().getName());
-    object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+    object.addProperty("userName", userName);
+    object.addProperty("uuid", uuid);
     object.addProperty("addonVersion", addon.addonInfo().getVersion());
     object.addProperty("gameVersion", addon.labyAPI().minecraft().getVersion());
     object.addProperty("development", addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment());
@@ -140,11 +135,11 @@ public class ChatClient {
     serverOut.println(data);
   }
 
-  public void sendQuitData() {
+  public void sendQuitData(String uuid) {
     if(serverOut == null || socket.isClosed()) return;
     JsonObject object = new JsonObject();
     object.addProperty("data", "remove");
-    object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+    object.addProperty("uuid", uuid);
     JsonObject data = new JsonObject();
     data.add("addonStatistics", object);
     serverOut.println(data);
