@@ -47,6 +47,7 @@ public class ScoreBoardListener {
 
       try {
         String[] balSplit = AddonSettings.balance.replace(".", "").split(" ");
+        if(balSplit.length == 1) return;
         int balance = Integer.parseInt(balSplit[0]);
         String balEinheit = balSplit[1];
 

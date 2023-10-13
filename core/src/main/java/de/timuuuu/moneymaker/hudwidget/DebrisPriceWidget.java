@@ -37,16 +37,19 @@ public class DebrisPriceWidget extends ItemHudWidget<HudWidgetConfig> {
           //String KontoEinheit = AddonSettings.balance.replaceAll("\\d", "").substring(1);
           //String MinerEinheit = AddonSettings.nextWorkerCost.replaceAll("\\d", "").substring(1);
 
-          String KontoEinheit = AddonSettings.balance.split(" ")[1];
-          String DebrisEinheit = AddonSettings.debrisCost.split(" ")[1];
+          String[] kontoSplit = AddonSettings.balance.split(" ");
+          if(kontoSplit.length > 1) {
+            String KontoEinheit = kontoSplit[1];
+            String DebrisEinheit = AddonSettings.debrisCost.split(" ")[1];
 
-          if(CurrencyUtil.units.get(KontoEinheit) >= CurrencyUtil.units.get(DebrisEinheit)) {
-            double d1 = Double.parseDouble(AddonSettings.balance.replaceAll("[^\\d.]", ""));
-            double d2 = Double.parseDouble(AddonSettings.debrisCost.replaceAll("[^\\d.]", ""));
-            int difference = Double.compare(d1, d2);
-            itemName = (difference >= 0 ? "§6" : "§c") + AddonSettings.balance + " / " + AddonSettings.debrisCost;
-          } else {
-            itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.debrisCost;
+            if(CurrencyUtil.units.get(KontoEinheit) >= CurrencyUtil.units.get(DebrisEinheit)) {
+              double d1 = Double.parseDouble(AddonSettings.balance.replaceAll("[^\\d.]", ""));
+              double d2 = Double.parseDouble(AddonSettings.debrisCost.replaceAll("[^\\d.]", ""));
+              int difference = Double.compare(d1, d2);
+              itemName = (difference >= 0 ? "§6" : "§c") + AddonSettings.balance + " / " + AddonSettings.debrisCost;
+            } else {
+              itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.debrisCost;
+            }
           }
 
         }
