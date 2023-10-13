@@ -47,4 +47,35 @@ public class Util {
     return AddonSettings.playerStatus.get(uuid).staff();
   }
 
+  public static int timeToInt(String input) {
+    if(!input.contains(":")) return 0;
+    String[] split = input.split(":");
+    if(split.length != 2) return 0;
+
+    int seconds = 0;
+    try {
+      seconds = Integer.parseInt(split[1]);
+      seconds += Integer.parseInt(split[1])*60;
+    } catch (NumberFormatException ignored) {}
+    return seconds;
+  }
+
+  public static String intToTime(int time) {
+    long seconds = time;
+    long minutes = 0;
+    while (seconds >= 60) {
+      seconds-=60;
+      minutes++;
+    }
+    String secString = String.valueOf(seconds);
+    String minString = String.valueOf(minutes);
+    if(minString.length() == 1) {
+      minString = "0" + minString;
+    }
+    if(secString.length() == 1) {
+      secString = "0" + secString;
+    }
+    return minString + ":" + secString;
+  }
+
 }

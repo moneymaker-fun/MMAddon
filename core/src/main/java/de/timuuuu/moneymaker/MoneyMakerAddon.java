@@ -15,6 +15,7 @@ import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
 import de.timuuuu.moneymaker.hudwidget.BoosterCountWidget;
 import de.timuuuu.moneymaker.hudwidget.BreakGoalWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
+import de.timuuuu.moneymaker.hudwidget.DebrisTimerWidget;
 import de.timuuuu.moneymaker.hudwidget.KillCountWidget;
 import de.timuuuu.moneymaker.hudwidget.SwordStatsWidget;
 import de.timuuuu.moneymaker.hudwidget.WorkerCountWidget;
@@ -90,6 +91,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new BalanceWidget(this));
     labyAPI().hudWidgetRegistry().register(new WorkerCountWidget(this));
     labyAPI().hudWidgetRegistry().register(new DebrisPriceWidget(this));
+    labyAPI().hudWidgetRegistry().register(new DebrisTimerWidget(this));
     labyAPI().hudWidgetRegistry().register(new WorkerPriceWidget(this));
     labyAPI().hudWidgetRegistry().register(new SwordStatsWidget(this));
     labyAPI().hudWidgetRegistry().register(new KillCountWidget(this));

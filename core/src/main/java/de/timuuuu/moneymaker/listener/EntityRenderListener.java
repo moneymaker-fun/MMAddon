@@ -3,9 +3,12 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatUtil;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.entity.EntityRenderEvent;
+import net.labymod.api.util.concurrent.task.Task;
+import java.util.concurrent.TimeUnit;
 
 public class EntityRenderListener {
 
@@ -49,11 +52,27 @@ public class EntityRenderListener {
 
     if(entityName.contains("Geröll entfernen ")) {
       String time = entityName.replace("Geröll entfernen ", "");
-      if(AddonSettings.debrisTimerString.equals("X")) {
-        AddonSettings.debrisTimerString = time;
+      if(AddonSettings.debrisTime == 0 & !timerRunning) {
+        AddonSettings.debrisTime = Util.timeToInt(time);
+        startTask();
       }
     }
 
+  }
+
+  private boolean timerRunning = false;
+  private Task debrisTask;
+
+  private void startTask() {
+    timerRunning = true;
+    debrisTask = Task.builder(() -> {
+      AddonSettings.debrisTime--;
+      if(AddonSettings.debrisTime == 0) {
+        debrisTask.cancel();
+        timerRunning = false;
+      }
+    }).repeat(1, TimeUnit.SECONDS).build();
+    debrisTask.execute();
   }
 
 }

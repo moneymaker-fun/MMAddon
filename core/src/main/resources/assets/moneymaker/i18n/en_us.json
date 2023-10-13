@@ -88,7 +88,10 @@
         "name": "Worker Count"
       },
       "debris_price": {
-        "name": "Show Debris Price"
+        "name": "Debris Price"
+      },
+      "debris_timer": {
+        "name": "Debris Timer"
       },
       "worker_price": {
         "name": "Show Miner Price"

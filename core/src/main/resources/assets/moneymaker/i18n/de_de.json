@@ -88,7 +88,10 @@
         "name": "Arbeiter Anzahl"
       },
       "debris_price": {
-        "name": "Geröll Preis anzeigen"
+        "name": "Geröll Preis"
+      },
+      "debris_timer": {
+        "name": "Geröll Timer"
       },
       "worker_price": {
         "name": "Arbeitsplatz Preis anzeigen"
