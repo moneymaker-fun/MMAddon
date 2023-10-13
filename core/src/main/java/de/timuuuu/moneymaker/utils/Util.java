@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.gui.screen.widget.attributes.bounds.Bounds;
 import net.labymod.api.client.gui.screen.widget.widgets.activity.Document;
@@ -17,7 +18,7 @@ public class Util {
   public static void addFeedbackButton(Document document) {
     ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
     feedbackButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://forms.gle/rWteNnvwqC5Q9Pz76");
+      OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
     });
     feedbackButton.addId("feedback-button");
     document.addChild(feedbackButton);
