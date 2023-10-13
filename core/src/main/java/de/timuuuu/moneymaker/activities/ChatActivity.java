@@ -169,7 +169,12 @@ public class ChatActivity extends Activity {
     if (chatMessages == null) return;
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-    String color = chatMessage.staff() ? "§8[§cStaff§8] §c" : "§b";
+    String color;
+    if(!Util.isDev(chatMessage.uuid().toString())) {
+      color = chatMessage.staff() ? "§8[§cStaff§8] §c" : "§b";
+    } else {
+      color = "§8[§4Dev§8] §c";
+    }
     Component component = Component.text("§e" + time + "  ")
         .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 10))
         .append(Component.text(" " + color + chatMessage.userName() + "§8: §7" + chatMessage.message()));
