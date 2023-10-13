@@ -91,11 +91,13 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.chatClient.connect(false);
     this.chatClient.heartBeat();
+    this.chatClient.sendLaunchData();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       if(configuration().exportOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV();
       }
+      this.chatClient.sendQuitData();
     }));
   }
 

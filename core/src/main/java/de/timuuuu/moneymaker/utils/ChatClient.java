@@ -126,6 +126,30 @@ public class ChatClient {
     serverOut.println(data);
   }
 
+  public void sendLaunchData() {
+    if(serverOut == null || socket.isClosed()) return;
+    JsonObject object = new JsonObject();
+    object.addProperty("data", "add");
+    object.addProperty("userName", addon.labyAPI().getName());
+    object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+    object.addProperty("addonVersion", addon.addonInfo().getVersion());
+    object.addProperty("gameVersion", addon.labyAPI().minecraft().getVersion());
+    JsonObject data = new JsonObject();
+    data.add("addonStatistics", object);
+    serverOut.println(data);
+  }
+
+  public void sendQuitData() {
+    if(serverOut == null || socket.isClosed()) return;
+    JsonObject object = new JsonObject();
+    object.addProperty("data", "remove");
+    object.addProperty("userName", addon.labyAPI().getName());
+    object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+    JsonObject data = new JsonObject();
+    data.add("addonStatistics", object);
+    serverOut.println(data);
+  }
+
   public void closeSocket() {
     try {
       if (socket != null && !socket.isClosed()) {
