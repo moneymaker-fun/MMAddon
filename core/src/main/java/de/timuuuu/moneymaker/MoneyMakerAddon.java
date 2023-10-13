@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker;
 
+import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
@@ -28,6 +29,7 @@ import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
@@ -40,8 +42,6 @@ import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
 import net.labymod.api.util.concurrent.task.Task;
-import net.labymod.api.util.concurrent.task.TaskBuilder;
-import java.util.concurrent.TimeUnit;
 
 @AddonMain
 public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
@@ -113,6 +113,12 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       if(configuration().exportOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV();
       }
+      JsonObject data = new JsonObject();
+      data.addProperty("uuid", this.labyAPI().getUniqueId().toString());
+      data.addProperty("userName", this.labyAPI().getName());
+      data.addProperty("server", "OFFLINE");
+      data.addProperty("addonVersion", this.addonInfo().getVersion());
+      this.chatClient.sendMessage("playerStatus", data);
       this.chatClient.sendQuitData(this.labyAPI().getUniqueId().toString());
     }));
   }
