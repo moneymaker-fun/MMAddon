@@ -35,15 +35,6 @@ Scroll {
    width: 100%;
    height: 90%;
 
-   .booster-entry {
-     top: 30;
-     left: 20;
-     height: 15;
-     width: 100%;
-     tiles-per-line: 5;
-     tile-height: 130;
-   }
-
    .online-entry {
      top: 30;
      left: 20;
@@ -60,6 +51,38 @@ Scroll {
       height: 100%;
       margin-right: 5;
    }
+}
+
+ChatMessage {
+  width: 100%;
+  height: 20;
+
+  .chat-msg-time {
+
+  }
+
+  .chat-msg-icon {
+
+  }
+
+  .chat-msg-playerName {
+
+  }
+
+  .chat-msg-message {
+
+  }
+
+  .timer-name {
+    padding-top: -2;
+    left: 25;
+  }
+
+  .timer-cancel {
+    height: 15;
+    width: 20;
+  }
+
 }
 
 .chat-container {

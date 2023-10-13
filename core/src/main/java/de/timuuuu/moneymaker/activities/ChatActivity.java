@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.activities;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.ChatClient.ChatAction;
@@ -37,7 +38,7 @@ public class ChatActivity extends Activity {
   private MoneyMakerAddon addon;
 
   private TextFieldWidget chatInput;
-  private static List<ComponentWidget> chatMessages = new ArrayList<>();
+  private static List<ChatMessageWidget> chatMessages = new ArrayList<>();
 
   public ChatActivity(MoneyMakerAddon addon) {
     this.addon = addon;
@@ -91,11 +92,12 @@ public class ChatActivity extends Activity {
     DivWidget chatContainer = new DivWidget();
     chatContainer.addId("chat-container");
 
-    VerticalListWidget<ComponentWidget> chatList = new VerticalListWidget<>().addId("chat-messages");
+    VerticalListWidget<ChatMessageWidget> chatList = new VerticalListWidget<>().addId("chat-messages");
 
     chatMessages.forEach(chatList::addChild);
 
     ScrollWidget chatScroll = new ScrollWidget(chatList, new ListSession<>());
+    Task.builder(chatScroll::scrollToBottom).delay(50, TimeUnit.MILLISECONDS).build().execute();
     chatContainer.addChild(chatScroll);
 
     // Online Container
@@ -177,18 +179,19 @@ public class ChatActivity extends Activity {
     if (chatMessages == null) return;
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-    String color;
+    /*String color;
     if(!Util.isDev(chatMessage.uuid().toString())) {
       color = chatMessage.staff() ? "§8[§cStaff§8] §c" : "§b";
     } else {
       color = "§8[§4Dev§8] §c";
-    }
-    Component component = Component.text("§e" + time + "  ")
+    }*/
+    /*Component component = Component.text("§e" + time + "  ")
         .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 10))
         .append(Component.text(" " + color + chatMessage.userName() + "§8: §7" + chatMessage.message()));
     ComponentWidget messageWidget = ComponentWidget.component(component);
     messageWidget.addId("chat-message");
-    chatMessages.add(messageWidget);
+    chatMessages.add(messageWidget);*/
+    chatMessages.add(new ChatMessageWidget(time, chatMessage).addId("chat-message"));
     reloadScreen();
   }
 
@@ -196,9 +199,9 @@ public class ChatActivity extends Activity {
     if(chatMessages == null) return;
     chatMessages.clear();
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-    ComponentWidget messageWidget = ComponentWidget.text("§e" + time + " §4Der Chat wurde geleert.");
-    messageWidget.addId("chat-message");
-    chatMessages.add(messageWidget);
+    //ComponentWidget messageWidget = ComponentWidget.text("§e" + time + " §4Der Chat wurde geleert.");
+    //messageWidget.addId("chat-message");
+    chatMessages.add(new ChatMessageWidget(time, "§4Der Chat wurde geleert.").addId("chat-message"));
     reloadScreen();
   }
 
@@ -206,9 +209,9 @@ public class ChatActivity extends Activity {
     if (chatMessages == null) return;
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-    ComponentWidget messageWidget = ComponentWidget.text(time + chatMessage);
-    messageWidget.addId("chat-message");
-    chatMessages.add(messageWidget);
+    //ComponentWidget messageWidget = ComponentWidget.text(time + chatMessage);
+    //messageWidget.addId("chat-message");
+    chatMessages.add(new ChatMessageWidget(time, chatMessage));
     reloadScreen();
   }
 
