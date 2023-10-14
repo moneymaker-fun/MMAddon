@@ -87,7 +87,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
     }
 
     size.setWidth(x + titleComponent.getWidth() + 1);
-    x += 1;
+    //x += 1;
     y += (int) (titleComponent.getHeight() +1);
     int rowHeight = (int) componentRenderer.height();
 
@@ -96,7 +96,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
     for(MoneyTimer timer : timers) {
       if(timerIndex > maxTimerIndex) break;
       timerIndex++;
-      int timerX = x + 2;
+      int timerX = x; //int timerX = x + 2;
       if(stack != null) {
         Icon icon = Icon.sprite16(
             ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 2);
