@@ -29,6 +29,7 @@ import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
+import de.timuuuu.moneymaker.utils.AddonUpdater;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
@@ -113,6 +114,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       }
     }).delay(5, TimeUnit.SECONDS).build().execute();
 
+    AddonUpdater.checkVersion();
+
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       if(configuration().exportOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV(true);
@@ -124,6 +127,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       data.addProperty("addonVersion", this.addonInfo().getVersion());
       this.chatClient.sendMessage("playerStatus", data);
       this.chatClient.sendQuitData(this.labyAPI().getUniqueId().toString());
+      new AddonUpdater();
     }));
   }
 
