@@ -35,7 +35,7 @@ public class ChatReceiveListener {
         }
       }
 
-      if(plain.contains("[MoneyMaker] Du wurdest teleportiert") & plain.contains("teleportiert")) {
+      if(plain.contains("[MoneyMaker] Du wurdest") & plain.contains("teleportiert")) {
         if(this.addon.configuration().hideTeleportMessage().get()) {
           event.setCancelled(true);
         }
