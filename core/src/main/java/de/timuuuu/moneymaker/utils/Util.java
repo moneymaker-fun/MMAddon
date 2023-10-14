@@ -19,7 +19,7 @@ public class Util {
   public static void addFeedbackButton(Document document) {
     ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
     feedbackButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
+      OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
     });
     feedbackButton.addId("feedback-button");
     document.addChild(feedbackButton);
