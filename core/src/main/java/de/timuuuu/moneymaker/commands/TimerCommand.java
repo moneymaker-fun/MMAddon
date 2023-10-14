@@ -12,6 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 public class TimerCommand extends Command {
 
+  private int warningAmount = 10;
+  private boolean warningSent = false;
+
   private MoneyMakerAddon addon;
 
   public TimerCommand(MoneyMakerAddon addon) {
@@ -36,6 +39,10 @@ public class TimerCommand extends Command {
               Util.timers.put(timerName, new MoneyTimer(timerName, minutes).start());
               this.displayMessage(AddonSettings.prefix + "§7Der Timer §e" + timerName + " §7mit §e" + minutes + " Minuten §7wurde erstellt.");
               this.addon.startActivity.reloadScreen();
+              if(Util.timers.size() > warningAmount & !warningSent) {
+                warningSent = true;
+                this.displayMessage(AddonSettings.prefix + "§7Bitte beachte, dass je mehr Timer du erstellt es zu Performance Verlusten kommen kann.");
+              }
             } else {
               this.displayMessage(AddonSettings.prefix + "§cEs existiert bereits ein Timer mit diesem Namen.");
             }
