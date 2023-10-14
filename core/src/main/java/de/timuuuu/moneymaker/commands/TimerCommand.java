@@ -4,11 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTimer;
 import de.timuuuu.moneymaker.utils.Util;
-import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.chat.command.Command;
-import net.labymod.api.client.component.Component;
-import net.labymod.api.util.concurrent.task.Task;
-import java.util.concurrent.TimeUnit;
 
 public class TimerCommand extends Command {
 
