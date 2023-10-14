@@ -26,6 +26,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> notifyOnMoneyReached = new ConfigProperty<>(false);
 
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showTimersOnEffect = new ConfigProperty<>(false);
+
   @SettingSection(value = "chat", center = true)
 
   @SwitchSetting
@@ -59,6 +62,12 @@ public class MoneyMakerConfiguration extends AddonConfig {
   public ConfigProperty<Boolean> notifyOnMoneyReached() {
     return notifyOnMoneyReached;
   }
+
+  public ConfigProperty<Boolean> showTimersOnEffect() {
+    return showTimersOnEffect;
+  }
+
+  // Chat Section
 
   public ConfigProperty<Boolean> chatNotification() {
     return chatNotification;

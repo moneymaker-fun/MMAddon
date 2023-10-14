@@ -25,6 +25,10 @@
       "notifyOnMoneyReached": {
         "name": "Notification when money for workers/debris reached"
       },
+      "showTimersOnEffect":{
+        "name": "Show clickable timers in chat",
+        "description": "Displays a clickable message in chat to activate a timer when a worker's effect activates."
+      },
       "chatNotification": {
         "name": "Chat Notifications",
         "description": "Receive notification of new messages via the Addon Chat"

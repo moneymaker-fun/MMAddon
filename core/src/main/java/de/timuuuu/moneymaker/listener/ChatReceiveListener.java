@@ -74,19 +74,21 @@ public class ChatReceiveListener {
       }
 
       if(plain.contains("Du hast den Effekt dieses Arbeiters aktiviert")) {
-        AtomicInteger timers = new AtomicInteger();
-        Util.timers.values().forEach(timer -> {
-          if(timer.name().contains("Effekt-Timer-")) {
-            timers.getAndIncrement();
-          }
-        });
-        TextComponent component = Component.text(AddonSettings.prefix + "§7Effekt Dauer wählen")
-            .append(Component.text(" §8[§e5m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 5 Effekt-Timer-" + timers.get()))
-            .append(Component.text(" §8[§e10m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 10 Effekt-Timer-" + timers.get())))
-            .append(Component.text(" §8[§e15m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 15 Effekt-Timer-" + timers.get())))
-            .append(Component.text(" §8[§e20m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 20 Effekt-Timer-" + timers.get())))
-            );
-        Task.builder(() -> this.addon.displayMessage(component)).delay(50, TimeUnit.MILLISECONDS).build().execute();
+        if(this.addon.configuration().showTimersOnEffect().get()) {
+          AtomicInteger timers = new AtomicInteger();
+          Util.timers.values().forEach(timer -> {
+            if(timer.name().contains("Effekt-Timer-")) {
+              timers.getAndIncrement();
+            }
+          });
+          TextComponent component = Component.text(AddonSettings.prefix + "§7Effekt Dauer wählen")
+              .append(Component.text(" §8[§e5m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 5 Effekt-Timer-" + timers.get()))
+                  .append(Component.text(" §8[§e10m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 10 Effekt-Timer-" + timers.get())))
+                  .append(Component.text(" §8[§e15m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 15 Effekt-Timer-" + timers.get())))
+                  .append(Component.text(" §8[§e20m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 20 Effekt-Timer-" + timers.get())))
+              );
+          Task.builder(() -> this.addon.displayMessage(component)).delay(50, TimeUnit.MILLISECONDS).build().execute();
+        }
       }
 
     }

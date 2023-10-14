@@ -25,6 +25,10 @@
       "notifyOnMoneyReached": {
         "name": "Benachrichtigung wenn Geld für Arbeiter/Geröll erreicht"
       },
+      "showTimersOnEffect": {
+        "name": "Klickbare Timer im Chat anzeigen",
+        "description": "Zeigt eine klickbare Nachricht im Chat an um einen Timer zu aktivieren, wenn der Effekt eines Arbeiters aktiviert wird."
+      },
       "chatNotification": {
         "name": "Chat Benachrichtigung",
         "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
