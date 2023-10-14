@@ -36,6 +36,7 @@ public class MoneyTimer {
       this.seconds--;
       if(this.seconds == 0) {
         this.task.cancel();
+        Util.timers.remove(this.name);
         MoneyMakerAddon.instance().labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
         MoneyMakerAddon.instance().pushNotification(Component.text("Timer abgelaufen!"), Component.text("§7Dein Timer mit dem Namen §e" + this.name + " §7ist abgelaufen."));
         MoneyMakerAddon.instance().startActivity.reloadScreen();
