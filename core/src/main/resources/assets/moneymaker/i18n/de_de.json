@@ -108,6 +108,12 @@
       },
       "kill_counter": {
         "name": "Mob Kill Zähler"
+      },
+      "timer_display": {
+        "name": "Timer",
+        "maxDisplayedTimers": {
+          "name": "Angezeigte Timers"
+        }
       }
     }
   }

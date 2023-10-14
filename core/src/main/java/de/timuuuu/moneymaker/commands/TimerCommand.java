@@ -33,13 +33,7 @@ public class TimerCommand extends Command {
           String timerName = builder.toString().trim();
           if(timerName.length() <= 32) {
             if(!Util.timers.containsKey(timerName)) {
-              Util.timers.put(timerName, new MoneyTimer(timerName, minutes, Task.builder(() -> {
-                this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
-                this.addon.pushNotification(Component.text("Timer abgelaufen!"), Component.text("§7Dein Timer mit dem Namen §e" + timerName + " §7ist abgelaufen."));
-                this.addon.startActivity.reloadScreen();
-                Util.timers.remove(timerName);
-              }).delay(minutes, TimeUnit.MINUTES).build()));
-              Util.timers.get(timerName).task().execute();
+              Util.timers.put(timerName, new MoneyTimer(timerName, minutes).start());
               this.displayMessage(AddonSettings.prefix + "§7Der Timer §e" + timerName + " §7mit §e" + minutes + " Minuten §7wurde erstellt.");
               this.addon.startActivity.reloadScreen();
             } else {
