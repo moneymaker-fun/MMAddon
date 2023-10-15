@@ -16,7 +16,6 @@ public class AddonSettings {
 
   public static void resetValues() {
     playingOn = "Hauptmenü";
-    gommeConnected = false;
     balance = "X";
     brokenBlocks = 0;
     sessionBlocks = 0;
@@ -29,9 +28,6 @@ public class AddonSettings {
     debrisNotifySent = false;
     workerNotifySent = false;
   }
-
-
-  public static boolean gommeConnected = false;
 
   public static String balance = "X";
 

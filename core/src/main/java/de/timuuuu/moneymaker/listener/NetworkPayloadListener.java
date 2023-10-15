@@ -31,7 +31,6 @@ public class NetworkPayloadListener {
   public void onServerLogin(ServerLoginEvent event) {
     if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
-      AddonSettings.gommeConnected = true;
 
       JsonObject object = new JsonObject();
       object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
@@ -53,7 +52,6 @@ public class NetworkPayloadListener {
   public void onNetworkPayload(NetworkPayloadEvent event) {
     if(event.identifier().getNamespace().equals("labymod3") & event.identifier().getPath().equals("main")) {
       try {
-        if(!AddonSettings.gommeConnected) return;
         PayloadReader reader = new PayloadReader(event.getPayload());
         String messageKey = reader.readString();
         String messageContent = reader.readString();
@@ -87,7 +85,6 @@ public class NetworkPayloadListener {
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
               data.addProperty("userName", this.addon.labyAPI().getName());
               data.addProperty("server", gameMode.contains("MoneyMaker") ? gameMode : "Other");
-              data.addProperty("afk", false);
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               this.addon.chatClient.sendMessage("playerStatus", data);
 
