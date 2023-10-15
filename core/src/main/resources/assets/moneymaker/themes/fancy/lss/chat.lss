@@ -138,4 +138,18 @@ ChatMessage {
     font-size: 1.5;
   }
 
+  .chat-muted-title {
+    bottom: 40%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.4;
+  }
+
+  .chat-muted-reason {
+    bottom: 20%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.0;
+  }
+
 }

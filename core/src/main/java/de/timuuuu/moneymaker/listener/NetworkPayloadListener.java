@@ -5,9 +5,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
-import java.util.UUID;
 import de.timuuuu.moneymaker.utils.Booster;
-import de.timuuuu.moneymaker.utils.ChatClient;
+import java.util.UUID;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.event.Subscribe;
@@ -37,6 +36,10 @@ public class NetworkPayloadListener {
       JsonObject object = new JsonObject();
       object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
       this.addon.chatClient.sendMessage("retrievePlayerData", object);
+
+      JsonObject muteCheckObject = new JsonObject();
+      muteCheckObject.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+      this.addon.chatClient.sendMessage("checkMute", muteCheckObject);
 
     }
   }

@@ -49,12 +49,10 @@ public class ChatActivity extends Activity {
   public void initialize(Parent parent) {
     super.initialize(parent);
 
-    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title");
-    titleWidget.addId("chat-title");
+    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title").addId("chat-title");
     this.document.addChild(titleWidget);
 
-    ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline"));
-    statusWidget.addId("chat-status");
+    ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline")).addId("chat-status");
     this.document.addChild(statusWidget);
 
     if(/*!ChatClient.online && */this.addon.configuration().chatReconnectButton().get()) {
@@ -88,8 +86,7 @@ public class ChatActivity extends Activity {
 
     // Chat Container
 
-    DivWidget chatContainer = new DivWidget();
-    chatContainer.addId("chat-container");
+    DivWidget chatContainer = new DivWidget().addId("chat-container");
 
     VerticalListWidget<ChatMessageWidget> chatList = new VerticalListWidget<>().addId("chat-messages");
 
@@ -101,8 +98,7 @@ public class ChatActivity extends Activity {
 
     // Online Container
 
-    ComponentWidget onlineTextWidget = ComponentWidget.i18n("moneymaker.ui.chat.online");
-    onlineTextWidget.addId("chat-online-text");
+    ComponentWidget onlineTextWidget = ComponentWidget.i18n("moneymaker.ui.chat.online").addId("chat-online-text");
     this.document.addChild(onlineTextWidget);
 
     DivWidget onlineContainer = new DivWidget();
@@ -127,20 +123,25 @@ public class ChatActivity extends Activity {
 
     // Input Container
 
-    DivWidget inputContainer = new DivWidget();
-    inputContainer.addId("input-container");
+    DivWidget inputContainer = new DivWidget().addId("input-container");
 
     if(ChatClient.online) {
-      chatInput = new TextFieldWidget();
-      chatInput.addId("chat-input");
-      chatInput.submitButton().set(true);
-      chatInput.maximalLength(250);
-      chatInput.submitHandler(message -> this.submitMessage());
+      if(ChatClient.muted & !(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) {
+        ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.muted.title").addId("chat-muted-title");
+        ComponentWidget reasonWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.reason").append(Component.text(ChatClient.muteReason))).addId("chat-muted-reason");
+        inputContainer.addChild(componentWidget);
+        inputContainer.addChild(reasonWidget);
+      } else {
+        chatInput = new TextFieldWidget();
+        chatInput.addId("chat-input");
+        chatInput.submitButton().set(true);
+        chatInput.maximalLength(250);
+        chatInput.submitHandler(message -> this.submitMessage());
 
-      inputContainer.addChild(chatInput);
+        inputContainer.addChild(chatInput);
+      }
     } else {
-      ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.server-offline");
-      componentWidget.addId("chat-error");
+      ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.server-offline").addId("chat-error");
       inputContainer.addChild(componentWidget);
     }
 
@@ -153,7 +154,7 @@ public class ChatActivity extends Activity {
     String message = this.chatInput.getText();
     message = message.trim();
     if (!message.isEmpty()) {
-      if(message.startsWith("/") & Util.isStaff(this.labyAPI.getUniqueId())) {
+      if(message.startsWith("/") & (Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) {
         this.handleCommands(message);
         this.chatInput.setText("");
         return;
@@ -174,7 +175,7 @@ public class ChatActivity extends Activity {
   }
 
   private void handleCommands(String input) {
-    if(!Util.isStaff(labyAPI.getUniqueId())) return;
+    if(!(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) return;
 
     boolean successful = false;
 
@@ -199,13 +200,23 @@ public class ChatActivity extends Activity {
           this.addCustomChatMessage(requestUuid.exception().getMessage());
           return;
         }
+        UUID uuid = requestUuid.get();
+
+        if(Util.isDev(uuid.toString()) || Util.isStaff(uuid)) {
+          this.addCustomChatMessage("§cDu kannst keine Teammitglieder muten.");
+          return;
+        }
 
         JsonObject object = new JsonObject();
-        object.addProperty("uuid", requestUuid.get().toString());
+        object.addProperty("uuid", uuid.toString());
         object.addProperty("playerName", playerName);
         object.addProperty("reason", reason);
 
         successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.MUTE, object);
+        if(successful) {
+          this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich gemutet.");
+          this.addCustomChatMessage("§7Grund: §e" + reason);
+        }
       } else {
         this.addCustomChatMessage("§cBitte nutze /mute <Spieler> <Grund>");
         return;
@@ -229,6 +240,9 @@ public class ChatActivity extends Activity {
         object.addProperty("playerName", playerName);
 
         successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.UNMUTE, object);
+        if(successful) {
+          this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich entmutet.");
+        }
       } else {
         this.addCustomChatMessage("§cBitte nutze /unmute <Spieler>");
         return;
@@ -241,7 +255,6 @@ public class ChatActivity extends Activity {
   }
 
   public void addChatMessage(MoneyChatMessage chatMessage) {
-    if (chatMessages == null) return;
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     /*String color;
@@ -260,18 +273,18 @@ public class ChatActivity extends Activity {
     reloadScreen();
   }
 
-  public void clearChat() {
-    if(chatMessages == null) return;
+  public void clearChat(boolean message) {
     chatMessages.clear();
-    String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-    //ComponentWidget messageWidget = ComponentWidget.text("§e" + time + " §4Der Chat wurde geleert.");
-    //messageWidget.addId("chat-message");
-    chatMessages.add(new ChatMessageWidget(time, "§4Der Chat wurde geleert.").addId("chat-message"));
+    if(message) {
+      String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
+      //ComponentWidget messageWidget = ComponentWidget.text("§e" + time + " §4Der Chat wurde geleert.");
+      //messageWidget.addId("chat-message");
+      chatMessages.add(new ChatMessageWidget(time, "§4Der Chat wurde geleert.").addId("chat-message"));
+    }
     reloadScreen();
   }
 
   public void addCustomChatMessage(String chatMessage) {
-    if (chatMessages == null) return;
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     //ComponentWidget messageWidget = ComponentWidget.text(time + chatMessage);

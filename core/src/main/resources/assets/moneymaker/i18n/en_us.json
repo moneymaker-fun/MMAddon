@@ -67,6 +67,10 @@
           "online": "§aChat-Server is online",
           "offline": "§cChat-Server is offline",
           "reconnect-button": "Reconnect"
+        },
+        "muted": {
+          "title": "You have been muted.",
+          "reason": "Reason: "
         }
       },
       "secret": {

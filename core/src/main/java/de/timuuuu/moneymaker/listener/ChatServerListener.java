@@ -8,12 +8,11 @@ import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatClient;
-import de.timuuuu.moneymaker.utils.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
+import java.util.UUID;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
-import java.util.UUID;
 
 public class ChatServerListener {
 
@@ -35,13 +34,49 @@ public class ChatServerListener {
     if(message.has("chatAction") && message.get("chatAction").isJsonObject()) {
       JsonObject data = message.get("chatAction").getAsJsonObject();
       if(ChatClient.actionByName(data.get("action").getAsString()) != null) {
-
         switch (ChatClient.actionByName(data.get("action").getAsString())) {
-
-          case CLEAR -> this.addon.chatActivity.clearChat();
-
+          case CLEAR -> this.addon.chatActivity.clearChat(true);
         }
+      }
+    }
 
+    if(message.has("chatMute") && message.get("chatMute").isJsonObject()) {
+      JsonObject data = message.get("chatMute").getAsJsonObject();
+      if(data.has("uuid")) {
+        String uuid = data.get("uuid").getAsString();
+        if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
+          ChatClient.muted = true;
+          ChatClient.muteReason = data.get("reason").getAsString();
+          this.addon.chatActivity.addCustomChatMessage("§cDu wurdest aus dem Chat ausgeschlossen.");
+          this.addon.chatActivity.reloadScreen();
+        }
+      }
+    }
+
+    if(message.has("chatUnMute") && message.get("chatUnMute").isJsonObject()) {
+      JsonObject data = message.get("chatUnMute").getAsJsonObject();
+      if(data.has("uuid") && ChatClient.muted) {
+        String uuid = data.get("uuid").getAsString();
+        if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
+          ChatClient.muted = false;
+          ChatClient.muteReason = "";
+          this.addon.chatActivity.addCustomChatMessage("§aDein Mute wurde aufgehoben.");
+          this.addon.chatActivity.reloadScreen();
+        }
+      }
+    }
+
+    if(message.has("muteInfo") && message.get("muteInfo").isJsonObject()) {
+      JsonObject data = message.get("muteInfo").getAsJsonObject();
+      if(data.has("requestedBy")) {
+        if(this.addon.labyAPI().getUniqueId().toString().equals(data.get("requestedBy").getAsString())) {
+          if(data.has("muted") && data.has("reason")) {
+            if(data.get("muted").getAsBoolean()) {
+              ChatClient.muted = true;
+              ChatClient.muteReason = data.get("reason").getAsString();
+            }
+          }
+        }
       }
     }
 
