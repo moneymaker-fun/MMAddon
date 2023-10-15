@@ -15,8 +15,10 @@ public class AddonSettings {
 
   public static boolean languageSupported = true;
 
-  public static void resetValues() {
-    playingOn = "Hauptmenü";
+  public static void resetValues(boolean changePlaying) {
+    if(changePlaying) {
+      playingOn = "Hauptmenü";
+    }
     balance = "X";
     brokenBlocks = 0;
     sessionBlocks = 0;

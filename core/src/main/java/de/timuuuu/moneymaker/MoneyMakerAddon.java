@@ -9,6 +9,7 @@ import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
 import de.timuuuu.moneymaker.badges.MoneyIconTag;
 import de.timuuuu.moneymaker.badges.MoneyTabBadge;
 import de.timuuuu.moneymaker.badges.MoneyTextTag;
+import de.timuuuu.moneymaker.commands.ResetCommand;
 import de.timuuuu.moneymaker.commands.TimerCommand;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.BlockSessionWidget;
@@ -72,6 +73,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.chatClient = new ChatClient(this);
 
     this.registerCommand(new TimerCommand(this));
+    this.registerCommand(new ResetCommand());
 
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener(this));
