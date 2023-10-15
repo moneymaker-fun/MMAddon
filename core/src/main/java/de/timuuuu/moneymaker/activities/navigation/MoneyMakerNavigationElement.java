@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.activities.navigation;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.navigation.elements.ScreenNavigationElement;
@@ -31,9 +32,9 @@ public class MoneyMakerNavigationElement extends ScreenNavigationElement {
     return Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"));
   }
 
-  /*@Override
+  @Override
   public boolean isVisible() {
-    return AddonSettings.playingOn.contains("MoneyMaker");
-  }*/
+    return AddonSettings.playingOn.contains("MoneyMaker") || Util.isDev(this.addon.labyAPI().getUniqueId().toString());
+  }
 
 }
