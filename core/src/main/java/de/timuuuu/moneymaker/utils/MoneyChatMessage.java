@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import com.google.gson.JsonObject;
+import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import java.util.UUID;
 
 public class MoneyChatMessage {
@@ -8,13 +9,13 @@ public class MoneyChatMessage {
   private UUID uuid;
   private String userName;
   private String message;
-  private boolean staff;
+  private Rank rank;
 
-  public MoneyChatMessage(UUID uuid, String userName, String message, boolean staff) {
+  public MoneyChatMessage(UUID uuid, String userName, String message, Rank rank) {
     this.uuid = uuid;
     this.userName = userName;
     this.message = message;
-    this.staff = staff;
+    this.rank = rank;
   }
 
   public static MoneyChatMessage fromJson(JsonObject object) {
@@ -23,7 +24,7 @@ public class MoneyChatMessage {
           UUID.fromString(object.get("uuid").getAsString()),
           object.get("userName").getAsString(),
           object.get("message").getAsString(),
-          object.has("staffMember") && object.get("staffMember").getAsBoolean()
+          MoneyPlayer.rankByName(object.get("rank").getAsString())
           );
     }
     return null;
@@ -49,7 +50,7 @@ public class MoneyChatMessage {
     return message;
   }
 
-  public boolean staff() {
-    return staff;
+  public Rank rank() {
+    return rank;
   }
 }

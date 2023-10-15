@@ -44,7 +44,7 @@ public class Util {
 
   public static boolean isStaff(UUID uuid) {
     if(!AddonSettings.playerStatus.containsKey(uuid)) return false;
-    return AddonSettings.playerStatus.get(uuid).staff();
+    return AddonSettings.playerStatus.get(uuid).rank().isStaff();
   }
 
   public static int timeToInt(String input) {

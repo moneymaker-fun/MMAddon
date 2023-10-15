@@ -8,6 +8,7 @@ import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
+import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import de.timuuuu.moneymaker.utils.Util;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
+import net.labymod.api.client.gui.screen.activity.Links;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
@@ -33,7 +35,7 @@ import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.io.web.result.Result;
 
 @AutoActivity
-@Link("chat.lss")
+@Links({@Link("chat.lss"), @Link("test-chat.lss")})
 public class ChatActivity extends Activity {
 
   private MoneyMakerAddon addon;
@@ -109,7 +111,16 @@ public class ChatActivity extends Activity {
     AddonSettings.playerStatus.keySet().forEach(uuid -> {
       MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
       if(moneyPlayer.server().contains("MoneyMaker")) {
-        String color = moneyPlayer.staff() ? "§c" : "§e";
+        String color;
+        if(moneyPlayer.rank() == Rank.DEVELOPER) {
+          color = "§4";
+        } else if(moneyPlayer.rank() == Rank.STAFF) {
+          color = "§c";
+        } else if(moneyPlayer.rank() == Rank.DONATOR) {
+          color = "§6";
+        } else {
+          color = "§e";
+        }
         Component component = Component.icon(Icon.head(uuid, true, false), 10)
             .append(Component.text(" " + color + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
         ComponentWidget componentWidget = ComponentWidget.component(component);
@@ -302,7 +313,7 @@ public class ChatActivity extends Activity {
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message,
-        false);
+        Rank.USER);
     return this.addon.chatClient.sendChatMessage(chatMessage);
   }
 

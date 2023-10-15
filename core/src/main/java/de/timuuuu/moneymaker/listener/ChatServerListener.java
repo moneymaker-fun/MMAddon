@@ -85,7 +85,7 @@ public class ChatServerListener {
       UUID uuid = UUID.fromString(data.get("uuid").getAsString());
       Laby.fireEvent(new MoneyPlayerStatusEvent(
           uuid,
-          new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), data.get("staffMember").getAsBoolean())
+          new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), MoneyPlayer.rankByName(data.get("rank").getAsString()))
       ));
     }
 
@@ -103,7 +103,7 @@ public class ChatServerListener {
                   playerData.get("userName").getAsString(),
                   playerData.get("server").getAsString(),
                   playerData.get("addonVersion").getAsString(),
-                  playerData.get("staffMember").getAsBoolean()
+                  MoneyPlayer.rankByName(playerData.get("rank").getAsString())
               ));
             }
           }

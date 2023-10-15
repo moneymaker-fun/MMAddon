@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.badges;
 
 import de.timuuuu.moneymaker.utils.AddonSettings;
-import de.timuuuu.moneymaker.utils.Util;
+import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.component.format.TextDecoration;
@@ -18,10 +18,13 @@ public class MoneyTextTag extends NameTag {
     if(!visible(entity)) return null;
     Component component = net.labymod.api.client.component.Component.text("MoneyMaker-Addon", TextColor.color(255, 255, 85))
         .decorate(TextDecoration.BOLD);
-    if(Util.isDev(entity.getUniqueId().toString())) {
+    Rank rank = AddonSettings.playerStatus.get(entity.getUniqueId()).rank();
+    if(rank == Rank.DEVELOPER) {
       component.append(Component.text(" Dev", TextColor.color(170, 0, 0)));
-    } else {
+    } else if(rank == Rank.STAFF) {
       component.append(Component.text(" Staff", TextColor.color(255, 85, 85)));
+    } else {
+      component.append(Component.text(" Donator", TextColor.color(255, 170, 0)));
     }
     return RenderableComponent.of(component);
   }
@@ -45,7 +48,7 @@ public class MoneyTextTag extends NameTag {
     if(!(entity instanceof Player player)) return false;
     if(player.profile().getUniqueId() == null) return false;
     if(!AddonSettings.playerStatus.containsKey(player.profile().getUniqueId())) return false;
-    return AddonSettings.playerStatus.get(player.profile().getUniqueId()).staff();
+    return AddonSettings.playerStatus.get(player.profile().getUniqueId()).rank() != Rank.USER;
   }
 
 }
