@@ -14,6 +14,8 @@ import net.labymod.api.Laby;
 
 public class AddonUpdater {
 
+  public static boolean notified = false;
+
   private static String currentVersion = "";
   private static String newestVersion = "";
   private static boolean devEnvironment = false;
@@ -84,6 +86,11 @@ public class AddonUpdater {
     } catch (IOException exception) {
       exception.printStackTrace();
     }
+  }
+
+  public static boolean updateAvailable() {
+    if(devEnvironment) return false;
+    return !currentVersion.equals(newestVersion);
   }
 
 }

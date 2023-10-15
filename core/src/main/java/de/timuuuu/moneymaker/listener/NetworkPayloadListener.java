@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.AddonUpdater;
 import de.timuuuu.moneymaker.utils.Booster;
 import java.util.UUID;
 import net.labymod.api.Laby;
@@ -87,6 +88,13 @@ public class NetworkPayloadListener {
               data.addProperty("server", gameMode.contains("MoneyMaker") ? gameMode : "Other");
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               this.addon.chatClient.sendMessage("playerStatus", data);
+
+              if(gameMode.contains("MoneyMaker")) {
+                if(AddonUpdater.updateAvailable() & !AddonUpdater.notified) {
+                  AddonUpdater.notified = true;
+                  this.addon.displayMessage(AddonSettings.prefix + "§aEin neues Addon-Update ist verfügbar. §7Das update wird installiert, wenn du das Spiel schließt.");
+                }
+              }
 
             }
           }
