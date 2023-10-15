@@ -33,6 +33,7 @@ import de.timuuuu.moneymaker.utils.AddonUpdater;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
+import de.timuuuu.moneymaker.utils.InstallDialog;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
@@ -45,6 +46,7 @@ import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
 import net.labymod.api.util.concurrent.task.Task;
+import javax.swing.*;
 
 @AddonMain
 public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
@@ -167,5 +169,11 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
         .addButton(NotificationButton.of(buttonText, buttonAction))
         .type(Type.ADVANCEMENT);
     Laby.labyAPI().notificationController().push(builder.build());
+  }
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> {
+      InstallDialog dialog = new InstallDialog();
+      dialog.setVisible(true);
+    });
   }
 }

@@ -52,8 +52,6 @@ public class ChatActivity extends Activity {
     titleWidget.addId("chat-title");
     this.document.addChild(titleWidget);
 
-    Util.addFeedbackButton(this.document);
-
     ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline"));
     statusWidget.addId("chat-status");
     this.document.addChild(statusWidget);
