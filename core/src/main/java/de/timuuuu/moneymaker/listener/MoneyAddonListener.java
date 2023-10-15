@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.listener;
 
+import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
@@ -25,8 +26,24 @@ public class MoneyAddonListener {
   public void onSessionUpdate(SessionUpdateEvent event) {
     this.addon.chatClient.sendQuitData(event.previousSession().getUniqueId().toString());
     this.addon.chatClient.sendLaunchData(event.newSession().getUniqueId().toString(), event.newSession().getUsername());
-    AddonSettings.resetValues();
+    AddonSettings.resetValues(true);
     this.addon.chatActivity.clearChat(false);
+    AddonSettings.playerStatus.remove(event.previousSession().getUniqueId());
+
+    JsonObject data = new JsonObject();
+    data.addProperty("uuid", event.previousSession().getUniqueId().toString());
+    data.addProperty("userName", event.previousSession().getUsername());
+    data.addProperty("server", "OFFLINE");
+    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+    this.addon.chatClient.sendMessage("playerStatus", data);
+
+    JsonObject data1 = new JsonObject();
+    data1.addProperty("uuid", event.newSession().getUniqueId().toString());
+    data1.addProperty("userName", event.newSession().getUsername());
+    data1.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
+    data1.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+    this.addon.chatClient.sendMessage("playerStatus", data1);
+
   }
 
   @Subscribe
