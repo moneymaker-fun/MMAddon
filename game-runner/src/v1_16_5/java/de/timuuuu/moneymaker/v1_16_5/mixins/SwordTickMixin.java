@@ -4,8 +4,6 @@ import de.timuuuu.moneymaker.event.SwordTickEvent;
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.Laby;
-import net.labymod.api.volt.annotation.Insert;
-import net.labymod.api.volt.callback.InsertInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -16,6 +14,8 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public class SwordTickMixin {
@@ -23,11 +23,11 @@ public class SwordTickMixin {
   @Shadow
   public @Nullable LocalPlayer player;
 
-  @Insert(
+  @Inject(
       method = {"tick()V"},
       at = @At("HEAD")
   )
-  private void moneymaker$tick(InsertInfo ci) {
+  private void moneymaker$tick(CallbackInfo ci) {
     Player player = Minecraft.getInstance().player;
     if(player != null) {
       ItemStack itemStack = player.inventory.getItem(0);
