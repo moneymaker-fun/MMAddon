@@ -62,6 +62,12 @@ public class AddonUpdater {
   }
 
   private void update() {
+    if(this.thread != null) {
+      this.thread.start();
+    }
+  }
+
+  public static void downloadUpdater() {
     try {
       File folder = new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile(), "MoneyMaker");
       if(!folder.exists()) {
@@ -70,13 +76,11 @@ public class AddonUpdater {
       FileOutputStream outputStream = new FileOutputStream(new File(folder, "Updater.jar"));
       HttpURLConnection connection = (HttpURLConnection) new URL("https://moneymaker.fun/download/Updater.jar").openConnection();
       connection.setRequestProperty("User-Agent", "LabyMod 4 Addon");
+      if(connection.getResponseCode() != 200) return;
       ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
       outputStream.getChannel().transferFrom(channel, 0L, Long.MAX_VALUE);
       outputStream.close();
       System.out.println("Downloaded latest MoneyMaker Updater...");
-      if(this.thread != null) {
-        this.thread.start();
-      }
     } catch (IOException exception) {
       exception.printStackTrace();
     }
