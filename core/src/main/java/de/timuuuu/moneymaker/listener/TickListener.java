@@ -74,6 +74,9 @@ public class TickListener {
                 if(text.contains("Platz ")) {
                   AddonSettings.swordRanking = text.replace("Platz ", "");
                 }
+                if(text.contains("Rank ")) {
+                  AddonSettings.swordRanking = text.replace("Rank ", "");
+                }
               }
             }
           }
@@ -81,7 +84,7 @@ public class TickListener {
         } catch (JsonSyntaxException ignored) {}
       }
 
-      if(mobsLine.contains("Getötete Mobs: ")) {
+      if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
         try {
           JsonObject loreObject = JsonParser.parseString(mobsLine).getAsJsonObject();
           if(!loreObject.has("extra")) return;
@@ -100,6 +103,9 @@ public class TickListener {
                 if(!text.contains("Getötete Mobs: ")) {
                   AddonSettings.swordMobs = text;
                 }
+                if(!text.contains("Killed mobs: ")) {
+                  AddonSettings.swordMobs = text;
+                }
               }
             }
           }
@@ -113,7 +119,10 @@ public class TickListener {
           if(AddonSettings.mobKills == 0) {
             AddonSettings.mobKills = mobKills;
           } else {
-            AddonSettings.sessionKills = mobKills - AddonSettings.mobKills;
+            int sessionKills = mobKills - AddonSettings.mobKills;
+            if(sessionKills >= 0) {
+              AddonSettings.sessionKills = sessionKills;
+            }
           }
         } catch (NumberFormatException ignored) {}
       }

@@ -35,7 +35,7 @@ public class ChatReceiveListener {
         }
       }
 
-      if(plain.contains("[MoneyMaker] Du wurdest") & plain.contains("teleportiert")) {
+      if((plain.contains("[MoneyMaker] Du wurdest") & plain.contains("teleportiert")) || (plain.contains("[MoneyMaker] You were teleported to"))) {
         if(this.addon.configuration().hideTeleportMessage().get()) {
           event.setCancelled(true);
         }
@@ -46,20 +46,23 @@ public class ChatReceiveListener {
           event.setCancelled(true);
         if (plain.equals("[MoneyMaker]"))
           event.setCancelled(true);
-        if (plain.contains("[MoneyMaker] Glückwunsch! Du hast einen Booster gefunden:"))
+        if (plain.contains("[MoneyMaker] Glückwunsch! Du hast einen Booster gefunden:") || plain.contains("[MoneyMaker] Congratulations! You have found a booster:"))
           event.setCancelled(true);
-        if (plain.contains("Booster (") && plain.contains(".")) {
+        if (plain.contains("Booster (") && plain.contains(")")) {
           String boost = plain.replace("[MoneyMaker]", "");
-          this.addon.displayMessage(boost + " gefunden.");
+          this.addon.displayMessage(AddonSettings.prefix + "§a" + boost + " gefunden.");
           event.setCancelled(true);
         }
       }
 
+      // EN: [MoneyMaker] +10% Booster (20 minutes)
+      // DE: [MoneyMaker] +10 % Booster (20 Minuten)
+
       if (plain.contains("[MoneyMaker] +") && plain.contains("Booster (")) {
-        int boost = Integer.parseInt(plain.split(" ")[1].substring(1));
+        int boost = Integer.parseInt(plain.split(" ")[1].replace("%", "").replace("+", ""));
         Booster.sessionBoost.addAndGet(boost);
-        int time = Integer.parseInt(plain.split(" ")[4].substring(1));
-        if (plain.contains("Stunde"))
+        int time = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
+        if (plain.contains("Stunde") || plain.contains("hour"))
           time *= 60;
         Booster.insertBooster(boost, time);
       }

@@ -13,6 +13,7 @@ public class AddonSettings {
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
 
+  public static boolean languageSupported = true;
 
   public static void resetValues() {
     playingOn = "Hauptmenü";

@@ -25,8 +25,8 @@ public class EntityRenderListener {
 
     String entityName = ChatUtil.stripColor(event.entity().toString().split("'")[1]);
 
-    if(entityName.contains("Kosten: ")) {
-      String costs = entityName.replace("Kosten: ","");
+    if(entityName.contains("Kosten: ") || entityName.contains("Price: ")) {
+      String costs = entityName.replace("Kosten: ","").replace("Price: ", "");
 
       if(entity.getPosX() == 2.5D || entity.getPosX() == 1001.5D || entity.getPosZ() == -1.5D || entity.getPosZ() == 6.5D) {
         if(!AddonSettings.nextWorkerCost.equals(costs)) {
@@ -41,13 +41,14 @@ public class EntityRenderListener {
       }
     }
 
-    if(entityName.contains("Minen-Arbeitsplätze") & entityName.contains("/")) {
+    if((entityName.contains("Minen-Arbeitsplätze") || entityName.contains("mining workplaces")) & entityName.contains("/")) {
       int count = Integer.parseInt(entityName.split("/")[0]);
       if(AddonSettings.workerCount != count) {
         AddonSettings.workerCount = count;
       }
     }
 
+    //TODO: Add support for english
     if(entityName.contains("Geröll entfernen ")) {
       String time = entityName.replace("Geröll entfernen ", "");
       if(AddonSettings.debrisTime == 0 & !timerRunning) {

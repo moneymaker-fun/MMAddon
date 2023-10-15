@@ -11,6 +11,8 @@ import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
 
 public class ScoreBoardListener {
 
+  private boolean langWarningSent = false;
+
   private MoneyMakerAddon addon;
 
   public ScoreBoardListener(MoneyMakerAddon addon) {
@@ -20,8 +22,21 @@ public class ScoreBoardListener {
   @Subscribe
   public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
     if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
+
+    if(event.score().getValue() == MoneyScore.LANG_CHECK.score() & AddonSettings.playingOn.contains(MoneyScore.LANG_CHECK.neededServer())) {
+      AddonSettings.languageSupported = event.score().getName().contains("Kontostand") || event.score().getName().contains("Balance");
+      if(!AddonSettings.languageSupported & !langWarningSent) {
+        langWarningSent = true;
+        this.addon.displayMessage("§4§lℹ Du benutzt eine Sprache, die vom MoneyMaker-Addon §nNICHT §4§lunterstützt wird! ℹ");
+        this.addon.displayMessage("§7Bitte gehe in die Lobby und stelle die Sprach auf 'Deutsch' oder 'Englisch'.");
+        this.addon.displayMessage(" ");
+        this.addon.displayMessage("§4§lℹ You are using a language that is §nNOT §4§lsupported by the MoneyMaker-Addon ℹ");
+        this.addon.displayMessage("§7Please go into the lobby and change your language to 'German' or 'English'.");
+      }
+    }
+
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() & AddonSettings.playingOn.contains(MoneyScore.BROKEN_BLOCKS.neededServer())) {
-      String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "");
+      String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
       try {
         int blocks = Integer.parseInt(raw);
         if(AddonSettings.brokenBlocks == 0) {
@@ -90,7 +105,9 @@ public class ScoreBoardListener {
   public enum MoneyScore {
 
     BROKEN_BLOCKS(3, "Farming"),
-    BALANCE(12, "MoneyMaker");
+    BALANCE(12, "MoneyMaker"),
+
+    LANG_CHECK(13, "MoneyMaker");
 
     private final int score;
     private final String neededServer;
