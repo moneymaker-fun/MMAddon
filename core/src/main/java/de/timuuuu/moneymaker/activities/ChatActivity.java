@@ -155,6 +155,7 @@ public class ChatActivity extends Activity {
     if (!message.isEmpty()) {
       if(message.startsWith("/") & Util.isStaff(this.labyAPI.getUniqueId())) {
         this.handleCommands(message);
+        this.chatInput.setText("");
         return;
       }
       if(this.sendToServer(message)) {
