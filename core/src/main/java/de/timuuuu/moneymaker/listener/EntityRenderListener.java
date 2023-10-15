@@ -4,11 +4,11 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatUtil;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.render.entity.EntityRenderEvent;
 import net.labymod.api.util.concurrent.task.Task;
-import java.util.concurrent.TimeUnit;
 
 public class EntityRenderListener {
 
@@ -21,11 +21,9 @@ public class EntityRenderListener {
   @Subscribe
   public void onRender(EntityRenderEvent event) {
     Entity entity = event.entity();
-    if(!entity.toString().contains("ArmorStand")) return;
     if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
 
     String entityName = ChatUtil.stripColor(event.entity().toString().split("'")[1]);
-    if(entityName.equals("Armor Stand")) return;
 
     if(entityName.contains("Kosten: ")) {
       String costs = entityName.replace("Kosten: ","");
