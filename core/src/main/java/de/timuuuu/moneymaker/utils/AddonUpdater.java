@@ -21,11 +21,16 @@ public class AddonUpdater {
   public static void checkVersion() {
     currentVersion = MoneyMakerAddon.instance().addonInfo().getVersion();
     devEnvironment = Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment();
+    if(devEnvironment) return;
     try {
       HttpURLConnection connection = (HttpURLConnection) new URL("https://moneymaker.fun/download/version.txt").openConnection();
       connection.setRequestMethod("GET");
       connection.setRequestProperty("User-Agent", "LabyMod 4 Addon");
       connection.setRequestProperty("Content-type", "application/json");
+      if(connection.getResponseCode() != 200) {
+        MoneyMakerAddon.instance().logger().error("Unable to contact MoneyMaker Update Server [Response: " + connection.getResponseCode() + "]");
+        return;
+      }
       BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
       String inputLine;
       while ((inputLine = bufferedReader.readLine()) != null) {
