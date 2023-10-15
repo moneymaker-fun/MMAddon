@@ -30,6 +30,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.util.concurrent.task.Task;
+import net.labymod.api.util.io.web.result.Result;
 
 @AutoActivity
 @Link("chat.lss")
@@ -152,10 +153,8 @@ public class ChatActivity extends Activity {
     String message = this.chatInput.getText();
     message = message.trim();
     if (!message.isEmpty()) {
-      if(message.equalsIgnoreCase("/clear") & Util.isStaff(this.labyAPI.getUniqueId())) {
-        if(!this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.CLEAR)) {
-          this.addCustomChatMessage("§cBefehl konnte nicht ausgeführt werden. §7(Nur für dich sichtbar)");
-        }
+      if(message.startsWith("/") & Util.isStaff(this.labyAPI.getUniqueId())) {
+        this.handleCommands(message);
         return;
       }
       if(this.sendToServer(message)) {
@@ -170,6 +169,73 @@ public class ChatActivity extends Activity {
           this.reload();
         }).delay(3, TimeUnit.SECONDS).build().execute();
       }
+    }
+  }
+
+  private void handleCommands(String input) {
+    if(!Util.isStaff(labyAPI.getUniqueId())) return;
+
+    boolean successful = false;
+
+    if(input.equalsIgnoreCase("/clear")) {
+      successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.CLEAR, null);
+    }
+
+    // /mute <Spieler> <Grund>
+    if(input.startsWith("/mute")) {
+      String[] args = input.split(" ");
+      if(args.length >= 3) {
+        String playerName = args[1];
+        StringBuilder builder = new StringBuilder();
+        for(int i = 2; i != args.length; i++) {
+          builder.append(args[i]).append(" ");
+        }
+        String reason = builder.toString().trim();
+
+        Result<UUID> requestUuid = this.labyAPI.labyNetController().loadUniqueIdByNameSync(playerName);
+        if(requestUuid.hasException()) {
+          this.addCustomChatMessage("§4Failed to get uuid from " + playerName + ":");
+          this.addCustomChatMessage(requestUuid.exception().getMessage());
+          return;
+        }
+
+        JsonObject object = new JsonObject();
+        object.addProperty("uuid", requestUuid.get().toString());
+        object.addProperty("playerName", playerName);
+        object.addProperty("reason", reason);
+
+        successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.MUTE, object);
+      } else {
+        this.addCustomChatMessage("§cBitte nutze /mute <Spieler> <Grund>");
+        return;
+      }
+    }
+
+    if(input.startsWith("/unmute")) {
+      String[] args = input.split(" ");
+      if(args.length == 2) {
+        String playerName = args[1];
+
+        Result<UUID> requestUuid = this.labyAPI.labyNetController().loadUniqueIdByNameSync(playerName);
+        if(requestUuid.hasException()) {
+          this.addCustomChatMessage("§4Failed to get uuid from " + playerName + ":");
+          this.addCustomChatMessage(requestUuid.exception().getMessage());
+          return;
+        }
+
+        JsonObject object = new JsonObject();
+        object.addProperty("uuid", requestUuid.get().toString());
+        object.addProperty("playerName", playerName);
+
+        successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.UNMUTE, object);
+      } else {
+        this.addCustomChatMessage("§cBitte nutze /unmute <Spieler>");
+        return;
+      }
+    }
+
+    if(!successful) {
+      this.addCustomChatMessage("§cBefehl konnte nicht ausgeführt werden. §7(Nur für dich sichtbar)");
     }
   }
 
@@ -226,10 +292,13 @@ public class ChatActivity extends Activity {
     return this.addon.chatClient.sendChatMessage(chatMessage);
   }
 
-  private boolean sendChatAction(UUID executor, ChatAction action) {
+  private boolean sendChatAction(UUID executor, ChatAction action, JsonObject data) {
     JsonObject object = new JsonObject();
     object.addProperty("action", action.getName());
     object.addProperty("executor", executor.toString());
+    if(data != null) {
+      object.add("data", data);
+    }
     return this.addon.chatClient.sendMessage("chatAction", object);
   }
 

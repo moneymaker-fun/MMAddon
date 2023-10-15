@@ -160,9 +160,11 @@ public class ChatClient {
 
 
   public enum ChatAction {
-    CLEAR("CLEAR");
+    CLEAR("CLEAR"),
+    MUTE("MUTE"),
+    UNMUTE("UNMUTE");
 
-    private String name;
+    private final String name;
 
     ChatAction(String name) {
       this.name = name;
