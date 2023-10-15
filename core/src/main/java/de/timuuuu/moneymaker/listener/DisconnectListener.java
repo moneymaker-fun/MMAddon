@@ -17,7 +17,7 @@ public class DisconnectListener {
 
   @Subscribe
   public void onDisconnect(ServerDisconnectEvent event){
-    AddonSettings.resetValues();
+    AddonSettings.resetValues(true);
 
     JsonObject data = new JsonObject();
     data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
