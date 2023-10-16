@@ -14,15 +14,15 @@ public class MoneyMakerMainActivity extends TabbedActivity {
 
   public MoneyMakerMainActivity(MoneyMakerAddon addon) {
     this.addon = addon;
-    this.register("moneymaker_start", new DefaultComponentTab(Component.text("Hauptmenü"), addon.startActivity));
-    this.register("moneymaker_booster", new DefaultComponentTab(Component.text("Booster"), new BoosterActivity(addon)));
-    this.register("moneymaker_chat", new DefaultComponentTab(Component.text("Chat"), addon.chatActivity));
+    this.register("moneymaker_start", new DefaultComponentTab(Component.translatable("moneymaker.navigation.main-menu"), addon.startActivity));
+    this.register("moneymaker_booster", new DefaultComponentTab(Component.translatable("moneymaker.navigation.booster"), new BoosterActivity(addon)));
+    this.register("moneymaker_chat", new DefaultComponentTab(Component.translatable("moneymaker.navigation.chat"), addon.chatActivity));
   }
 
   public void registerSecret() {
     String id = "moneymaker_secret";
     if(getElementById(id) == null) {
-      this.register("moneymaker_secret", new DefaultComponentTab(Component.text("Secret"), new SecretActivity(this.addon)));
+      this.register("moneymaker_secret", new DefaultComponentTab(Component.translatable("moneymaker.navigation.secret"), new SecretActivity(this.addon)));
       Laby.labyAPI().minecraft().executeOnRenderThread(this::reload);
     }
   }

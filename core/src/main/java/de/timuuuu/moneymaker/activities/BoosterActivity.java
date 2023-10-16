@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
@@ -51,16 +52,17 @@ public class BoosterActivity extends Activity {
     Util.addFeedbackButton(this.document);
 
     AtomicInteger boost = new AtomicInteger(0);
-    Booster.getBoosterguilist().forEach(booster -> boost.getAndAdd(booster.getBoost()));
+    Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.getBoost()));
 
-    ComponentWidget subTitleWidget = ComponentWidget.text("§eGesamt: §6" + boost.get() + "%");
+    ComponentWidget subTitleWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.boost-total", TextColor.color(255, 255, 85),
+        Component.text(boost.get() + "%", TextColor.color(255, 170, 0))));
     subTitleWidget.addId("booster-subTitle");
     this.document.addChild(subTitleWidget);
 
-    VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>();
-    listWidget.addId("booster-list");
+    VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>().addId("booster-list");
 
-    ButtonWidget sortButton = ButtonWidget.text("§6Sortierung " + (orderAscending ? "§b⬆" : "§b⬇"));
+    ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting", TextColor.color(255, 170, 0))
+        .append(Component.text(orderAscending ? "§b⬆" : "§b⬇")));
     sortButton.setPressable(() -> {
       orderAscending = !orderAscending;
       this.reload();
@@ -68,23 +70,21 @@ public class BoosterActivity extends Activity {
     sortButton.addId("booster-sort-button");
     this.document.addChild(sortButton);
 
-    DivWidget container = new DivWidget();
-    container.addId("booster-container");
+    DivWidget container = new DivWidget().addId("booster-container");
 
     LinkedList<Booster> list = new LinkedList<>();
 
     if (this.orderAscending) {
-      for (int j = Booster.getBoosterguilist().size() - 1; j >= 0; j--) {
-        Booster booster = Booster.getBoosterguilist().get(j);
+      for (int j = Booster.boosterList().size() - 1; j >= 0; j--) {
+        Booster booster = Booster.boosterList().get(j);
         list.add(booster);
       }
     } else {
-      list.addAll(Booster.getBoosterguilist());
+      list.addAll(Booster.boosterList());
     }
 
     list.forEach(booster -> {
       String boosterMessage = "§6" + booster.getAmnt() + " §7✗ §e" + booster.getBoost() + "%";
-
       String boosterTime;
       int tempTime = booster.getTime();
       if (tempTime > 59) {
@@ -96,18 +96,13 @@ public class BoosterActivity extends Activity {
       } else {
         boosterTime = booster.getTime() + " Minuten";
       }
-
-      ComponentWidget widget = ComponentWidget.text(boosterMessage + " §8┃ §7" + boosterTime);
-      widget.addId("booster-entry");
-      listWidget.addChild(widget);
+      listWidget.addChild(ComponentWidget.text(boosterMessage + " §8┃ §7" + boosterTime).addId("booster-entry"));
     });
 
-    ScrollWidget scrollWidget = new ScrollWidget(listWidget, new ListSession<>());
-    container.addChild(scrollWidget);
+    container.addChild(new ScrollWidget(listWidget, new ListSession<>()));
 
-    ButtonWidget exportBtnWidget = ButtonWidget.text("Export als CSV");
+    ButtonWidget exportBtnWidget = ButtonWidget.i18n("moneymaker.ui.booster.export").addId("exportBtn");
     exportBtnWidget.alignmentX().set(WidgetAlignment.CENTER);
-    exportBtnWidget.addId("exportBtn");
     exportBtnWidget.setPressable(() -> writeLinkedListToCSV(false));
 
     container.addChild(exportBtnWidget);
@@ -135,9 +130,12 @@ public class BoosterActivity extends Activity {
   }
 
   public static void writeLinkedListToCSV(boolean quit) {
-    if(Booster.getBoosterguilist().isEmpty()) {
+    if(Booster.boosterList().isEmpty()) {
       if(!quit) {
-        MoneyMakerAddon.instance().pushNotification(Component.text("Booster-Export"), Component.text("§cEs sind keine Booster zum exportieren vorhanden."));
+        MoneyMakerAddon.instance().pushNotification(
+            Component.translatable("moneymaker.notification.booster-export.title"),
+            Component.translatable("moneymaker.notification.booster-export.no-boosters", TextColor.color(255, 85, 85))
+        );
       }
       return;
     }
@@ -147,11 +145,13 @@ public class BoosterActivity extends Activity {
       FileWriter writer = new FileWriter(file);
 
       writer.write("Anzahl;Booster;Zeit\n\n");
-      for (Booster entry : Booster.getBoosterguilist()) {
+      for (Booster entry : Booster.boosterList()) {
         writer.write(entry.toExport() + "\n");
       }
       writer.close();
-      MoneyMakerAddon.pushNotification(Component.text("Booster-Export"), Component.text("Die Übersicht der gefarmten Booster wurde gespeichert"), Component.text("Ordner öffnen"), () -> {
+      MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.booster-export.title"),
+          Component.translatable("moneymaker.notification.booster-export.saved", TextColor.color(85, 255, 85)),
+          Component.translatable("moneymaker.notification.booster-export.open-folder"), () -> {
         OperatingSystem.getPlatform().openFile(new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile().getPath()));
       });
     } catch (IOException exception) {

@@ -8,10 +8,84 @@
     }
   },
   "moneymaker": {
+    "navigation": {
+      "title": "MoneyMaker",
+      "main-menu": "Hauptmenü",
+      "booster": "Booster",
+      "chat": "Chat",
+      "secret": "Secret"
+    },
+    "command": {
+      "reset": "Die Daten wurde zurückgesetzt.",
+      "timer": {
+        "usage": "Bitte nutze /mm-timer <Zeit in Minuten> <name des Timers>",
+        "no-number": "<Zeit in Minuten> muss eine Zahl sein.",
+        "max-length": "Der Name des Timers darf maximal %s Zeichen lang sein.",
+        "already-exists": "Es existiert bereits ein Timer mit diesem Namen.",
+        "performance": "Bitte beachte, dass je mehr Timer du erstellt es zu Performance Verlusten kommen kann.",
+        "created": "Der Timer %s mit %s Minuten wurde erstellt."
+      }
+    },
+    "text": {
+      "found": "gefunden.",
+      "user-farming-enter": "%s hat die Farming-Höhle betreten.",
+      "no-fetch-name": "Der Name für %s konnte nicht abgerufen werden.",
+      "effect-select": "Effekt Dauer wählen",
+      "new-update": "§aEin neues Addon-Update ist verfügbar. §7Das Update wird installiert, wenn du das Spiel schließt."
+    },
+    "notification": {
+      "new-chat-message": "Neue Chat Nachricht",
+      "booster-export": {
+        "title": "Booster-Export",
+        "no-boosters": "Es sind keine Booster zum exportieren vorhanden.",
+        "saved": "Die Übersicht deiner gefarmten Booster wurde gespeichert.",
+        "open-folder": "Ordner öffnen"
+      },
+      "chat": {
+        "title": "Addon-Chat",
+        "connected": "Erfolgreich zum Chat-Server verbunden.",
+        "no-connection": "Keine Verbindung zum Chat-Server möglich.",
+        "timed": "Verbindung zum Chat-Server verloren."
+      },
+      "timer": {
+        "finished": {
+          "title": "Dein Timer ist abgelaufen",
+          "text": "Der Timer mit dem Namen %s ist abgelaufen."
+        },
+        "deleted": {
+          "title": "Timer wurde gelöscht",
+          "text": "Der Timer %s wurde gelöscht."
+        }
+      },
+      "farming": {
+        "left": {
+          "title": "Farming-Höhle verlassen",
+          "reset-question": "Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?",
+          "reset-button": "Zurücksetzen",
+          "reset": "Dein Block-, Kill- und Boosterzähler wurde zurückgesetzt."
+        }
+      },
+      "break-goal": {
+        "title": "Abbau Ziel",
+        "text": "Du hast dein Abbau Ziel erreicht!",
+        "set": "Du hast dein Abbau Ziel auf %s Blöcke gesetzt.",
+        "no-number": "Bitte gebe eine Zahl als Input ein."
+      },
+      "balance-reached": {
+        "miner": {
+          "title": "Geld für Arbeiter erreicht!",
+          "text": "Du hast das Geld für den nächsten Minenarbeiter erreicht."
+        },
+        "debris": {
+          "title": "Geld für Geröll erreicht!",
+          "text": "Du hast das Geld zum entfernen des Geröll erreicht."
+        }
+      }
+    },
     "settings": {
       "name": "MoneyMaker",
       "enabled": {
-        "name": "Enabled"
+        "name": "Aktiviert"
       },
       "shortBoosterMessage": {
         "name": "Booster Nachrichten kürzen"
@@ -52,6 +126,7 @@
     "ui": {
       "start": {
         "title": "MoneyMaker Hauptmenü",
+        "current-timers": "Aktuell laufende Timer",
         "break-goal": {
           "title": "Abbau Ziel",
           "description": "Soll die Funktion für das Abbau Ziel aktiviert sein?",
@@ -60,7 +135,10 @@
         }
       },
       "booster": {
-        "title": "Liste der gefarmten Booster"
+        "title": "Liste der gefarmten Booster",
+        "boost-total": "Gesamt: %s",
+        "sorting": "Sortierung",
+        "export": "Als CSV exportieren"
       },
       "chat": {
         "title": "MoneyMaker Addon Chat",
@@ -77,6 +155,7 @@
         }
       },
       "secret": {
+        "title": "Super Secret Einstellungen",
         "toggleJoinMessageTitle": "Join Nachrichten",
         "exportOnShutdownTitle": "Export beim beenden",
         "chat-reconnect": "Chat Reconnect Knopf"
@@ -87,7 +166,8 @@
         "name": "Booster-Count"
       },
       "block_session": {
-        "name": "Blöcke/Sitzung"
+        "name": "Blöcke/Sitzung",
+        "blocks": "Blöcke"
       },
       "break_goal": {
         "name": "Abbau Ziel"
@@ -96,7 +176,8 @@
         "name": "Kontostand"
       },
       "worker_count": {
-        "name": "Arbeiter Anzahl"
+        "name": "Arbeiter Anzahl",
+        "miners": "Minenarbeiter"
       },
       "debris_price": {
         "name": "Geröll Preis"
@@ -111,7 +192,9 @@
         "name": "Schwert Statistiken",
         "showIcons": {
           "name": "Mit Icons anzeigen"
-        }
+        },
+        "rank": "Schwert Rang",
+        "kills": "Schwert Kills"
       },
       "kill_counter": {
         "name": "Mob Kill Zähler"
@@ -120,7 +203,8 @@
         "name": "Timer",
         "maxDisplayedTimers": {
           "name": "Angezeigte Timers"
-        }
+        },
+        "currentTimers": "Aktuell laufende Timer:"
       }
     }
   }

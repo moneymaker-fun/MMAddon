@@ -77,7 +77,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
     ComponentRenderer componentRenderer = this.labyAPI.renderPipeline().componentRenderer();
     int x = 1;
     int y = 1;
-    Component title = Component.text("Aktuell laufende Timer: ");
+    Component title = Component.translatable("moneymaker.hudWidget.timer_display.currentTimers");
     RenderableComponent titleComponent = RenderableComponent.of(title);
     if(stack != null) {
       componentRenderer.builder()

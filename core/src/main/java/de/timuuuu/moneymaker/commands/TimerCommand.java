@@ -5,9 +5,12 @@ import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTimer;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.chat.command.Command;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 
 public class TimerCommand extends Command {
 
+  private int maxNameLength = 32;
   private int warningAmount = 10;
   private boolean warningSent = false;
 
@@ -30,26 +33,29 @@ public class TimerCommand extends Command {
             builder.append(arguments[i]).append(" ");
           }
           String timerName = builder.toString().trim();
-          if(timerName.length() <= 32) {
+          if(timerName.length() <= maxNameLength) {
             if(!Util.timers.containsKey(timerName)) {
               Util.timers.put(timerName, new MoneyTimer(timerName, minutes).start());
-              this.displayMessage(AddonSettings.prefix + "§7Der Timer §e" + timerName + " §7mit §e" + minutes + " Minuten §7wurde erstellt.");
+              this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.created", TextColor.color(170, 170, 170),
+                Component.text(timerName, TextColor.color(255, 255, 85)), Component.text(minutes, TextColor.color(255, 255, 85))
+              )));
               this.addon.startActivity.reloadScreen();
               if(Util.timers.size() > warningAmount & !warningSent) {
                 warningSent = true;
-                this.displayMessage(AddonSettings.prefix + "§7Bitte beachte, dass je mehr Timer du erstellt es zu Performance Verlusten kommen kann.");
+                this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.performance", TextColor.color(255, 85, 85))));
               }
             } else {
-              this.displayMessage(AddonSettings.prefix + "§cEs existiert bereits ein Timer mit diesem Namen.");
+              this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.already-exists", TextColor.color(255, 85, 85))));
             }
           } else {
-            this.displayMessage(AddonSettings.prefix + "§cDer Timer-Name darf nur 32 Zeichen lang sein.");
+            this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.max-length", TextColor.color(255, 85, 85),
+                Component.text(maxNameLength))));
           }
         } catch (NumberFormatException ignored) {
-          this.displayMessage(AddonSettings.prefix + "§c<Zeit in Minuten> muss eine Zahl sein.");
+          this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.no-number", TextColor.color(255, 85, 85))));
         }
       } else {
-        this.displayMessage(AddonSettings.prefix + "§cBitte nutze /mm-timer <Zeit in Minuten> <Name des Timers>");
+        this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.usage", TextColor.color(255, 85, 85))));
       }
     }
     return true;

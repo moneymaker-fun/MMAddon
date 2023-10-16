@@ -50,7 +50,8 @@ public class ChatReceiveListener {
           event.setCancelled(true);
         if (plain.contains("Booster (") && plain.contains(")")) {
           String boost = plain.replace("[MoneyMaker]", "");
-          this.addon.displayMessage(AddonSettings.prefix + "§a" + boost + " gefunden.");
+          Component component = Component.text(AddonSettings.prefix + "§a" + boost + " ").append(Component.translatable("moneymaker.text.found"));
+          this.addon.displayMessage(component);
           event.setCancelled(true);
         }
       }
@@ -67,16 +68,17 @@ public class ChatReceiveListener {
         Booster.insertBooster(boost, time);
       }
 
+      //TODO: Add english texts
       if(plain.contains("[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet")) {
         AddonSettings.nextWorkerCost = "X";
         AddonSettings.workerNotifySent = false;
       }
-      if (plain.startsWith("[MoneyMaker] Das geröll wird in") && plain.contains("entfernt")) {
+      if(plain.startsWith("[MoneyMaker] Das geröll wird in") && plain.contains("entfernt")) {
         AddonSettings.debrisCost = "X";
         AddonSettings.debrisNotifySent = false;
       }
 
-      if(plain.contains("Du hast den Effekt dieses Arbeiters aktiviert")) {
+      if(plain.contains("[MoneyMaker] Du hast den Effekt dieses Arbeiters aktiviert") || plain.contains("[MoneyMaker] You have activated the effect of this worker")) {
         if(this.addon.configuration().showTimersOnEffect().get()) {
           AtomicInteger timers = new AtomicInteger();
           Util.timers.values().forEach(timer -> {
@@ -84,7 +86,7 @@ public class ChatReceiveListener {
               timers.getAndIncrement();
             }
           });
-          TextComponent component = Component.text(AddonSettings.prefix + "§7Effekt Dauer wählen")
+          TextComponent component = Component.text(AddonSettings.prefix + "§7").append(Component.translatable("moneymaker.text.effect-select"))
               .append(Component.text(" §8[§e5m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 5 Effekt-Timer-" + timers.get()))
                   .append(Component.text(" §8[§e10m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 10 Effekt-Timer-" + timers.get())))
                   .append(Component.text(" §8[§e15m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 15 Effekt-Timer-" + timers.get())))

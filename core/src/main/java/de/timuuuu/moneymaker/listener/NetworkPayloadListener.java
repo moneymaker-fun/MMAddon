@@ -10,6 +10,7 @@ import de.timuuuu.moneymaker.utils.Booster;
 import java.util.UUID;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
 import net.labymod.api.event.client.network.server.ServerLoginEvent;
@@ -71,11 +72,14 @@ public class NetworkPayloadListener {
 
               if(AddonSettings.playingOn.contains("Farming") && gameMode.contains("Mine")) {
                 if(AddonSettings.sessionBlocks > 0) {
-                  MoneyMakerAddon.pushNotification(Component.text("§bFarminghöhle verlassen"), Component.text("§7Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?"),
-                      Component.text("Zurücksetzen"), () -> {
+                  MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
+                      Component.translatable("moneymaker.notification.farming.left.reset-question", TextColor.color(170, 170, 170)),
+                      Component.translatable("moneymaker.notification.farming.left.reset-button"), () -> {
                         AddonSettings.sessionBlocks = 0;
                         Booster.sessionBoost.set(0);
-                        this.addon.pushNotification(Component.text("§bFarminghöhle verlassen"), Component.text("§eDein Block-, Kill- und Boosterzähler wurde zurückgesetzt."));
+                        AddonSettings.sessionKills = 0;
+                        this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
+                            Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
                       });
                 }
               }
@@ -92,7 +96,7 @@ public class NetworkPayloadListener {
               if(gameMode.contains("MoneyMaker")) {
                 if(AddonUpdater.updateAvailable() & !AddonUpdater.notified) {
                   AddonUpdater.notified = true;
-                  this.addon.displayMessage(AddonSettings.prefix + "§aEin neues Addon-Update ist verfügbar. §7Das update wird installiert, wenn du das Spiel schließt.");
+                  this.addon.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.text.new-update")));
                 }
               }
 
@@ -114,9 +118,13 @@ public class NetworkPayloadListener {
                 JsonObject object = data.getAsJsonObject();
                 Laby.labyAPI().labyNetController().loadNameByUniqueId(UUID.fromString(object.get("uuid").getAsString()), result -> {
                   if (!result.hasException()) {
-                    this.addon.displayMessage(AddonSettings.prefix + result.get() + " hat die Farming-Höhle betreten.");
+                    Component component = Component.text(AddonSettings.prefix)
+                        .append(Component.translatable("moneymaker.text.user-farming-enter", Component.text(result.get())));
+                    this.addon.displayMessage(component);
                   } else {
-                    this.addon.displayMessage(AddonSettings.prefix + "Konnte Name für UUID "+object.get("uuid") + " nicht abrufen.");
+                    Component component = Component.text(AddonSettings.prefix)
+                        .append(Component.translatable("moneymaker.text.no-fetch-name", Component.text(object.get("uuid").getAsString())));
+                    this.addon.displayMessage(component);
                   }
                 });
 

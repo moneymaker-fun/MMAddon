@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.util.concurrent.task.Task;
 
 public class ChatClient {
@@ -42,7 +43,8 @@ public class ChatClient {
       online = true;
       if(reconnect) {
         addon.chatActivity.reloadScreen();
-        addon.pushNotification(Component.text("Chat-Server"), Component.text("§aErfolgreich zum Server verbunden."));
+        addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+            Component.translatable("moneymaker.notification.chat.connected", TextColor.color(85, 255, 85)));
       }
 
       new Thread(() -> {
@@ -71,7 +73,8 @@ public class ChatClient {
     } catch (IOException e) {
         online = false;
         if(reconnect) {
-          addon.pushNotification(Component.text("Chat-Server"), Component.text("§cKeine Verbindung zum Chat-Server möglich."));
+          addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+              Component.translatable("moneymaker.notification.chat.no-connection", TextColor.color(255, 85, 85)));
           addon.chatActivity.reloadScreen();
         }
         e.printStackTrace();
@@ -92,7 +95,8 @@ public class ChatClient {
       boolean status = isPortOpen(SERVER_IP, SERVER_PORT);
       if(!status && online) {
         addon.chatActivity.reloadScreen();
-        addon.pushNotification(Component.text("Chat-Server"), Component.text("§cVerbindung zum Chat-Server verloren."));
+        addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+            Component.translatable("moneymaker.notification.chat.timed", TextColor.color(255, 85, 85)));
       }
       if(status & !online) {
         connect(true);

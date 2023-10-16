@@ -8,37 +8,111 @@
     }
   },
   "moneymaker": {
+    "navigation": {
+      "title": "MoneyMaker",
+      "main-menu": "Main Menu",
+      "booster": "Booster",
+      "chat": "Chat",
+      "secret": "Secret"
+    },
+    "command": {
+      "reset": "The data has been reset.",
+      "timer": {
+        "usage": "Please use /mm-timer <Time in minutes> <name of the timer>",
+        "no-number": "<Time in minutes> must be a number.",
+        "max-length": "The timer name can be a maximum of %s characters long.",
+        "already-exists": "A timer with this name already exists.",
+        "performance": "Please note that the more timers you create, the performance loss may occur.",
+        "created": "The timer %s with %s minutes has been created."
+      }
+    },
+    "text": {
+      "found": "found.",
+      "user-farming-enter": "%s has joined the farming cave.",
+      "no-fetch-name": "The name for %s could not be retrieved.",
+      "effect-select": "Select effect duration",
+      "new-update": "§aA new addon update is available. §7The update will install when you close the game."
+    },
+    "notification": {
+      "new-chat-message": "New Chat Message",
+      "booster-export": {
+        "title": "Booster-Export",
+        "no-boosters": "There are no boosters to export.",
+        "saved": "The overview of your farmed boosters has been saved.",
+        "open-folder": "Open folder"
+      },
+      "chat": {
+        "title": "Addon-Chat",
+        "connected": "Successfully connected to the chat server.",
+        "no-connection": "Unable to connect to the chat server.",
+        "timed": "Lost connection to chat server."
+      },
+      "timer": {
+        "finished": {
+          "title": "Your timer has expired",
+          "text": "The timer named %s has expired."
+        },
+        "deleted": {
+          "title": "Timer has been deleted",
+          "text": "The timer %s has been deleted."
+        }
+      },
+      "farming": {
+        "left": {
+          "title": "Leave farming cave",
+          "reset-question": "Do you want to reset the block, kill and booster counters?",
+          "reset-button": "Reset",
+          "reset": "Your block, kill and booster counters have been reset."
+        }
+      },
+      "break-goal": {
+        "title": "Break Goal",
+        "text": "You have reached your break goal!",
+        "set": "You have set your break goal to %s blocks.",
+        "no-number": "Please enter a number as input."
+      },
+      "balance-reached": {
+        "miner": {
+          "title": "Money for workers reached!",
+          "text": "You have reached the money for the next miner."
+        },
+        "debris": {
+          "title": "Money for debris reached!",
+          "text": "You have reached the money to remove the debris."
+        }
+      }
+    },
     "settings": {
       "name": "MoneyMaker",
       "enabled": {
         "name": "Enabled"
       },
       "shortBoosterMessage": {
-        "name": "Short Booster Messages"
+        "name": "Short booster messages"
       },
       "hideWorkerUpdateMessage": {
-        "name": "Hide Worker Upgrade Message"
+        "name": "Upgrade Hide messages from workers"
       },
       "hideTeleportMessage": {
-        "name": "Hide Teleport Messages"
+        "name": "Hide teleport messages"
       },
       "notifyOnMoneyReached": {
         "name": "Notification when money for workers/debris reached"
       },
-      "showTimersOnEffect":{
+      "showTimersOnEffect": {
         "name": "Show clickable timers in chat",
         "description": "Displays a clickable message in chat to activate a timer when a worker's effect activates."
       },
       "hideFullBoosterInventory": {
-        "name": "Hide full Booster Inventory message"
+        "name": "Full Booster Inventory Hide Message"
       },
       "chatNotification": {
         "name": "Chat Notifications",
-        "description": "Receive notification of new messages via the Addon Chat"
+        "description": "Receive notification of new messages via the addon chat"
       },
       "chatNotificationSound": {
-        "name": "Chat Notification Sounds",
-        "description": "Receive a notification tone for new messages via the Addon Chat"
+        "name": "Chat Notification sound",
+        "description": "Receive a notification sound for new messages via the addon chat"
       },
       "header": {
         "general": {
@@ -52,19 +126,23 @@
     "ui": {
       "start": {
         "title": "MoneyMaker Main Menu",
+        "current-timers": "Currently active timers",
         "break-goal": {
           "title": "Break Goal",
           "description": "Should the break goal function be activated?",
           "input-title": "Enter Break Goal",
-          "input-description": "Enter the Break Goal you want to achieve."
+          "input-description": "Enter the break goal you want to achieve."
         }
       },
       "booster": {
-        "title": "List of farmed boosters"
+        "title": "List of farmed boosters",
+        "boost-total": "Total: %s",
+        "sorting": "Sorting",
+        "export": "Export as CSV"
       },
       "chat": {
         "title": "MoneyMaker Addon Chat",
-        "server-offline": "The Chat-Server is currently offline.",
+        "server-offline": "The chat server is currently not available.",
         "online": "§bCurrently online",
         "server": {
           "online": "§aChat-Server is online",
@@ -72,13 +150,14 @@
           "reconnect-button": "Reconnect"
         },
         "muted": {
-          "title": "You have been muted.",
+          "title": "You have been muted from the chat.",
           "reason": "Reason: "
         }
       },
       "secret": {
+        "title": "Super Secret Settings",
         "toggleJoinMessageTitle": "Join Messages",
-        "exportOnShutdownTitle": "Export on shutdown",
+        "exportOnShutdownTitle": "Export on exit",
         "chat-reconnect": "Chat Reconnect Button"
       }
     },
@@ -87,7 +166,8 @@
         "name": "Booster-Count"
       },
       "block_session": {
-        "name": "Blocks/Session"
+        "name": "Blocks/Session",
+        "blocks": "Blocks"
       },
       "break_goal": {
         "name": "Break Goal"
@@ -96,7 +176,8 @@
         "name": "Balance"
       },
       "worker_count": {
-        "name": "Worker Count"
+        "name": "Miner Count",
+        "miners": "Miners"
       },
       "debris_price": {
         "name": "Debris Price"
@@ -105,13 +186,15 @@
         "name": "Debris Timer"
       },
       "worker_price": {
-        "name": "Show Miner Price"
+        "name": "Show worker price"
       },
       "sword_stats": {
         "name": "Sword Statistics",
         "showIcons": {
           "name": "Show with icons"
-        }
+        },
+        "rank": "Sword Rank",
+        "kills": "Sword Kills"
       },
       "kill_counter": {
         "name": "Mob Kill Counter"
@@ -120,7 +203,8 @@
         "name": "Timer",
         "maxDisplayedTimers": {
           "name": "Displayed Timers"
-        }
+        },
+        "currentTimers": "Currently running timers:"
       }
     }
   }

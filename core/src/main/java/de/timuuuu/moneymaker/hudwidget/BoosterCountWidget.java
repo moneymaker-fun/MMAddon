@@ -38,7 +38,6 @@ public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public Icon createPlaceholderIcon() {
-    //return Icon.texture(ResourceLocation.create("minecraft", "textures/item/experience_bottle.png"));
     return Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 0);
   }
 

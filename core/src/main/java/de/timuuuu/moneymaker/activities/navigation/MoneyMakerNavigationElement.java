@@ -24,7 +24,7 @@ public class MoneyMakerNavigationElement extends ScreenNavigationElement {
 
   @Override
   public Component getDisplayName() {
-    return Component.text("MoneyMaker");
+    return Component.translatable("moneymaker.navigation.title");
   }
 
   @Override

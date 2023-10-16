@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.utils;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.util.concurrent.task.Task;
 import java.util.concurrent.TimeUnit;
 
@@ -38,7 +39,12 @@ public class MoneyTimer {
         this.task.cancel();
         Util.timers.remove(this.name);
         MoneyMakerAddon.instance().labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
-        MoneyMakerAddon.instance().pushNotification(Component.text("Timer abgelaufen!"), Component.text("§7Dein Timer mit dem Namen §e" + this.name + " §7ist abgelaufen."));
+        MoneyMakerAddon.instance().pushNotification(
+            Component.translatable("moneymaker.notification.timer.finished.title"),
+            Component.translatable("moneymaker.notification.timer.finished.text", TextColor.color(170, 170, 170),
+                Component.text(this.name, TextColor.color(255, 255, 85))
+            )
+        );
         MoneyMakerAddon.instance().startActivity.reloadScreen();
       }
     }).repeat(1, TimeUnit.SECONDS).build();

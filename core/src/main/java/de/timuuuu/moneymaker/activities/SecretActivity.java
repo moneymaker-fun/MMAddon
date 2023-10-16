@@ -27,8 +27,7 @@ public class SecretActivity extends Activity {
   public void initialize(Parent parent) {
     super.initialize(parent);
 
-    ComponentWidget titleWidget = ComponentWidget.text("Super secret settings");
-    titleWidget.addId("secret-title");
+    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.secret.title").addId("secret-title");
     this.document.addChild(titleWidget);
 
     Util.addFeedbackButton(this.document);
@@ -38,8 +37,7 @@ public class SecretActivity extends Activity {
     this.document.addChild(container);
 
     //ShowJoins
-    ComponentWidget toggleJoinMessageTitle = ComponentWidget.i18n("moneymaker.ui.secret.toggleJoinMessageTitle");
-    toggleJoinMessageTitle.addId("showJoinsTitle");
+    ComponentWidget toggleJoinMessageTitle = ComponentWidget.i18n("moneymaker.ui.secret.toggleJoinMessageTitle").addId("showJoinsTitle");
     this.document.addChild(toggleJoinMessageTitle);
 
     SwitchWidget showJoinsSwitch = SwitchWidget.create(value -> {
@@ -49,8 +47,7 @@ public class SecretActivity extends Activity {
     this.document.addChild(showJoinsSwitch);
 
     //ExportOnShutdown
-    ComponentWidget exportOnShutdownTitle = ComponentWidget.i18n("moneymaker.ui.secret.exportOnShutdownTitle");
-    exportOnShutdownTitle.addId("exportOnShutdownTitle");
+    ComponentWidget exportOnShutdownTitle = ComponentWidget.i18n("moneymaker.ui.secret.exportOnShutdownTitle").addId("exportOnShutdownTitle");
     this.document.addChild(exportOnShutdownTitle);
 
     SwitchWidget exportOnShutdownSwitch = SwitchWidget.create(value -> {
@@ -60,8 +57,7 @@ public class SecretActivity extends Activity {
     this.document.addChild(exportOnShutdownSwitch);
 
     //ExportOnShutdown
-    ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat-reconnect");
-    chatReconnectTitle.addId("chat-reconnect-title");
+    ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat-reconnect").addId("chat-reconnect-title");
     this.document.addChild(chatReconnectTitle);
 
     SwitchWidget chatReconnectSwitch = SwitchWidget.create(value -> {

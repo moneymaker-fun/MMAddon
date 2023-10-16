@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.activities.widgets.TimerWidget;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
@@ -68,7 +69,7 @@ public class StartActivity extends Activity {
       container.addChild(breakGoalInput);
     }
 
-    ComponentWidget timerTitle = ComponentWidget.text("Aktuell laufende Timer").addId("timer-title");
+    ComponentWidget timerTitle = ComponentWidget.i18n("moneymaker.ui.start.current-timers").addId("timer-title");
 
     container.addChild(timerTitle);
 
@@ -92,9 +93,12 @@ public class StartActivity extends Activity {
     try {
       int count = Integer.parseInt(input);
       AddonSettings.breakGoal = count;
-      this.addon.pushNotification(Component.text("§eAbbau Ziel"), Component.text("§7Du hast dein Abbau Ziel auf §e" + count + " §7Blöcke gesetzt."));
+      this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
+          Component.translatable("moneymaker.notification.break-goal.set", TextColor.color(170, 170, 170),
+              Component.text(count, TextColor.color(255, 255, 85))));
     } catch (NumberFormatException ignored) {
-      this.addon.pushNotification(Component.text("§4Fehler"), Component.text("§cBitte gebe eine Zahl als Input ein."));
+      this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
+          Component.translatable("moneymaker.notification.break-goal.no-number", TextColor.color(255, 85, 85)));
     }
   }
 

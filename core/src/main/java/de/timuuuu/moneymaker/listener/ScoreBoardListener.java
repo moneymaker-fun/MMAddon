@@ -6,6 +6,7 @@ import de.timuuuu.moneymaker.utils.ChatUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
 
@@ -47,7 +48,8 @@ public class ScoreBoardListener {
               AddonSettings.breakGoalBlocks++;
               if(AddonSettings.breakGoal == (AddonSettings.breakGoalBlocks / 2)) {
                 this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
-                this.addon.pushNotification(Component.text("§eAbbau Ziel"), Component.text("§aDu hast dein Abbau Ziel erreicht! §7Das Abbau Zeil wurde deaktiviert."));
+                this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
+                    Component.translatable("moneymaker.notification.break-goal.text", TextColor.color(85, 255, 85)));
                 AddonSettings.breakGoalEnabled = false;
                 AddonSettings.breakGoal = 0;
                 AddonSettings.breakGoalBlocks = 0;
@@ -73,8 +75,8 @@ public class ScoreBoardListener {
           if(CurrencyUtil.units.get(balEinheit) >= CurrencyUtil.units.get(workerEinheit) && balance >= workerCost) {
             if(this.addon.configuration().notifyOnMoneyReached().get()) {
               AddonSettings.workerNotifySent = true;
-              this.addon.pushNotification(Component.text("§aGeld für Arbeiter erreicht!"),
-                  Component.text("§7Du hast das Geld für den nächsten Minenarbeiter erreicht."));
+              this.addon.pushNotification(Component.translatable("moneymaker.notification.balance-reached.miner.title", TextColor.color(85, 255, 85)),
+                  Component.translatable("moneymaker.notification.balance-reached.miner.text", TextColor.color(170, 170, 170)));
               this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
             }
           }
@@ -87,8 +89,8 @@ public class ScoreBoardListener {
           if(CurrencyUtil.units.get(balEinheit) >= CurrencyUtil.units.get(debrisEinheit) && balance >= debrisCost) {
             if(this.addon.configuration().notifyOnMoneyReached().get()) {
               AddonSettings.debrisNotifySent = true;
-              this.addon.pushNotification(Component.text("§aGeld für Geröll erreicht!"),
-                  Component.text("§7Du hast das Geld zum entfernen des Gerölls erreicht."));
+              this.addon.pushNotification(Component.translatable("moneymaker.notification.balance-reached.debris.title", TextColor.color(85, 255, 85)),
+                  Component.translatable("moneymaker.notification.balance-reached.debris.text", TextColor.color(170, 170, 170)));
               this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
             }
           }

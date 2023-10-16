@@ -34,12 +34,12 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
     boolean showIcon = this.getConfig().showIcons().get();
     this.rankLine = createLine(
         showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.text(" Rang"))
-            : Component.text("Schwert Rang"),
+            : Component.translatable("moneymaker.hudWidget.sword_stats.rank"),
         "0"
     );
     this.mobsLine = createLine(
         showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.text(" Kills"))
-            : Component.text("Schwert Kills"),
+            : Component.translatable("moneymaker.hudWidget.sword_stats.kills"),
         "0"
     );
     /*this.rankLine = createLine(

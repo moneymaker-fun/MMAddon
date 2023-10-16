@@ -10,6 +10,7 @@ import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
@@ -64,7 +65,8 @@ public class MoneyAddonListener {
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
       if(this.addon.configuration().chatNotification().get()) {
         this.addon.pushNotification(
-            Component.text("§aNeue Chat Nachricht"), Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
+            Component.translatable("moneymaker.notification.new-chat-message", TextColor.color(85, 255, 85)),
+            Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
             Icon.head(chatMessage.uuid()));
       }
       if(this.addon.configuration().chatNotificationSound().get()) {

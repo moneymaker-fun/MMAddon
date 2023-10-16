@@ -5,33 +5,33 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Booster {
 
-  private static LinkedList<Booster> boosterguilist = new LinkedList<>();
+  private static LinkedList<Booster> boosterList = new LinkedList<>();
 
   public static AtomicInteger sessionBoost = new AtomicInteger(0);
 
   public static void insertBooster(int boost, int time) {
     int i;
-    for (i = 0; i < boosterguilist.size(); i++) {
-      if (boosterguilist.get(i).getBoost() == boost && boosterguilist.get(i).getTime() == time) {
-        boosterguilist.get(i).addAmnt();
+    for (i = 0; i < boosterList.size(); i++) {
+      if (boosterList.get(i).getBoost() == boost && boosterList.get(i).getTime() == time) {
+        boosterList.get(i).addAmnt();
         return;
       }
     }
-    for (i = 0; i < boosterguilist.size(); i++) {
-      if (boosterguilist.get(i).getBoost() < boost) {
-        boosterguilist.add(i, new Booster(boost, time));
+    for (i = 0; i < boosterList.size(); i++) {
+      if (boosterList.get(i).getBoost() < boost) {
+        boosterList.add(i, new Booster(boost, time));
         return;
       }
-      if (boosterguilist.get(i).getBoost() == boost && boosterguilist.get(i).getTime() < time) {
-        boosterguilist.add(i, new Booster(boost, time));
+      if (boosterList.get(i).getBoost() == boost && boosterList.get(i).getTime() < time) {
+        boosterList.add(i, new Booster(boost, time));
         return;
       }
     }
-    boosterguilist.add(new Booster(boost, time));
+    boosterList.add(new Booster(boost, time));
   }
 
-  public static LinkedList<Booster> getBoosterguilist() {
-    return boosterguilist;
+  public static LinkedList<Booster> boosterList() {
+    return boosterList;
   }
 
   private int boost;
