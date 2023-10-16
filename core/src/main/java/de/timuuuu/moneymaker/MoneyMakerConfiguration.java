@@ -29,6 +29,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> showTimersOnEffect = new ConfigProperty<>(false);
 
+  @SwitchSetting
+  private final ConfigProperty<Boolean> hideFullBoosterInventory = new ConfigProperty<>(false);
+
   @SettingSection(value = "chat", center = true)
 
   @SwitchSetting
@@ -65,6 +68,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> showTimersOnEffect() {
     return showTimersOnEffect;
+  }
+
+  public ConfigProperty<Boolean> hideFullBoosterInventory() {
+    return hideFullBoosterInventory;
   }
 
   // Chat Section

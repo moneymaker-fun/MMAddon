@@ -94,6 +94,19 @@ public class ChatReceiveListener {
         }
       }
 
+      if(plain.contains("[MoneyMaker] Dein Booster-Inventar hat das Limit von") || plain.contains("[MoneyMaker] Your booster inventory has reached the limit of")) {
+        if(this.addon.configuration().hideFullBoosterInventory().get()) {
+          event.setCancelled(true);
+        }
+      }
+
+      if((plain.contains("[MoneyMaker] Dein ") & plain.contains(" Booster (") & plain.contains(" wurde aktiviert")) ||
+          (plain.contains("[MoneyMaker] Your ") & plain.contains(" booster (") & plain.contains(" was activated"))) {
+        if(this.addon.configuration().hideFullBoosterInventory().get()) {
+          event.setCancelled(true);
+        }
+      }
+
     }
   }
 }

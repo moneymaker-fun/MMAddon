@@ -29,6 +29,9 @@
         "name": "Klickbare Timer im Chat anzeigen",
         "description": "Zeigt eine klickbare Nachricht im Chat an um einen Timer zu aktivieren, wenn der Effekt eines Arbeiters aktiviert wird."
       },
+      "hideFullBoosterInventory": {
+        "name": "Volle Booster Inventar Nachricht verstecken"
+      },
       "chatNotification": {
         "name": "Chat Benachrichtigung",
         "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
