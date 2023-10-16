@@ -137,7 +137,7 @@ ChatMessage {
   }
 
   .chat-muted-title {
-    bottom: 40%;
+    bottom: 42%;
     alignment-x: center;
     text-color: dark_red;
     font-size: 1.4;
