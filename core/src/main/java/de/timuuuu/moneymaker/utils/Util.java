@@ -47,15 +47,28 @@ public class Util {
     return AddonSettings.playerStatus.get(uuid).rank().isStaff();
   }
 
-  public static int timeToInt(String input) {
+  public static int timeToInt(String input, boolean hours) {
+    // Incoming format
+    // Normal >> 20:00
+    // Hours >> 15:50:26
     if(!input.contains(":")) return 0;
     String[] split = input.split(":");
-    if(split.length != 2) return 0;
+    if(hours) {
+      if(split.length != 3) return 0;
+    } else {
+      if(split.length != 2) return 0;
+    }
 
     int seconds = 0;
     try {
-      seconds = Integer.parseInt(split[1]);
-      seconds += Integer.parseInt(split[1])*60;
+      if(!hours) {
+        seconds = Integer.parseInt(split[1]);
+        seconds += Integer.parseInt(split[0])*60;
+      } else {
+        seconds = Integer.parseInt(split[2]);
+        seconds += Integer.parseInt(split[1])*60;
+        seconds += Integer.parseInt(split[0])*60*60;
+      }
     } catch (NumberFormatException ignored) {}
     return seconds;
   }
@@ -63,19 +76,28 @@ public class Util {
   public static String intToTime(int time) {
     long seconds = time;
     long minutes = 0;
+    long hours = 0;
     while (seconds >= 60) {
       seconds-=60;
       minutes++;
     }
+    while (minutes >= 60) {
+      minutes-=60;
+      hours++;
+    }
     String secString = String.valueOf(seconds);
     String minString = String.valueOf(minutes);
+    String hourString = String.valueOf(hours);
+    if(hourString.length() == 1) {
+      hourString = "0" + hourString;
+    }
     if(minString.length() == 1) {
       minString = "0" + minString;
     }
     if(secString.length() == 1) {
       secString = "0" + secString;
     }
-    return minString + ":" + secString;
+    return hourString + ":" + minString + ":" + secString;
   }
 
 }

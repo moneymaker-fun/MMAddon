@@ -48,13 +48,25 @@ public class EntityRenderListener {
       }
     }
 
-    //TODO: Add support for english
-    if(entityName.contains("Geröll entfernen ")) {
-      String time = entityName.replace("Geröll entfernen ", "");
-      if(AddonSettings.debrisTime == 0 & !timerRunning) {
-        AddonSettings.debrisTime = Util.timeToInt(time);
-        startTask();
+    if(entityName.contains("Geröll entfernen ") || entityName.contains("Remove debris ")) {
+      String time = entityName.replace("Geröll entfernen ", "").replace("Remove debris ", "");
+
+      if((time.contains(" Stunde") && time.contains(" Minute")) || (time.contains(" hour") && time.contains(" minute"))) {
+        time = time.replace(" Stunden", "").replace(" Stunde", "").replace(" hours", "").replace(" hours", "");
+        time = time.replace(" Minuten", "").replace(" Minute", "").replace(" minutes", "").replace(" minute", "");
+        time = time.replace(" ", ":");
+        time = time + ":00";
+        if(AddonSettings.debrisTime == 0 & !timerRunning) {
+          AddonSettings.debrisTime = Util.timeToInt(time, true);
+          startTask();
+        }
+      } else {
+        if(AddonSettings.debrisTime == 0 & !timerRunning) {
+          AddonSettings.debrisTime = Util.timeToInt(time, false);
+          startTask();
+        }
       }
+
     }
 
   }
