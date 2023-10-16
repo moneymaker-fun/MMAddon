@@ -28,7 +28,7 @@ public class SecretActivity extends Activity {
     super.initialize(parent);
 
     ComponentWidget titleWidget = ComponentWidget.text("Super secret settings");
-    titleWidget.addId("booster-title");
+    titleWidget.addId("secret-title");
     this.document.addChild(titleWidget);
 
     Util.addFeedbackButton(this.document);
