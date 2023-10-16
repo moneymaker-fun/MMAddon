@@ -2,18 +2,22 @@ package de.timuuuu.moneymaker.activities.widgets;
 
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
-import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
+import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
+import net.labymod.api.client.resources.ResourceLocation;
 
-public class ChatMessageWidget extends HorizontalListWidget { // FlexibleContentWidget
+public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleContentWidget | Default > HorizontalListWidget
 
   private String time;
   private MoneyChatMessage chatMessage = null;
   private String customMessage;
-  private boolean headless = false;
+  private boolean systemMessage = false;
 
   public ChatMessageWidget(String time, MoneyChatMessage chatMessage) {
     this.time = time;
@@ -23,44 +27,50 @@ public class ChatMessageWidget extends HorizontalListWidget { // FlexibleContent
   public ChatMessageWidget(String time, String customMessage) {
     this.time = time;
     this.customMessage = customMessage;
-    this.headless = true;
+    this.systemMessage = true;
   }
 
-  /*@Override
+  @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
 
     VerticalListWidget<Widget> flex = new VerticalListWidget<>().addId("flex");
 
-    if(!this.headless) {
-      HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
-      String color;
-      if(!Util.isDev(chatMessage.uuid().toString())) {
-        color = chatMessage.staff() ? "§8[§cStaff§8] §c" : "§b";
+    HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
+    if (!this.systemMessage) {
+      String prefix;
+      if (chatMessage.rank() == Rank.DEVELOPER) {
+        prefix = "§8[§4Dev§8] §4";
+      } else if (chatMessage.rank() == Rank.STAFF) {
+        prefix = "§8[§cStaff§8] §c";
+      } else if (chatMessage.rank() == Rank.DONATOR) {
+        prefix = "§8[§6Don§8] §6";
       } else {
-        color = "§8[§4Dev§8] §c";
+        prefix = "§e";
       }
-      header.addEntry(ComponentWidget.text(color + chatMessage.userName()).addId("sender"));
-      header.addEntry(ComponentWidget.text(time).addId("timestamp"));
-      flex.addChild(header);
+      header.addEntry(new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar"));
+      header.addEntry(ComponentWidget.text(prefix + chatMessage.userName()).addId("sender"));
+    } else {
+      header.addEntry(new IconWidget(Icon.sprite16(
+          ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2)).addId("avatar"));
+      header.addEntry(ComponentWidget.text("System").addId("sender"));
     }
+    header.addEntry(ComponentWidget.text(time).addId("timestamp"));
+    flex.addChild(header);
 
     VerticalListWidget<Widget> messageContentWidget = new VerticalListWidget<>().addId("message-content");
     ComponentWidget componentMessageWidget = ComponentWidget.text(chatMessage != null ? chatMessage.message() : customMessage).addId(new String[] {"component-message", "tile"});
     messageContentWidget.addChild(componentMessageWidget);
-    if(!this.headless) {
+    if(!this.systemMessage) {
       messageContentWidget.addId("headless");
     }
 
+    flex.addChild(messageContentWidget);
     this.addContent(flex);
-    if(!this.headless) {
-      IconWidget avatar = new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar");
-      this.addContent(avatar);
-    }
 
-  }*/
+  }
 
-  @Override
+  /*@Override
   public void initialize(Parent parent) {
     super.initialize(parent);
 
@@ -117,6 +127,6 @@ public class ChatMessageWidget extends HorizontalListWidget { // FlexibleContent
 
     }
 
-  }
+  }*/
 
 }

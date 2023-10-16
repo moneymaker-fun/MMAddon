@@ -23,7 +23,6 @@ import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
-import net.labymod.api.client.gui.screen.activity.Links;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
@@ -35,7 +34,7 @@ import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.io.web.result.Result;
 
 @AutoActivity
-@Links({@Link("chat.lss"), @Link("test-chat.lss")})
+@Link("chat.lss")
 public class ChatActivity extends Activity {
 
   private MoneyMakerAddon addon;
@@ -72,7 +71,6 @@ public class ChatActivity extends Activity {
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
               data.addProperty("userName", this.addon.labyAPI().getName());
               data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
-              data.addProperty("afk", false);
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               this.addon.chatClient.sendMessage("playerStatus", data);
 
@@ -94,7 +92,7 @@ public class ChatActivity extends Activity {
 
     chatMessages.forEach(chatList::addChild);
 
-    ScrollWidget chatScroll = new ScrollWidget(chatList, new ListSession<>());
+    ScrollWidget chatScroll = new ScrollWidget(chatList, new ListSession<>()).addId("chat-scroll");
     Task.builder(chatScroll::scrollToBottom).delay(50, TimeUnit.MILLISECONDS).build().execute();
     chatContainer.addChild(chatScroll);
 
@@ -129,7 +127,7 @@ public class ChatActivity extends Activity {
       }
     });
 
-    ScrollWidget onlineScroll = new ScrollWidget(onlineList, new ListSession<>());
+    ScrollWidget onlineScroll = new ScrollWidget(onlineList, new ListSession<>()).addId("online-scroll");
     onlineContainer.addChild(onlineScroll);
 
     // Input Container
@@ -146,7 +144,7 @@ public class ChatActivity extends Activity {
         chatInput = new TextFieldWidget();
         chatInput.addId("chat-input");
         chatInput.submitButton().set(true);
-        chatInput.maximalLength(250);
+        chatInput.maximalLength(200);
         chatInput.submitHandler(message -> this.submitMessage());
 
         inputContainer.addChild(chatInput);
