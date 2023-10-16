@@ -5,6 +5,16 @@
   top: 10;
 }
 
+.chat-reconnect-button {
+  width: fit-content;
+  top: 18;
+  left: 120;
+  padding: 1 5 1 5;
+  height: 10;
+  background-color: red !important;
+  border-color: dark_red !important;
+}
+
 .chat-status {
   font-size: 0.8;
   top: 20;
@@ -23,15 +33,6 @@ Scroll {
    width: 100%;
    height: 90%;
 
-   .booster-entry {
-     top: 30;
-     left: 20;
-     height: 15;
-     width: 100%;
-     tiles-per-line: 5;
-     tile-height: 130;
-   }
-
    .online-entry {
      top: 30;
      left: 20;
@@ -48,6 +49,38 @@ Scroll {
       height: 100%;
       margin-right: 5;
    }
+}
+
+ChatMessage {
+  width: 100%;
+  height: 20;
+
+  .chat-msg-time {
+
+  }
+
+  .chat-msg-icon {
+
+  }
+
+  .chat-msg-playerName {
+
+  }
+
+  .chat-msg-message {
+
+  }
+
+  .timer-name {
+    padding-top: -2;
+    left: 25;
+  }
+
+  .timer-cancel {
+    height: 15;
+    width: 20;
+  }
+
 }
 
 .chat-container {
@@ -103,12 +136,18 @@ Scroll {
     font-size: 1.5;
   }
 
-}
+  .chat-muted-title {
+    bottom: 40%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.4;
+  }
 
-.feedback-button {
-  top:0;
-  right:20;
-  width: fit-content;
-  padding-left: 3;
-  padding-right: 3;
+  .chat-muted-reason {
+    bottom: 20%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.0;
+  }
+
 }
