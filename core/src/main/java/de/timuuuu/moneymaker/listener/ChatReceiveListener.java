@@ -7,6 +7,7 @@ import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Priority;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -50,7 +51,7 @@ public class ChatReceiveListener {
           event.setCancelled(true);
         if (plain.contains("Booster (") && plain.contains(")")) {
           String boost = plain.replace("[MoneyMaker]", "");
-          Component component = Component.text(AddonSettings.prefix + "§a" + boost + " ").append(Component.translatable("moneymaker.text.found"));
+          Component component = Component.text(AddonSettings.prefix + "§a" + boost + " ").append(Component.translatable("moneymaker.text.found", TextColor.color(85, 255, 85)));
           this.addon.displayMessage(component);
           event.setCancelled(true);
         }
