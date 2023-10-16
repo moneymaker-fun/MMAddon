@@ -47,9 +47,9 @@ public class StartActivity extends Activity {
 
     SwitchWidget breakGoalSwitch = SwitchWidget.create(value -> {
       AddonSettings.breakGoalEnabled = value;
+      AddonSettings.breakGoalBlocks = 0;
       if(!value) {
         AddonSettings.breakGoal = 0;
-        AddonSettings.breakGoalBlocks = 0;
       }
       this.reload();
     }).addId("break-goal-switch");
