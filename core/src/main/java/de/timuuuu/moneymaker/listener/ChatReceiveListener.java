@@ -68,12 +68,11 @@ public class ChatReceiveListener {
         Booster.insertBooster(boost, time);
       }
 
-      //TODO: Add english texts
-      if(plain.contains("[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet")) {
+      if(plain.contains("[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet") || plain.contains("[MoneyMaker] The workplace was successfully unlocked")) {
         AddonSettings.nextWorkerCost = "X";
         AddonSettings.workerNotifySent = false;
       }
-      if(plain.startsWith("[MoneyMaker] Das geröll wird in") && plain.contains("entfernt")) {
+      if((plain.startsWith("[MoneyMaker] Das geröll wird in") & plain.contains("entfernt")) || (plain.contains("[MoneyMaker] Debris will be removed in"))) {
         AddonSettings.debrisCost = "X";
         AddonSettings.debrisNotifySent = false;
       }
