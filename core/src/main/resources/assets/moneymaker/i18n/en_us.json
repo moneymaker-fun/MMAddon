@@ -193,8 +193,14 @@
         "showIcons": {
           "name": "Show with icons"
         },
-        "rank": "Sword Rank",
-        "kills": "Sword Kills"
+        "without-icon": {
+          "rank": "Sword Rank",
+          "kills": "Sword Kills"
+        },
+        "with-icon": {
+          "rank": " Rank",
+          "kills": " Kills"
+        }
       },
       "kill_counter": {
         "name": "Mob Kill Counter"

@@ -193,8 +193,14 @@
         "showIcons": {
           "name": "Mit Icons anzeigen"
         },
-        "rank": "Schwert Rang",
-        "kills": "Schwert Kills"
+        "without-icon": {
+          "rank": "Schwert Rang",
+          "kills": "Schwert Kills"
+        },
+        "with-icon": {
+          "rank": " Rang",
+          "kills": " Kills"
+        }
       },
       "kill_counter": {
         "name": "Mob Kill Zähler"
