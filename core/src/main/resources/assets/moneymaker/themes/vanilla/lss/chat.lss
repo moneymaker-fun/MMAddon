@@ -144,7 +144,8 @@
 
     ChatMessage {
       width: 90%;
-      height: 40;
+      height: fit-content;
+      padding-bottom: 5;
 
       .message-header {
         height: 10;
@@ -157,7 +158,7 @@
 
       .message-content {
         width: 90%;
-        height: 100%;
+        height: fit-content;
         .component-message {
           padding: 2 3 2 2;
           border-radius: 0 5 5 5;
@@ -185,7 +186,7 @@
 
       .flex {
         width: 100%;
-        height: 100%;
+        height: fit-content;
         .message-header {
           space-between-entries: 0;
 
