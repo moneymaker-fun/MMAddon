@@ -129,7 +129,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
 
   public static class TimerHudWidgetConfig extends HudWidgetConfig {
 
-    @SliderSetting(min = 2, max = 20)
+    @SliderSetting(min = 2, max = 15)
     private final ConfigProperty<Integer> maxDisplayedTimers = new ConfigProperty<>(5);
 
   }
