@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,7 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import de.timuuuu.moneymaker.MoneyMakerAddon;
+import java.nio.file.Path;
 import net.labymod.api.Laby;
 
 public class AddonUpdater {
@@ -19,6 +20,9 @@ public class AddonUpdater {
   private static String currentVersion = "";
   private static String newestVersion = "";
   private static boolean devEnvironment = false;
+
+  private static Path gameDirectory = Laby.labyAPI().labyModLoader().getGameDirectory();
+  private static Path updatePath = gameDirectory.resolve("MoneyMaker/Updater.jar");
 
   public static void checkVersion() {
     currentVersion = MoneyMakerAddon.instance().addonInfo().getVersion();
@@ -46,26 +50,16 @@ public class AddonUpdater {
     }
   }
 
-  private Thread thread = null;
-
-  public AddonUpdater() {
+  public static void executeUpdater() {
     if(devEnvironment) return;
     if(currentVersion.equals(newestVersion)) return;
-    this.thread = new Thread(() -> {
-      try {
-        File folder = Laby.labyAPI().labyModLoader().getGameDirectory().toFile();
-        File updaterFile = new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile().getPath(), "MoneyMaker/Updater.jar");
-        new ProcessBuilder(new String[]{ "java", "-jar", updaterFile.getAbsolutePath(), "--gameDir="+folder.getAbsolutePath() }).start();
-      } catch (IOException exception) {
-        exception.printStackTrace();
-      }
-    });
-    this.update();
-  }
-
-  private void update() {
-    if(this.thread != null) {
-      this.thread.start();
+    try {
+      File folder = Laby.labyAPI().labyModLoader().getGameDirectory().toFile();
+      File updaterFile = new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile().getPath(), "MoneyMaker/Updater.jar");
+      new ProcessBuilder(new String[]{"java", "-jar", updaterFile.getAbsolutePath(),
+          "--gameDir=" + folder.getAbsolutePath()}).start();
+    } catch (IOException exception) {
+      exception.printStackTrace();
     }
   }
 
