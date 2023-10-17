@@ -7,17 +7,20 @@ import de.timuuuu.moneymaker.utils.Booster;
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.SimpleHudWidget;
 import net.labymod.api.client.gui.hud.position.HudSize;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.color.ColorPickerWidget.ColorPickerSetting;
 import net.labymod.api.client.render.font.ComponentRenderer;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
+import net.labymod.api.util.Color;
 
 public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidgetConfig> {
 
@@ -81,7 +84,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
     ComponentRenderer componentRenderer = this.labyAPI.renderPipeline().componentRenderer();
     int x = 1;
     int y = 1;
-    Component title = Component.translatable("moneymaker.hudWidget.booster_display.latestBoosters");
+    Component title = Component.translatable("moneymaker.hudWidget.booster_display.latestBoosters", TextColor.color(this.config.textColor.get().get()));
     RenderableComponent titleComponent = RenderableComponent.of(title);
     if(stack != null) {
       componentRenderer.builder()
@@ -132,6 +135,9 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
   }
 
   public static class BoosterHudWidgetConfig extends HudWidgetConfig {
+
+    @ColorPickerSetting
+    private final ConfigProperty<Color> textColor = new ConfigProperty<>(Color.YELLOW);
 
     @SliderSetting(min = 2, max = 10)
     private final ConfigProperty<Integer> maxDisplayedBoosters = new ConfigProperty<>(5);

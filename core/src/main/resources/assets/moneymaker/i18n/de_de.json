@@ -210,12 +210,18 @@
         "maxDisplayedTimers": {
           "name": "Angezeigte Timer"
         },
+        "textColor": {
+          "name": "Textfarbe"
+        },
         "currentTimers": "Aktuell laufende Timer:"
       },
       "booster_display": {
         "name": "Zuletzt gefarmte Booster",
         "maxDisplayedBoosters": {
           "name": "Angezeigte Booster"
+        },
+        "textColor": {
+          "name": "Textfarbe"
         },
         "latestBoosters": "Zuletzt gefarmte Booster:"
       }
