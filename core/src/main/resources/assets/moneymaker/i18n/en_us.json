@@ -132,7 +132,8 @@
           "description": "Should the break goal function be activated?",
           "input-title": "Enter Break Goal",
           "input-description": "Enter the break goal you want to achieve."
-        }
+        },
+        "donate": "Donate"
       },
       "booster": {
         "title": "List of farmed boosters",

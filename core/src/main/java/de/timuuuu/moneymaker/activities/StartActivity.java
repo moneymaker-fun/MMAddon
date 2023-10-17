@@ -14,11 +14,13 @@ import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.render.matrix.Stack;
+import net.labymod.api.models.OperatingSystem;
 
 @AutoActivity
 @Link("start.lss")
@@ -84,6 +86,13 @@ public class StartActivity extends Activity {
     timerContainer.addChild(scrollWidget);
 
     container.addChild(timerContainer);
+
+    //TODO: Add Coffee icon ;D
+    ButtonWidget donateButton = ButtonWidget.i18n("moneymaker.ui.start.donate").addId("donate-btn");
+    donateButton.setPressable(() -> {
+      OperatingSystem.getPlatform().openUrl("https://www.paypal.com/donate/?hosted_button_id=P5DTFDECSA532");
+    });
+    container.addChild(donateButton);
 
     this.document.addChild(container);
 

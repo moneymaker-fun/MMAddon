@@ -88,6 +88,16 @@ Timer {
   padding-right: 3;
 }
 
+.donate-btn {
+  bottom: 10;
+  left: 10;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+  height: 10;
+  border-color: blue !important;
+}
+
 .break-goal-title {
   text-color: yellow;
   left: 30;
