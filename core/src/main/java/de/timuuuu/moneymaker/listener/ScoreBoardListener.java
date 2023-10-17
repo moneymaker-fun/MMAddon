@@ -9,6 +9,8 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
+import net.labymod.api.util.concurrent.task.Task;
+import java.util.concurrent.TimeUnit;
 
 public class ScoreBoardListener {
 
@@ -26,14 +28,16 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.LANG_CHECK.score() & AddonSettings.playingOn.contains(MoneyScore.LANG_CHECK.neededServer())) {
       AddonSettings.languageSupported = event.score().getName().contains("Kontostand") || event.score().getName().contains("Balance");
-      if(!AddonSettings.languageSupported & !langWarningSent) {
-        langWarningSent = true;
-        this.addon.displayMessage("§4§lℹ Du benutzt eine Sprache, die vom MoneyMaker-Addon §nNICHT §4§lunterstützt wird! ℹ");
-        this.addon.displayMessage("§7Bitte gehe in die Lobby und stelle die Sprach auf 'Deutsch' oder 'Englisch'.");
-        this.addon.displayMessage(" ");
-        this.addon.displayMessage("§4§lℹ You are using a language that is §nNOT §4§lsupported by the MoneyMaker-Addon ℹ");
-        this.addon.displayMessage("§7Please go into the lobby and change your language to 'German' or 'English'.");
-      }
+      Task.builder(() -> {
+        if(!AddonSettings.languageSupported & !langWarningSent) {
+          langWarningSent = true;
+          this.addon.displayMessage("§4§lℹ Du benutzt eine Sprache, die vom MoneyMaker-Addon §nNICHT§4§l unterstützt wird! ℹ");
+          this.addon.displayMessage("§7Bitte gehe in die Lobby und stelle die Sprach auf 'Deutsch' oder 'Englisch'.");
+          this.addon.displayMessage(" ");
+          this.addon.displayMessage("§4§lℹ You are using a language that is §nNOT§4§l supported by the MoneyMaker-Addon ℹ");
+          this.addon.displayMessage("§7Please go into the lobby and change your language to 'German' or 'English'.");
+        }
+      }).delay(5, TimeUnit.SECONDS).build().execute();
     }
 
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() & AddonSettings.playingOn.contains(MoneyScore.BROKEN_BLOCKS.neededServer())) {
