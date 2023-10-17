@@ -2,9 +2,11 @@ package de.timuuuu.moneymaker.listener;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.utils.AddonSettings;
-import de.timuuuu.moneymaker.utils.ChatClient;
+import de.timuuuu.moneymaker.utils.AddonUpdater;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.lifecycle.GameShutdownEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 
 public class DisconnectListener {
@@ -25,6 +27,25 @@ public class DisconnectListener {
     data.addProperty("server", "OFFLINE");
     data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
     this.addon.chatClient.sendMessage("playerStatus", data);
+  }
+
+  @Subscribe
+  public void onShutdown(GameShutdownEvent event) {
+
+    JsonObject data = new JsonObject();
+    data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+    data.addProperty("userName", this.addon.labyAPI().getName());
+    data.addProperty("server", "OFFLINE");
+    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+    this.addon.chatClient.sendMessage("playerStatus", data);
+    this.addon.chatClient.sendQuitData(this.addon.labyAPI().getUniqueId().toString());
+
+    if(this.addon.configuration().exportOnShutdown().get()) {
+      BoosterActivity.writeLinkedListToCSV(true);
+    }
+
+    AddonUpdater.executeUpdater();
+
   }
 
 }
