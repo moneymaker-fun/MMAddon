@@ -67,6 +67,7 @@ public class ChatReceiveListener {
         if (plain.contains("Stunde") || plain.contains("hour"))
           time *= 60;
         Booster.insertBooster(boost, time);
+        Booster.insertLatestBooster(boost, time);
       }
 
       if(plain.contains("[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet") || plain.contains("[MoneyMaker] The workplace was successfully unlocked")) {

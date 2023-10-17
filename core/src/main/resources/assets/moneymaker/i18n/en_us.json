@@ -211,6 +211,13 @@
           "name": "Displayed Timers"
         },
         "currentTimers": "Currently running timers:"
+      },
+      "booster_display": {
+        "name": "Latest farmed boosters",
+        "maxDisplayedBoosters": {
+          "name": "Displayed Boosters"
+        },
+        "latestBoosters": "Latest farmed boosters:"
       }
     }
   }

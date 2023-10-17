@@ -208,9 +208,16 @@
       "timer_display": {
         "name": "Timer",
         "maxDisplayedTimers": {
-          "name": "Angezeigte Timers"
+          "name": "Angezeigte Timer"
         },
         "currentTimers": "Aktuell laufende Timer:"
+      },
+      "booster_display": {
+        "name": "Zuletzt gefarmte Booster",
+        "maxDisplayedBoosters": {
+          "name": "Angezeigte Booster"
+        },
+        "latestBoosters": "Zuletzt gefarmte Booster:"
       }
     }
   }

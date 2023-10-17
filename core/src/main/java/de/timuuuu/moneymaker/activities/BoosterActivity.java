@@ -52,7 +52,7 @@ public class BoosterActivity extends Activity {
     Util.addFeedbackButton(this.document);
 
     AtomicInteger boost = new AtomicInteger(0);
-    Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.getBoost()));
+    Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost()));
 
     ComponentWidget subTitleWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.boost-total", TextColor.color(255, 255, 85),
         Component.text(boost.get() + "%", TextColor.color(255, 170, 0))));
@@ -84,19 +84,8 @@ public class BoosterActivity extends Activity {
     }
 
     list.forEach(booster -> {
-      String boosterMessage = "§6" + booster.getAmnt() + " §7✗ §e" + booster.getBoost() + "%";
-      String boosterTime;
-      int tempTime = booster.getTime();
-      if (tempTime > 59) {
-        if (tempTime == 90) {
-          boosterTime = "90 Minuten";
-        } else {
-          boosterTime = (booster.getTime() / 60) + " Stunde/n";
-        }
-      } else {
-        boosterTime = booster.getTime() + " Minuten";
-      }
-      listWidget.addChild(ComponentWidget.text(boosterMessage + " §8┃ §7" + boosterTime).addId("booster-entry"));
+      String boosterMessage = "§6" + booster.amount() + " §7✗ §e" + booster.boost() + "%";
+      listWidget.addChild(ComponentWidget.text(boosterMessage + " §8┃ §7" + booster.readableTime()).addId("booster-entry"));
     });
 
     container.addChild(new ScrollWidget(listWidget, new ListSession<>()));

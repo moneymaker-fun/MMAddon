@@ -1,28 +1,40 @@
 package de.timuuuu.moneymaker.utils;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Booster {
 
   private static LinkedList<Booster> boosterList = new LinkedList<>();
+  private static List<Booster> latestFoundBoosters = new ArrayList<>();
 
   public static AtomicInteger sessionBoost = new AtomicInteger(0);
 
-  public static void insertBooster(int boost, int time) {
-    int i;
-    for (i = 0; i < boosterList.size(); i++) {
-      if (boosterList.get(i).getBoost() == boost && boosterList.get(i).getTime() == time) {
-        boosterList.get(i).addAmnt();
-        return;
-      }
+  public static void insertLatestBooster(int boost, int time) {
+    if(latestFoundBoosters.size() <= 10) {
+      latestFoundBoosters.add(new Booster(boost, time));
+    } else {
+      int lastIndex = latestFoundBoosters.size() -1;
+      latestFoundBoosters.remove(lastIndex);
+      latestFoundBoosters.add(new Booster(boost, time));
     }
-    for (i = 0; i < boosterList.size(); i++) {
-      if (boosterList.get(i).getBoost() < boost) {
+  }
+
+  public static void insertBooster(int boost, int time) {
+      for(Booster booster : boosterList) {
+          if(booster.boost() == boost && booster.time() == time) {
+              booster.addAmount();
+              return;
+          }
+      }
+    for (int i = 0; i < boosterList.size(); i++) {
+      if (boosterList.get(i).boost() < boost) {
         boosterList.add(i, new Booster(boost, time));
         return;
       }
-      if (boosterList.get(i).getBoost() == boost && boosterList.get(i).getTime() < time) {
+      if (boosterList.get(i).boost() == boost && boosterList.get(i).time() < time) {
         boosterList.add(i, new Booster(boost, time));
         return;
       }
@@ -34,35 +46,39 @@ public class Booster {
     return boosterList;
   }
 
+  public static List<Booster> latestFoundBoosters() {
+    return latestFoundBoosters;
+  }
+
   private int boost;
 
-  private int amnt;
+  private int amount;
 
   private int time;
 
   public Booster(int boost, int time) {
     this.boost = boost;
-    this.amnt = 1;
+    this.amount = 1;
     this.time = time;
   }
 
-  public int getBoost() {
+  public int boost() {
     return this.boost;
   }
 
-  public int getTime() {
+  public int time() {
     return this.time;
   }
 
-  public int getAmnt() {
-    return this.amnt;
+  public int amount() {
+    return this.amount;
   }
 
-  public void addAmnt() {
-    this.amnt++;
+  public void addAmount() {
+    this.amount++;
   }
 
-  public String toExport() {
+  public String readableTime() {
     String boosterTime;
     int tempTime = this.time;
     if (tempTime > 59) {
@@ -74,7 +90,11 @@ public class Booster {
     } else {
       boosterTime = this.time + " Minuten";
     }
-    return this.amnt + "x;" + this.boost + ";(" + boosterTime + ")";
+    return boosterTime;
+  }
+
+  public String toExport() {
+    return this.amount + "x;" + this.boost + ";(" + readableTime() + ")";
   }
 
 }
