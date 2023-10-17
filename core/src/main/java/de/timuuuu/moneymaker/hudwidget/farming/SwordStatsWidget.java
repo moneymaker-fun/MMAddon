@@ -1,7 +1,7 @@
-package de.timuuuu.moneymaker.hudwidget;
+package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.hudwidget.SwordStatsWidget.SwordHudWidgetConfig;
+import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget.SwordHudWidgetConfig;
 import de.timuuuu.moneymaker.utils.AddonSettings;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;

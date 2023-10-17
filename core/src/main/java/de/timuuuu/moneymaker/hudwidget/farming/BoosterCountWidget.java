@@ -1,22 +1,24 @@
-package de.timuuuu.moneymaker.hudwidget;
+package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.utils.Booster;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 
-public class BlockSessionWidget extends ItemHudWidget<HudWidgetConfig> {
+@SpriteSlot()
+public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
   private MoneyMakerAddon addon;
 
-  public BlockSessionWidget(MoneyMakerAddon addon) {
-    super("block_session");
+  public BoosterCountWidget(MoneyMakerAddon addon) {
+    super("booster_count");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_ore.png")));
   }
 
   @Override
@@ -26,17 +28,17 @@ public class BlockSessionWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.updateItemName(Component.text(AddonSettings.sessionBlocks + " ").append(Component.translatable("moneymaker.hudWidget.block_session.blocks")), isEditorContext);
+    this.updateItemName(Component.text(Booster.sessionBoost.get()+"%"), isEditorContext);
   }
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("Farming") && AddonSettings.sessionBlocks > 0;
+    return AddonSettings.playingOn.contains("Farming") && Booster.sessionBoost.get() > 0;
   }
 
   @Override
   public Icon createPlaceholderIcon() {
-    return Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_ore.png"));
+    return Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 0);
   }
 
 }

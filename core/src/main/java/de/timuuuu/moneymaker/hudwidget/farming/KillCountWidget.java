@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.hudwidget;
+package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonSettings;
