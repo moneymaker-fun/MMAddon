@@ -94,7 +94,7 @@ Timer {
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
-  height: 10;
+  height: 15;
   border-color: blue !important;
 }
 
