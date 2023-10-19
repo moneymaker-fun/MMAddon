@@ -27,8 +27,6 @@ public class MoneyAddonListener {
   public void onSessionUpdate(SessionUpdateEvent event) {
     this.addon.chatClient.sendQuitData(event.previousSession().getUniqueId().toString());
     this.addon.chatClient.sendLaunchData(event.newSession().getUniqueId().toString(), event.newSession().getUsername());
-    AddonSettings.resetValues(true);
-    this.addon.chatActivity.clearChat(false);
     AddonSettings.playerStatus.remove(event.previousSession().getUniqueId());
 
     JsonObject data = new JsonObject();
