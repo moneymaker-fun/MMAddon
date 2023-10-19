@@ -52,7 +52,7 @@ public class MoneyAddonListener {
     UUID uuid = event.uuid();
     MoneyPlayer player = event.player();
     if(!player.server().equals("OFFLINE")) {
-      if(!AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().chatOnlineOfflineMessages().get()) {
+      if(!AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().chatOnlineOfflineMessages().get() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString())) {
         this.addon.pushNotification(
             Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
             Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
