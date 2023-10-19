@@ -34,7 +34,6 @@
       "new-update": "§aA new addon update is available. §7The update will install when you close the game."
     },
     "notification": {
-      "new-chat-message": "New Chat Message",
       "booster-export": {
         "title": "Booster-Export",
         "no-boosters": "There are no boosters to export.",
@@ -43,9 +42,14 @@
       },
       "chat": {
         "title": "Addon-Chat",
+        "new-message": "New Chat Message",
         "connected": "Successfully connected to the chat server.",
         "no-connection": "Unable to connect to the chat server.",
-        "timed": "Lost connection to chat server."
+        "timed": "Lost connection to chat server.",
+        "user": {
+          "online": "%s is now online.",
+          "offline": "%s is now offline."
+        }
       },
       "timer": {
         "finished": {
@@ -113,6 +117,9 @@
       "chatNotificationSound": {
         "name": "Chat Notification sound",
         "description": "Receive a notification sound for new messages via the addon chat"
+      },
+      "chatOnlineOfflineMessages": {
+        "name": "Show Online/Offline Messages"
       },
       "header": {
         "general": {

@@ -34,7 +34,6 @@
       "new-update": "§aEin neues Addon-Update ist verfügbar. §7Das Update wird installiert, wenn du das Spiel schließt."
     },
     "notification": {
-      "new-chat-message": "Neue Chat Nachricht",
       "booster-export": {
         "title": "Booster-Export",
         "no-boosters": "Es sind keine Booster zum exportieren vorhanden.",
@@ -43,9 +42,14 @@
       },
       "chat": {
         "title": "Addon-Chat",
+        "new-message": "Neue Chat Nachricht",
         "connected": "Erfolgreich zum Chat-Server verbunden.",
         "no-connection": "Keine Verbindung zum Chat-Server möglich.",
-        "timed": "Verbindung zum Chat-Server verloren."
+        "timed": "Verbindung zum Chat-Server verloren.",
+        "user": {
+          "online": "%s ist nun online.",
+          "offline": "%s ist nun offline."
+        }
       },
       "timer": {
         "finished": {
@@ -113,6 +117,9 @@
       "chatNotificationSound": {
         "name": "Chat Benachrichtigungston",
         "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"
+      },
+      "chatOnlineOfflineMessages": {
+        "name": "Online/Offline Nachrichten anzeigen"
       },
       "header": {
         "general": {

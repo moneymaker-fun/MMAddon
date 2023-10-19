@@ -15,7 +15,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SettingSection(value = "general", center = true)
 
   @SwitchSetting
-  private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(true);
+  private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(false);
 
   @SwitchSetting
   private final ConfigProperty<Boolean> hideWorkerUpdateMessage = new ConfigProperty<>(false);
@@ -39,6 +39,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @SwitchSetting
   private final ConfigProperty<Boolean> chatNotificationSound = new ConfigProperty<>(true);
+
+  @SwitchSetting
+  private final ConfigProperty<Boolean> chatOnlineOfflineMessages = new ConfigProperty<>(true);
 
 
 
@@ -84,6 +87,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return chatNotificationSound;
   }
 
+  public ConfigProperty<Boolean> chatOnlineOfflineMessages() {
+    return chatOnlineOfflineMessages;
+  }
 
   // Internal Settings
 

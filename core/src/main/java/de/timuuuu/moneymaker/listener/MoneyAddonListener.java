@@ -52,8 +52,24 @@ public class MoneyAddonListener {
     UUID uuid = event.uuid();
     MoneyPlayer player = event.player();
     if(!player.server().equals("OFFLINE")) {
+      if(!AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().chatOnlineOfflineMessages().get()) {
+        this.addon.pushNotification(
+            Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+            Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
+                Component.text(player.userName(), TextColor.color(255, 255, 85))),
+            Icon.head(uuid).enableHat()
+        );
+      }
       AddonSettings.playerStatus.put(uuid, player);
     } else {
+      if(AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().chatOnlineOfflineMessages().get()) {
+        this.addon.pushNotification(
+            Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+            Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
+                Component.text(player.userName(), TextColor.color(255, 255, 85))),
+            Icon.head(uuid).enableHat()
+        );
+      }
       AddonSettings.playerStatus.remove(uuid);
     }
   }
@@ -65,7 +81,7 @@ public class MoneyAddonListener {
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
       if(this.addon.configuration().chatNotification().get()) {
         this.addon.pushNotification(
-            Component.translatable("moneymaker.notification.new-chat-message", TextColor.color(85, 255, 85)),
+            Component.translatable("moneymaker.notification.chat.new-message", TextColor.color(85, 255, 85)),
             Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
             Icon.head(chatMessage.uuid()));
       }
