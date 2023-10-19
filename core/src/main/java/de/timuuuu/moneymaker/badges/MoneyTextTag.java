@@ -19,12 +19,8 @@ public class MoneyTextTag extends NameTag {
     Component component = net.labymod.api.client.component.Component.text("MoneyMaker-Addon", TextColor.color(255, 255, 85))
         .decorate(TextDecoration.BOLD);
     Rank rank = AddonSettings.playerStatus.get(entity.getUniqueId()).rank();
-    if(rank == Rank.DEVELOPER) {
-      component.append(Component.text(" Dev", TextColor.color(170, 0, 0)));
-    } else if(rank == Rank.STAFF) {
-      component.append(Component.text(" Staff", TextColor.color(255, 85, 85)));
-    } else {
-      component.append(Component.text(" Donator", TextColor.color(255, 170, 0)));
+    if(rank.getNameTag() != null) {
+      component.append(rank.getNameTag());
     }
     return RenderableComponent.of(component);
   }

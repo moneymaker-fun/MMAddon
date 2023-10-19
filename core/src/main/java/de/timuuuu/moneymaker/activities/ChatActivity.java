@@ -109,18 +109,8 @@ public class ChatActivity extends Activity {
     AddonSettings.playerStatus.keySet().forEach(uuid -> {
       MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
       if(moneyPlayer.server().contains("MoneyMaker")) {
-        String color;
-        if(moneyPlayer.rank() == Rank.DEVELOPER) {
-          color = "§4";
-        } else if(moneyPlayer.rank() == Rank.STAFF) {
-          color = "§c";
-        } else if(moneyPlayer.rank() == Rank.DONATOR) {
-          color = "§6";
-        } else {
-          color = "§e";
-        }
         Component component = Component.icon(Icon.head(uuid, true, false), 10)
-            .append(Component.text(" " + color + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
+            .append(Component.text(" " + moneyPlayer.rank().getOnlineColor() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
         ComponentWidget componentWidget = ComponentWidget.component(component);
         componentWidget.addId("online-entry");
         onlineList.addChild(componentWidget);

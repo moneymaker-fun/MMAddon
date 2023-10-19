@@ -38,16 +38,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
 
     HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
     if (!this.systemMessage) {
-      String prefix;
-      if (chatMessage.rank() == Rank.DEVELOPER) {
-        prefix = "§8[§4Dev§8] §4";
-      } else if (chatMessage.rank() == Rank.STAFF) {
-        prefix = "§8[§cStaff§8] §c";
-      } else if (chatMessage.rank() == Rank.DONATOR) {
-        prefix = "§8[§6Don§8] §6";
-      } else {
-        prefix = "§e";
-      }
+      String prefix = chatMessage.rank().getChatPrefix();
       header.addEntry(new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar"));
       header.addEntry(ComponentWidget.text(prefix + chatMessage.userName()).addId("sender"));
     } else {

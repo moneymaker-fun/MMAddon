@@ -1,5 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.TextColor;
 import java.util.UUID;
 
 public class MoneyPlayer {
@@ -50,17 +52,23 @@ public class MoneyPlayer {
 
   public enum Rank {
 
-    USER("user", false),
-    DONATOR("donator", false),
-    STAFF("staff", true),
-    DEVELOPER("developer", true);
+    USER("user", false, "§e", "§e", null),
+    DONATOR("donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0))),
+    STAFF("staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85))),
+    DEVELOPER("developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)));
 
     private final String name;
     private final boolean staff;
+    private final String chatPrefix;
+    private final String onlineColor;
+    private final Component nameTag;
 
-    Rank(String name, boolean staff) {
+    Rank(String name, boolean staff, String chatPrefix, String onlineColor, Component nameTag) {
       this.name = name;
       this.staff = staff;
+      this.chatPrefix = chatPrefix;
+      this.onlineColor = onlineColor;
+      this.nameTag = nameTag;
     }
 
     public String getName() {
@@ -70,6 +78,19 @@ public class MoneyPlayer {
     public boolean isStaff() {
       return staff;
     }
+
+    public String getChatPrefix() {
+      return chatPrefix;
+    }
+
+    public String getOnlineColor() {
+      return onlineColor;
+    }
+
+    public Component getNameTag() {
+      return nameTag;
+    }
+
   }
 
 }
