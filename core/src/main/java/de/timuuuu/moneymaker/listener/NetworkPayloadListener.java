@@ -32,6 +32,7 @@ public class NetworkPayloadListener {
   @Subscribe
   public void onServerLogin(ServerLoginEvent event) {
     if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
+        event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
 
       JsonObject object = new JsonObject();
