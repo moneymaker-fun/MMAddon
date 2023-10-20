@@ -52,23 +52,29 @@ public class MoneyPlayer {
 
   public enum Rank {
 
-    USER("user", false, "§e", "§e", null),
-    DONATOR("donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0))),
-    STAFF("staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85))),
-    DEVELOPER("developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)));
+    USER(4, "user", false, "§e", "§e", null),
+    DONATOR(3, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0))),
+    STAFF(2, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85))),
+    DEVELOPER(1, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)));
 
+    private final int id;
     private final String name;
     private final boolean staff;
     private final String chatPrefix;
     private final String onlineColor;
     private final Component nameTag;
 
-    Rank(String name, boolean staff, String chatPrefix, String onlineColor, Component nameTag) {
+    Rank(int id, String name, boolean staff, String chatPrefix, String onlineColor, Component nameTag) {
+      this.id = id;
       this.name = name;
       this.staff = staff;
       this.chatPrefix = chatPrefix;
       this.onlineColor = onlineColor;
       this.nameTag = nameTag;
+    }
+
+    public int getId() {
+      return id;
     }
 
     public String getName() {

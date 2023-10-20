@@ -12,6 +12,8 @@ import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import de.timuuuu.moneymaker.utils.Util;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -105,6 +107,9 @@ public class ChatActivity extends Activity {
     onlineContainer.addId("online-container");
 
     VerticalListWidget<ComponentWidget> onlineList = new VerticalListWidget<>().addId("online-list");
+
+    List<MoneyPlayer> players = new ArrayList<>(AddonSettings.playerStatus.values());
+    players.sort(Comparator.comparing(o -> o.rank().getId()));
 
     AddonSettings.playerStatus.keySet().forEach(uuid -> {
       MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
