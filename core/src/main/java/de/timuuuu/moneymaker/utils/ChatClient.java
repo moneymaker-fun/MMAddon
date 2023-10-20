@@ -51,13 +51,15 @@ public class ChatClient {
         try {
           BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
-          String serverMessage;
-          while ((serverMessage = serverIn.readLine()) != null) {
+          if(!socket.isClosed()) {
+            String serverMessage;
+            while ((serverMessage = serverIn.readLine()) != null) {
 
-            JsonElement element = JsonParser.parseString(serverMessage);
-            if (element.isJsonObject()) {
-              JsonObject object = element.getAsJsonObject();
-              Laby.fireEvent(new ChatServerMessageReceiveEvent(object));
+              JsonElement element = JsonParser.parseString(serverMessage);
+              if (element.isJsonObject()) {
+                JsonObject object = element.getAsJsonObject();
+                Laby.fireEvent(new ChatServerMessageReceiveEvent(object));
+              }
             }
           }
 
