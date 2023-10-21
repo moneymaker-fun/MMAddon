@@ -12,6 +12,7 @@ import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
 
@@ -77,14 +78,27 @@ public class MoneyAddonListener {
     MoneyChatMessage chatMessage = event.chatMessage();
     this.addon.chatActivity.addChatMessage(chatMessage);
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
-      if(this.addon.configuration().chatNotification().get()) {
+      if(!chatMessage.systemMessage()) {
+
+        if(this.addon.configuration().chatNotification().get()) {
+          this.addon.pushNotification(
+              Component.translatable("moneymaker.notification.chat.new-message", TextColor.color(85, 255, 85)),
+              Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
+              Icon.head(chatMessage.uuid()));
+          if(this.addon.configuration().chatNotificationSound().get()) {
+            this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
+          }
+        }
+
+      } else {
+
         this.addon.pushNotification(
-            Component.translatable("moneymaker.notification.chat.new-message", TextColor.color(85, 255, 85)),
-            Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
-            Icon.head(chatMessage.uuid()));
-      }
-      if(this.addon.configuration().chatNotificationSound().get()) {
+            Component.translatable("moneymaker.notification.chat.system-message", TextColor.color(255, 85, 85)),
+            Component.text("§c" + chatMessage.message()),
+            Icon.sprite16(
+                ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2));
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);
+
       }
     }
   }

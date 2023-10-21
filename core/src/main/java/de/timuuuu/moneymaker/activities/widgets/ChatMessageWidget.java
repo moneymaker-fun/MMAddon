@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.activities.widgets;
 
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
-import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.Widget;
@@ -17,11 +16,12 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
   private String time;
   private MoneyChatMessage chatMessage = null;
   private String customMessage;
-  private boolean systemMessage = false;
+  private boolean systemMessage;
 
   public ChatMessageWidget(String time, MoneyChatMessage chatMessage) {
     this.time = time;
     this.chatMessage = chatMessage;
+    this.systemMessage = chatMessage.systemMessage();
   }
 
   public ChatMessageWidget(String time, String customMessage) {
@@ -44,7 +44,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     } else {
       header.addEntry(new IconWidget(Icon.sprite16(
           ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2)).addId("avatar"));
-      header.addEntry(ComponentWidget.text("System").addId("sender"));
+      header.addEntry(ComponentWidget.text("§4§lSYSTEM").addId("sender"));
     }
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
     flex.addChild(header);

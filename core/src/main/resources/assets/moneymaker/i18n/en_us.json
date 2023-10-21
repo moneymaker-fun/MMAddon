@@ -43,6 +43,7 @@
       "chat": {
         "title": "Addon-Chat",
         "new-message": "New Chat Message",
+        "system-message": "New System Message",
         "connected": "Successfully connected to the chat server.",
         "no-connection": "Unable to connect to the chat server.",
         "timed": "Lost connection to chat server.",
