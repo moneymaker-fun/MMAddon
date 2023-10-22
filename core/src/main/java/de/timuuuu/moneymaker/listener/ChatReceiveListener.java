@@ -49,7 +49,7 @@ public class ChatReceiveListener {
           event.setCancelled(true);
         if (plain.contains("[MoneyMaker] Glückwunsch! Du hast einen Booster gefunden:") || plain.contains("[MoneyMaker] Congratulations! You have found a booster:"))
           event.setCancelled(true);
-        if (plain.contains("Booster (") && plain.contains(")")) {
+        if (plain.contains("Booster (") && plain.contains(")") && !(plain.contains(" wurde aktiviert") || plain.contains(" was activated"))) {
           String boost = plain.replace("[MoneyMaker]", "");
           Component component = Component.text(AddonSettings.prefix + "§a" + boost + " ").append(Component.translatable("moneymaker.text.found", TextColor.color(85, 255, 85)));
           this.addon.displayMessage(component);
