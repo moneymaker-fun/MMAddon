@@ -36,6 +36,7 @@ public class AddonSettings {
 
   public static int brokenBlocks = 0;
   public static int sessionBlocks = 0;
+  public static int currentBrokenBlocks = 0;
 
   public static boolean breakGoalEnabled = false;
   public static int breakGoal = 0;

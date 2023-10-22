@@ -70,6 +70,9 @@ public class StartActivity extends Activity {
       TextFieldWidget breakGoalInput = new TextFieldWidget().addId("break-goal-input");
       //breakGoalInput.validator(this::validateInput);
       breakGoalInput.submitHandler(this::submitInput);
+      if(AddonSettings.breakGoal > 0) {
+        breakGoalInput.setText(String.valueOf(AddonSettings.breakGoal));
+      }
       container.addChild(breakGoalInput);
     }
 
@@ -104,6 +107,9 @@ public class StartActivity extends Activity {
     try {
       int count = Integer.parseInt(input);
       AddonSettings.breakGoal = count;
+      if(AddonSettings.currentBrokenBlocks > 0) {
+        AddonSettings.breakGoalBlocks = AddonSettings.currentBrokenBlocks + count;
+      }
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.set", TextColor.color(170, 170, 170),
               Component.text(count, TextColor.color(255, 255, 85))));

@@ -44,13 +44,18 @@ public class ScoreBoardListener {
       String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
       try {
         int blocks = Integer.parseInt(raw);
+        AddonSettings.currentBrokenBlocks = blocks;
         if(AddonSettings.brokenBlocks == 0) {
           AddonSettings.brokenBlocks = blocks;
         } else {
             AddonSettings.sessionBlocks = blocks - AddonSettings.brokenBlocks;
-            if(AddonSettings.breakGoalEnabled & AddonSettings.breakGoal != 0) {
-              AddonSettings.breakGoalBlocks++;
-              if(AddonSettings.breakGoal == (AddonSettings.breakGoalBlocks / 2)) {
+            if(AddonSettings.breakGoalEnabled && AddonSettings.breakGoal != 0) {
+
+              if(AddonSettings.breakGoalBlocks == 0) {
+                AddonSettings.breakGoalBlocks = blocks + AddonSettings.breakGoal;
+              }
+
+              if(blocks == AddonSettings.breakGoalBlocks) {
                 this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
                 this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
                     Component.translatable("moneymaker.notification.break-goal.text", TextColor.color(85, 255, 85)));
@@ -58,6 +63,7 @@ public class ScoreBoardListener {
                 AddonSettings.breakGoal = 0;
                 AddonSettings.breakGoalBlocks = 0;
               }
+
             }
         }
       } catch (NumberFormatException ignored) {}
