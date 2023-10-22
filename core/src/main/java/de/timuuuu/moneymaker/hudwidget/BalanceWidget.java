@@ -33,7 +33,7 @@ public class BalanceWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("MoneyMaker") && !Objects.equals(AddonSettings.balance, "");
+    return AddonSettings.playingOn.contains("MoneyMaker") && !Objects.equals(AddonSettings.balance, "X");
   }
 
   @Override
