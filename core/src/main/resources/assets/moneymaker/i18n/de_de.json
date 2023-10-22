@@ -176,7 +176,8 @@
       },
       "block_session": {
         "name": "Blöcke/Sitzung",
-        "blocks": "Blöcke"
+        "blocks": "Blöcke",
+        "block": "Block"
       },
       "break_goal": {
         "name": "Abbau Ziel"

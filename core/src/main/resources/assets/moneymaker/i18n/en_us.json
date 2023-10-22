@@ -176,7 +176,8 @@
       },
       "block_session": {
         "name": "Blocks/Session",
-        "blocks": "Blocks"
+        "blocks": "Blocks",
+        "block": "Block"
       },
       "break_goal": {
         "name": "Break Goal"

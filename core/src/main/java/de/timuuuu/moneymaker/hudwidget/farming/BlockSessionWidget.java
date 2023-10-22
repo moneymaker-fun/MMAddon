@@ -26,7 +26,7 @@ public class BlockSessionWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.updateItemName(Component.text(AddonSettings.sessionBlocks + " ").append(Component.translatable("moneymaker.hudWidget.block_session.blocks")), isEditorContext);
+    this.updateItemName(Component.text(AddonSettings.sessionBlocks + " ").append(Component.translatable("moneymaker.hudWidget.block_session." + (AddonSettings.sessionBlocks == 1 ? "block" : "blocks"))), isEditorContext);
   }
 
   @Override
