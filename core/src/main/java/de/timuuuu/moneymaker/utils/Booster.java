@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
+import net.labymod.api.util.I18n;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,12 +84,13 @@ public class Booster {
     int tempTime = this.time;
     if (tempTime > 59) {
       if (tempTime == 90) {
-        boosterTime = "90 Minuten";
+        boosterTime = "90 " + I18n.translate("moneymaker.text.timeUnit.minutes");
       } else {
-        boosterTime = (this.time / 60) + " Stunde/n";
+        int hours = this.time / 60;
+        boosterTime = hours + " " + I18n.translate("moneymaker.text.timeUnit." + (hours == 1 ? "hour" : "hours"));
       }
     } else {
-      boosterTime = this.time + " Minuten";
+      boosterTime = this.time + " " + I18n.translate("moneymaker.text.timeUnit.minutes");
     }
     return boosterTime;
   }

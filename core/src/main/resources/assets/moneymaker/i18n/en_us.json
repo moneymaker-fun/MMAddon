@@ -31,7 +31,13 @@
       "user-farming-enter": "%s has joined the farming cave.",
       "no-fetch-name": "The name for %s could not be retrieved.",
       "effect-select": "Select effect duration",
-      "new-update": "§aA new addon update is available. §7The update will install when you close the game."
+      "new-update": "§aA new addon update is available. §7The update will install when you close the game.",
+      "timeUnit": {
+        "minute": "Minute",
+        "minutes": "Minutes",
+        "hour": "Hour",
+        "hours": "Hours"
+      }
     },
     "notification": {
       "booster-export": {
@@ -96,7 +102,7 @@
         "name": "Short booster messages"
       },
       "hideWorkerUpdateMessage": {
-        "name": "Upgrade Hide messages from workers"
+        "name": "Hide Upgrade messages from workers"
       },
       "hideTeleportMessage": {
         "name": "Hide teleport messages"
