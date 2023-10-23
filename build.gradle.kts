@@ -21,7 +21,7 @@ labyMod {
         author = "Timuuuu, MisterCore"
         description = "Adds some features to the MoneyMaker IdleGame on GommeHD.net"
         minecraftVersion = "*"
-        version = System.getenv().getOrDefault("VERSION", "0.0.1")
+        version = System.getenv().getOrDefault("VERSION", "0.0.2")
     }
 
     minecraft {
@@ -79,11 +79,7 @@ fun configureRun(provider: net.labymod.gradle.core.minecraft.provider.VersionPro
         args("--addon-dev-environment", "true")
     }
 
-    provider.javaVersion = when (gameVersion) {
-        else -> {
-            JavaVersion.VERSION_17
-        }
-    }
+    provider.javaVersion = JavaVersion.VERSION_17
 
     provider.mixin {
         val mixinMinVersion = when (gameVersion) {
