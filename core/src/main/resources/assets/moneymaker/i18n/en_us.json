@@ -110,6 +110,9 @@
       "notifyOnMoneyReached": {
         "name": "Notification when money for workers/debris reached"
       },
+      "hideEffectMessage": {
+        "name": "Hide Effect Messages"
+      },
       "showTimersOnEffect": {
         "name": "Show clickable timers in chat",
         "description": "Displays a clickable message in chat to activate a timer when a worker's effect activates."

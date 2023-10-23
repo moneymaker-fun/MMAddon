@@ -80,7 +80,10 @@ public class ChatReceiveListener {
       }
 
       if(plain.contains("[MoneyMaker] Du hast den Effekt dieses Arbeiters aktiviert") || plain.contains("[MoneyMaker] You have activated the effect of this worker")) {
-        if(this.addon.configuration().showTimersOnEffect().get()) {
+        if(this.addon.configuration().hideEffectMessage().get()) {
+          event.setCancelled(true);
+        }
+        if(this.addon.configuration().showTimersOnEffect().get() && !this.addon.configuration().hideEffectMessage().get()) {
           AtomicInteger timers = new AtomicInteger();
           Util.timers.values().forEach(timer -> {
             if(timer.name().contains("Effekt-Timer-")) {

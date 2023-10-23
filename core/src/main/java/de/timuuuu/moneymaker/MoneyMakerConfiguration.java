@@ -28,6 +28,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> notifyOnMoneyReached = new ConfigProperty<>(false);
 
   @SwitchSetting
+  private final ConfigProperty<Boolean> hideEffectMessage = new ConfigProperty<>(false);
+
+  @SettingRequires(value = "hideEffectMessage", invert = true)
+  @SwitchSetting
   private final ConfigProperty<Boolean> showTimersOnEffect = new ConfigProperty<>(false);
 
   @SwitchSetting
@@ -73,6 +77,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> showTimersOnEffect() {
     return showTimersOnEffect;
+  }
+
+  public ConfigProperty<Boolean> hideEffectMessage() {
+    return hideEffectMessage;
   }
 
   public ConfigProperty<Boolean> hideFullBoosterInventory() {
