@@ -260,40 +260,30 @@ public class ChatActivity extends Activity {
   public void addChatMessage(MoneyChatMessage chatMessage) {
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-    /*String color;
-    if(!Util.isDev(chatMessage.uuid().toString())) {
-      color = chatMessage.staff() ? "§8[§cStaff§8] §c" : "§b";
-    } else {
-      color = "§8[§4Dev§8] §c";
-    }*/
-    /*Component component = Component.text("§e" + time + "  ")
-        .append(Component.icon(Icon.head(chatMessage.uuid(), true, false), 10))
-        .append(Component.text(" " + color + chatMessage.userName() + "§8: §7" + chatMessage.message()));
-    ComponentWidget messageWidget = ComponentWidget.component(component);
-    messageWidget.addId("chat-message");
-    chatMessages.add(messageWidget);*/
-    chatMessages.add(new ChatMessageWidget(time, chatMessage).addId("chat-message"));
-    reloadScreen();
+    this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
+      chatMessages.add(new ChatMessageWidget(time, chatMessage).addId("chat-message"));
+      this.reload();
+    });
   }
 
   public void clearChat(boolean message) {
     chatMessages.clear();
     if(message) {
       String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-      //ComponentWidget messageWidget = ComponentWidget.text("§e" + time + " §4Der Chat wurde geleert.");
-      //messageWidget.addId("chat-message");
-      chatMessages.add(new ChatMessageWidget(time, "§4Der Chat wurde geleert.").addId("chat-message"));
+      this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
+        chatMessages.add(new ChatMessageWidget(time, "§4Der Chat wurde geleert.").addId("chat-message"));
+        this.reload();
+      });
     }
-    reloadScreen();
   }
 
   public void addCustomChatMessage(String chatMessage) {
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-    //ComponentWidget messageWidget = ComponentWidget.text(time + chatMessage);
-    //messageWidget.addId("chat-message");
-    chatMessages.add(new ChatMessageWidget(time, chatMessage));
-    reloadScreen();
+    this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
+      chatMessages.add(new ChatMessageWidget(time, chatMessage));
+      this.reload();
+    });
   }
 
   public void reloadScreen() {
