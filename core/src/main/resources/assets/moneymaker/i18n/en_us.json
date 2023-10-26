@@ -150,7 +150,8 @@
           "input-title": "Enter Break Goal",
           "input-description": "Enter the break goal you want to achieve."
         },
-        "donate": "Donate"
+        "donate": "Donate",
+        "discord": "Discord"
       },
       "booster": {
         "title": "List of farmed boosters",

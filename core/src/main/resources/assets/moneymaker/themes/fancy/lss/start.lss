@@ -95,7 +95,17 @@ Timer {
   padding-left: 3;
   padding-right: 3;
   height: 15;
-  border-color: blue !important;
+  border-color: blue;
+}
+
+.discord-btn {
+  bottom: 10;
+  left: 50;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+  height: 15;
+  border-color: #5865F2;
 }
 
 .break-goal-title {

@@ -150,7 +150,8 @@
           "input-title": "Abbau Ziel eingeben",
           "input-description": "Gebe dein Abbau Ziel ein, welches du erreichen willst."
         },
-        "donate": "Spenden"
+        "donate": "Spenden",
+        "discord": "Discord"
       },
       "booster": {
         "title": "Liste der gefarmten Booster",

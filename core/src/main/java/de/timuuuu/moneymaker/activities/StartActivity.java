@@ -99,6 +99,13 @@ public class StartActivity extends Activity {
     });
     container.addChild(donateButton);
 
+    ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.start.discord", Icon.texture(
+        ResourceLocation.create("moneymaker", "textures/ui/discord.png"))).addId("discord-btn");
+    discordButton.setPressable(() -> {
+      OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd");
+    });
+    container.addChild(discordButton);
+
     this.document.addChild(container);
 
   }
