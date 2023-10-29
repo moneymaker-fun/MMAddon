@@ -27,6 +27,10 @@ public class BreakGoalWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public void onTick(boolean isEditorContext) {
+    if(isEditorContext) {
+      this.updateItemName(Component.text("0/0"), isEditorContext);
+      return;
+    }
     this.updateItemName(Component.text((AddonSettings.breakGoalBlocks - AddonSettings.currentBrokenBlocks) + " / " + AddonSettings.breakGoal), isEditorContext);
   }
 
