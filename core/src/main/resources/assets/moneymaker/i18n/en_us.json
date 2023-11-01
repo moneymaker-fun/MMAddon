@@ -17,6 +17,7 @@
     },
     "command": {
       "reset": "The data has been reset.",
+      "notConnected": "You cannot use this feature because you are not on MoneyMaker.",
       "timer": {
         "usage": "Please use /mm-timer <Time in minutes> <name of the timer>",
         "no-number": "<Time in minutes> must be a number.",

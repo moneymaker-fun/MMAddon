@@ -17,6 +17,7 @@
     },
     "command": {
       "reset": "Die Daten wurde zurückgesetzt.",
+      "notConnected": "Du kannst diese Funktion nicht nutzen, da du dich nicht auf MoneyMaker befindest.",
       "timer": {
         "usage": "Bitte nutze /mm-timer <Zeit in Minuten> <name des Timers>",
         "no-number": "<Zeit in Minuten> muss eine Zahl sein.",
