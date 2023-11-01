@@ -51,7 +51,7 @@ public class ChatClient {
         try {
           BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
 
-          if(!socket.isClosed()) {
+          if(!socket.isClosed() || socket != null) {
             String serverMessage;
             while ((serverMessage = serverIn.readLine()) != null) {
 
@@ -69,7 +69,7 @@ public class ChatClient {
             addon.chatActivity.reloadScreen();
           }
           online = false;
-          e.printStackTrace();
+          //e.printStackTrace();
         }
       }).start();
     } catch (IOException e) {
@@ -79,7 +79,7 @@ public class ChatClient {
               Component.translatable("moneymaker.notification.chat.no-connection", TextColor.color(255, 85, 85)));
           addon.chatActivity.reloadScreen();
         }
-        e.printStackTrace();
+        //e.printStackTrace();
       // Handle connection error
     }
   }
