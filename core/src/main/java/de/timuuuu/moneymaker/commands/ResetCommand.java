@@ -14,8 +14,12 @@ public class ResetCommand extends Command {
   @Override
   public boolean execute(String prefix, String[] arguments) {
     if(prefix.equalsIgnoreCase("mm-reset")) {
-      AddonSettings.resetValues(false);
-      this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset", TextColor.color(85, 255, 85))));
+      if(AddonSettings.playingOn.contains("MoneyMaker")) {
+        AddonSettings.resetValues(false);
+        this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset", TextColor.color(85, 255, 85))));
+      } else {
+        this.displayMessage(Component.translatable("moneymaker.command.notConnected", TextColor.color(255, 85, 85)));
+      }
     }
     return true;
   }
