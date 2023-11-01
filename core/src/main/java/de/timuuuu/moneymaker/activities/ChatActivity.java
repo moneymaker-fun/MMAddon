@@ -107,19 +107,21 @@ public class ChatActivity extends Activity {
 
     VerticalListWidget<ComponentWidget> onlineList = new VerticalListWidget<>().addId("online-list");
 
-    List<MoneyPlayer> players = new ArrayList<>(AddonSettings.playerStatus.values());
-    players.sort(Comparator.comparing(o -> o.rank().getId()));
+    if(ChatClient.online) {
+      List<MoneyPlayer> players = new ArrayList<>(AddonSettings.playerStatus.values());
+      players.sort(Comparator.comparing(o -> o.rank().getId()));
 
-    AddonSettings.playerStatus.keySet().forEach(uuid -> {
-      MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
-      if(moneyPlayer.server().contains("MoneyMaker")) {
-        Component component = Component.icon(Icon.head(uuid, true, false), 10)
-            .append(Component.text(" " + moneyPlayer.rank().getOnlineColor() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
-        ComponentWidget componentWidget = ComponentWidget.component(component);
-        componentWidget.addId("online-entry");
-        onlineList.addChild(componentWidget);
-      }
-    });
+      AddonSettings.playerStatus.keySet().forEach(uuid -> {
+        MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
+        if(moneyPlayer.server().contains("MoneyMaker")) {
+          Component component = Component.icon(Icon.head(uuid, true, false), 10)
+              .append(Component.text(" " + moneyPlayer.rank().getOnlineColor() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
+          ComponentWidget componentWidget = ComponentWidget.component(component);
+          componentWidget.addId("online-entry");
+          onlineList.addChild(componentWidget);
+        }
+      });
+    }
 
     ScrollWidget onlineScroll = new ScrollWidget(onlineList, new ListSession<>()).addId("online-scroll");
     onlineContainer.addChild(onlineScroll);
