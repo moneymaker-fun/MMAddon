@@ -15,6 +15,7 @@ public class MainActivity extends TabbedActivity {
   public MainActivity(MoneyMakerAddon addon) {
     this.addon = addon;
     this.register("moneymaker_start", new DefaultComponentTab(Component.translatable("moneymaker.navigation.main-menu"), addon.startActivity));
+    this.register("moneymaker_info", new DefaultComponentTab(Component.translatable("moneymaker.navigation.info"), new InfoActivity(addon)));
     this.register("moneymaker_booster", new DefaultComponentTab(Component.translatable("moneymaker.navigation.booster"), new BoosterActivity(addon)));
     this.register("moneymaker_chat", new DefaultComponentTab(Component.translatable("moneymaker.navigation.chat"), addon.chatActivity));
   }

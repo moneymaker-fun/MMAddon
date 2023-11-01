@@ -1,0 +1,61 @@
+@import super();
+
+.info-title {
+  alignment-x: center;
+  text-color: green;
+  font-size: 1.5;
+  top: 0;
+}
+
+.info-container {
+  top: 20;
+  bottom: 20;
+  left: 20;
+  right: 20;
+  filter: blur(25);
+  border-radius: 15;
+  border-thickness: 5;
+  border-color: var(--background-color-border);
+  background-color: var(--background-color);
+}
+
+.commands-title {
+  text-color: green;
+  font-size: 1.5;
+  top: 10;
+  left: 10;
+}
+
+.commands {
+  top: 30;
+  left: 20;
+}
+
+.feedback-button {
+  top:0;
+  right:20;
+  height: 20;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+}
+
+.donate-btn {
+  bottom: 10;
+  left: 10;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+  height: 15;
+  border-color: blue;
+}
+
+.discord-btn {
+  bottom: 10;
+  left: 60;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+  height: 15;
+  border-color: #5865F2;
+}

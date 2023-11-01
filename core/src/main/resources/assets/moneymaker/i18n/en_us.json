@@ -11,6 +11,7 @@
     "navigation": {
       "title": "MoneyMaker",
       "main-menu": "Main Menu",
+      "info": "Information",
       "booster": "Booster",
       "chat": "Chat",
       "secret": "Secret"
@@ -159,6 +160,11 @@
         },
         "donate": "Donate",
         "discord": "Discord"
+      },
+      "info": {
+        "title": "MoneyMaker Information",
+        "commandsTitle": "Commands of the Addon",
+        "commands": "§b/mm-timer <Minutes> <Timer Name> §6Creates a timer\n§b/mm-reset §6Reset the collected data"
       },
       "booster": {
         "title": "List of farmed boosters",
