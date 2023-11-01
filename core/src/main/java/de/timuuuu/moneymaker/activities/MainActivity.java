@@ -8,11 +8,11 @@ import net.labymod.api.client.gui.screen.activity.types.TabbedActivity;
 import net.labymod.api.client.gui.screen.widget.widgets.navigation.tab.DefaultComponentTab;
 
 @AutoActivity
-public class MoneyMakerMainActivity extends TabbedActivity {
+public class MainActivity extends TabbedActivity {
 
   private MoneyMakerAddon addon;
 
-  public MoneyMakerMainActivity(MoneyMakerAddon addon) {
+  public MainActivity(MoneyMakerAddon addon) {
     this.addon = addon;
     this.register("moneymaker_start", new DefaultComponentTab(Component.translatable("moneymaker.navigation.main-menu"), addon.startActivity));
     this.register("moneymaker_booster", new DefaultComponentTab(Component.translatable("moneymaker.navigation.booster"), new BoosterActivity(addon)));
