@@ -1,6 +1,8 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import java.util.HashMap;
+import java.util.UUID;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.gui.screen.theme.Theme;
@@ -10,8 +12,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.render.font.text.TextRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
-import java.util.HashMap;
-import java.util.UUID;
 
 public class Util {
 
