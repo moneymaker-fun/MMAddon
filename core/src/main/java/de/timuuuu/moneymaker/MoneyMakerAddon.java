@@ -3,7 +3,7 @@ package de.timuuuu.moneymaker;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.activities.ChatActivity;
-import de.timuuuu.moneymaker.activities.MoneyMakerMainActivity;
+import de.timuuuu.moneymaker.activities.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
 import de.timuuuu.moneymaker.badges.MoneyIconTag;
@@ -56,7 +56,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public ChatClient chatClient;
 
-  public MoneyMakerMainActivity moneyMakerMainActivity;
+  public MainActivity moneyMakerMainActivity;
   public ChatActivity chatActivity;
   public StartActivity startActivity;
 
@@ -73,7 +73,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.startActivity = new StartActivity(this);
     this.chatActivity = new ChatActivity(this);
-    this.moneyMakerMainActivity = new MoneyMakerMainActivity(this);
+    this.moneyMakerMainActivity = new MainActivity(this);
 
     this.chatClient = new ChatClient(this);
 
