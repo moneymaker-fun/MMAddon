@@ -92,6 +92,24 @@ Timer {
   padding-left: 3;
   padding-right: 3;
   height: 15;
+
+  Icon {
+    height: 90%;
+  }
+}
+
+.discord-btn {
+  bottom: 10;
+  left: 70;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+  height: 15;
+  border-color: #5865F2;
+
+  Icon {
+    height: 90%;
+  }
 }
 
 .break-goal-title {

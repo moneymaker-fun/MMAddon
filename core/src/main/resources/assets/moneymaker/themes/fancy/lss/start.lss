@@ -100,7 +100,7 @@ Timer {
 
 .discord-btn {
   bottom: 10;
-  left: 50;
+  left: 60;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
