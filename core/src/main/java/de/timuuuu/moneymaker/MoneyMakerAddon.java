@@ -12,17 +12,17 @@ import de.timuuuu.moneymaker.badges.MoneyTextTag;
 import de.timuuuu.moneymaker.commands.ResetCommand;
 import de.timuuuu.moneymaker.commands.TimerCommand;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
-import de.timuuuu.moneymaker.hudwidget.farming.BlockSessionWidget;
-import de.timuuuu.moneymaker.hudwidget.farming.BoosterCountWidget;
-import de.timuuuu.moneymaker.hudwidget.farming.BreakGoalWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisTimerWidget;
-import de.timuuuu.moneymaker.hudwidget.farming.KillCountWidget;
-import de.timuuuu.moneymaker.hudwidget.farming.LatestBoosterDisplayWidget;
-import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget;
 import de.timuuuu.moneymaker.hudwidget.TimerDisplayWidget;
 import de.timuuuu.moneymaker.hudwidget.WorkerCountWidget;
 import de.timuuuu.moneymaker.hudwidget.WorkerPriceWidget;
+import de.timuuuu.moneymaker.hudwidget.farming.BlockSessionWidget;
+import de.timuuuu.moneymaker.hudwidget.farming.BoosterCountWidget;
+import de.timuuuu.moneymaker.hudwidget.farming.BreakGoalWidget;
+import de.timuuuu.moneymaker.hudwidget.farming.KillCountWidget;
+import de.timuuuu.moneymaker.hudwidget.farming.LatestBoosterDisplayWidget;
+import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.ChatServerListener;
 import de.timuuuu.moneymaker.listener.DisconnectListener;
@@ -31,6 +31,7 @@ import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
+import de.timuuuu.moneymaker.managers.DiscordAPI;
 import de.timuuuu.moneymaker.utils.AddonUpdater;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
@@ -59,6 +60,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   public ChatActivity chatActivity;
   public StartActivity startActivity;
 
+  private DiscordAPI discordAPI;
+
   private static MoneyMakerAddon instance;
 
   @Override
@@ -66,6 +69,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerSettingCategory();
 
     instance = this;
+    discordAPI = new DiscordAPI(this);
 
     this.startActivity = new StartActivity(this);
     this.chatActivity = new ChatActivity(this);
@@ -121,7 +125,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     AddonUpdater.checkVersion();
     AddonUpdater.downloadUpdater();
 
-    /*Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       JsonObject data = new JsonObject();
       data.addProperty("uuid", this.labyAPI().getUniqueId().toString());
       data.addProperty("userName", this.labyAPI().getName());
@@ -134,7 +138,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
         BoosterActivity.writeLinkedListToCSV(true);
       }
       new AddonUpdater();
-    }));*/
+    }));
   }
 
   @Override
@@ -144,6 +148,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static MoneyMakerAddon instance() {
     return instance;
+  }
+
+  public DiscordAPI discordAPI() {
+    return discordAPI;
   }
 
   public void pushNotification(Component title, Component text) {

@@ -85,8 +85,6 @@ public class NetworkPayloadListener {
                 }
               }
 
-              AddonSettings.playingOn = gameMode;
-
               JsonObject data = new JsonObject();
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
               data.addProperty("userName", this.addon.labyAPI().getName());
@@ -94,12 +92,26 @@ public class NetworkPayloadListener {
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               this.addon.chatClient.sendMessage("playerStatus", data);
 
+              if(!gameMode.contains("Other")) {
+                this.addon.discordAPI().setSaved();
+              }
+
               if(gameMode.contains("MoneyMaker")) {
+                this.addon.discordAPI().update();
+                this.addon.discordAPI().startUpdater();
                 if(AddonUpdater.updateAvailable() & !AddonUpdater.notified) {
                   AddonUpdater.notified = true;
                   this.addon.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.text.new-update")));
                 }
+              } else {
+                if(AddonSettings.playingOn.contains("MoneyMaker")) {
+                  this.addon.discordAPI().cancelUpdater();
+                  this.addon.discordAPI().removeCustom();
+                  this.addon.discordAPI().removeSaved();
+                }
               }
+
+              AddonSettings.playingOn = gameMode;
 
             }
           }

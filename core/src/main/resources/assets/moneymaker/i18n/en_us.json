@@ -131,12 +131,18 @@
       "chatOnlineOfflineMessages": {
         "name": "Show Online/Offline Messages"
       },
+      "discordRichPresence": {
+        "name": "Custom Discord Rich Presence"
+      },
       "header": {
         "general": {
           "name": "General Settings"
         },
         "chat": {
           "name": "Addon Chat Settings"
+        },
+        "other": {
+          "name": "Other Settings"
         }
       }
     },

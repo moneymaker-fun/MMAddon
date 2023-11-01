@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker;
 
+import de.timuuuu.moneymaker.managers.DiscordAPI;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
@@ -9,6 +10,21 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @ConfigName("settings")
 public class MoneyMakerConfiguration extends AddonConfig {
+
+  public MoneyMakerConfiguration() {
+
+    this.discordRichPresence.addChangeListener((type, oldValue, newValue) -> {
+      DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
+      if(discordAPI != null) {
+        if(newValue) {
+          discordAPI.update();
+        } else {
+          discordAPI.removeCustom();
+        }
+      }
+    });
+
+  }
 
   @SwitchSetting
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
@@ -49,6 +65,12 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> chatOnlineOfflineMessages = new ConfigProperty<>(true);
 
+  // Other
+
+  @SettingSection(value = "other", center = true)
+
+  @SwitchSetting
+  private final ConfigProperty<Boolean> discordRichPresence = new ConfigProperty<>(true);
 
 
 
@@ -99,6 +121,12 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> chatOnlineOfflineMessages() {
     return chatOnlineOfflineMessages;
+  }
+
+  // Other
+
+  public ConfigProperty<Boolean> discordRichPresence() {
+    return discordRichPresence;
   }
 
   // Internal Settings

@@ -20,6 +20,7 @@ public class AddonSettings {
       playingOn = "Hauptmenü";
     }
     balance = "X";
+    rank = "X";
     brokenBlocks = 0;
     sessionBlocks = 0;
     breakGoalEnabled = false;
@@ -33,6 +34,10 @@ public class AddonSettings {
   }
 
   public static String balance = "X";
+  public static String rank = "X";
+
+  public static String pickaxeLevel = "X";
+  public static String pickaxeRanking = "X";
 
   public static int brokenBlocks = 0;
   public static int sessionBlocks = 0;

@@ -69,6 +69,21 @@ public class ScoreBoardListener {
       } catch (NumberFormatException ignored) {}
     }
 
+    if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() & AddonSettings.playingOn.contains(MoneyScore.PICKAXE_LEVEL.neededServer())) {
+      AddonSettings.pickaxeLevel = ChatUtil.stripColor(event.score().getName());
+    }
+
+    if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() & AddonSettings.playingOn.contains(MoneyScore.PICKAXE_RANKING.neededServer())) {
+      AddonSettings.pickaxeRanking = ChatUtil.stripColor(event.score().getName()).replace("Platz ", "").replace("Rank ", "");
+    }
+
+    if(event.score().getValue() == MoneyScore.RANK.score() & AddonSettings.playingOn.contains(MoneyScore.RANK.neededServer())) {
+      String scoreName = ChatUtil.stripColor(event.score().getName());
+      if(scoreName.startsWith("Rank") || scoreName.startsWith("Platz")) {
+        AddonSettings.rank = scoreName.replace("Rank ", "").replace("Platz ", "");
+      }
+    }
+
     if(event.score().getValue() == MoneyScore.BALANCE.score() & AddonSettings.playingOn.contains(MoneyScore.BALANCE.neededServer())) {
       AddonSettings.balance = ChatUtil.stripColor(event.score().getName());
 
@@ -117,6 +132,11 @@ public class ScoreBoardListener {
   public enum MoneyScore {
 
     BROKEN_BLOCKS(3, "Farming"),
+    PICKAXE_LEVEL(6, "Farming"),
+    PICKAXE_RANKING(0, "Farming"),
+
+    RANK(9, "MoneyMaker"),
+
     BALANCE(12, "MoneyMaker"),
 
     LANG_CHECK(13, "MoneyMaker");
