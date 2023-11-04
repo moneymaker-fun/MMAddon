@@ -84,7 +84,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
     ComponentRenderer componentRenderer = this.labyAPI.renderPipeline().componentRenderer();
     int x = 1;
     int y = 1;
-    Component title = Component.translatable("moneymaker.hudWidget.booster_display.latestBoosters", TextColor.color(this.config.textColor.get().get()));
+    Component title = Component.translatable("moneymaker.hudWidget.mm_booster_display.latestBoosters", TextColor.color(this.config.textColor.get().get()));
     RenderableComponent titleComponent = RenderableComponent.of(title);
     if(stack != null) {
       componentRenderer.builder()

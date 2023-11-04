@@ -26,7 +26,7 @@ public class WorkerCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.updateItemName(Component.text(AddonSettings.workerCount + " ").append(Component.translatable("moneymaker.hudWidget.worker_count.miners")), isEditorContext);
+    this.updateItemName(Component.text(AddonSettings.workerCount + " ").append(Component.translatable("moneymaker.hudWidget.mm_worker_count.miners")), isEditorContext);
   }
 
   @Override

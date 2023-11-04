@@ -80,7 +80,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
     ComponentRenderer componentRenderer = this.labyAPI.renderPipeline().componentRenderer();
     int x = 1;
     int y = 1;
-    Component title = Component.translatable("moneymaker.hudWidget.timer_display.currentTimers", TextColor.color(this.config.textColor.get().get()));
+    Component title = Component.translatable("moneymaker.hudWidget.mm_timer_display.currentTimers", TextColor.color(this.config.textColor.get().get()));
     RenderableComponent titleComponent = RenderableComponent.of(title);
     if(stack != null) {
       componentRenderer.builder()

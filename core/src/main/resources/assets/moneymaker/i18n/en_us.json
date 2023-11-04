@@ -212,34 +212,34 @@
       }
     },
     "hudWidget": {
-      "booster_count": {
+      "mm_booster_count": {
         "name": "Booster-Count"
       },
-      "block_session": {
+      "mm_block_session": {
         "name": "Blocks/Session",
         "blocks": "Blocks",
         "block": "Block"
       },
-      "break_goal": {
+      "mm_break_goal": {
         "name": "Break Goal"
       },
-      "balance": {
+      "mm_balance": {
         "name": "Balance"
       },
-      "worker_count": {
+      "mm_worker_count": {
         "name": "Miner Count",
         "miners": "Miners"
       },
-      "debris_price": {
+      "mm_debris_price": {
         "name": "Debris Price"
       },
-      "debris_timer": {
+      "mm_debris_timer": {
         "name": "Debris Timer"
       },
-      "worker_price": {
+      "mm_worker_price": {
         "name": "Show worker price"
       },
-      "sword_stats": {
+      "mm_sword_stats": {
         "name": "Sword Statistics",
         "showIcons": {
           "name": "Show with icons"
@@ -253,10 +253,10 @@
           "kills": " Kills"
         }
       },
-      "kill_counter": {
+      "mm_kill_counter": {
         "name": "Mob Kill Counter"
       },
-      "timer_display": {
+      "mm_timer_display": {
         "name": "Timer",
         "maxDisplayedTimers": {
           "name": "Displayed Timers"
@@ -266,7 +266,7 @@
         },
         "currentTimers": "Currently running timers:"
       },
-      "booster_display": {
+      "mm_booster_display": {
         "name": "Latest farmed boosters",
         "maxDisplayedBoosters": {
           "name": "Displayed Boosters"
@@ -275,6 +275,9 @@
           "name": "Text color"
         },
         "latestBoosters": "Latest farmed boosters:"
+      },
+      "mm_activated_boosters": {
+        "name": "Activated Boosters"
       }
     }
   }

@@ -33,13 +33,13 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
     super.load(config);
     boolean showIcon = this.getConfig().showIcons().get();
     this.rankLine = createLine(
-        showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.translatable("moneymaker.hudWidget.sword_stats.with-icon.rank"))
-            : Component.translatable("moneymaker.hudWidget.sword_stats.without-icon.rank"),
+        showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.translatable("moneymaker.hudWidget.mm_sword_stats.with-icon.rank"))
+            : Component.translatable("moneymaker.hudWidget.mm_sword_stats.without-icon.rank"),
         "0"
     );
     this.mobsLine = createLine(
-        showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.translatable("moneymaker.hudWidget.sword_stats.with-icon.kills"))
-            : Component.translatable("moneymaker.hudWidget.sword_stats.without-icon.kills"),
+        showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.translatable("moneymaker.hudWidget.mm_sword_stats.with-icon.kills"))
+            : Component.translatable("moneymaker.hudWidget.mm_sword_stats.without-icon.kills"),
         "0"
     );
     /*this.rankLine = createLine(

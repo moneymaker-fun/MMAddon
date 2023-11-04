@@ -212,34 +212,34 @@
       }
     },
     "hudWidget": {
-      "booster_count": {
+      "mm_booster_count": {
         "name": "Booster-Count"
       },
-      "block_session": {
+      "mm_block_session": {
         "name": "Blöcke/Sitzung",
         "blocks": "Blöcke",
         "block": "Block"
       },
-      "break_goal": {
+      "mm_break_goal": {
         "name": "Abbau Ziel"
       },
-      "balance": {
+      "mm_balance": {
         "name": "Kontostand"
       },
-      "worker_count": {
+      "mm_worker_count": {
         "name": "Arbeiter Anzahl",
         "miners": "Minenarbeiter"
       },
-      "debris_price": {
+      "mm_debris_price": {
         "name": "Geröll Preis"
       },
-      "debris_timer": {
+      "mm_debris_timer": {
         "name": "Geröll Timer"
       },
-      "worker_price": {
+      "mm_worker_price": {
         "name": "Arbeitsplatz Preis anzeigen"
       },
-      "sword_stats": {
+      "mm_sword_stats": {
         "name": "Schwert Statistiken",
         "showIcons": {
           "name": "Mit Icons anzeigen"
@@ -253,10 +253,10 @@
           "kills": " Kills"
         }
       },
-      "kill_counter": {
+      "mm_kill_counter": {
         "name": "Mob Kill Zähler"
       },
-      "timer_display": {
+      "mm_timer_display": {
         "name": "Timer",
         "maxDisplayedTimers": {
           "name": "Angezeigte Timer"
@@ -266,7 +266,7 @@
         },
         "currentTimers": "Aktuell laufende Timer:"
       },
-      "booster_display": {
+      "mm_booster_display": {
         "name": "Zuletzt gefarmte Booster",
         "maxDisplayedBoosters": {
           "name": "Angezeigte Booster"
@@ -275,6 +275,9 @@
           "name": "Textfarbe"
         },
         "latestBoosters": "Zuletzt gefarmte Booster:"
+      },
+      "mm_activated_boosters": {
+        "name": "Activated Boosters"
       }
     }
   }
