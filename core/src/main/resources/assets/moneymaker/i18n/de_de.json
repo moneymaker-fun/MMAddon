@@ -41,6 +41,24 @@
         "hours": "Stunden"
       }
     },
+    "discordPresence": {
+      "mine": {
+        "currently": "Aktuell in der Mine",
+        "balance": "Kontostand: ",
+        "workers": "Minenarbeiter: ",
+        "ranking": "Ranking: "
+      },
+      "farming": {
+        "currently": "Aktuell in der Farming Höhle",
+        "blocks": "Blöcke: ",
+        "boosters": "Gefarmte Booster: ",
+        "ranking": "Ranking: ",
+        "pickaxe": {
+          "rank": "Spitzhacken Rang: ",
+          "level": "Spitzhacken Level: "
+        }
+      }
+    },
     "notification": {
       "booster-export": {
         "title": "Booster-Export",

@@ -41,6 +41,24 @@
         "hours": "Hours"
       }
     },
+    "discordPresence": {
+      "mine": {
+        "currently": "Currently in the Mine",
+        "balance": "Balance: ",
+        "workers": "Workers: ",
+        "ranking": "Ranking: "
+      },
+      "farming": {
+        "currently": "Currently in the farming cave",
+        "blocks": "Blocks: ",
+        "boosters": "Farmed Boosters: ",
+        "ranking": "Ranking: ",
+        "pickaxe": {
+          "rank": "Pickaxe Rank: ",
+          "level": "Pickaxe Level: "
+        }
+      }
+    },
     "notification": {
       "booster-export": {
         "title": "Booster-Export",

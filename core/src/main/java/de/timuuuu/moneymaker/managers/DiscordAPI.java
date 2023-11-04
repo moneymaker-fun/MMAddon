@@ -3,12 +3,13 @@ package de.timuuuu.moneymaker.managers;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Asset;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Builder;
+import net.labymod.api.util.I18n;
 import net.labymod.api.util.concurrent.task.Task;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DiscordAPI {
 
@@ -79,36 +80,36 @@ public class DiscordAPI {
       if(AddonSettings.playingOn.contains("MoneyMaker")) {
         count.getAndAdd(1);
         if(AddonSettings.playingOn.contains("Mine")) {
-          this.line1 = "Aktuell auf der Mine";
+          this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently");
           if(count.get() == 1) {
-            this.line2 = "Konto: " + (AddonSettings.balance.equals("X") ? "?" : AddonSettings.balance);
+            this.line2 = I18n.translate("moneymaker.discordPresence.mine.balance") + (AddonSettings.balance.equals("X") ? "?" : AddonSettings.balance);
           }
           if(count.get() == 2) {
-            this.line2 = "Arbeiter: " + AddonSettings.workerCount;
+            this.line2 = I18n.translate("moneymaker.discordPresence.mine.workers") + AddonSettings.workerCount;
           }
           if(count.get() == 3) {
             count.set(0);
-            this.line2 = "Ranking: " + AddonSettings.rank;
+            this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + AddonSettings.rank;
           }
         }
 
         if(AddonSettings.playingOn.contains("Farming")) {
-          this.line1 = "Aktuell in der Farming-Höhle";
+          this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently");
           if(count.get() == 1) {
-            this.line2 = "Blöcke: " + AddonSettings.currentBrokenBlocks;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + AddonSettings.currentBrokenBlocks;
           }
           if(count.get() == 2) {
-            this.line2 = "Gefarmte Booster: " + Booster.sessionBoost.get() + "%";
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Booster.sessionBoost.get() + "%";
           }
           if(count.get() == 3) {
-            this.line2 = "Spitzhaken-Rang: " + AddonSettings.pickaxeRanking;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + AddonSettings.pickaxeRanking;
           }
           if(count.get() == 4) {
-            this.line2 = "Spitzhaken-Level: " + AddonSettings.pickaxeLevel;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + AddonSettings.pickaxeLevel;
           }
           if(count.get() == 5) {
             count.set(0);
-            this.line2 = "Ranking: " + AddonSettings.rank;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + AddonSettings.rank;
           }
         }
 
