@@ -1,6 +1,7 @@
-package de.timuuuu.moneymaker.utils;
+package de.timuuuu.moneymaker.settings;
 
 
+import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,6 +22,8 @@ public class AddonSettings {
     }
     balance = "X";
     rank = "X";
+    pickaxeLevel = "X";
+    pickaxeRanking = "X";
     brokenBlocks = 0;
     sessionBlocks = 0;
     breakGoalEnabled = false;
