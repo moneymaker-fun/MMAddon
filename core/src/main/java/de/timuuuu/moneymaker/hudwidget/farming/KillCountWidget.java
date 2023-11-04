@@ -16,7 +16,7 @@ public class KillCountWidget extends TextHudWidget<TextHudWidgetConfig> {
   private TextLine rankLine;
 
   public KillCountWidget(MoneyMakerAddon addon) {
-    super("kill_counter");
+    super("mm_kill_counter");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
   }

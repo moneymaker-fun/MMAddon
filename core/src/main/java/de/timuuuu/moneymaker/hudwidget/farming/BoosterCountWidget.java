@@ -16,7 +16,7 @@ public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public BoosterCountWidget(MoneyMakerAddon addon) {
-    super("booster_count");
+    super("mm_booster_count");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
   }

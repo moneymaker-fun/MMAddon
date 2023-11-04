@@ -30,7 +30,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public TimerDisplayWidget(MoneyMakerAddon addon) {
-    super("timer_display", TimerHudWidgetConfig.class);
+    super("mm_timer_display", TimerHudWidgetConfig.class);
     this.bindCategory(MoneyMakerAddon.CATEGORY);
     this.setIcon(Icon.sprite16(
         ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 2));

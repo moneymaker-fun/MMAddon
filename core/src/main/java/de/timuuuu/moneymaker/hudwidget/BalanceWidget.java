@@ -15,7 +15,7 @@ public class BalanceWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public BalanceWidget(MoneyMakerAddon addon) {
-    super("balance");
+    super("mm_balance");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
     this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/coin.png")));

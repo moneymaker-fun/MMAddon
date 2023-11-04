@@ -15,7 +15,7 @@ public class BreakGoalWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public BreakGoalWidget(MoneyMakerAddon addon) {
-    super("break_goal");
+    super("mm_break_goal");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
   }

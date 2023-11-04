@@ -30,7 +30,8 @@ public class ChatReceiveListener {
 
     if (plain.startsWith("[MoneyMaker]")) {
 
-      if(plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) {
+      if((plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) ||
+          (plain.startsWith("[MoneyMaker] You have upgraded the workplace to level"))) {
         if(this.addon.configuration().hideWorkerUpdateMessage().get()) {
           event.setCancelled(true);
         }
@@ -106,11 +107,26 @@ public class ChatReceiveListener {
         }
       }
 
+      // DE: [MoneyMaker] Dein +20 % Booster (2 Stunden) wurde aktiviert
+      // EN: [MoneyMaker] Your +20% booster (2 Hours) was activated
+
       if((plain.contains("[MoneyMaker] Dein ") & plain.contains(" Booster (") & plain.contains(" wurde aktiviert")) ||
           (plain.contains("[MoneyMaker] Your ") & plain.contains(" booster (") & plain.contains(" was activated"))) {
+
         if(this.addon.configuration().hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
+
+        String message = plain.split(" \\(")[0].replace("[MoneyMaker] Dein +", "").replace("% Booster", "")
+            .replace("[MoneyMaker] Your +", "").replace("% booster", "");
+
+        try {
+          int boost = Integer.parseInt(message);
+          Booster.activatedBoost.addAndGet(boost);
+        } catch (NumberFormatException ignored) {
+
+        }
+
       }
 
     }

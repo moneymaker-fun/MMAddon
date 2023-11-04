@@ -23,7 +23,7 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
   private TextLine mobsLine;
 
   public SwordStatsWidget(MoneyMakerAddon addon) {
-    super("sword_stats", SwordHudWidgetConfig.class);
+    super("mm_sword_stats", SwordHudWidgetConfig.class);
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
   }

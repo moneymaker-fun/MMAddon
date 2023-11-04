@@ -13,7 +13,7 @@ public class BlockSessionWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public BlockSessionWidget(MoneyMakerAddon addon) {
-    super("block_session");
+    super("mm_block_session");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
     this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_ore.png")));

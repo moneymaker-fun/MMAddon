@@ -14,7 +14,7 @@ public class WorkerPriceWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public WorkerPriceWidget(MoneyMakerAddon addon) {
-    super("worker_price");
+    super("mm_worker_price");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
     this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/miner.png")));

@@ -13,7 +13,7 @@ public class WorkerCountWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public WorkerCountWidget(MoneyMakerAddon addon) {
-    super("worker_count");
+    super("mm_worker_count");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
     this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/miner.png")));

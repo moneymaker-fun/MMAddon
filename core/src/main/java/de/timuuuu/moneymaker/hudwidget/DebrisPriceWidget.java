@@ -16,7 +16,7 @@ public class DebrisPriceWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public DebrisPriceWidget(MoneyMakerAddon addon) {
-    super("debris_price");
+    super("mm_debris_price");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
   }

@@ -29,7 +29,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
   private MoneyMakerAddon addon;
 
   public LatestBoosterDisplayWidget(MoneyMakerAddon addon) {
-    super("booster_display", BoosterHudWidgetConfig.class);
+    super("mm_booster_display", BoosterHudWidgetConfig.class);
     this.bindCategory(MoneyMakerAddon.CATEGORY);
     this.setIcon(Icon.sprite16(
         ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 0));

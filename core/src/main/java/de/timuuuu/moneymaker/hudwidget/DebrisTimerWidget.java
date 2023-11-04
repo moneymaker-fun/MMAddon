@@ -16,7 +16,7 @@ public class DebrisTimerWidget extends ItemHudWidget<HudWidgetConfig> {
   private MoneyMakerAddon addon;
 
   public DebrisTimerWidget(MoneyMakerAddon addon) {
-    super("debris_timer");
+    super("mm_debris_timer");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
   }

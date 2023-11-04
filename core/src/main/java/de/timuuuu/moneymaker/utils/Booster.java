@@ -12,6 +12,7 @@ public class Booster {
   private static List<Booster> latestFoundBoosters = new ArrayList<>();
 
   public static AtomicInteger sessionBoost = new AtomicInteger(0);
+  public static AtomicInteger activatedBoost = new AtomicInteger(0);
 
   public static void insertLatestBooster(int boost, int time) {
     if(latestFoundBoosters.size() <= 10) {
