@@ -111,10 +111,9 @@ public class ChatActivity extends Activity {
       List<MoneyPlayer> players = new ArrayList<>(AddonSettings.playerStatus.values());
       players.sort(Comparator.comparing(o -> o.rank().getId()));
 
-      AddonSettings.playerStatus.keySet().forEach(uuid -> {
-        MoneyPlayer moneyPlayer = AddonSettings.playerStatus.get(uuid);
+      players.forEach(moneyPlayer -> {
         if(moneyPlayer.server().contains("MoneyMaker")) {
-          Component component = Component.icon(Icon.head(uuid, true, false), 10)
+          Component component = Component.icon(Icon.head(moneyPlayer.uuid(), true, false), 10)
               .append(Component.text(" " + moneyPlayer.rank().getOnlineColor() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
           ComponentWidget componentWidget = ComponentWidget.component(component);
           componentWidget.addId("online-entry");
