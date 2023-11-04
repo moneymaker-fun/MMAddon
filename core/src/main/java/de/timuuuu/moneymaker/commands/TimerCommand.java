@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.commands;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTimer;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.chat.command.Command;

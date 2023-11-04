@@ -3,7 +3,7 @@ package de.timuuuu.moneymaker.activities;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
-import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;

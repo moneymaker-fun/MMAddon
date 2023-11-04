@@ -120,18 +120,7 @@
         "description": "Displays a clickable message in chat to activate a timer when a worker's effect activates."
       },
       "hideFullBoosterInventory": {
-        "name": "Full Booster Inventory Hide Message"
-      },
-      "chatNotification": {
-        "name": "Chat Notifications",
-        "description": "Receive notification of new messages via the addon chat"
-      },
-      "chatNotificationSound": {
-        "name": "Chat Notification sound",
-        "description": "Receive a notification sound for new messages via the addon chat"
-      },
-      "chatOnlineOfflineMessages": {
-        "name": "Show Online/Offline Messages"
+        "name": "Hide Full Booster Inventory Message"
       },
       "discordRichPresence": {
         "name": "Custom Discord Rich Presence"
@@ -140,11 +129,22 @@
         "general": {
           "name": "General Settings"
         },
-        "chat": {
-          "name": "Addon Chat Settings"
+        "gameplay": {
+          "name": "Gameplay Settings"
+        }
+      },
+      "moneyChatConfiguration": {
+        "name": "Chat Settings",
+        "notification": {
+          "name": "Notifications",
+          "description": "Receive notification of new messages via the addon chat"
         },
-        "other": {
-          "name": "Other Settings"
+        "notificationSound": {
+          "name": "Notification sound",
+          "description": "Receive a notification sound for new messages via the addon chat"
+        },
+        "onlineOfflineMessages": {
+          "name": "Show Online/Offline Messages"
         }
       }
     },

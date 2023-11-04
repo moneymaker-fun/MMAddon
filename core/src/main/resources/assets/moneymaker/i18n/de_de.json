@@ -122,17 +122,6 @@
       "hideFullBoosterInventory": {
         "name": "Volle Booster Inventar Nachricht verstecken"
       },
-      "chatNotification": {
-        "name": "Chat Benachrichtigung",
-        "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
-      },
-      "chatNotificationSound": {
-        "name": "Chat Benachrichtigungston",
-        "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"
-      },
-      "chatOnlineOfflineMessages": {
-        "name": "Online/Offline Nachrichten anzeigen"
-      },
       "discordRichPresence": {
         "name": "Eigene Discord Rich Presence"
       },
@@ -140,11 +129,22 @@
         "general": {
           "name": "Allgemeine Einstellungen"
         },
-        "chat": {
-          "name": "Addon Chat Einstellungen"
+        "gameplay": {
+          "name": "Gameplay Einstellungen"
+        }
+      },
+      "moneyChatConfiguration": {
+        "name": "Chat-Einstellungen",
+        "chatNotification": {
+          "name": "Benachrichtigung",
+          "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
         },
-        "other": {
-          "name": "Andere Einstellungen"
+        "chatNotificationSound": {
+          "name": "Benachrichtigungston",
+          "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"
+        },
+        "chatOnlineOfflineMessages": {
+          "name": "Online/Offline Nachrichten anzeigen"
         }
       }
     },

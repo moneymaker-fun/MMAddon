@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.badges;
 
-import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;

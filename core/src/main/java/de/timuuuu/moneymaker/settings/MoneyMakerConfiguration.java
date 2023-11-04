@@ -1,5 +1,6 @@
-package de.timuuuu.moneymaker;
+package de.timuuuu.moneymaker.settings;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.managers.DiscordAPI;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
@@ -26,10 +27,19 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   }
 
+
+  @SettingSection(value = "general", center = true)
+
   @SwitchSetting
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
-  @SettingSection(value = "general", center = true)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> discordRichPresence = new ConfigProperty<>(true);
+
+  public MoneyChatConfiguration moneyChatConfiguration = new MoneyChatConfiguration();
+
+
+  @SettingSection(value = "gameplay", center = true)
 
   @SwitchSetting
   private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(false);
@@ -53,33 +63,22 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> hideFullBoosterInventory = new ConfigProperty<>(false);
 
-  @SettingSection(value = "chat", center = true)
-
-  @SwitchSetting
-  private final ConfigProperty<Boolean> chatNotification = new ConfigProperty<>(true);
-
-  @SettingRequires("chatNotification")
-  @SwitchSetting
-  private final ConfigProperty<Boolean> chatNotificationSound = new ConfigProperty<>(true);
-
-  @SwitchSetting
-  private final ConfigProperty<Boolean> chatOnlineOfflineMessages = new ConfigProperty<>(true);
-
-  // Other
-
-  @SettingSection(value = "other", center = true)
-
-  @SwitchSetting
-  private final ConfigProperty<Boolean> discordRichPresence = new ConfigProperty<>(true);
-
-
 
   // Settings Getters
+
+  // General
 
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
   }
+
+  public ConfigProperty<Boolean> discordRichPresence() {
+    return discordRichPresence;
+  }
+
+
+  // Gameplay
 
   public ConfigProperty<Boolean> shortBoosterMessage() {
     return shortBoosterMessage;
@@ -109,25 +108,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return hideFullBoosterInventory;
   }
 
-  // Chat Section
 
-  public ConfigProperty<Boolean> chatNotification() {
-    return chatNotification;
-  }
-
-  public ConfigProperty<Boolean> chatNotificationSound() {
-    return chatNotificationSound;
-  }
-
-  public ConfigProperty<Boolean> chatOnlineOfflineMessages() {
-    return chatOnlineOfflineMessages;
-  }
-
-  // Other
-
-  public ConfigProperty<Boolean> discordRichPresence() {
-    return discordRichPresence;
-  }
 
   // Internal Settings
 

@@ -2,7 +2,7 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.hudwidget.farming.LatestBoosterDisplayWidget.BoosterHudWidgetConfig;
-import de.timuuuu.moneymaker.utils.AddonSettings;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
 import java.util.ArrayList;
 import java.util.List;

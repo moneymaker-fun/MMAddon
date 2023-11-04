@@ -3,6 +3,8 @@ package de.timuuuu.moneymaker.utils;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import java.util.HashMap;
 import java.util.UUID;
+
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.gui.screen.theme.Theme;
