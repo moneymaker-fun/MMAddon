@@ -164,6 +164,29 @@
         "onlineOfflineMessages": {
           "name": "Show Online/Offline Messages"
         }
+      },
+      "moneyBadgeConfiguration": {
+        "name": "Tag Settings",
+        "header": {
+          "general": {
+            "name": "General Tag Settings"
+          },
+          "customization": {
+            "name": "Tag Customization"
+          }
+        },
+        "textTag": {
+          "name": "Show Text-Tag"
+        },
+        "iconTag": {
+          "name": "Show Icon-Tag"
+        },
+        "tabListIcon": {
+          "name": "Show Icon in TabList"
+        },
+        "textColor": {
+          "name": "Color of the Text-Tag"
+        }
       }
     },
     "ui": {

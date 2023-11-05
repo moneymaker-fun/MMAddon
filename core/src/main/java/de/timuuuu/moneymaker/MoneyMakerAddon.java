@@ -49,7 +49,9 @@ import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
+import net.labymod.api.revision.SimpleRevision;
 import net.labymod.api.util.concurrent.task.Task;
+import net.labymod.api.util.version.SemanticVersion;
 
 @AddonMain
 public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
@@ -65,6 +67,11 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private DiscordAPI discordAPI;
 
   private static MoneyMakerAddon instance;
+
+  @Override
+  protected void preConfigurationLoad() {
+    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("0.0.5"), "2023-11-05"));
+  }
 
   @Override
   protected void enable() {
@@ -110,9 +117,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new LatestBoosterDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new ActivatedBoosterWidget(this));
 
-    labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag());
-    labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag());
-    Laby.references().badgeRegistry().register("moneymaker_tab_icon", net.labymod.api.client.entity.player.badge.PositionType.LEFT_TO_NAME, new MoneyTabBadge());
+    labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag(this));
+    labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag(this));
+    Laby.references().badgeRegistry().register("moneymaker_tab_icon", net.labymod.api.client.entity.player.badge.PositionType.LEFT_TO_NAME, new MoneyTabBadge(this));
 
     this.logger().info("Enabled the Addon");
 

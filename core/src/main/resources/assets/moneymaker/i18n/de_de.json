@@ -164,6 +164,29 @@
         "chatOnlineOfflineMessages": {
           "name": "Online/Offline Nachrichten anzeigen"
         }
+      },
+      "moneyBadgeConfiguration": {
+        "name": "Tag Einstellungen",
+        "header": {
+          "general": {
+            "name": "Allgemeine Tag Einstellungen"
+          },
+          "customization": {
+            "name": "Tag Anpassung"
+          }
+        },
+        "textTag": {
+          "name": "Text-Tag anzeigen"
+        },
+        "iconTag": {
+          "name": "Icon-Tag anzeigen"
+        },
+        "tabListIcon": {
+          "name": "Icon in TabList anzeigen"
+        },
+        "textColor": {
+          "name": "Farbe des Text-Tag"
+        }
       }
     },
     "ui": {
