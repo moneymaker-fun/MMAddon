@@ -5,11 +5,15 @@ import de.timuuuu.moneymaker.managers.DiscordAPI;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
+import net.labymod.api.configuration.loader.annotation.IntroducedIn;
+import net.labymod.api.configuration.loader.annotation.SpriteSlot;
+import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingRequires;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @ConfigName("settings")
+@SpriteTexture("sprite/settings")
 public class MoneyMakerConfiguration extends AddonConfig {
 
   public MoneyMakerConfiguration() {
@@ -30,13 +34,20 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @SettingSection(value = "general", center = true)
 
+  @SpriteSlot()
   @SwitchSetting
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
+  @SpriteSlot(x = 1)
   @SwitchSetting
   private final ConfigProperty<Boolean> discordRichPresence = new ConfigProperty<>(true);
 
+  @SpriteSlot(x = 2)
   public MoneyChatConfiguration moneyChatConfiguration = new MoneyChatConfiguration();
+
+  @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
+  @SpriteSlot(y = 6)
+  public MoneyBadgeConfiguration moneyBadgeConfiguration = new MoneyBadgeConfiguration();
 
 
   @SettingSection(value = "gameplay", center = true)
