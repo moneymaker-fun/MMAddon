@@ -26,9 +26,9 @@ public class ChatReceiveListener {
   @Subscribe(Priority.LATEST)
   public void onChatReceive(ChatReceiveEvent event) {
     String plain = event.chatMessage().getOriginalPlainText();
-    if (!AddonSettings.playingOn.contains("MoneyMaker")) return;
+    //if (!AddonSettings.playingOn.contains("MoneyMaker")) return;
 
-    if (plain.startsWith("[MoneyMaker]")) {
+    if (plain.contains("[MoneyMaker]")) {
 
       if((plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) ||
           (plain.startsWith("[MoneyMaker] You have upgraded the workplace to level"))) {
@@ -107,25 +107,36 @@ public class ChatReceiveListener {
         }
       }
 
-      // DE: [MoneyMaker] Dein +20 % Booster (2 Stunden) wurde aktiviert
-      // EN: [MoneyMaker] Your +20% booster (2 Hours) was activated
+      // DE: [MoneyMaker] Dein +30 % Booster (15 Minuten) wurde aktiviert
+      // EN: [MoneyMaker] Your +30% booster (15 Minutes) was activated
 
-      if((plain.contains("[MoneyMaker] Dein ") & plain.contains(" Booster (") & plain.contains(" wurde aktiviert")) ||
-          (plain.contains("[MoneyMaker] Your ") & plain.contains(" booster (") & plain.contains(" was activated"))) {
+      if(plain.contains("[MoneyMaker] Dein +") & plain.contains(" % Booster (") & plain.contains(" wurde aktiviert")) {
 
         if(this.addon.configuration().hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
 
-        String message = plain.split(" \\(")[0].replace("[MoneyMaker] Dein +", "").replace("% Booster", "")
-            .replace("[MoneyMaker] Your +", "").replace("% booster", "");
+        String message = plain.split(" \\(")[0].replace("[MoneyMaker] Dein +", "").replace(" % Booster", "");
 
         try {
           int boost = Integer.parseInt(message);
           Booster.activatedBoost.addAndGet(boost);
-        } catch (NumberFormatException ignored) {
+        } catch (NumberFormatException ignored) {}
 
+      }
+
+      if(plain.contains("[MoneyMaker] Your +") & plain.contains("% booster (") & plain.contains(" was activated")) {
+
+        if(this.addon.configuration().hideFullBoosterInventory().get()) {
+          event.setCancelled(true);
         }
+
+        String message = plain.split(" \\(")[0].replace("[MoneyMaker] Your +", "").replace("% booster", "");
+
+        try {
+          int boost = Integer.parseInt(message);
+          Booster.activatedBoost.addAndGet(boost);
+        } catch (NumberFormatException ignored) {}
 
       }
 
