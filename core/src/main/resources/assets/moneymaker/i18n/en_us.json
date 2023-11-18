@@ -17,7 +17,6 @@
       "secret": "Secret"
     },
     "command": {
-      "reset": "The data has been reset.",
       "notConnected": "You cannot use this feature because you are not on MoneyMaker.",
       "timer": {
         "usage": "Please use /mm-timer <Time in minutes> <name of the timer>",
@@ -26,6 +25,13 @@
         "already-exists": "A timer with this name already exists.",
         "performance": "Please note that the more timers you create, the performance loss may occur.",
         "created": "The timer %s with %s minutes has been created."
+      },
+      "reset": {
+        "usage": "Please use /mm-reset <booster, miners, debris, all>",
+        "booster": "Your saved booster data has been reset",
+        "miners": "Your saved miner data has been reset.",
+        "debris": "Your saved debris data has been reset.",
+        "all": "All saved data has been reset."
       }
     },
     "text": {

@@ -17,7 +17,6 @@
       "secret": "Secret"
     },
     "command": {
-      "reset": "Die Daten wurde zurückgesetzt.",
       "notConnected": "Du kannst diese Funktion nicht nutzen, da du dich nicht auf MoneyMaker befindest.",
       "timer": {
         "usage": "Bitte nutze /mm-timer <Zeit in Minuten> <name des Timers>",
@@ -26,6 +25,13 @@
         "already-exists": "Es existiert bereits ein Timer mit diesem Namen.",
         "performance": "Bitte beachte, dass je mehr Timer du erstellt es zu Performance Verlusten kommen kann.",
         "created": "Der Timer %s mit %s Minuten wurde erstellt."
+      },
+      "reset": {
+        "usage": "Bitte nutze /mm-reset <booster, arbeiter, geröll, all>",
+        "booster": "Deine gespeicherten Booster Daten wurden zurückgesetzt.",
+        "miners": "Deine gespeicherten Arbeiter Daten wurden zurückgesetzt.",
+        "debris": "Deine gespeicherten Geröll Daten wurden zurückgesetzt.",
+        "all": "Alle gespeicherten Daten wurde zurückgesetzt."
       }
     },
     "text": {

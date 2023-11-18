@@ -78,7 +78,7 @@ public class EntityRenderListener {
     timerRunning = true;
     debrisTask = Task.builder(() -> {
       AddonSettings.debrisTime--;
-      if(AddonSettings.debrisTime == 0) {
+      if(AddonSettings.debrisTime <= 0) {
         debrisTask.cancel();
         timerRunning = false;
       }
