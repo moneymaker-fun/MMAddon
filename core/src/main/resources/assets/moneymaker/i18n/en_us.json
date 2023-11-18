@@ -121,6 +121,10 @@
       "shortBoosterMessage": {
         "name": "Short booster messages"
       },
+      "hideEmptyMessages": {
+        "name": "Hide Empty Messages",
+        "description": "Hides empty messages and divider messages"
+      },
       "hideWorkerUpdateMessage": {
         "name": "Hide Upgrade messages from workers"
       },

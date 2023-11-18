@@ -121,6 +121,10 @@
       "shortBoosterMessage": {
         "name": "Booster Nachrichten kürzen"
       },
+      "hideEmptyMessages": {
+        "name": "Leere Nachrichten verstecken",
+        "description": "Versteckt leere Nachrichten und Trennnachrichten"
+      },
       "hideWorkerUpdateMessage": {
         "name": "Upgrade Nachrichten von Arbeitern verstecken"
       },

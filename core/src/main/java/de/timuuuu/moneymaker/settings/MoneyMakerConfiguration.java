@@ -56,6 +56,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(false);
 
+  @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> hideEmptyMessages = new ConfigProperty<>(false);
+
   @SwitchSetting
   private final ConfigProperty<Boolean> hideWorkerUpdateMessage = new ConfigProperty<>(false);
 
@@ -96,6 +100,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> shortBoosterMessage() {
     return shortBoosterMessage;
+  }
+
+  public ConfigProperty<Boolean> hideEmptyMessages() {
+    return hideEmptyMessages;
   }
 
   public ConfigProperty<Boolean> hideWorkerUpdateMessage() {
