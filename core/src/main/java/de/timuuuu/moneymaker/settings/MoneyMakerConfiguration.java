@@ -52,6 +52,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @SettingSection(value = "gameplay", center = true)
 
+  @SpriteSlot(y = 2, x = 1)
   @SwitchSetting
   private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(false);
 
@@ -61,6 +62,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> hideTeleportMessage = new ConfigProperty<>(false);
 
+  @SpriteSlot(y = 4)
   @SwitchSetting
   private final ConfigProperty<Boolean> notifyOnMoneyReached = new ConfigProperty<>(false);
 
@@ -68,6 +70,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> hideEffectMessage = new ConfigProperty<>(false);
 
   @SettingRequires(value = "hideEffectMessage", invert = true)
+  @SpriteSlot(y = 2)
   @SwitchSetting
   private final ConfigProperty<Boolean> showTimersOnEffect = new ConfigProperty<>(false);
 
