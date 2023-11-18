@@ -54,10 +54,8 @@ public class AddonUpdater {
     if(devEnvironment) return;
     if(currentVersion.equals(newestVersion)) return;
     try {
-      File folder = Laby.labyAPI().labyModLoader().getGameDirectory().toFile();
-      File updaterFile = new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile().getPath(), "MoneyMaker/Updater.jar");
-      new ProcessBuilder(new String[]{"java", "-jar", updaterFile.getAbsolutePath(),
-          "--gameDir=" + folder.getAbsolutePath()}).start();
+      new ProcessBuilder(new String[]{"java", "-jar", updatePath.toFile().getAbsolutePath(),
+          "--gameDir=" + gameDirectory.toFile().getAbsolutePath() }).start();
     } catch (IOException exception) {
       exception.printStackTrace();
     }
