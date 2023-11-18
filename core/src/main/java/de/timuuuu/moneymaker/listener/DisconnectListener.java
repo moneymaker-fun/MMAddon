@@ -2,11 +2,8 @@ package de.timuuuu.moneymaker.listener;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.utils.AddonUpdater;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.lifecycle.GameShutdownEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 
 public class DisconnectListener {
@@ -33,7 +30,7 @@ public class DisconnectListener {
     this.addon.discordAPI().cancelUpdater();
   }
 
-  @Subscribe
+  /*@Subscribe
   public void onShutdown(GameShutdownEvent event) {
 
     JsonObject data = new JsonObject();
@@ -50,6 +47,6 @@ public class DisconnectListener {
 
     AddonUpdater.executeUpdater();
 
-  }
+  }*/
 
 }
