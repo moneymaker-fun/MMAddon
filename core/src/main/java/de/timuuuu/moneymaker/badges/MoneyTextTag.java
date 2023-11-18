@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.badges;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.component.format.TextDecoration;
@@ -25,7 +24,7 @@ public class MoneyTextTag extends NameTag {
     if(!visible(entity)) return null;
     Component component = Component.text("MoneyMaker-Addon", TextColor.color(this.addon.configuration().moneyBadgeConfiguration.textColor().get().get()))
         .decorate(TextDecoration.BOLD);
-    Rank rank = AddonSettings.playerStatus.get(entity.getUniqueId()).rank();
+    MoneyRank rank = AddonSettings.playerStatus.get(entity.getUniqueId()).rank();
     if(rank.getNameTag() != null) {
       component.append(rank.getNameTag());
     }
@@ -52,7 +51,7 @@ public class MoneyTextTag extends NameTag {
     if(player.profile().getUniqueId() == null) return false;
     if(!this.addon.configuration().moneyBadgeConfiguration.textTag().get()) return false;
     if(!AddonSettings.playerStatus.containsKey(player.profile().getUniqueId())) return false;
-    return AddonSettings.playerStatus.get(player.profile().getUniqueId()).rank() != Rank.USER;
+    return AddonSettings.playerStatus.get(player.profile().getUniqueId()).rank() != MoneyRank.USER;
   }
 
 }

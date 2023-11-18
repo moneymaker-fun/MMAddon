@@ -3,12 +3,12 @@ package de.timuuuu.moneymaker.activities;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
+import de.timuuuu.moneymaker.badges.MoneyRank;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatClient;
 import de.timuuuu.moneymaker.utils.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.utils.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
-import de.timuuuu.moneymaker.utils.MoneyPlayer.Rank;
 import de.timuuuu.moneymaker.utils.Util;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -296,7 +296,7 @@ public class ChatActivity extends Activity {
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message,
-        Rank.USER);
+        MoneyRank.USER);
     return this.addon.chatClient.sendChatMessage(chatMessage);
   }
 
