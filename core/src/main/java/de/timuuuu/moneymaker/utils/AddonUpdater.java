@@ -74,7 +74,7 @@ public class AddonUpdater {
       ReadableByteChannel channel = Channels.newChannel(connection.getInputStream());
       outputStream.getChannel().transferFrom(channel, 0L, Long.MAX_VALUE);
       outputStream.close();
-      System.out.println("Downloaded latest MoneyMaker Updater...");
+      MoneyMakerAddon.instance().logger().info("Downloaded latest MoneyMaker Updater...");
     } catch (IOException exception) {
       exception.printStackTrace();
     }
