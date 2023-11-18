@@ -147,7 +147,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       if(configuration().exportOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV(true);
       }
-      new AddonUpdater();
+      AddonUpdater.executeUpdater();
     }));
   }
 
