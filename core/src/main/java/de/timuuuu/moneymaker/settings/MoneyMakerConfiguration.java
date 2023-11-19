@@ -20,10 +20,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
-  @SpriteSlot(x = 1)
+  @SpriteSlot(y = 1)
   public MoneyDiscordConfiguration moneyDiscordConfiguration = new MoneyDiscordConfiguration();
 
-  @SpriteSlot(x = 2)
+  @SpriteSlot(x = 1)
   public MoneyChatConfiguration moneyChatConfiguration = new MoneyChatConfiguration();
 
   @IntroducedIn(value = "0.0.5", namespace = "moneymaker")

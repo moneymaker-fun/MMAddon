@@ -150,15 +150,23 @@
       "hideFullBoosterInventory": {
         "name": "Volle Booster Inventar Nachricht verstecken"
       },
-      "discordRichPresence": {
-        "name": "Eigene Discord Rich Presence"
-      },
       "header": {
         "general": {
           "name": "Allgemeine Einstellungen"
         },
         "gameplay": {
           "name": "Gameplay Einstellungen"
+        }
+      },
+      "moneyDiscordConfiguration": {
+        "name": "Eigene Discord Rich Presence",
+        "showLocation": {
+          "name": "Zeige aktuelle Position",
+          "description": "Zeigt deine aktuelle Position (Mine oder Farminghöhle)"
+        },
+        "showStats": {
+          "name": "Zeige Statistiken",
+          "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, Gefarmte Booster, Spitzhacken Rang & Level, Ranking"
         }
       },
       "moneyChatConfiguration": {

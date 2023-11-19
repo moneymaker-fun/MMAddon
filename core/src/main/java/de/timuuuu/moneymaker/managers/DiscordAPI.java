@@ -47,7 +47,7 @@ public class DiscordAPI {
   public void update() {
     if(this.busy) return;
     if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
-    if(!this.addon.configuration().discordRichPresence().get()) return;
+    if(!this.addon.configuration().moneyDiscordConfiguration.enabled().get()) return;
 
     this.busy = true;
 
@@ -60,8 +60,16 @@ public class DiscordAPI {
       builder.start(current.getStartTime());
     }
 
-    builder.details(this.line1);
-    builder.state(this.line2);
+    if(this.addon.configuration().moneyDiscordConfiguration.showLocation().get()) {
+      builder.details(this.line1);
+    } else {
+      builder.details("MoneyMaker Addon v" + this.addon.addonInfo().getVersion());
+    }
+    if(this.addon.configuration().moneyDiscordConfiguration.showStats().get()) {
+      builder.state(this.line2);
+    } else {
+      builder.state("by MisterCore & Timuuuu");
+    }
 
     builder.largeAsset(Asset.of(
         "http://cdn.terramc.net/moneymaker/miner.png",

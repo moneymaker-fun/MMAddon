@@ -150,15 +150,23 @@
       "hideFullBoosterInventory": {
         "name": "Hide Full Booster Inventory Message"
       },
-      "discordRichPresence": {
-        "name": "Custom Discord Rich Presence"
-      },
       "header": {
         "general": {
           "name": "General Settings"
         },
         "gameplay": {
           "name": "Gameplay Settings"
+        }
+      },
+      "moneyDiscordConfiguration": {
+        "name": "Custom Discord Rich Presence",
+        "showLocation": {
+          "name": "Show current Location",
+          "description": "Shows your current Location (Mine or Farming cave)"
+        },
+        "showStats": {
+          "name": "Show Statistics",
+          "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Farmed Boosters, Pickaxe Rank & Level, Ranking"
         }
       },
       "moneyChatConfiguration": {
