@@ -8,7 +8,6 @@ import net.labymod.api.configuration.loader.annotation.ParentSwitch;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
-import java.util.function.Consumer;
 
 @SpriteTexture("sprite/settings")
 public class MoneyDiscordConfiguration extends Config {
