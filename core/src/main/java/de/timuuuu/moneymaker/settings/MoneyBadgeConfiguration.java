@@ -14,20 +14,21 @@ public class MoneyBadgeConfiguration extends Config {
 
   @SettingSection(value = "general", center = true)
 
-  @SpriteSlot(y = 6)
+  @SpriteSlot(y = 7)
   @SwitchSetting
   private ConfigProperty<Boolean> textTag = new ConfigProperty<>(true);
 
-  @SpriteSlot(y = 6, x = 1)
+  @SpriteSlot(y = 7, x = 1)
   @SwitchSetting
   private ConfigProperty<Boolean> iconTag = new ConfigProperty<>(true);
 
-  @SpriteSlot(y = 6, x = 2)
+  @SpriteSlot(y = 7, x = 2)
   @SwitchSetting
   private ConfigProperty<Boolean> tabListIcon = new ConfigProperty<>(true);
 
   @SettingSection(value = "customization", center = true)
 
+  @SpriteSlot(y = 7, x = 3)
   @ColorPickerSetting(chroma = true)
   private ConfigProperty<Color> textColor = new ConfigProperty<>(Color.ofRGB(255, 255, 85));
 

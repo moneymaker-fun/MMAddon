@@ -1,7 +1,5 @@
 package de.timuuuu.moneymaker.settings;
 
-import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.managers.DiscordAPI;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
@@ -16,22 +14,6 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 @SpriteTexture("sprite/settings")
 public class MoneyMakerConfiguration extends AddonConfig {
 
-  public MoneyMakerConfiguration() {
-
-    this.discordRichPresence.addChangeListener((type, oldValue, newValue) -> {
-      DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
-      if(discordAPI != null) {
-        if(newValue) {
-          discordAPI.update();
-        } else {
-          discordAPI.removeCustom();
-        }
-      }
-    });
-
-  }
-
-
   @SettingSection(value = "general", center = true)
 
   @SpriteSlot()
@@ -39,14 +21,13 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
   @SpriteSlot(x = 1)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> discordRichPresence = new ConfigProperty<>(true);
+  public MoneyDiscordConfiguration moneyDiscordConfiguration = new MoneyDiscordConfiguration();
 
   @SpriteSlot(x = 2)
   public MoneyChatConfiguration moneyChatConfiguration = new MoneyChatConfiguration();
 
   @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
-  @SpriteSlot(y = 6)
+  @SpriteSlot(y = 7)
   public MoneyBadgeConfiguration moneyBadgeConfiguration = new MoneyBadgeConfiguration();
 
 
@@ -57,12 +38,15 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(false);
 
   @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
+  @SpriteSlot(y = 2, x = 3)
   @SwitchSetting
   private final ConfigProperty<Boolean> hideEmptyMessages = new ConfigProperty<>(false);
 
+  @SpriteSlot(y = 2, x = 5)
   @SwitchSetting
   private final ConfigProperty<Boolean> hideWorkerUpdateMessage = new ConfigProperty<>(false);
 
+  @SpriteSlot(y = 2, x = 4)
   @SwitchSetting
   private final ConfigProperty<Boolean> hideTeleportMessage = new ConfigProperty<>(false);
 
@@ -70,6 +54,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> notifyOnMoneyReached = new ConfigProperty<>(false);
 
+  @SpriteSlot(y = 2, x = 6)
   @SwitchSetting
   private final ConfigProperty<Boolean> hideEffectMessage = new ConfigProperty<>(false);
 
@@ -78,21 +63,16 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> showTimersOnEffect = new ConfigProperty<>(false);
 
+  @SpriteSlot(y = 2, x = 2)
   @SwitchSetting
   private final ConfigProperty<Boolean> hideFullBoosterInventory = new ConfigProperty<>(false);
 
 
   // Settings Getters
 
-  // General
-
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
-  }
-
-  public ConfigProperty<Boolean> discordRichPresence() {
-    return discordRichPresence;
   }
 
 

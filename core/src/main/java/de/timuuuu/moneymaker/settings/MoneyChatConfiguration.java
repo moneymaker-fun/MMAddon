@@ -15,9 +15,11 @@ public class MoneyChatConfiguration extends Config {
   private final ConfigProperty<Boolean> notification = new ConfigProperty<>(true);
 
   @SettingRequires("notification")
+  @SpriteSlot(y = 4, x = 1)
   @SwitchSetting
   private final ConfigProperty<Boolean> notificationSound = new ConfigProperty<>(true);
 
+  @SpriteSlot(y = 4, x = 2)
   @SwitchSetting
   private final ConfigProperty<Boolean> onlineOfflineMessages = new ConfigProperty<>(true);
 
