@@ -21,6 +21,7 @@ public class ResetCommand extends Command {
 
             Booster.activatedBoost.set(0);
             Booster.sessionBoost.set(0);
+            Booster.sessionBoosters.set(0);
             Booster.latestFoundBoosters().clear();
             Booster.boosterList().clear();
             this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset.booster", TextColor.color(85, 255, 85))));
