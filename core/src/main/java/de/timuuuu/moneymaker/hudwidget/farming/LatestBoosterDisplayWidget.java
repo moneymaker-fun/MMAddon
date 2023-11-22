@@ -105,8 +105,8 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
       boosterIndex++;
       int timerX = x; //int timerX = x + 2;
       if(stack != null) {
-        Icon icon = Icon.sprite16(
-            ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 0);
+        Icon icon = Icon.texture(
+            ResourceLocation.create("moneymaker", "textures/hud/booster.png"));
         icon.render(stack, timerX, y, rowHeight);
       }
 
