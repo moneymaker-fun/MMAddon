@@ -78,6 +78,7 @@ public class NetworkPayloadListener {
                       Component.translatable("moneymaker.notification.farming.left.reset-button"), () -> {
                         AddonSettings.sessionBlocks = 0;
                         Booster.sessionBoost.set(0);
+                        Booster.sessionBoosters.set(0);
                         AddonSettings.sessionKills = 0;
                         this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
                             Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));

@@ -6,10 +6,16 @@
   font-size: 1.5;
 }
 
-.booster-subTitle {
-  alignment-x: center;
-  top: 25;
-  font-size: 1.2;
+.booster-totalBoost {
+  left: 100;
+  top: 20;
+  font-size: 1.0;
+}
+
+.booster-averageBoosters {
+  top: 31;
+  font-size: 0.8;
+  left: 100;
 }
 
 .booster-sort-button {

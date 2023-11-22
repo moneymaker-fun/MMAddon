@@ -5,10 +5,16 @@
   top: 10;
 }
 
-.booster-subTitle {
-  alignment-x: center;
+.booster-totalBoost {
+  left: 100;
   top: 30;
-  font-size: 1.2;
+  font-size: 1;
+}
+
+.booster-averageBoosters {
+  top: 41;
+  font-size: 0.8;
+  left: 100;
 }
 
 .booster-sort-button {
@@ -16,7 +22,7 @@
   padding-left: 3;
   left: 20;
   padding-right: 3;
-  top: 20;
+  top: 30;
 }
 
 .booster-container {

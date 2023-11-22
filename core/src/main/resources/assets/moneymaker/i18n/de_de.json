@@ -228,6 +228,7 @@
       "booster": {
         "title": "Liste der gefarmten Booster",
         "boost-total": "Gesamt: %s",
+        "average-boosters": "Durchschnittliche Booster (pro Sitzung): ",
         "sorting": "Sortierung",
         "export": "Als CSV exportieren"
       },

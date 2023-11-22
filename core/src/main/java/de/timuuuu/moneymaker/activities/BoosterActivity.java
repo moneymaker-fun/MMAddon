@@ -54,15 +54,22 @@ public class BoosterActivity extends Activity {
     AtomicInteger boost = new AtomicInteger(0);
     Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost()));
 
-    ComponentWidget subTitleWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.boost-total", TextColor.color(255, 255, 85),
+    ComponentWidget totalBoostWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.boost-total", TextColor.color(255, 255, 85),
         Component.text(boost.get() + "%", TextColor.color(255, 170, 0))));
-    subTitleWidget.addId("booster-subTitle");
-    this.document.addChild(subTitleWidget);
+    totalBoostWidget.addId("booster-totalBoost");
+    this.document.addChild(totalBoostWidget);
+
+    ComponentWidget averageBoostersWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.average-boosters", TextColor.color(255, 255, 85)).append(
+        Component.text(Booster.sessionBoosters.get() > 0 && AddonSettings.sessionBlocks > 0 ? (float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks : "N/A", TextColor.color(255, 170, 0))
+    ));
+    averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + AddonSettings.sessionBlocks + " Blöcke"));
+    averageBoostersWidget.addId("booster-averageBoosters");
+    this.document.addChild(averageBoostersWidget);
 
     VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>().addId("booster-list");
 
     ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting", TextColor.color(255, 170, 0))
-        .append(Component.text(orderAscending ? "§b⬆" : "§b⬇")));
+        .append(Component.text(orderAscending ? " §b⬆" : " §b⬇")));
     sortButton.setPressable(() -> {
       orderAscending = !orderAscending;
       this.reload();

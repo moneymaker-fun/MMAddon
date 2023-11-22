@@ -70,6 +70,7 @@ public class ChatReceiveListener {
       if (plain.contains("[MoneyMaker] +") && plain.contains("Booster (")) {
         int boost = Integer.parseInt(plain.split(" ")[1].replace("%", "").replace("+", ""));
         Booster.sessionBoost.addAndGet(boost);
+        Booster.sessionBoosters.addAndGet(1);
         int time = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
         if (plain.contains("Stunde") || plain.contains("hour"))
           time *= 60;
