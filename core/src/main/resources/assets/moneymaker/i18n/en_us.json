@@ -223,7 +223,7 @@
       "info": {
         "title": "MoneyMaker Information",
         "commandsTitle": "Commands of the Addon",
-        "commands": "§b/mm-timer <Minutes> <Timer Name> §6Creates a timer\n§b/mm-reset §6Reset the collected data"
+        "commands": "§b/mm-timer <Minutes> <Timer Name> §6Creates a timer\n§b/mm-reset <booster, miners, debris, all> §6Reset the collected data"
       },
       "booster": {
         "title": "List of farmed boosters",

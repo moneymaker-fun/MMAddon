@@ -223,7 +223,7 @@
       "info": {
         "title": "MoneyMaker Informationen",
         "commandsTitle": "Befehle des Addons",
-        "commands": "§b/mm-timer <Minuten> <Timer Name> §6Erstelle einen Timer\n§b/mm-reset §6Setzt die gesammelten Daten zurück"
+        "commands": "§b/mm-timer <Minuten> <Timer Name> §6Erstelle einen Timer\n§b/mm-reset <booster, arbeiter, geröll, all> §6Setzt die gesammelten Daten zurück"
       },
       "booster": {
         "title": "Liste der gefarmten Booster",
