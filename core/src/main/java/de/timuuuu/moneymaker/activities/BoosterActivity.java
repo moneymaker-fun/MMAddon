@@ -60,7 +60,7 @@ public class BoosterActivity extends Activity {
     this.document.addChild(totalBoostWidget);
 
     ComponentWidget averageBoostersWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.average-boosters", TextColor.color(255, 255, 85)).append(
-        Component.text(Booster.sessionBoosters.get() > 0 && AddonSettings.sessionBlocks > 0 ? (float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks : "N/A", TextColor.color(255, 170, 0))
+        Component.text(Booster.sessionBoosters.get() > 0 && AddonSettings.sessionBlocks > 0 ? (float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks + "(" + ((float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks) * 100 +  " %)" : "N/A", TextColor.color(255, 170, 0))
     ));
     averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + AddonSettings.sessionBlocks + " Blöcke"));
     averageBoostersWidget.addId("booster-averageBoosters");
