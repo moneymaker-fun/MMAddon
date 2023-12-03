@@ -107,7 +107,7 @@ public class DiscordAPI {
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + AddonSettings.currentBrokenBlocks;
           }
           if(count.get() == 2) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Booster.sessionBoost.get() + "%";
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Booster.sessionBoosters.get() + " (" + Booster.sessionBoost.get() + ")";
           }
           if(count.get() == 3) {
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + AddonSettings.pickaxeRanking;
