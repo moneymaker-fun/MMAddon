@@ -44,7 +44,11 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @SpriteSlot(y = 2, x = 5)
   @SwitchSetting
-  private final ConfigProperty<Boolean> hideWorkerUpdateMessage = new ConfigProperty<>(false);
+  private final ConfigProperty<Boolean> hideWorkerUpgradeMessage = new ConfigProperty<>(false);
+
+  @IntroducedIn(value = "0.0.6", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> hideBuySellWorkerMessage = new ConfigProperty<>(false);
 
   @SpriteSlot(y = 2, x = 4)
   @SwitchSetting
@@ -86,8 +90,12 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return hideEmptyMessages;
   }
 
-  public ConfigProperty<Boolean> hideWorkerUpdateMessage() {
-    return hideWorkerUpdateMessage;
+  public ConfigProperty<Boolean> hideWorkerUpgradeMessage() {
+    return hideWorkerUpgradeMessage;
+  }
+
+  public ConfigProperty<Boolean> hideBuySellWorkerMessage() {
+    return hideBuySellWorkerMessage;
   }
 
   public ConfigProperty<Boolean> hideTeleportMessage() {

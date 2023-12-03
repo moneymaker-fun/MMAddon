@@ -131,8 +131,11 @@
         "name": "Hide Empty Messages",
         "description": "Hides empty messages and divider messages"
       },
-      "hideWorkerUpdateMessage": {
+      "hideWorkerUpgradeMessage": {
         "name": "Hide Upgrade messages from workers"
+      },
+      "hideBuySellWorkerMessage": {
+        "name": "Hide Buy/Sell Messages from workers"
       },
       "hideTeleportMessage": {
         "name": "Hide teleport messages"

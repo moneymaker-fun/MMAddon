@@ -131,8 +131,11 @@
         "name": "Leere Nachrichten verstecken",
         "description": "Versteckt leere Nachrichten und Trennnachrichten"
       },
-      "hideWorkerUpdateMessage": {
+      "hideWorkerUpgradeMessage": {
         "name": "Upgrade Nachrichten von Arbeitern verstecken"
+      },
+      "hideBuySellWorkerMessage": {
+        "name": "Kauf/Verkauf Nachrichten von Arbeitern verstecken"
       },
       "hideTeleportMessage": {
         "name": "Teleport Nachrichten verstecken"

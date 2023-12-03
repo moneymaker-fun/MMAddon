@@ -32,7 +32,21 @@ public class ChatReceiveListener {
 
       if((plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) ||
           (plain.startsWith("[MoneyMaker] You have upgraded the workplace to level"))) {
-        if(this.addon.configuration().hideWorkerUpdateMessage().get()) {
+        if(this.addon.configuration().hideWorkerUpgradeMessage().get()) {
+          event.setCancelled(true);
+        }
+      }
+
+      if((plain.startsWith("[MoneyMaker] Du hast einen ") & plain.contains(" gekauft")) ||
+          (plain.startsWith("[MoneyMaker] You have purchased a "))) {
+        if(this.addon.configuration().hideBuySellWorkerMessage().get()) {
+          event.setCancelled(true);
+        }
+      }
+
+      if((plain.startsWith("[MoneyMaker] Du hast den ") & plain.contains(" verkauft")) ||
+          (plain.startsWith("[MoneyMaker] You have sold "))) {
+        if(this.addon.configuration().hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
         }
       }
