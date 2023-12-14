@@ -7,10 +7,13 @@ import java.util.UUID;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.screen.theme.Theme;
 import net.labymod.api.client.gui.screen.widget.attributes.bounds.Bounds;
 import net.labymod.api.client.gui.screen.widget.widgets.activity.Document;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
+import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.font.text.TextRenderer;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
@@ -32,21 +35,39 @@ public class Util {
     TextRenderer textRenderer = labyAPI.renderPipeline().textRenderer();
     Theme currentTheme = labyAPI.themeService().currentTheme();
 
-    if(currentTheme.getNamespace().equalsIgnoreCase("fancy")) {
-      textRenderer.text("§7Addon-Version§8: §e" + MoneyMakerAddon.instance().addonInfo().getVersion())
+    if(currentTheme.getId().equalsIgnoreCase("fancy")) {
+      textRenderer.text(RenderableComponent.of(
+          Component.text("Addon-Version", NamedTextColor.GRAY)
+              .append(Component.text(": ", NamedTextColor.DARK_GRAY))
+              .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
+          ))
           .scale(0.8f)
           .pos(5, bounds.getHeight() -17)
           .render(stack);
-      textRenderer.text("§7Developed by §eTimuuuu §7& §eMisterCore")
+      textRenderer.text(RenderableComponent.of(
+          Component.text("Developed by ", NamedTextColor.GRAY)
+              .append(Component.text("Timuuuu", NamedTextColor.YELLOW))
+              .append(Component.text(" & ", NamedTextColor.GRAY))
+              .append(Component.text("MisterCore", NamedTextColor.YELLOW))
+          ))
           .scale(0.8f)
           .pos(5, bounds.getHeight() -7)
           .render(stack);
     } else {
-      textRenderer.text("§7Addon-Version§8: §e" + MoneyMakerAddon.instance().addonInfo().getVersion())
+      textRenderer.text(RenderableComponent.of(
+              Component.text("Addon-Version", NamedTextColor.GRAY)
+                  .append(Component.text(": ", NamedTextColor.DARK_GRAY))
+                  .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
+          ))
           .scale(0.8f)
           .pos(5, bounds.getHeight() -18)
           .render(stack);
-      textRenderer.text("§7Developed by §eTimuuuu §7& §eMisterCore")
+      textRenderer.text(RenderableComponent.of(
+              Component.text("Developed by ", NamedTextColor.GRAY)
+                  .append(Component.text("Timuuuu", NamedTextColor.YELLOW))
+                  .append(Component.text(" & ", NamedTextColor.GRAY))
+                  .append(Component.text("MisterCore", NamedTextColor.YELLOW))
+          ))
           .scale(0.8f)
           .pos(5, bounds.getHeight() -8)
           .render(stack);
