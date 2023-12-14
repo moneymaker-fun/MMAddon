@@ -12,7 +12,7 @@ public class MoneyChatMessage {
   private String userName;
   private String message;
   private MoneyRank rank;
-  private boolean systemMessage = false;
+  private boolean systemMessage;
 
   public MoneyChatMessage(UUID uuid, String userName, String message, MoneyRank rank) {
     this.uuid = uuid;
