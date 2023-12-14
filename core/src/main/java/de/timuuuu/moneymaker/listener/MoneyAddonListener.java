@@ -5,7 +5,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.utils.MoneyChatMessage;
+import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
 import net.labymod.api.Constants.Resources;

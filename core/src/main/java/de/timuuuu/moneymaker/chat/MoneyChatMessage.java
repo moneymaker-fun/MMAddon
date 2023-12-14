@@ -1,7 +1,9 @@
-package de.timuuuu.moneymaker.utils;
+package de.timuuuu.moneymaker.chat;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.badges.MoneyRank;
+import de.timuuuu.moneymaker.utils.MoneyPlayer;
+
 import java.util.UUID;
 
 public class MoneyChatMessage {
@@ -26,7 +28,7 @@ public class MoneyChatMessage {
           UUID.fromString(object.get("uuid").getAsString()),
           object.get("userName").getAsString(),
           object.get("message").getAsString(),
-          MoneyPlayer.rankByName(object.get("rank").getAsString())
+          object.has("rank") ? MoneyPlayer.rankByName(object.get("rank").getAsString()) : MoneyRank.USER
           );
     }
     return null;

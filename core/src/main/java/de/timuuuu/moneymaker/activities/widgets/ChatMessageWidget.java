@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.activities.widgets;
 
-import de.timuuuu.moneymaker.utils.MoneyChatMessage;
+import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.Widget;

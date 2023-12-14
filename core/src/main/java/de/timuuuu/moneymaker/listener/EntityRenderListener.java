@@ -2,7 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.utils.ChatUtil;
+import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.client.entity.Entity;

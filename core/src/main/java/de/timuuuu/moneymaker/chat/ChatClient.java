@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.utils;
+package de.timuuuu.moneymaker.chat;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -128,11 +128,7 @@ public class ChatClient {
   }
 
   public void sendLaunchData(String uuid, String userName) {
-    //if(serverOut == null || socket.isClosed()) return;
-    if(socket.isClosed()) {
-      addon.logger().info("Socket is closed.");
-      return;
-    }
+    if(serverOut == null || socket.isClosed()) return;
     JsonObject object = new JsonObject();
     object.addProperty("data", "add");
     object.addProperty("userName", userName);

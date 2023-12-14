@@ -35,7 +35,7 @@ import de.timuuuu.moneymaker.listener.TickListener;
 import de.timuuuu.moneymaker.managers.DiscordAPI;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.AddonUpdater;
-import de.timuuuu.moneymaker.utils.ChatClient;
+import de.timuuuu.moneymaker.chat.ChatClient;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;

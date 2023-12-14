@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.events;
 
-import de.timuuuu.moneymaker.utils.MoneyChatMessage;
+import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import net.labymod.api.event.Event;
 
 public class MoneyChatReceiveEvent implements Event {
