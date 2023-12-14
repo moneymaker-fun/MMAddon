@@ -35,7 +35,7 @@ public class ChatServerListener {
       JsonObject data = message.get("chatAction").getAsJsonObject();
       if(ChatClient.actionByName(data.get("action").getAsString()) != null) {
         switch (ChatClient.actionByName(data.get("action").getAsString())) {
-          case CLEAR -> this.addon.chatActivity.clearChat(true);
+          case CLEAR -> this.addon.chatActivity().clearChat(true);
         }
       }
     }
@@ -47,8 +47,8 @@ public class ChatServerListener {
         if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
           ChatClient.muted = true;
           ChatClient.muteReason = data.get("reason").getAsString();
-          this.addon.chatActivity.addCustomChatMessage("§cDu wurdest aus dem Chat ausgeschlossen.");
-          this.addon.chatActivity.reloadScreen();
+          this.addon.chatActivity().addCustomChatMessage("§cDu wurdest aus dem Chat ausgeschlossen.");
+          this.addon.chatActivity().reloadScreen();
         }
       }
     }
@@ -60,8 +60,8 @@ public class ChatServerListener {
         if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
           ChatClient.muted = false;
           ChatClient.muteReason = "";
-          this.addon.chatActivity.addCustomChatMessage("§aDein Mute wurde aufgehoben.");
-          this.addon.chatActivity.reloadScreen();
+          this.addon.chatActivity().addCustomChatMessage("§aDein Mute wurde aufgehoben.");
+          this.addon.chatActivity().reloadScreen();
         }
       }
     }

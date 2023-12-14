@@ -109,7 +109,7 @@ public class BoosterActivity extends Activity {
       AddonSettings.id.decrementAndGet();
       if (AddonSettings.id.get() == 0) {
         System.out.println("Freigeschaltet");
-        this.addon.moneyMakerMainActivity.registerSecret();
+        this.addon.mainActivity().registerSecret();
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);
       }
     });

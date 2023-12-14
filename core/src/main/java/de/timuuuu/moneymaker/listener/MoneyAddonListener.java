@@ -26,8 +26,8 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
-    this.addon.chatClient.sendQuitData(event.previousSession().getUniqueId().toString());
-    this.addon.chatClient.sendLaunchData(event.newSession().getUniqueId().toString(), event.newSession().getUsername());
+    this.addon.chatClient().sendQuitData(event.previousSession().getUniqueId().toString());
+    this.addon.chatClient().sendLaunchData(event.newSession().getUniqueId().toString(), event.newSession().getUsername());
     AddonSettings.playerStatus.remove(event.previousSession().getUniqueId());
 
     JsonObject data = new JsonObject();
@@ -35,14 +35,14 @@ public class MoneyAddonListener {
     data.addProperty("userName", event.previousSession().getUsername());
     data.addProperty("server", "OFFLINE");
     data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    this.addon.chatClient.sendMessage("playerStatus", data);
+    this.addon.chatClient().sendMessage("playerStatus", data);
 
     JsonObject data1 = new JsonObject();
     data1.addProperty("uuid", event.newSession().getUniqueId().toString());
     data1.addProperty("userName", event.newSession().getUsername());
     data1.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
     data1.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    this.addon.chatClient.sendMessage("playerStatus", data1);
+    this.addon.chatClient().sendMessage("playerStatus", data1);
 
   }
 
@@ -76,7 +76,7 @@ public class MoneyAddonListener {
   @Subscribe
   public void onMoneyChatReceive(MoneyChatReceiveEvent event) {
     MoneyChatMessage chatMessage = event.chatMessage();
-    this.addon.chatActivity.addChatMessage(chatMessage);
+    this.addon.chatActivity().addChatMessage(chatMessage);
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
       if(!chatMessage.systemMessage()) {
 

@@ -42,7 +42,7 @@ public class ChatClient {
       serverOut = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
       online = true;
       if(reconnect) {
-        addon.chatActivity.reloadScreen();
+        addon.chatActivity().reloadScreen();
         addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
             Component.translatable("moneymaker.notification.chat.connected", TextColor.color(85, 255, 85)));
       }
@@ -66,7 +66,7 @@ public class ChatClient {
           socket.close();
         } catch (IOException e) {
           if(online) {
-            addon.chatActivity.reloadScreen();
+            addon.chatActivity().reloadScreen();
           }
           online = false;
           //e.printStackTrace();
@@ -77,7 +77,7 @@ public class ChatClient {
         if(reconnect) {
           addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
               Component.translatable("moneymaker.notification.chat.no-connection", TextColor.color(255, 85, 85)));
-          addon.chatActivity.reloadScreen();
+          addon.chatActivity().reloadScreen();
         }
         //e.printStackTrace();
       // Handle connection error
@@ -96,7 +96,7 @@ public class ChatClient {
     Task.builder(() -> {
       boolean status = isPortOpen(SERVER_IP, SERVER_PORT);
       if(!status && online) {
-        addon.chatActivity.reloadScreen();
+        addon.chatActivity().reloadScreen();
         addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
             Component.translatable("moneymaker.notification.chat.timed", TextColor.color(255, 85, 85)));
       }
@@ -110,7 +110,7 @@ public class ChatClient {
   public boolean sendChatMessage(MoneyChatMessage chatMessage) {
     if(serverOut == null || socket.isClosed()) {
       online = false;
-      addon.chatActivity.reloadScreen();
+      addon.chatActivity().reloadScreen();
       return false;
     }
     JsonObject object = new JsonObject();

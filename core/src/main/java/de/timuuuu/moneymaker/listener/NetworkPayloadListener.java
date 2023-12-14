@@ -37,11 +37,11 @@ public class NetworkPayloadListener {
 
       JsonObject object = new JsonObject();
       object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      this.addon.chatClient.sendMessage("retrievePlayerData", object);
+      this.addon.chatClient().sendMessage("retrievePlayerData", object);
 
       JsonObject muteCheckObject = new JsonObject();
       muteCheckObject.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      this.addon.chatClient.sendMessage("checkMute", muteCheckObject);
+      this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
 
     }
   }
@@ -91,7 +91,7 @@ public class NetworkPayloadListener {
               data.addProperty("userName", this.addon.labyAPI().getName());
               data.addProperty("server", gameMode.contains("MoneyMaker") ? gameMode : "Other");
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              this.addon.chatClient.sendMessage("playerStatus", data);
+              this.addon.chatClient().sendMessage("playerStatus", data);
 
               if(!gameMode.contains("Other")) {
                 this.addon.discordAPI().setSaved();

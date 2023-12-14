@@ -61,11 +61,11 @@ public class ChatActivity extends Activity {
       ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
       reconnectButton.addId("chat-reconnect-button");
       reconnectButton.setPressable(() -> {
-        this.addon.chatClient.closeSocket();
+        this.addon.chatClient().closeSocket();
         reconnectButton.setEnabled(false);
           Task.builder(() -> {
             reconnectButton.setEnabled(true);
-            this.addon.chatClient.connect(true);
+            this.addon.chatClient().connect(true);
             if(ChatClient.online) {
 
               JsonObject data = new JsonObject();
@@ -73,11 +73,11 @@ public class ChatActivity extends Activity {
               data.addProperty("userName", this.addon.labyAPI().getName());
               data.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              this.addon.chatClient.sendMessage("playerStatus", data);
+              this.addon.chatClient().sendMessage("playerStatus", data);
 
               JsonObject object = new JsonObject();
               object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-              this.addon.chatClient.sendMessage("retrievePlayerData", object);
+              this.addon.chatClient().sendMessage("retrievePlayerData", object);
             }
 
           }).delay(5, TimeUnit.SECONDS).build().execute();
@@ -297,7 +297,7 @@ public class ChatActivity extends Activity {
         this.addon.labyAPI().getName(),
         message,
         MoneyRank.USER);
-    return this.addon.chatClient.sendChatMessage(chatMessage);
+    return this.addon.chatClient().sendChatMessage(chatMessage);
   }
 
   private boolean sendChatAction(UUID executor, ChatAction action, JsonObject data) {
@@ -307,7 +307,7 @@ public class ChatActivity extends Activity {
     if(data != null) {
       object.add("data", data);
     }
-    return this.addon.chatClient.sendMessage("chatAction", object);
+    return this.addon.chatClient().sendMessage("chatAction", object);
   }
 
 }

@@ -23,7 +23,7 @@ public class DisconnectListener {
     data.addProperty("userName", this.addon.labyAPI().getName());
     data.addProperty("server", "OFFLINE");
     data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    this.addon.chatClient.sendMessage("playerStatus", data);
+    this.addon.chatClient().sendMessage("playerStatus", data);
 
     this.addon.discordAPI().removeCustom();
     this.addon.discordAPI().removeSaved();

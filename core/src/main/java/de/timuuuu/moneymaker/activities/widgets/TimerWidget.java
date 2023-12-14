@@ -32,7 +32,7 @@ public class TimerWidget extends HorizontalListWidget {
                 Component.text(this.timer.name(), TextColor.color(255, 255, 85))));
       }
       Util.timers.remove(this.timer.name());
-      this.addon.startActivity.reloadScreen();
+      this.addon.startActivity().reloadScreen();
     });
     this.addEntry(cancelButton);
     this.addEntry(ComponentWidget.text("§8[§e" + this.timer.minutes() + "m§8] §e" + this.timer.name()).addId("timer-name"));

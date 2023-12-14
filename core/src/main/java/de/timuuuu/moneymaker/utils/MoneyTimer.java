@@ -45,7 +45,7 @@ public class MoneyTimer {
                 Component.text(this.name, TextColor.color(255, 255, 85))
             )
         );
-        MoneyMakerAddon.instance().startActivity.reloadScreen();
+        MoneyMakerAddon.instance().startActivity().reloadScreen();
       }
     }).repeat(1, TimeUnit.SECONDS).build();
     this.task.execute();

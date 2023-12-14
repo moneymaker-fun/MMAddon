@@ -58,11 +58,11 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static final HudWidgetCategory CATEGORY = new HudWidgetCategory("moneymaker");
 
-  public ChatClient chatClient;
+  private ChatClient chatClient;
 
-  public MainActivity moneyMakerMainActivity;
-  public ChatActivity chatActivity;
-  public StartActivity startActivity;
+  private MainActivity mainActivity;
+  private ChatActivity chatActivity;
+  private StartActivity startActivity;
 
   private DiscordAPI discordAPI;
 
@@ -82,7 +82,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.startActivity = new StartActivity(this);
     this.chatActivity = new ChatActivity(this);
-    this.moneyMakerMainActivity = new MainActivity(this);
+    this.mainActivity = new MainActivity(this);
 
     this.chatClient = new ChatClient(this);
 
@@ -162,6 +162,22 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public DiscordAPI discordAPI() {
     return discordAPI;
+  }
+
+  public MainActivity mainActivity() {
+    return mainActivity;
+  }
+
+  public ChatActivity chatActivity() {
+    return chatActivity;
+  }
+
+  public ChatClient chatClient() {
+    return chatClient;
+  }
+
+  public StartActivity startActivity() {
+    return startActivity;
   }
 
   public void pushNotification(Component title, Component text) {
