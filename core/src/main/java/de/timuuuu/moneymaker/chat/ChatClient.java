@@ -85,7 +85,7 @@ public class ChatClient {
   }
 
   public static boolean isPortOpen(String host, int port) {
-    try (Socket socket = new Socket(host, port)) {
+    try (Socket ignored1 = new Socket(host, port)) {
       return true;
     } catch (IOException ignored) {
       return false;
