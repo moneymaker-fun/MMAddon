@@ -200,7 +200,7 @@ public class ChatActivity extends Activity {
 
         Result<UUID> requestUuid = this.labyAPI.labyNetController().loadUniqueIdByNameSync(playerName);
         if(requestUuid.hasException()) {
-          this.addCustomChatMessage("§4Failed to get uuid from " + playerName + ":");
+          this.addCustomChatMessage("§4Failed to get uuid from " + playerName + ".");
           this.addCustomChatMessage(requestUuid.exception().getMessage());
           return;
         }
