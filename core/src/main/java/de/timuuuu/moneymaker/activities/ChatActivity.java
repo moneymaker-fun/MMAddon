@@ -4,10 +4,10 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.badges.MoneyRank;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.chat.ChatClient;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import de.timuuuu.moneymaker.utils.Util;
 import java.text.SimpleDateFormat;
@@ -45,6 +45,10 @@ public class ChatActivity extends Activity {
 
   public ChatActivity(MoneyMakerAddon addon) {
     this.addon = addon;
+    chatInput = new TextFieldWidget();
+    chatInput.addId("chat-input");
+    chatInput.maximalLength(200);
+    chatInput.submitHandler(message -> this.submitMessage());
   }
 
   @Override
@@ -94,7 +98,7 @@ public class ChatActivity extends Activity {
     chatMessages.forEach(chatList::addChild);
 
     ScrollWidget chatScroll = new ScrollWidget(chatList, new ListSession<>()).addId("chat-scroll");
-    Task.builder(chatScroll::scrollToBottom).delay(50, TimeUnit.MILLISECONDS).build().execute();
+    //Task.builder(chatScroll::scrollToBottom).delay(50, TimeUnit.MILLISECONDS).build().execute();
     chatContainer.addChild(chatScroll);
 
     // Online Container
@@ -136,12 +140,6 @@ public class ChatActivity extends Activity {
         inputContainer.addChild(componentWidget);
         inputContainer.addChild(reasonWidget);
       } else {
-        chatInput = new TextFieldWidget();
-        chatInput.addId("chat-input");
-        chatInput.submitButton().set(true);
-        chatInput.maximalLength(200);
-        chatInput.submitHandler(message -> this.submitMessage());
-
         inputContainer.addChild(chatInput);
       }
     } else {
@@ -168,11 +166,11 @@ public class ChatActivity extends Activity {
         this.chatInput.addId("blocked");
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
         this.chatInput.setText("");
-        this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
         Task.builder(() -> {
           this.chatInput.setEditable(true);
           this.chatInput.removeId("blocked");
-          this.reload();
+          this.reloadScreen();
+          this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
         }).delay(3, TimeUnit.SECONDS).build().execute();
       }
     }
@@ -263,7 +261,7 @@ public class ChatActivity extends Activity {
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
       chatMessages.add(new ChatMessageWidget(time, chatMessage).addId("chat-message"));
-      this.reload();
+      this.reloadScreen();
     });
   }
 
@@ -283,7 +281,7 @@ public class ChatActivity extends Activity {
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
       chatMessages.add(new ChatMessageWidget(time, chatMessage));
-      this.reload();
+      this.reloadScreen();
     });
   }
 
