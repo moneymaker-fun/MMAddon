@@ -1,8 +1,7 @@
 package de.timuuuu.moneymaker.chat;
 
-import com.google.gson.JsonElement;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.events.ChatServerMessageReceiveEvent;
 import java.io.BufferedReader;
@@ -54,17 +53,13 @@ public class ChatClient {
           if(!socket.isClosed() || socket != null) {
             String serverMessage;
             while ((serverMessage = serverIn.readLine()) != null) {
-
-              JsonElement element = JsonParser.parseString(serverMessage);
-              if (element.isJsonObject()) {
-                JsonObject object = element.getAsJsonObject();
+                JsonObject object = new Gson().fromJson(serverMessage, JsonObject.class);
                 Laby.fireEvent(new ChatServerMessageReceiveEvent(object));
-              }
             }
+            socket.close();
           }
 
-          socket.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
           if(online) {
             addon.chatActivity().reloadScreen();
           }
@@ -85,7 +80,8 @@ public class ChatClient {
   }
 
   public static boolean isPortOpen(String host, int port) {
-    try (Socket ignored1 = new Socket(host, port)) {
+    try (Socket socket1 = new Socket(host, port)) {
+      socket1.close();
       return true;
     } catch (IOException ignored) {
       return false;
