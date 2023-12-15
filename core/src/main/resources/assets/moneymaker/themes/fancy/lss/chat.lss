@@ -68,11 +68,7 @@
     bottom: 25%;
     left: 20;
     right: 20;
-
-    .blocked {
-      background-color: red;
-    }
-
+    submit-button: true;
   }
 
   .chat-error {
@@ -140,7 +136,7 @@
   }
 
   .chat-messages {
-    space-between-entries: 0;
+    space-between-entries: 5;
     width: 90%;
     height: 100%;
 
