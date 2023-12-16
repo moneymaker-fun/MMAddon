@@ -19,6 +19,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
@@ -119,6 +121,10 @@ public class ChatActivity extends Activity {
         if(moneyPlayer.server().contains("MoneyMaker")) {
           Component component = Component.icon(Icon.head(moneyPlayer.uuid(), true, false), 10)
               .append(Component.text(" " + moneyPlayer.rank().getOnlineColor() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
+          component.clickEvent(ClickEvent.openUrl("https://laby.net/@" + moneyPlayer.userName()));
+          if(Util.isDev(this.labyAPI.getUniqueId().toString())) {
+            component.hoverEvent(HoverEvent.showText(Component.text("§7Nutzt §e" + moneyPlayer.addonVersion() + " §7als Addon-Version")));
+          }
           ComponentWidget componentWidget = ComponentWidget.component(component);
           componentWidget.addId("online-entry");
           onlineList.addChild(componentWidget);
