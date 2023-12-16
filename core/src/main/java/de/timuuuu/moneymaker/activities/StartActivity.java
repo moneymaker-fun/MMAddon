@@ -4,6 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.TimerWidget;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
@@ -107,6 +108,17 @@ public class StartActivity extends Activity {
     container.addChild(discordButton);
 
     this.document.addChild(container);
+
+    //Toggle secret
+    ButtonWidget secretButton = ButtonWidget.text("").addId("secret-button");
+    secretButton.setActionListener(() -> {
+      AddonSettings.secretCount.decrementAndGet();
+      if (AddonSettings.secretCount.get() == 0) {
+        this.addon.mainActivity().registerSecret();
+        this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);
+      }
+    });
+    this.document.addChild(secretButton);
 
   }
 

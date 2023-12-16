@@ -75,15 +75,6 @@ Scroll {
   padding-right: 3;
 }
 
-.secret-button {
-  bottom:0;
-  left:0;
-  width: 7;
-  height: 7;
-  opacity:0.2;
-  border-radius:0.1;
-}
-
 .feedback-button {
   top:15;
   right:20;

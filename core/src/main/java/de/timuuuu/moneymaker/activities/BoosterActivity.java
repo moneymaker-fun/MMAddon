@@ -103,19 +103,6 @@ public class BoosterActivity extends Activity {
 
     container.addChild(exportBtnWidget);
 
-    //Toggle secret
-    ButtonWidget secretButton = ButtonWidget.text("");
-    secretButton.setActionListener(() -> {
-      AddonSettings.id.decrementAndGet();
-      if (AddonSettings.id.get() == 0) {
-        System.out.println("Freigeschaltet");
-        this.addon.mainActivity().registerSecret();
-        this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);
-      }
-    });
-    secretButton.addId("secret-button");
-    this.document.addChild(secretButton);
-
     this.document.addChild(container);
   }
 
