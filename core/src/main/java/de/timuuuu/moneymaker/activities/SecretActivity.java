@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
@@ -36,17 +35,7 @@ public class SecretActivity extends Activity {
     container.addId("secret-container");
     this.document.addChild(container);
 
-    //ShowJoins
-    ComponentWidget toggleJoinMessageTitle = ComponentWidget.i18n("moneymaker.ui.secret.toggleJoinMessageTitle").addId("showJoinsTitle");
-    this.document.addChild(toggleJoinMessageTitle);
-
-    SwitchWidget showJoinsSwitch = SwitchWidget.create(value -> {
-      AddonSettings.showJoins = value;
-    }).addId("showJoinsSwitch");
-    showJoinsSwitch.setValue(AddonSettings.showJoins);
-    this.document.addChild(showJoinsSwitch);
-
-    //ExportOnShutdown
+    // Export Booster on Shutdown
     ComponentWidget exportOnShutdownTitle = ComponentWidget.i18n("moneymaker.ui.secret.exportOnShutdownTitle").addId("exportOnShutdownTitle");
     this.document.addChild(exportOnShutdownTitle);
 
@@ -56,7 +45,7 @@ public class SecretActivity extends Activity {
     exportOnShutdownSwitch.setValue(this.addon.configuration().exportOnShutdown().get());
     this.document.addChild(exportOnShutdownSwitch);
 
-    //ExportOnShutdown
+    // Show Chat Reconnect Button
     ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat-reconnect").addId("chat-reconnect-title");
     this.document.addChild(chatReconnectTitle);
 
@@ -65,6 +54,17 @@ public class SecretActivity extends Activity {
     }).addId("chat-reconnect-switch");
     chatReconnectSwitch.setValue(this.addon.configuration().chatReconnectButton().get());
     this.document.addChild(chatReconnectSwitch);
+
+    // Show Joins
+    /*ComponentWidget toggleJoinMessageTitle = ComponentWidget.i18n("moneymaker.ui.secret.toggleJoinMessageTitle").addId("showJoinsTitle");
+    this.document.addChild(toggleJoinMessageTitle);
+
+    SwitchWidget showJoinsSwitch = SwitchWidget.create(value -> {
+      AddonSettings.showJoins = value;
+    }).addId("showJoinsSwitch");
+    showJoinsSwitch.setValue(AddonSettings.showJoins);
+    this.document.addChild(showJoinsSwitch);*/
+
   }
 
   @Override
