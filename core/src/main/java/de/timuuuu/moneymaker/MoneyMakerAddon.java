@@ -69,7 +69,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   @Override
   protected void preConfigurationLoad() {
-    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("0.0.6"), "2023-12-15"));
+    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("1.0.0"), "2023-12-16"));
   }
 
   @Override
