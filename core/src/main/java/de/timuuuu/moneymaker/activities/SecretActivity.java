@@ -35,16 +35,6 @@ public class SecretActivity extends Activity {
     container.addId("secret-container");
     this.document.addChild(container);
 
-    // Export Booster on Shutdown
-    ComponentWidget exportOnShutdownTitle = ComponentWidget.i18n("moneymaker.ui.secret.exportOnShutdownTitle").addId("exportOnShutdownTitle");
-    this.document.addChild(exportOnShutdownTitle);
-
-    SwitchWidget exportOnShutdownSwitch = SwitchWidget.create(value -> {
-      this.addon.configuration().exportOnShutdown().set(value);
-    }).addId("exportOnShutdownSwitch");
-    exportOnShutdownSwitch.setValue(this.addon.configuration().exportOnShutdown().get());
-    this.document.addChild(exportOnShutdownSwitch);
-
     // Show Chat Reconnect Button
     ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat-reconnect").addId("chat-reconnect-title");
     this.document.addChild(chatReconnectTitle);

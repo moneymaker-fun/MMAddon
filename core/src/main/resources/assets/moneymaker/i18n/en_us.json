@@ -252,7 +252,6 @@
       "secret": {
         "title": "Super Secret Settings",
         "toggleJoinMessageTitle": "Join Messages",
-        "exportOnShutdownTitle": "Export booster on exit",
         "chat-reconnect": "Chat Reconnect Button"
       }
     },
