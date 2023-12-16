@@ -124,6 +124,10 @@
       "enabled": {
         "name": "Enabled"
       },
+      "exportBoosterOnShutdown": {
+        "name": "Export farmed boosters on exit",
+        "description": "Exports your farmed boosters when you exit the game.\nThe file will be saved in your Game Directory"
+      },
       "shortBoosterMessage": {
         "name": "Short booster messages"
       },
@@ -156,6 +160,9 @@
       "header": {
         "general": {
           "name": "General Settings"
+        },
+        "other": {
+          "name": "Other Settings"
         },
         "gameplay": {
           "name": "Gameplay Settings"

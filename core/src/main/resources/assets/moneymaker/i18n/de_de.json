@@ -127,6 +127,10 @@
       "shortBoosterMessage": {
         "name": "Booster Nachrichten kürzen"
       },
+      "exportBoosterOnShutdown": {
+        "name": "Exportiere die gefarmten Booster beim beenden",
+        "description": "Exportiert deine gefarmten Booster, wenn du das Spiel beendest.\nDie Datei wird im Spieleverzeichnis gespeichert."
+      },
       "hideEmptyMessages": {
         "name": "Leere Nachrichten verstecken",
         "description": "Versteckt leere Nachrichten und Trennnachrichten"
@@ -156,6 +160,9 @@
       "header": {
         "general": {
           "name": "Allgemeine Einstellungen"
+        },
+        "other": {
+          "name": "Andere Einstellungen"
         },
         "gameplay": {
           "name": "Gameplay Einstellungen"

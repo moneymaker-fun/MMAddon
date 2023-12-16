@@ -30,6 +30,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SpriteSlot(y = 7)
   public MoneyBadgeConfiguration moneyBadgeConfiguration = new MoneyBadgeConfiguration();
 
+  @SettingSection(value = "other", center = true)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> exportBoosterOnShutdown = new ConfigProperty<>(false);
 
   @SettingSection(value = "gameplay", center = true)
 
@@ -79,8 +82,13 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return this.enabled;
   }
 
+  // Other Getters
 
-  // Gameplay
+  public ConfigProperty<Boolean> exportBoosterOnShutdown() {
+    return exportBoosterOnShutdown;
+  }
+
+  // Gameplay Getters
 
   public ConfigProperty<Boolean> shortBoosterMessage() {
     return shortBoosterMessage;
@@ -122,13 +130,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   // Internal Settings
 
-  private final ConfigProperty<Boolean> exportOnShutdown = new ConfigProperty<>(false);
-
   private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
-
-  public ConfigProperty<Boolean> exportOnShutdown() {
-    return exportOnShutdown;
-  }
 
   public ConfigProperty<Boolean> chatReconnectButton() {
     return chatReconnectButton;
