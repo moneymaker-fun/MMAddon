@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.utils.AddonUpdater;
 import de.timuuuu.moneymaker.utils.Booster;
 import java.util.UUID;
 import net.labymod.api.Laby;
