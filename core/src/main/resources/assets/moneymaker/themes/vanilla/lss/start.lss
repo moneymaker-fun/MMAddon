@@ -95,22 +95,9 @@ Timer {
   border-radius:0;
 }
 
-.donate-btn {
-  bottom: 10;
-  left: 10;
-  width: fit-content;
-  padding-left: 3;
-  padding-right: 3;
-  height: 15;
-
-  Icon {
-    height: 90%;
-  }
-}
-
 .discord-btn {
   bottom: 10;
-  left: 70;
+  left: 10;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
@@ -118,7 +105,7 @@ Timer {
   border-color: #5865F2;
 
   Icon {
-    height: 90%;
+    height: 75%;
   }
 }
 

@@ -43,13 +43,6 @@ public class InfoActivity extends Activity {
     ComponentWidget commands = ComponentWidget.i18n("moneymaker.ui.info.commands").addId("commands");
     container.addChild(commands);
 
-    ButtonWidget donateButton = ButtonWidget.i18n("moneymaker.ui.start.donate", Icon.texture(
-        ResourceLocation.create("moneymaker", "textures/ui/donate.png"))).addId("donate-btn");
-    donateButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://www.paypal.com/donate/?hosted_button_id=P5DTFDECSA532");
-    });
-    container.addChild(donateButton);
-
     ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.start.discord", Icon.texture(
         ResourceLocation.create("moneymaker", "textures/ui/discord.png"))).addId("discord-btn");
     discordButton.setPressable(() -> {
