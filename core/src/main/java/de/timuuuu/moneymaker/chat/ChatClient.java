@@ -80,8 +80,7 @@ public class ChatClient {
   }
 
   public static boolean isPortOpen(String host, int port) {
-    try (Socket socket1 = new Socket(host, port)) {
-      socket1.close();
+    try (Socket ignored = new Socket(host, port)) {
       return true;
     } catch (IOException ignored) {
       return false;
@@ -90,23 +89,21 @@ public class ChatClient {
 
   public void heartBeat() {
     Task.builder(() -> {
-      if(addon.configuration().enabled().get()) {
-        boolean status = isPortOpen(SERVER_IP, SERVER_PORT);
-        if(!status && online) {
-          addon.chatActivity().reloadScreen();
-          addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
-              Component.translatable("moneymaker.notification.chat.timed", TextColor.color(255, 85, 85)));
-        }
-        if(status & !online) {
-          connect(true);
-        }
-        online = status;
+      boolean status = isPortOpen(SERVER_IP, SERVER_PORT);
+      if(!status && online) {
+        addon.chatActivity().reloadScreen();
+        addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+            Component.translatable("moneymaker.notification.chat.timed", TextColor.color(255, 85, 85)));
       }
+      if(status & !online) {
+        connect(true);
+      }
+      online = status;
     }).repeat(1, TimeUnit.MINUTES).build().execute();
   }
 
   public boolean sendChatMessage(MoneyChatMessage chatMessage) {
-    if(addon.configuration().enabled().get()) return false;
+    if(!addon.configuration().enabled().get()) return false;
     if(serverOut == null || socket.isClosed()) {
       online = false;
       addon.chatActivity().reloadScreen();
@@ -119,7 +116,7 @@ public class ChatClient {
   }
 
   public boolean sendMessage(String channel, JsonObject object) {
-    if(addon.configuration().enabled().get()) return false;
+    if(!addon.configuration().enabled().get()) return false;
     if(serverOut == null || socket.isClosed()) return false;
     JsonObject data = new JsonObject();
     data.add(channel, object);
