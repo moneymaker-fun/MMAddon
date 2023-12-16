@@ -132,8 +132,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       }
     }).delay(5, TimeUnit.SECONDS).build().execute();
 
-    AddonUpdater.checkVersion();
-    AddonUpdater.downloadUpdater();
+    //AddonUpdater.checkVersion();
+    //AddonUpdater.downloadUpdater();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       JsonObject data = new JsonObject();
@@ -147,7 +147,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       if(configuration().exportOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV(true);
       }
-      AddonUpdater.executeUpdater();
+      //AddonUpdater.executeUpdater();
     }));
   }
 
