@@ -87,7 +87,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.chatClient = new ChatClient(this);
 
     this.registerCommand(new TimerCommand(this));
-    this.registerCommand(new ResetCommand());
+    this.registerCommand(new ResetCommand(this));
 
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener(this));

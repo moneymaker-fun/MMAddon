@@ -24,6 +24,7 @@ public class TickListener {
 
   @Subscribe
   public void onSwordTick(SwordTickEvent event) {
+    if(!this.addon.configuration().enabled().get()) return;
     if(!AddonSettings.playingOn.contains("Farming")) return;
     tickCount++;
     if(tickCount == checkTick) {

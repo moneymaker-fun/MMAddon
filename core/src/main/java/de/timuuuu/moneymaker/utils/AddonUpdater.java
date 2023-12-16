@@ -54,8 +54,8 @@ public class AddonUpdater {
     if(devEnvironment) return;
     if(currentVersion.equals(newestVersion)) return;
     try {
-      new ProcessBuilder(new String[]{"java", "-jar", updatePath.toFile().getAbsolutePath(),
-          "--gameDir=" + gameDirectory.toFile().getAbsolutePath() }).start();
+      new ProcessBuilder("java", "-jar", updatePath.toFile().getAbsolutePath(),
+              "--gameDir=" + gameDirectory.toFile().getAbsolutePath()).start();
     } catch (IOException exception) {
       exception.printStackTrace();
     }

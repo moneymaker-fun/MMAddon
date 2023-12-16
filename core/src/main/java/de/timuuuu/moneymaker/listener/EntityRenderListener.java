@@ -21,6 +21,7 @@ public class EntityRenderListener {
   @Subscribe
   public void onRender(EntityRenderEvent event) {
     Entity entity = event.entity();
+    if(!this.addon.configuration().enabled().get()) return;
     if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
 
     String entityName = ChatUtil.stripColor(event.entity().toString().split("'")[1]);
