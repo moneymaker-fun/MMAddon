@@ -7,13 +7,14 @@ import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
+import net.labymod.api.client.gui.screen.activity.Links;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.render.matrix.Stack;
 
 @AutoActivity
-@Link("secret.lss")
+@Links({@Link("secret.lss"), @Link("buttons.lss")})
 public class SecretActivity extends Activity {
 
   MoneyMakerAddon addon;
