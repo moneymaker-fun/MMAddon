@@ -1,6 +1,6 @@
 .feedback-button {
-  top:0;
-  right:20;
+  top: 20;
+  right: 20;
   height: 20;
   width: fit-content;
   padding-left: 3;

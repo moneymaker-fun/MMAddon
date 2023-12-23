@@ -2,11 +2,11 @@
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
-  top: 0;
+  top: 10;
 }
 
 .info-container {
-  top: 20;
+  top: 40;
   bottom: 20;
   left: 20;
   right: 20;

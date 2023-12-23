@@ -2,12 +2,12 @@
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
-  top:0;
+  top: 10;
 }
 
 .chat-reconnect-button {
   width: fit-content;
-  top: 8;
+  top: 28;
   left: 120;
   padding: 1 5 1 5;
   height: 10;
@@ -17,22 +17,21 @@
 
 .chat-status {
   font-size: 0.8;
-  top: 10;
+  top: 30;
   left: 20;
 }
 
 .chat-online-text {
   font-size: 0.8;
-  top: 10;
+  top: 30;
   right: 12%;
 }
 
 .chat-container {
-  top: 20;
+  top: 40;
   bottom: 50;
   left: 20;
   width: 68%;
-  filter: blur(25);
   border-radius: 15 0 0 0;
   border-thickness: 5;
   border-color: var(--background-color-border);
@@ -40,11 +39,10 @@
 }
 
 .online-container {
-  top: 20;
+  top: 40;
   bottom: 50;
   width: 25%;
   right: 20;
-  filter: blur(25);
   border-radius: 0 15 0 0;
   border-thickness: 5;
   border-color: var(--background-color-border);
@@ -52,7 +50,7 @@
 }
 
 .input-container {
-  bottom: 0;
+  bottom: 5;
   left: 20;
   right: 20;
   height: 40;
@@ -64,8 +62,8 @@
 
   .chat-input {
     bottom: 25%;
-    left: 20;
-    right: 20;
+    left: 10;
+    right: 10;
     submit-button: true;
   }
 

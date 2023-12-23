@@ -6,27 +6,27 @@
 }
 
 .booster-totalBoost {
-  left: 100;
-  top: 30;
+  left: 90;
+  top: 20;
   font-size: 1;
 }
 
 .booster-averageBoosters {
-  top: 41;
+  top: 31;
   font-size: 0.8;
-  left: 100;
+  left: 90;
 }
 
 .booster-sort-button {
-  width: fit-content;
+  width: 50;
   padding-left: 3;
   left: 20;
   padding-right: 3;
-  top: 30;
+  top: 20;
 }
 
 .booster-container {
-  top: 50;
+  top: 40;
   bottom: 20;
   left: 20;
   right: 20;
