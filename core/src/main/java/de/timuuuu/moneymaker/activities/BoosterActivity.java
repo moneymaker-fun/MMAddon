@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
-import net.labymod.api.Constants.Resources;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -20,6 +19,7 @@ import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
+import net.labymod.api.client.gui.screen.activity.Links;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.attributes.WidgetAlignment;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
@@ -31,7 +31,7 @@ import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
 
 @AutoActivity
-@Link("booster.lss")
+@Links({@Link("booster.lss"), @Link("buttons.lss")})
 public class BoosterActivity extends Activity {
 
   MoneyMakerAddon addon;

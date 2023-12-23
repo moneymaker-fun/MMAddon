@@ -9,13 +9,16 @@ import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.theme.Theme;
+import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.attributes.bounds.Bounds;
 import net.labymod.api.client.gui.screen.widget.widgets.activity.Document;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.font.text.TextRenderer;
 import net.labymod.api.client.render.matrix.Stack;
+import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.OperatingSystem;
 
 public class Util {
@@ -29,6 +32,15 @@ public class Util {
     });
     feedbackButton.addId("feedback-button");
     document.addChild(feedbackButton);
+  }
+
+  public static Widget addDiscordButton() {
+    ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.start.discord", Icon.texture(
+        ResourceLocation.create("moneymaker", "textures/ui/discord.png"))).addId("discord-btn");
+    discordButton.setPressable(() -> {
+      OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd");
+    });
+    return discordButton;
   }
 
   public static void drawAuthor(LabyAPI labyAPI, Bounds bounds, Stack stack) {

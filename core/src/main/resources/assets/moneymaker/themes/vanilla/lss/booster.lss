@@ -73,12 +73,3 @@ Scroll {
   padding-left: 3;
   padding-right: 3;
 }
-
-.feedback-button {
-  top:0;
-  right:20;
-  width: fit-content;
-  padding-left: 3;
-  padding-right: 3;
-  top: 20;
-}
