@@ -4,30 +4,32 @@
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
+  top: 0;
 }
 
 .booster-totalBoost {
   left: 100;
-  top: 20;
+  top: 0;
   font-size: 1.0;
 }
 
 .booster-averageBoosters {
-  top: 31;
+  top: 11;
   font-size: 0.8;
   left: 100;
 }
 
 .booster-sort-button {
-  width: fit-content;
+  width: 50;
+  height: 20;
   padding-left: 3;
   left: 20;
   padding-right: 3;
-  top: 15;
+  top: 0;
 }
 
 .booster-container {
-  top: 40;
+  top: 20;
   bottom: 20;
   left: 20;
   right: 20;
