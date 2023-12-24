@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
@@ -26,7 +27,7 @@ public class BlockSessionWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.updateItemName(Component.text(AddonSettings.sessionBlocks + " ").append(Component.translatable("moneymaker.hudWidget.mm_block_session." + (AddonSettings.sessionBlocks == 1 ? "block" : "blocks"))), isEditorContext);
+    this.updateItemName(Component.text(Util.format(AddonSettings.sessionBlocks) + " ").append(Component.translatable("moneymaker.hudWidget.mm_block_session." + (AddonSettings.sessionBlocks == 1 ? "block" : "blocks"))), isEditorContext);
   }
 
   @Override

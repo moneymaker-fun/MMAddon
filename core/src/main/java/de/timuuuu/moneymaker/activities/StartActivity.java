@@ -117,7 +117,7 @@ public class StartActivity extends Activity {
       }
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.set", TextColor.color(170, 170, 170),
-              Component.text(count, TextColor.color(255, 255, 85))));
+              Component.text(Util.format(count), TextColor.color(255, 255, 85))));
     } catch (NumberFormatException ignored) {
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.no-number", TextColor.color(255, 85, 85)));

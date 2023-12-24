@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Asset;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Builder;
@@ -20,10 +21,14 @@ public class DiscordAPI {
   private boolean busy;
   private Task updaterTask;
 
+  private final String minerUrl = "https://cdn.terramc.net/moneymaker/miner.png";
+  private final String loreUrl = "https://cdn.terramc.net/moneymaker/lore.png";
+
   public DiscordAPI(MoneyMakerAddon addon) {
     this.addon = addon;
   }
 
+  private String imageUrl = loreUrl;
   private String line1 = "";
   private String line2 = "";
 
@@ -73,7 +78,7 @@ public class DiscordAPI {
     }
 
     builder.largeAsset(Asset.of(
-        "https://cdn.terramc.net/moneymaker/miner.png",
+        this.imageUrl,
         "MoneyMaker Addon v" + this.addon.addonInfo().getVersion()));
 
     this.addon.labyAPI().thirdPartyService().discord().displayActivity(builder.build());
@@ -89,6 +94,9 @@ public class DiscordAPI {
       if(AddonSettings.playingOn.contains("MoneyMaker")) {
         count.getAndAdd(1);
         if(AddonSettings.playingOn.contains("Mine")) {
+          if(!imageUrl.equals(loreUrl)) {
+            imageUrl = loreUrl;
+          }
           this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently");
           if(count.get() == 1) {
             this.line2 = I18n.translate("moneymaker.discordPresence.mine.balance") + (AddonSettings.balance.equals("X") ? "?" : AddonSettings.balance);
@@ -103,12 +111,15 @@ public class DiscordAPI {
         }
 
         if(AddonSettings.playingOn.contains("Farming")) {
+          if(!imageUrl.equals(minerUrl)) {
+            imageUrl = minerUrl;
+          }
           this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently");
           if(count.get() == 1) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + AddonSettings.currentBrokenBlocks;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + Util.format(AddonSettings.currentBrokenBlocks);
           }
           if(count.get() == 2) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Booster.sessionBoosters.get() + " (" + Booster.sessionBoost.get() + ")";
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Util.format(Booster.sessionBoosters.get()) + " (" + Util.format(Booster.sessionBoost.get()) + "%)";
           }
           if(count.get() == 3) {
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + AddonSettings.pickaxeRanking;

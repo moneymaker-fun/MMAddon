@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
@@ -31,7 +32,8 @@ public class BreakGoalWidget extends ItemHudWidget<HudWidgetConfig> {
       this.updateItemName(Component.text("0/0"), true);
       return;
     }
-    this.updateItemName(Component.text(AddonSettings.breakGoalBlocks - AddonSettings.currentBrokenBlocks), false);
+    int blocks = AddonSettings.breakGoalBlocks - AddonSettings.currentBrokenBlocks;
+    this.updateItemName(Component.text(Util.format(blocks)), false);
   }
 
   @Override

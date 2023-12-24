@@ -1,9 +1,13 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.UUID;
 
+import de.timuuuu.moneymaker.activities.popup.FeedbackActivity;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
@@ -28,7 +32,10 @@ public class Util {
   public static void addFeedbackButton(Document document) {
     ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
     feedbackButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
+      //OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
+      Laby.labyAPI().minecraft().executeNextTick(() -> {
+        Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new FeedbackActivity(MoneyMakerAddon.instance(), Laby.labyAPI().minecraft().minecraftWindow().currentScreen()));
+      });
     });
     feedbackButton.addId("feedback-button");
     document.addChild(feedbackButton);
@@ -84,6 +91,10 @@ public class Util {
           .pos(5, bounds.getHeight() -8)
           .render(stack);
     }
+  }
+
+  public static String format(int toFormate) {
+    return new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN)).format(toFormate);
   }
 
   public static boolean isDev(String uuid) {
