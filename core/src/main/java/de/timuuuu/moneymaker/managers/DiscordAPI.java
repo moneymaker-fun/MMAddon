@@ -119,15 +119,18 @@ public class DiscordAPI {
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + Util.format(AddonSettings.currentBrokenBlocks);
           }
           if(count.get() == 2) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Util.format(Booster.sessionBoosters.get()) + " (" + Util.format(Booster.sessionBoost.get()) + "%)";
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.sessionBlocks") + Util.format(AddonSettings.sessionBlocks);
           }
           if(count.get() == 3) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + AddonSettings.pickaxeRanking;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Util.format(Booster.sessionBoosters.get()) + " (" + Util.format(Booster.sessionBoost.get()) + "%)";
           }
           if(count.get() == 4) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + AddonSettings.pickaxeLevel;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + AddonSettings.pickaxeRanking;
           }
           if(count.get() == 5) {
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + AddonSettings.pickaxeLevel;
+          }
+          if(count.get() == 6) {
             count.set(0);
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + AddonSettings.rank;
           }

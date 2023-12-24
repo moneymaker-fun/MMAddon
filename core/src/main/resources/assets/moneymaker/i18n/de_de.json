@@ -57,6 +57,7 @@
       "farming": {
         "currently": "Aktuell in der Farming Höhle",
         "blocks": "Blöcke: ",
+        "sessionBlocks": "Blöcke (Aktuelle Session): ",
         "boosters": "Gefarmte Booster: ",
         "ranking": "Ranking: ",
         "pickaxe": {
