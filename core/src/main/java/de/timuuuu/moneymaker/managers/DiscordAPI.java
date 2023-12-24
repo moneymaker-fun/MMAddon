@@ -104,7 +104,7 @@ public class DiscordAPI {
           if(count.get() == 2) {
             this.line2 = I18n.translate("moneymaker.discordPresence.mine.workers") + AddonSettings.workerCount;
           }
-          if(count.get() == 3) {
+          if(count.get() >= 3) {
             count.set(0);
             this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + AddonSettings.rank;
           }
@@ -130,7 +130,7 @@ public class DiscordAPI {
           if(count.get() == 5) {
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + AddonSettings.pickaxeLevel;
           }
-          if(count.get() == 6) {
+          if(count.get() >= 6) {
             count.set(0);
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + AddonSettings.rank;
           }
