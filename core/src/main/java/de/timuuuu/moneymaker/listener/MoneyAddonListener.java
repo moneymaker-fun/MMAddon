@@ -44,6 +44,10 @@ public class MoneyAddonListener {
     data1.addProperty("addonVersion", this.addon.addonInfo().getVersion());
     this.addon.chatClient().sendMessage("playerStatus", data1);
 
+    JsonObject muteCheckObject = new JsonObject();
+    muteCheckObject.addProperty("uuid", event.newSession().getUniqueId().toString());
+    this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
+
   }
 
   @Subscribe
