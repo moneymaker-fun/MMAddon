@@ -74,6 +74,9 @@ public class ChatServerListener {
             if(data.get("muted").getAsBoolean()) {
               ChatClient.muted = true;
               ChatClient.muteReason = data.get("reason").getAsString();
+            } else {
+              ChatClient.muted = false;
+              ChatClient.muteReason = "";
             }
             this.addon.chatActivity().reloadScreen();
           }
