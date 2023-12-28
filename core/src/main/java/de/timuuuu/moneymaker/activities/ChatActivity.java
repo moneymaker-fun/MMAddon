@@ -26,6 +26,7 @@ import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
+import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
@@ -44,6 +45,7 @@ public class ChatActivity extends Activity {
 
   private TextFieldWidget chatInput;
   private static List<ChatMessageWidget> chatMessages = new ArrayList<>();
+  private ListSession<Widget> listSession = new ListSession<>();
 
   public ChatActivity(MoneyMakerAddon addon) {
     this.addon = addon;
@@ -51,6 +53,7 @@ public class ChatActivity extends Activity {
     chatInput.addId("chat-input");
     chatInput.maximalLength(200);
     chatInput.submitHandler(message -> this.submitMessage());
+    listSession.scrollToBottom();
   }
 
   @Override
@@ -99,7 +102,7 @@ public class ChatActivity extends Activity {
 
     chatMessages.forEach(chatList::addChild);
 
-    ScrollWidget chatScroll = new ScrollWidget(chatList, new ListSession<>()).addId("chat-scroll");
+    ScrollWidget chatScroll = new ScrollWidget(chatList, this.listSession).addId("chat-scroll");
     //Task.builder(chatScroll::scrollToBottom).delay(50, TimeUnit.MILLISECONDS).build().execute();
     chatContainer.addChild(chatScroll);
 
@@ -156,6 +159,10 @@ public class ChatActivity extends Activity {
     this.document.addChild(chatContainer);
     this.document.addChild(onlineContainer);
     this.document.addChild(inputContainer);
+
+    if(!chatMessages.isEmpty()) {
+      chatScroll.scrollToBottom();
+    }
   }
 
   private void submitMessage() {
@@ -277,7 +284,7 @@ public class ChatActivity extends Activity {
       String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
       this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
         chatMessages.add(new ChatMessageWidget(time, "§4Der Chat wurde geleert.").addId("chat-message"));
-        this.reload();
+        this.reloadScreen();
       });
     }
   }
