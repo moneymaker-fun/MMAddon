@@ -34,7 +34,6 @@ public class ScoreBoardListener {
       Task.builder(() -> {
         if(!AddonSettings.languageSupported & !langWarningSent) {
           langWarningSent = true;
-          //TODO: Make message as translation
           this.addon.displayMessage(" ");
           this.addon.displayMessage(Component.translatable("moneymaker.text.languageNotSupported.line1",
               NamedTextColor.DARK_RED).decorate(TextDecoration.BOLD));
