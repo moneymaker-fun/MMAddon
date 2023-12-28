@@ -40,8 +40,6 @@ public class ScoreBoardListener {
               NamedTextColor.DARK_RED).decorate(TextDecoration.BOLD));
           this.addon.displayMessage(Component.translatable("moneymaker.text.languageNotSupported.line2", NamedTextColor.GRAY));
           this.addon.displayMessage(" ");
-          //this.addon.displayMessage("§4§lℹ You are using a language that is §nNOT§4§l supported by the MoneyMaker-Addon ℹ");
-          //this.addon.displayMessage("§7Please go into the lobby and change your language to 'German' or 'English'.");
         }
       }).delay(5, TimeUnit.SECONDS).build().execute();
     }
