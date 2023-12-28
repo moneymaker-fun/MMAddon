@@ -6,7 +6,9 @@ import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
 import net.labymod.api.util.concurrent.task.Task;
@@ -33,11 +35,13 @@ public class ScoreBoardListener {
         if(!AddonSettings.languageSupported & !langWarningSent) {
           langWarningSent = true;
           //TODO: Make message as translation
-          this.addon.displayMessage("§4§lℹ Du benutzt eine Sprache, die vom MoneyMaker-Addon §nNICHT§4§l unterstützt wird! ℹ");
-          this.addon.displayMessage("§7Bitte gehe in die Lobby und stelle die Sprach auf 'Deutsch' oder 'Englisch'.");
           this.addon.displayMessage(" ");
-          this.addon.displayMessage("§4§lℹ You are using a language that is §nNOT§4§l supported by the MoneyMaker-Addon ℹ");
-          this.addon.displayMessage("§7Please go into the lobby and change your language to 'German' or 'English'.");
+          this.addon.displayMessage(Component.translatable("moneymaker.text.languageNotSupported.line1",
+              NamedTextColor.DARK_RED).decorate(TextDecoration.BOLD));
+          this.addon.displayMessage(Component.translatable("moneymaker.text.languageNotSupported.line2", NamedTextColor.GRAY));
+          this.addon.displayMessage(" ");
+          //this.addon.displayMessage("§4§lℹ You are using a language that is §nNOT§4§l supported by the MoneyMaker-Addon ℹ");
+          //this.addon.displayMessage("§7Please go into the lobby and change your language to 'German' or 'English'.");
         }
       }).delay(5, TimeUnit.SECONDS).build().execute();
     }

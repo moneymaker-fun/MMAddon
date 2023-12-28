@@ -45,6 +45,10 @@
         "minutes": "Minutes",
         "hour": "Hour",
         "hours": "Hours"
+      },
+      "languageNotSupported":{
+        "line1": "ℹ You are using a language that is §nNOT§4§l supported by the MoneyMaker-Addon ℹ",
+        "line2": "Please go into the lobby and change your language to 'German' or 'English'."
       }
     },
     "discordPresence": {
