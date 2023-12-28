@@ -32,6 +32,7 @@ public class ScoreBoardListener {
       Task.builder(() -> {
         if(!AddonSettings.languageSupported & !langWarningSent) {
           langWarningSent = true;
+          //TODO: Make message as translation
           this.addon.displayMessage("§4§lℹ Du benutzt eine Sprache, die vom MoneyMaker-Addon §nNICHT§4§l unterstützt wird! ℹ");
           this.addon.displayMessage("§7Bitte gehe in die Lobby und stelle die Sprach auf 'Deutsch' oder 'Englisch'.");
           this.addon.displayMessage(" ");

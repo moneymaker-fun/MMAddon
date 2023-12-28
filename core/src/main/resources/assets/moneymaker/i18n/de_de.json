@@ -120,6 +120,43 @@
         }
       }
     },
+    "feedback": {
+      "form": {
+        "title": "MoneyMaker Addon Feedback Formular",
+        "minecraftName": "Minecraft Name",
+        "date": "Wann ist der Fehler aufgetreten?",
+        "addonVersion": "Addon Version",
+        "minecraftVersion": "Minecraft Version",
+        "type": {
+          "title": "Art des Feedbacks",
+          "idea": "Vorschlag",
+          "bugreport": "Bugreport"
+        },
+        "description": {
+          "title": "Beschreibung",
+          "placeholder": "Bitte beschreibe dein Anliegen ausführlich"
+        },
+        "attachments": {
+          "title": "Anhänge (Bild- oder Video-Links)",
+          "placeholder": "z.B. https://youtu.be/dQw4w9WgXcQ"
+        },
+        "availability": "Erreichbarkeit für Rückfragen (z.B. Discord Tag)",
+        "send": "Senden",
+        "close": "Schließen",
+        "invalid": {
+          "title": "Ungültiges Feedback-Formular",
+          "invalidDate": "Das eingegebene Datum ist ungültig. Bitte verwende %s als Format",
+          "descriptionShort": "Die eingegebene Beschreibung ist zu kurz. Mindestens 5 Zeichen erforderlich",
+          "noAvailability": "Bitte gebe eine Erreichbarkeit an",
+          "noAttachment": "Bitte geben einen Anhang an, da du „Bugreport“ als Typ ausgewählt hast",
+          "noUrl": "Du musst eine URL als Anhang eingeben"
+        },
+        "success": {
+          "title": "Feedback Form wurde gesendet",
+          "text": "Das Formular wurde erfolgreich gesendet. Vielen Dank für dein Feedback"
+        }
+      }
+    },
     "settings": {
       "name": "MoneyMaker",
       "enabled": {
