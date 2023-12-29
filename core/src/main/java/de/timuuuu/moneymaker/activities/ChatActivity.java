@@ -23,9 +23,9 @@ import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
+import net.labymod.api.client.gui.screen.activity.types.SimpleActivity;
 import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
@@ -39,7 +39,7 @@ import net.labymod.api.util.io.web.result.Result;
 
 @AutoActivity
 @Link("chat.lss")
-public class ChatActivity extends Activity {
+public class ChatActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
 
@@ -59,6 +59,7 @@ public class ChatActivity extends Activity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
+    this.renderBackground = false;
 
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title").addId("chat-title");
     this.document.addChild(titleWidget);
@@ -273,7 +274,7 @@ public class ChatActivity extends Activity {
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-      chatMessages.add(new ChatMessageWidget(time, chatMessage).addId("chat-message"));
+      chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage).addId("chat-message"));
       this.reloadScreen();
     });
   }
@@ -283,7 +284,7 @@ public class ChatActivity extends Activity {
     if(message) {
       String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
       this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-        chatMessages.add(new ChatMessageWidget(time, "§4Der Chat wurde geleert.").addId("chat-message"));
+        chatMessages.add(new ChatMessageWidget(this.addon, time, "§4Der Chat wurde geleert.").addId("chat-message"));
         this.reloadScreen();
       });
     }
@@ -293,7 +294,7 @@ public class ChatActivity extends Activity {
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-      chatMessages.add(new ChatMessageWidget(time, chatMessage));
+      chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage));
       this.reloadScreen();
     });
   }

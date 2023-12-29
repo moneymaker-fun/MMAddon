@@ -161,6 +161,52 @@
         }
       }
     },
+    "mute": {
+      "form": {
+        "title": "%s muten",
+        "message": "Geschriebene Nachricht des Spielers",
+        "reason": "Gebe einen Grund für den Mute an",
+        "send": "Senden",
+        "close": "Schließen",
+        "invalid": {
+          "title": "Ungültiges Mute-Formular",
+          "noStaff": "Du bist kein Teammitglied",
+          "noReason": "Du musst einen Grund für den Mute angeben",
+          "chatError": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten"
+        },
+        "success": {
+          "title": "Der Mute wurde gesendet",
+          "text": "%s wurde erfolgreich gemutet.\nGrund: %s"
+        }
+      }
+    },
+    "report": {
+      "form": {
+        "title": "%s melden",
+        "message": "Geschriebene Nachricht des Spielers",
+        "reason": {
+          "title": "Grund für die Meldung",
+          "type": {
+            "spam": "Spamming",
+            "choiceofwords": "Wortwahl",
+            "behavior": "Verhalten",
+            "advertising": "Werbung",
+            "provocation": "Provokation",
+            "other": "Sonstiges"
+          }
+        },
+        "send": "Senden",
+        "abort": "Abbrechen",
+        "invalid": {
+          "title": "Ungültiges Report-Formular",
+          "chatError": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten"
+        },
+        "success": {
+          "title": "Die Meldung wurde  gesendet",
+          "text": "Du hast %s erfolgreich gemeldet"
+        }
+      }
+    },
     "settings": {
       "name": "MoneyMaker",
       "enabled": {
@@ -295,6 +341,10 @@
         "muted": {
           "title": "Du wurdest aus dem Chat gemutet.",
           "reason": "Grund: "
+        },
+        "button": {
+          "report": "Melden",
+          "mute": "Muten"
         }
       },
       "secret": {

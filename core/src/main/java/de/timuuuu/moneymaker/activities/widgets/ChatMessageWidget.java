@@ -1,10 +1,17 @@
 package de.timuuuu.moneymaker.activities.widgets;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.popup.ChatReportActivity;
+import de.timuuuu.moneymaker.activities.popup.MuteActivity;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.utils.Util;
+import java.util.UUID;
+import net.labymod.api.Laby;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
@@ -13,18 +20,22 @@ import net.labymod.api.client.resources.ResourceLocation;
 
 public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleContentWidget | Default > HorizontalListWidget
 
+  private MoneyMakerAddon addon;
+
   private String time;
   private MoneyChatMessage chatMessage = null;
   private String customMessage;
   private boolean systemMessage;
 
-  public ChatMessageWidget(String time, MoneyChatMessage chatMessage) {
+  public ChatMessageWidget(MoneyMakerAddon addon, String time, MoneyChatMessage chatMessage) {
+    this.addon = addon;
     this.time = time;
     this.chatMessage = chatMessage;
     this.systemMessage = chatMessage.systemMessage();
   }
 
-  public ChatMessageWidget(String time, String customMessage) {
+  public ChatMessageWidget(MoneyMakerAddon addon, String time, String customMessage) {
+    this.addon = addon;
     this.time = time;
     this.customMessage = customMessage;
     this.systemMessage = true;
@@ -47,6 +58,42 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       header.addEntry(ComponentWidget.text("§4§lSYSTEM").addId("sender"));
     }
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
+
+    if(!this.systemMessage) {
+      UUID uuid = Laby.labyAPI().getUniqueId();
+
+      // User is Staff member - add Mute button
+      if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
+        ButtonWidget muteButton = ButtonWidget.i18n("moneymaker.ui.chat.button.mute").addId("mute-button");
+        muteButton.setPressable(() -> {
+          Laby.labyAPI().minecraft().executeNextTick(() -> {
+            Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new MuteActivity(
+                this.addon,
+                Laby.labyAPI().getUniqueId(),
+                this.chatMessage,
+                Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
+            ));
+          });
+        });
+        header.addEntry(muteButton);
+
+      // User is normal - add Report button
+      } else {
+        ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
+        reportButton.setPressable(() -> {
+          Laby.labyAPI().minecraft().executeNextTick(() -> {
+            Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
+                this.addon,
+                Laby.labyAPI().getUniqueId(),
+                this.chatMessage,
+                Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
+            ));
+          });
+        });
+        header.addEntry(reportButton);
+      }
+    }
+
     flex.addChild(header);
 
     VerticalListWidget<Widget> messageContentWidget = new VerticalListWidget<>().addId("message-content");
@@ -60,64 +107,5 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     this.addContent(flex);
 
   }
-
-  /*@Override
-  public void initialize(Parent parent) {
-    super.initialize(parent);
-
-    if(this.chatMessage != null) {
-
-      String prefix;
-      if(chatMessage.rank() == Rank.DEVELOPER) {
-        prefix = "§8[§4Dev§8] §4";
-      } else if(chatMessage.rank() == Rank.STAFF) {
-        prefix = "§8[§cStaff§8] §c";
-      } else if(chatMessage.rank() == Rank.DONATOR) {
-        prefix = "§8[§6Don§8] §6";
-      } else {
-        prefix = "§e";
-      }
-
-      this.addEntry(ComponentWidget.text("§e" + time + " ").addId("chat-msg-time"));
-      this.addEntry(ComponentWidget.component(
-          Component.icon(Icon.head(this.chatMessage.uuid(), true, false), 10)).addId("chat-msg-icon"));
-      this.addEntry(ComponentWidget.text(" " + prefix + chatMessage.userName() + " §8- §7").addId("chat-msg-playerName"));
-      //this.addEntry(ComponentWidget.text(chatMessage.message()).addId("chat-msg-message"));
-
-      // Split: 65; 130; 195;
-
-      ComponentWidget messageWidget;
-      if(chatMessage.message().length() > 195) {
-        String split1 = chatMessage.message().substring(0, 65);
-        String split2 = chatMessage.message().substring(65, 130);
-        String split3 = chatMessage.message().substring(130, 195);
-        String split4 = chatMessage.message().substring(195);
-        messageWidget = ComponentWidget.text(split1 + "\n" + split2 + "\n" + split3 + "\n" + split4);
-      } else if(chatMessage.message().length() > 130) {
-        String split1 = chatMessage.message().substring(0, 65);
-        String split2 = chatMessage.message().substring(65, 130);
-        String split3 = chatMessage.message().substring(130);
-        messageWidget = ComponentWidget.text(split1 + "\n" + split2 + "\n" + split3);
-      } else if(chatMessage.message().length() > 65) {
-        String split1 = chatMessage.message().substring(0, 65);
-        String split2 = chatMessage.message().substring(65);
-        messageWidget = ComponentWidget.text(split1 + "\n" + split2);
-      } else {
-        messageWidget = ComponentWidget.text(chatMessage.message());
-        this.heightPrecision().set(10F);
-      }
-      this.addEntry(messageWidget.addId("chat-msg-message"));
-
-    } else {
-
-      ComponentWidget timeWidget = ComponentWidget.text("§e" + time + " ");
-      ComponentWidget messageWidget = ComponentWidget.text(this.customMessage);
-
-      this.addEntry(timeWidget);
-      this.addEntry(messageWidget);
-
-    }
-
-  }*/
 
 }

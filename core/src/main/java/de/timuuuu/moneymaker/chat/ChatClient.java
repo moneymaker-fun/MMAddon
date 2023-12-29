@@ -175,7 +175,8 @@ public class ChatClient {
   public enum ChatAction {
     CLEAR("CLEAR"),
     MUTE("MUTE"),
-    UNMUTE("UNMUTE");
+    UNMUTE("UNMUTE"),
+    REPORT("REPORT");
 
     private final String name;
 

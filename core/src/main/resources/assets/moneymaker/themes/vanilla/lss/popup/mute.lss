@@ -1,0 +1,98 @@
+.container {
+  left: 50%;
+  top: 50%;
+  width: 300;
+  height: 150;
+  alignment-x: center;
+  alignment-y: center;
+  box-shadow: classic left top right bottom;
+  renderer: "DirtBackground";
+
+  .header {
+    left: 50%;
+    width: 100%;
+    height: 25;
+    padding: 0 2 0 2;
+    space-between-entries: 5;
+    background-color: rgba(255, 85, 85, 0.3);
+
+    .head {
+      width: 16;
+      height: width;
+      alignment: center;
+    }
+
+    .title {
+      alignment: center;
+    }
+
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+    overwrite-width: false;
+
+    .message-container {
+      width: 100%;
+      height: fit-content;
+      margin-left: 15;
+      margin-right: 15;
+
+      .message-title {
+        margin-top: 10;
+        margin-bottom: 5;
+        alignment-x: center;
+      }
+
+      .message-input {
+        width: 100%;
+        height: 15;
+        alignment-x: center;
+      }
+
+    }
+
+    .reason-container {
+      width: 100%;
+      height: fit-content;
+      margin-left: 15;
+      margin-right: 15;
+
+      .reason-title {
+        margin-top: 10;
+        margin-bottom: 5;
+        alignment-x: center;
+      }
+
+      .reason-input {
+        width: 100%;
+        height: 15;
+        alignment-x: center;
+      }
+
+    }
+
+    .button-container {
+      orientation: horizontal;
+      margin-top: 10;
+      width: fit-content;
+      height: fit-content;
+      alignment-x: center;
+
+      .send-button {
+        width: 50;
+        height: 20;
+        margin-right: 5;
+      }
+
+      .close-button {
+        width: 50;
+        height: 20;
+        margin-left: 5;
+      }
+
+    }
+
+  }
+}

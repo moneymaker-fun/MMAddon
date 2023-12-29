@@ -161,6 +161,52 @@
         }
       }
     },
+    "mute": {
+      "form": {
+        "title": "Mute %s",
+        "message": "Written message of the player",
+        "reason": "Enter the reason for the mute",
+        "send": "Send",
+        "close": "Close",
+        "invalid": {
+          "title": "Invalid Mute Form",
+          "noStaff": "You are not a staff member",
+          "noReason": "You must provide a reason for the mute",
+          "chatError": "There was an error while contacting the Chat-Server"
+        },
+        "success": {
+          "title": "Mute has been sent",
+          "text": "%s has been successfully muted.\nReason: %s"
+        }
+      }
+    },
+    "report": {
+      "form": {
+        "title": "Report %s",
+        "message": "Written message of the player",
+        "reason": {
+          "title": "Reason for the report",
+          "type": {
+            "spam": "Spam",
+            "choiceofwords": "Choice of words",
+            "behavior": "Behavior",
+            "advertising": "Advertising",
+            "provocation": "Provocation",
+            "other": "Other"
+          }
+        },
+        "send": "Send",
+        "abort": "Abort",
+        "invalid": {
+          "title": "Invalid Report Form",
+          "chatError": "There was an error while contacting the Chat-Server"
+        },
+        "success": {
+          "title": "Report has been sent",
+          "text": "You have successfully reported %s"
+        }
+      }
+    },
     "settings": {
       "name": "MoneyMaker",
       "enabled": {
@@ -295,6 +341,10 @@
         "muted": {
           "title": "You have been muted from the chat.",
           "reason": "Reason: "
+        },
+        "button": {
+          "report": "Report",
+          "mute": "Mute"
         }
       },
       "secret": {
