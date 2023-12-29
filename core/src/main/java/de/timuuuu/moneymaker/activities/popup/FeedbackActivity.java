@@ -56,7 +56,6 @@ public class FeedbackActivity extends SimpleActivity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
-    AtomicBoolean valid = new AtomicBoolean(false);
 
     FlexibleContentWidget container = new FlexibleContentWidget().addId("container");
     HorizontalListWidget header = new HorizontalListWidget().addId("header");
