@@ -195,7 +195,7 @@ public class ChatActivity extends Activity {
     boolean successful = false;
 
     if(input.equalsIgnoreCase("/clear")) {
-      successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.CLEAR, null);
+      successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), ChatAction.CLEAR, null);
     }
 
     // /mute <Spieler> <Grund>
@@ -227,7 +227,7 @@ public class ChatActivity extends Activity {
         object.addProperty("playerName", playerName);
         object.addProperty("reason", reason);
 
-        successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.MUTE, object);
+        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), ChatAction.MUTE, object);
         if(successful) {
           this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich gemutet.");
           this.addCustomChatMessage("§7Grund: §e" + reason);
@@ -254,7 +254,7 @@ public class ChatActivity extends Activity {
         object.addProperty("uuid", requestUuid.get().toString());
         object.addProperty("playerName", playerName);
 
-        successful = this.sendChatAction(this.labyAPI.getUniqueId(), ChatAction.UNMUTE, object);
+        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), ChatAction.UNMUTE, object);
         if(successful) {
           this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich entmutet.");
         }
@@ -309,16 +309,6 @@ public class ChatActivity extends Activity {
         message,
         MoneyRank.USER);
     return this.addon.chatClient().sendChatMessage(chatMessage);
-  }
-
-  private boolean sendChatAction(UUID executor, ChatAction action, JsonObject data) {
-    JsonObject object = new JsonObject();
-    object.addProperty("action", action.getName());
-    object.addProperty("executor", executor.toString());
-    if(data != null) {
-      object.add("data", data);
-    }
-    return this.addon.chatClient().sendMessage("chatAction", object);
   }
 
 }

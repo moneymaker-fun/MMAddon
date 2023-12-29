@@ -11,6 +11,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
@@ -122,6 +123,16 @@ public class ChatClient {
     data.add(channel, object);
     serverOut.println(data);
     return true;
+  }
+
+  public boolean sendChatAction(UUID executor, ChatAction action, JsonObject data) {
+    JsonObject object = new JsonObject();
+    object.addProperty("action", action.getName());
+    object.addProperty("executor", executor.toString());
+    if(data != null) {
+      object.add("data", data);
+    }
+    return this.sendMessage("chatAction", object);
   }
 
   public void sendLaunchData(String uuid, String userName) {
