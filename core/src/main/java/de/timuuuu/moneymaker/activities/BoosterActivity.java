@@ -16,10 +16,10 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
+import net.labymod.api.client.gui.screen.activity.types.SimpleActivity;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.attributes.WidgetAlignment;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
@@ -32,7 +32,7 @@ import net.labymod.api.models.OperatingSystem;
 
 @AutoActivity
 @Links({@Link("booster.lss"), @Link("buttons.lss")})
-public class BoosterActivity extends Activity {
+public class BoosterActivity extends SimpleActivity {
 
   MoneyMakerAddon addon;
   public BoosterActivity(MoneyMakerAddon addon) {
@@ -44,6 +44,7 @@ public class BoosterActivity extends Activity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
+    this.renderBackground = false;
 
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.booster.title");
     titleWidget.addId("booster-title");

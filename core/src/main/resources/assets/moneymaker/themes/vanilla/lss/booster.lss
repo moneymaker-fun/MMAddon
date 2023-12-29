@@ -6,7 +6,7 @@
 }
 
 .booster-totalBoost {
-  left: 90;
+  left: 100;
   top: 20;
   font-size: 1;
 }
@@ -14,11 +14,11 @@
 .booster-averageBoosters {
   top: 31;
   font-size: 0.8;
-  left: 90;
+  left: 100;
 }
 
 .booster-sort-button {
-  width: 50;
+  width: fit-content;
   padding-left: 3;
   left: 20;
   padding-right: 3;
@@ -30,11 +30,8 @@
   bottom: 20;
   left: 20;
   right: 20;
-  filter: blur(25);
-  border-radius: 15;
-  border-thickness: 5;
-  border-color: var(--background-color-border);
-  background-color: var(--background-color);
+  box-shadow: classic left top right bottom;
+  renderer: "DirtBackground";
 }
 
 .booster-list {
@@ -67,8 +64,8 @@ Scroll {
 }
 
 .exportBtn {
-  bottom:10;
-  right:55;
+  bottom: 5;
+  right: 60;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;

@@ -4,17 +4,17 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
+import net.labymod.api.client.gui.screen.activity.types.SimpleActivity;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.render.matrix.Stack;
 
 @AutoActivity
 @Links({@Link("info.lss"), @Link("buttons.lss")})
-public class InfoActivity extends Activity {
+public class InfoActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
 
@@ -25,6 +25,7 @@ public class InfoActivity extends Activity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
+    this.renderBackground = false;
 
     Util.addFeedbackButton(this.document);
 

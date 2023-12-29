@@ -17,6 +17,7 @@
   border-thickness: 5;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  box-shadow: none;
 }
 
 .commands-title {

@@ -9,10 +9,10 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.activity.Activity;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
+import net.labymod.api.client.gui.screen.activity.types.SimpleActivity;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
@@ -25,7 +25,7 @@ import net.labymod.api.client.render.matrix.Stack;
 
 @AutoActivity
 @Links({@Link("start.lss"), @Link("buttons.lss")})
-public class StartActivity extends Activity {
+public class StartActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
 
@@ -36,6 +36,7 @@ public class StartActivity extends Activity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
+    this.renderBackground = false;
 
     Util.addFeedbackButton(this.document);
 
