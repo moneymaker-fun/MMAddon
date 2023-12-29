@@ -4,7 +4,6 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
@@ -22,7 +21,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWi
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 
-@Link("feedback.lss")
+@Link("popup/feedback.lss")
 @AutoActivity
 public class FeedbackActivity extends SimpleActivity {
 
