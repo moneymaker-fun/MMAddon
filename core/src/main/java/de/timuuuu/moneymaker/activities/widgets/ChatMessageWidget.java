@@ -65,7 +65,9 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     }
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
     if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
-      header.addEntry(ComponentWidget.text("(ID: " + this.chatMessage.messageId() + ")").addId("message-id"));
+      if(this.chatMessage != null) {
+        header.addEntry(ComponentWidget.text("(ID: " + this.chatMessage.messageId() + ")").addId("message-id"));
+      }
     }
 
     if(!this.systemMessage) {
