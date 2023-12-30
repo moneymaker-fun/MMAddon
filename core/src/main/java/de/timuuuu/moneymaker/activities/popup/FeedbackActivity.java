@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.activities.popup;
 
+import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,7 +32,6 @@ public class FeedbackActivity extends SimpleActivity {
 
   private UUID uuid;
   private String username;
-  private String date;
   private String addonVersion;
   private String minecraftVersion;
   private FeedbackType feedbackType;
@@ -48,7 +48,6 @@ public class FeedbackActivity extends SimpleActivity {
     this.previousScreen = previousScreen;
     this.uuid = this.addon.labyAPI().getUniqueId();
     this.username = this.addon.labyAPI().getName();
-    this.date = new SimpleDateFormat(this.DATE_FORMATE).format(new Date());
     this.addonVersion = this.addon.addonInfo().getVersion();
     this.minecraftVersion = this.addon.labyAPI().minecraft().getVersion();
     this.feedbackType = FeedbackType.BUGREPORT;
@@ -78,7 +77,7 @@ public class FeedbackActivity extends SimpleActivity {
 
     ComponentWidget dateTitleWidget = ComponentWidget.i18n("moneymaker.feedback.form.date").addId("date");
     dateInputWidget = new TextFieldWidget().addId("date-input");
-    dateInputWidget.setText(this.date);
+    dateInputWidget.setText(new SimpleDateFormat(this.DATE_FORMATE).format(new Date()));
 
     ComponentWidget addonVersionTitleWidget = ComponentWidget.i18n("moneymaker.feedback.form.addonVersion").addId("addon-version");
     TextFieldWidget addonVersionInputWidget = new TextFieldWidget().addId("addon-version-input");
@@ -231,7 +230,24 @@ public class FeedbackActivity extends SimpleActivity {
       return false;
     }
 
-    //TODO: Send API Request or Chat Server message
+    JsonObject object = new JsonObject();
+    object.addProperty("uuid", this.uuid.toString());
+    object.addProperty("userName", this.username);
+    object.addProperty("date", this.dateInputWidget.getText());
+    object.addProperty("addonVersion", this.addonVersion);
+    object.addProperty("minecraftVersion", this.minecraftVersion);
+    object.addProperty("feedbackType", this.feedbackType.name());
+    object.addProperty("description", this.descriptionInputWidget.getText());
+    object.addProperty("attachments", this.attachmentsInputWidget.getText());
+    object.addProperty("availability", this.availabilityInputWidget.getText());
+
+    if(!this.addon.chatClient().sendMessage("feedback", object)) {
+      this.addon.pushNotification(
+          Component.translatable("moneymaker.mute.form.invalid.title", NamedTextColor.DARK_RED),
+          Component.translatable("moneymaker.mute.form.invalid.chatError", NamedTextColor.RED)
+      );
+      return false;
+    }
 
     return true;
   }
