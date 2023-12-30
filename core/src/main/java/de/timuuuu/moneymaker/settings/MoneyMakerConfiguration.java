@@ -30,6 +30,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SpriteSlot(y = 7)
   public MoneyBadgeConfiguration moneyBadgeConfiguration = new MoneyBadgeConfiguration();
 
+  @IntroducedIn(value = "1.1.0", namespace = "moneymaker")
   @SettingSection(value = "other", center = true)
   @SwitchSetting
   private final ConfigProperty<Boolean> exportBoosterOnShutdown = new ConfigProperty<>(false);
