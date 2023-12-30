@@ -23,7 +23,7 @@ public class ChatClient {
   public static boolean muted = false;
   public static String muteReason = "";
 
-  public static final String SERVER_IP = "moneychat.mistercore.de"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
+  public static final String SERVER_IP = "chat.moneymaker.fun"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
