@@ -66,21 +66,17 @@ public class ChatServerListener {
       }
     }
 
-    if(message.has("muteInfo") && message.get("muteInfo").isJsonObject()) {
+    if (message.has("muteInfo") && message.get("muteInfo").isJsonObject()) {
       JsonObject data = message.get("muteInfo").getAsJsonObject();
-      if(data.has("requestedBy")) {
-        if(this.addon.labyAPI().getUniqueId().toString().equals(data.get("requestedBy").getAsString())) {
-          if(data.has("muted") && data.has("reason")) {
-            if(data.get("muted").getAsBoolean()) {
-              ChatClient.muted = true;
-              ChatClient.muteReason = data.get("reason").getAsString();
-            } else {
-              ChatClient.muted = false;
-              ChatClient.muteReason = "";
-            }
-            this.addon.chatActivity().reloadScreen();
-          }
+      if (data.has("muted") && data.has("reason")) {
+        if (data.get("muted").getAsBoolean()) {
+          ChatClient.muted = true;
+          ChatClient.muteReason = data.get("reason").getAsString();
+        } else {
+          ChatClient.muted = false;
+          ChatClient.muteReason = "";
         }
+        this.addon.chatActivity().reloadScreen();
       }
     }
 
@@ -95,21 +91,19 @@ public class ChatServerListener {
 
     if(message.has("retrievedPlayerData")) {
       JsonObject data = message.get("retrievedPlayerData").getAsJsonObject();
-      if(data.has("uuid") & data.has("players")) {
-        if(Laby.labyAPI().getUniqueId().toString().equals(data.get("uuid").getAsString())) {
-          if(data.get("players").isJsonArray()) {
-            JsonArray array = data.get("players").getAsJsonArray();
-            for(int i  = 0; i < array.size(); i++) {
-              JsonObject playerData = array.get(i).getAsJsonObject();
-              UUID uuid = UUID.fromString(playerData.get("uuid").getAsString());
-              AddonSettings.playerStatus.put(uuid, new MoneyPlayer(
-                  uuid,
-                  playerData.get("userName").getAsString(),
-                  playerData.get("server").getAsString(),
-                  playerData.get("addonVersion").getAsString(),
-                  MoneyPlayer.rankByName(playerData.get("rank").getAsString())
-              ));
-            }
+      if(data.has("players")) {
+        if (data.get("players").isJsonArray()) {
+          JsonArray array = data.get("players").getAsJsonArray();
+          for (int i = 0; i < array.size(); i++) {
+            JsonObject playerData = array.get(i).getAsJsonObject();
+            UUID uuid = UUID.fromString(playerData.get("uuid").getAsString());
+            AddonSettings.playerStatus.put(uuid, new MoneyPlayer(
+                uuid,
+                playerData.get("userName").getAsString(),
+                playerData.get("server").getAsString(),
+                playerData.get("addonVersion").getAsString(),
+                MoneyPlayer.rankByName(playerData.get("rank").getAsString())
+            ));
           }
         }
       }
