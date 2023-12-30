@@ -336,8 +336,11 @@
         "server": {
           "online": "§aChat-Server ist online",
           "offline": "§cChat-Server ist offline",
-          "reconnect-button": "Neu verbinden"
+          "reconnect-button": "Neu verbinden",
+          "error": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten"
         },
+        "chatCleared": "Der Chat wurde geleert.",
+        "messageDeleted": "Diese Nachricht wurde gelöscht.",
         "muted": {
           "title": "Du wurdest aus dem Chat gemutet.",
           "reason": "Grund: "

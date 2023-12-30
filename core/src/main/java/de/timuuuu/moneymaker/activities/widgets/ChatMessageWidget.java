@@ -1,12 +1,16 @@
 package de.timuuuu.moneymaker.activities.widgets;
 
+import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatReportActivity;
 import de.timuuuu.moneymaker.activities.popup.MuteActivity;
+import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.UUID;
 import net.labymod.api.Laby;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.Widget;
@@ -64,35 +68,55 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
 
       // User is Staff member - add Mute button
       if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
-        ButtonWidget muteButton = ButtonWidget.i18n("moneymaker.ui.chat.button.mute").addId("mute-button");
-        muteButton.setPressable(() -> {
-          Laby.labyAPI().minecraft().executeNextTick(() -> {
-            Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new MuteActivity(
-                this.addon,
-                Laby.labyAPI().getUniqueId(),
-                Laby.labyAPI().getName(),
-                this.chatMessage,
-                Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
-            ));
+
+        if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
+          ButtonWidget muteButton = ButtonWidget.i18n("moneymaker.ui.chat.button.mute").addId("mute-button");
+          muteButton.setPressable(() -> {
+            Laby.labyAPI().minecraft().executeNextTick(() -> {
+              Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new MuteActivity(
+                  this.addon,
+                  Laby.labyAPI().getUniqueId(),
+                  Laby.labyAPI().getName(),
+                  this.chatMessage,
+                  Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
+              ));
+            });
           });
-        });
-        header.addEntry(muteButton);
+          header.addEntry(muteButton);
+        }
+
+        if(!this.chatMessage.deleted()) {
+          ButtonWidget deleteButton = ButtonWidget.deleteButton().addId("delete-button");
+          deleteButton.setPressable(() -> {
+            JsonObject object = new JsonObject();
+            object.addProperty("messageId", this.chatMessage.messageId());
+            if(!this.addon.chatClient().sendChatAction(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), ChatAction.DELETE_MESSAGE, object)) {
+              this.addon.pushNotification(
+                  Component.translatable("moneymaker.ui.chat.title", NamedTextColor.DARK_RED),
+                  Component.translatable("moneymaker.ui.chat.server.error", NamedTextColor.RED)
+              );
+            }
+          });
+          header.addEntry(deleteButton);
+        }
 
       // User is normal - add Report button
       } else {
-        ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
-        reportButton.setPressable(() -> {
-          Laby.labyAPI().minecraft().executeNextTick(() -> {
-            Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
-                this.addon,
-                Laby.labyAPI().getUniqueId(),
-                Laby.labyAPI().getName(),
-                this.chatMessage,
-                Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
-            ));
+        if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
+          ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
+          reportButton.setPressable(() -> {
+            Laby.labyAPI().minecraft().executeNextTick(() -> {
+              Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
+                  this.addon,
+                  Laby.labyAPI().getUniqueId(),
+                  Laby.labyAPI().getName(),
+                  this.chatMessage,
+                  Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
+              ));
+            });
           });
-        });
-        header.addEntry(reportButton);
+          header.addEntry(reportButton);
+        }
       }
     }
 
@@ -110,4 +134,11 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
 
   }
 
+  public MoneyChatMessage chatMessage() {
+    return chatMessage;
+  }
+
+  public boolean systemMessage() {
+    return systemMessage;
+  }
 }

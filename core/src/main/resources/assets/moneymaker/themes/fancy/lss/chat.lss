@@ -162,7 +162,6 @@
           width: fit-content;
           padding: -1 2 0.5 1;
           margin: 2 0 0 5;
-          font-size: 0.8;
 
           .button-text {
             font-size: 0.6 !important;
@@ -176,11 +175,24 @@
           width: fit-content;
           padding: -1 2 0.5 1;
           margin: 2 0 0 5;
-          font-size: 0.8;
 
           .button-text {
             font-size: 0.6 !important;
             text-color: red !important;
+          }
+
+        }
+
+        .delete-button {
+          height: 9;
+          width: fit-content;
+          padding: 0 3 1 2;
+          margin: 2 0 0 5;
+
+          .button-icon {
+            height: 7;
+            alignment-y: bottom;
+            padding: 0 0 1 1;
           }
 
         }

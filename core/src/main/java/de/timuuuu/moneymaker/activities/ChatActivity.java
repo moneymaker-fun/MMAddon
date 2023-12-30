@@ -34,6 +34,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
+import net.labymod.api.util.I18n;
 import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.io.web.result.Result;
 
@@ -284,10 +285,30 @@ public class ChatActivity extends SimpleActivity {
     if(message) {
       String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
       this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-        chatMessages.add(new ChatMessageWidget(this.addon, time, "§4Der Chat wurde geleert.").addId("chat-message"));
+        chatMessages.add(new ChatMessageWidget(this.addon, time, "§4" + I18n.translate("moneymaker.ui.chat.chatCleared")).addId("chat-message"));
         this.reloadScreen();
       });
     }
+  }
+
+  public void deleteMessage(String id) {
+    List<ChatMessageWidget> remove = new ArrayList<>();
+    for(ChatMessageWidget messageWidget : chatMessages) {
+      if(messageWidget.chatMessage() != null) {
+        if(messageWidget.chatMessage().messageId().equals(id)) {
+          if(messageWidget.systemMessage()) {
+            remove.add(messageWidget);
+          } else {
+            messageWidget.chatMessage().message("§7§o" + I18n.translate("moneymaker.ui.chat.messageDeleted"));
+            messageWidget.chatMessage().deleted(true);
+          }
+        }
+      }
+    }
+    if(!remove.isEmpty()) {
+      chatMessages.removeAll(remove);
+    }
+    this.reloadScreen();
   }
 
   public void addCustomChatMessage(String chatMessage) {
@@ -305,6 +326,7 @@ public class ChatActivity extends SimpleActivity {
 
   private boolean sendToServer(String message) {
     MoneyChatMessage chatMessage = new MoneyChatMessage(
+        "UNKNOWN",
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message,

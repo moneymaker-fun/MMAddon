@@ -35,7 +35,18 @@ public class ChatServerListener {
       JsonObject data = message.get("chatAction").getAsJsonObject();
       if(ChatClient.actionByName(data.get("action").getAsString()) != null) {
         switch (ChatClient.actionByName(data.get("action").getAsString())) {
+
           case CLEAR -> this.addon.chatActivity().clearChat(true);
+
+          case DELETE_MESSAGE -> {
+            if(data.has("data") && data.get("data").isJsonObject()) {
+              JsonObject deleteData = data.get("data").getAsJsonObject();
+              if(deleteData.has("messageId")) {
+                this.addon.chatActivity().deleteMessage(deleteData.get("messageId").getAsString());
+              }
+            }
+          }
+
         }
       }
     }

@@ -8,13 +8,16 @@ import java.util.UUID;
 
 public class MoneyChatMessage {
 
+  private String messageId;
   private UUID uuid;
   private String userName;
   private String message;
   private MoneyRank rank;
   private boolean systemMessage;
+  private boolean deleted = false;
 
-  public MoneyChatMessage(UUID uuid, String userName, String message, MoneyRank rank) {
+  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank) {
+    this.messageId = messageId;
     this.uuid = uuid;
     this.userName = userName;
     this.message = message;
@@ -25,6 +28,7 @@ public class MoneyChatMessage {
   public static MoneyChatMessage fromJson(JsonObject object) {
     if(object.has("uuid")) {
       return new MoneyChatMessage(
+          object.get("messageId").getAsString(),
           UUID.fromString(object.get("uuid").getAsString()),
           object.get("userName").getAsString(),
           object.get("message").getAsString(),
@@ -42,6 +46,10 @@ public class MoneyChatMessage {
     return object;
   }
 
+  public String messageId() {
+    return messageId;
+  }
+
   public UUID uuid() {
     return uuid;
   }
@@ -54,11 +62,23 @@ public class MoneyChatMessage {
     return message;
   }
 
+  public void message(String message) {
+    this.message = message;
+  }
+
   public MoneyRank rank() {
     return rank;
   }
 
   public boolean systemMessage() {
     return systemMessage;
+  }
+
+  public boolean deleted() {
+    return deleted;
+  }
+
+  public void deleted(boolean deleted) {
+    this.deleted = deleted;
   }
 }

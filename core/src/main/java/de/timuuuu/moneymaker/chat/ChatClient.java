@@ -177,7 +177,8 @@ public class ChatClient {
     CLEAR("CLEAR"),
     MUTE("MUTE"),
     UNMUTE("UNMUTE"),
-    REPORT("REPORT");
+    REPORT("REPORT"),
+    DELETE_MESSAGE("DELETE_MESSAGE");
 
     private final String name;
 
