@@ -71,27 +71,27 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     }
 
     if(!this.systemMessage) {
+      if(this.chatMessage != null & !this.chatMessage.deleted()) {
 
-      // User is Staff member - add Mute button
-      if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
+        // User is Staff member - add Mute button
+        if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
 
-        if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
-          ButtonWidget muteButton = ButtonWidget.i18n("moneymaker.ui.chat.button.mute").addId("mute-button");
-          muteButton.setPressable(() -> {
-            Laby.labyAPI().minecraft().executeNextTick(() -> {
-              Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new MuteActivity(
-                  this.addon,
-                  Laby.labyAPI().getUniqueId(),
-                  Laby.labyAPI().getName(),
-                  this.chatMessage,
-                  Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
-              ));
+          if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
+            ButtonWidget muteButton = ButtonWidget.i18n("moneymaker.ui.chat.button.mute").addId("mute-button");
+            muteButton.setPressable(() -> {
+              Laby.labyAPI().minecraft().executeNextTick(() -> {
+                Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new MuteActivity(
+                    this.addon,
+                    Laby.labyAPI().getUniqueId(),
+                    Laby.labyAPI().getName(),
+                    this.chatMessage,
+                    Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
+                ));
+              });
             });
-          });
-          header.addEntry(muteButton);
-        }
+            header.addEntry(muteButton);
+          }
 
-        if(!this.chatMessage.deleted()) {
           ButtonWidget deleteButton = ButtonWidget.deleteButton().addId("delete-button");
           deleteButton.setPressable(() -> {
             JsonObject object = new JsonObject();
@@ -104,25 +104,26 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
             }
           });
           header.addEntry(deleteButton);
+
+          // User is normal - add Report button
+        } else {
+          if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
+            ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
+            reportButton.setPressable(() -> {
+              Laby.labyAPI().minecraft().executeNextTick(() -> {
+                Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
+                    this.addon,
+                    Laby.labyAPI().getUniqueId(),
+                    Laby.labyAPI().getName(),
+                    this.chatMessage,
+                    Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
+                ));
+              });
+            });
+            header.addEntry(reportButton);
+          }
         }
 
-      // User is normal - add Report button
-      } else {
-        if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
-          ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
-          reportButton.setPressable(() -> {
-            Laby.labyAPI().minecraft().executeNextTick(() -> {
-              Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
-                  this.addon,
-                  Laby.labyAPI().getUniqueId(),
-                  Laby.labyAPI().getName(),
-                  this.chatMessage,
-                  Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
-              ));
-            });
-          });
-          header.addEntry(reportButton);
-        }
       }
     }
 
