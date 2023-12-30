@@ -27,7 +27,8 @@ import java.util.UUID;
 public class ChatReportActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
-  private UUID reporter;
+  private UUID reporterUUID;
+  private String reporterName;
   private MoneyChatMessage chatMessage;
   private String uuid;
   private String userName;
@@ -36,10 +37,11 @@ public class ChatReportActivity extends SimpleActivity {
 
   private ReportReason reportReason = ReportReason.SPAM;
 
-  public ChatReportActivity(MoneyMakerAddon addon, UUID reporter, MoneyChatMessage chatMessage,
+  public ChatReportActivity(MoneyMakerAddon addon, UUID reporterUUID, String reporterName, MoneyChatMessage chatMessage,
       ScreenInstance previousScreen) {
     this.addon = addon;
-    this.reporter = reporter;
+    this.reporterUUID = reporterUUID;
+    this.reporterName = reporterName;
     this.chatMessage = chatMessage;
     this.uuid = chatMessage.uuid().toString();
     this.userName = chatMessage.userName();
@@ -114,8 +116,9 @@ public class ChatReportActivity extends SimpleActivity {
     object.addProperty("uuid", this.uuid);
     object.addProperty("playerName", this.userName);
     object.addProperty("reason", this.reportReason.getName());
+    object.addProperty("originalChatMessage", this.chatMessage.message());
 
-    if(!this.addon.chatClient().sendChatAction(this.reporter, ChatAction.REPORT, object)) {
+    if(!this.addon.chatClient().sendChatAction(this.reporterUUID, this.reporterName, ChatAction.REPORT, object)) {
       this.addon.pushNotification(
           Component.translatable("moneymaker.mute.form.invalid.title", NamedTextColor.DARK_RED),
           Component.translatable("moneymaker.mute.form.invalid.chatError", NamedTextColor.RED)

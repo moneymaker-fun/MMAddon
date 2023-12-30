@@ -70,6 +70,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
             Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new MuteActivity(
                 this.addon,
                 Laby.labyAPI().getUniqueId(),
+                Laby.labyAPI().getName(),
                 this.chatMessage,
                 Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
             ));
@@ -85,6 +86,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
             Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
                 this.addon,
                 Laby.labyAPI().getUniqueId(),
+                Laby.labyAPI().getName(),
                 this.chatMessage,
                 Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
             ));

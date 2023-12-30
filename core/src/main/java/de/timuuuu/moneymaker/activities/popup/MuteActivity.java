@@ -27,7 +27,8 @@ import java.util.UUID;
 public class MuteActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
-  private UUID executor;
+  private UUID executorUUID;
+  private String executorName;
   private MoneyChatMessage chatMessage;
   private String uuid;
   private String userName;
@@ -36,10 +37,11 @@ public class MuteActivity extends SimpleActivity {
 
   private TextFieldWidget reasonInput;
 
-  public MuteActivity(MoneyMakerAddon addon, UUID executor, MoneyChatMessage chatMessage,
+  public MuteActivity(MoneyMakerAddon addon, UUID executorUUID, String executorName, MoneyChatMessage chatMessage,
       ScreenInstance previousScreen) {
     this.addon = addon;
-    this.executor = executor;
+    this.executorUUID = executorUUID;
+    this.executorName = executorName;
     this.chatMessage = chatMessage;
     this.uuid = chatMessage.uuid().toString();
     this.userName = chatMessage.userName();
@@ -109,7 +111,7 @@ public class MuteActivity extends SimpleActivity {
 
   private boolean sendForm() {
 
-    if(!(Util.isStaff(this.executor) || Util.isDev(this.executor.toString()))) {
+    if(!(Util.isStaff(this.executorUUID) || Util.isDev(this.executorUUID.toString()))) {
       this.addon.pushNotification(
           Component.translatable("moneymaker.mute.form.invalid.title", NamedTextColor.DARK_RED),
           Component.translatable("moneymaker.mute.form.invalid.noStaff", NamedTextColor.RED)
@@ -130,7 +132,7 @@ public class MuteActivity extends SimpleActivity {
     object.addProperty("playerName", this.userName);
     object.addProperty("reason", reasonInput.getText());
 
-    if(!this.addon.chatClient().sendChatAction(this.executor, ChatAction.MUTE, object)) {
+    if(!this.addon.chatClient().sendChatAction(this.executorUUID, this.executorName, ChatAction.MUTE, object)) {
       this.addon.pushNotification(
           Component.translatable("moneymaker.mute.form.invalid.title", NamedTextColor.DARK_RED),
           Component.translatable("moneymaker.mute.form.invalid.chatError", NamedTextColor.RED)

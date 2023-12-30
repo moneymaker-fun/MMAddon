@@ -196,7 +196,7 @@ public class ChatActivity extends SimpleActivity {
     boolean successful = false;
 
     if(input.equalsIgnoreCase("/clear")) {
-      successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), ChatAction.CLEAR, null);
+      successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.CLEAR, null);
     }
 
     // /mute <Spieler> <Grund>
@@ -228,7 +228,7 @@ public class ChatActivity extends SimpleActivity {
         object.addProperty("playerName", playerName);
         object.addProperty("reason", reason);
 
-        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), ChatAction.MUTE, object);
+        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.MUTE, object);
         if(successful) {
           this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich gemutet.");
           this.addCustomChatMessage("§7Grund: §e" + reason);
@@ -255,7 +255,7 @@ public class ChatActivity extends SimpleActivity {
         object.addProperty("uuid", requestUuid.get().toString());
         object.addProperty("playerName", playerName);
 
-        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), ChatAction.UNMUTE, object);
+        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.UNMUTE, object);
         if(successful) {
           this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich entmutet.");
         }

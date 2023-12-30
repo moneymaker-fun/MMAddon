@@ -23,7 +23,7 @@ public class ChatClient {
   public static boolean muted = false;
   public static String muteReason = "";
 
-  public static final String SERVER_IP = "chat.moneymaker.fun"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
+  public static final String SERVER_IP = "moneychat.mistercore.de"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
   private static final int SERVER_PORT = 12345;
 
   public static boolean online = false;
@@ -125,10 +125,11 @@ public class ChatClient {
     return true;
   }
 
-  public boolean sendChatAction(UUID executor, ChatAction action, JsonObject data) {
+  public boolean sendChatAction(UUID executorUUID, String executorName, ChatAction action, JsonObject data) {
     JsonObject object = new JsonObject();
     object.addProperty("action", action.getName());
-    object.addProperty("executor", executor.toString());
+    object.addProperty("executorUUID", executorUUID.toString());
+    object.addProperty("executorName", executorName);
     if(data != null) {
       object.add("data", data);
     }
