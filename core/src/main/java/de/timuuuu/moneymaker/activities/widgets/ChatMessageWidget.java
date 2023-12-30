@@ -49,6 +49,8 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
   public void initialize(Parent parent) {
     super.initialize(parent);
 
+    UUID uuid = Laby.labyAPI().getUniqueId();
+
     VerticalListWidget<Widget> flex = new VerticalListWidget<>().addId("flex");
 
     HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
@@ -62,9 +64,11 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       header.addEntry(ComponentWidget.text("§4§lSYSTEM").addId("sender"));
     }
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
+    if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
+      header.addEntry(ComponentWidget.text("(ID: " + this.chatMessage.messageId() + ")").addId("message-id"));
+    }
 
     if(!this.systemMessage) {
-      UUID uuid = Laby.labyAPI().getUniqueId();
 
       // User is Staff member - add Mute button
       if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
