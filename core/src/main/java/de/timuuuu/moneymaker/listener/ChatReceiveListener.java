@@ -3,17 +3,18 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
+import de.timuuuu.moneymaker.utils.ChatMessages;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.component.event.ClickEvent;
-import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.event.Priority;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
 import net.labymod.api.util.concurrent.task.Task;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ChatReceiveListener {
 
@@ -28,51 +29,53 @@ public class ChatReceiveListener {
     String plain = event.chatMessage().getOriginalPlainText();
     if (!AddonSettings.playingOn.contains("MoneyMaker")) return;
 
-    if (plain.contains("[MoneyMaker]")) {
+    if (plain.contains(ChatMessages.PREFIX.message())) {
 
-      if((plain.startsWith("[MoneyMaker] Du hast den Arbeitsplatz auf Level") & plain.contains("verbessert")) ||
-          (plain.startsWith("[MoneyMaker] You have upgraded the workplace to level"))) {
+      if((plain.startsWith(ChatMessages.WORKPLACE_UPGRADE_DE_1.message()) && plain.contains(ChatMessages.WORKPLACE_UPGRADE_DE_2.message())) ||
+          (plain.startsWith(ChatMessages.WORKPLACE_UPGRADE_EN.message()))) {
         if(this.addon.configuration().hideWorkerUpgradeMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if((plain.startsWith("[MoneyMaker] Du hast einen ") & plain.contains(" gekauft")) ||
-          (plain.startsWith("[MoneyMaker] You have purchased a "))) {
+      if((plain.startsWith(ChatMessages.BUY_WORKER_DE_1.message()) && plain.contains(ChatMessages.BUY_WORKER_DE_2.message())) ||
+          (plain.startsWith(ChatMessages.BUY_WORKER_EN.message()))) {
         if(this.addon.configuration().hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if((plain.startsWith("[MoneyMaker] Du hast den ") & plain.contains(" verkauft")) ||
-          (plain.startsWith("[MoneyMaker] You have sold "))) {
+      if((plain.startsWith(ChatMessages.SELL_WORKER_DE_1.message()) && plain.contains(ChatMessages.SELL_WORKER_DE_2.message())) ||
+          (plain.startsWith(ChatMessages.SELL_WORKER_EN.message()))) {
         if(this.addon.configuration().hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if((plain.contains("[MoneyMaker] Du wurdest") & plain.contains("teleportiert")) || (plain.contains("[MoneyMaker] You were teleported to"))) {
+      if((plain.startsWith(ChatMessages.TELEPORT_DE_1.message()) && plain.contains(ChatMessages.TELEPORT_DE_2.message())) ||
+          (plain.startsWith(ChatMessages.TELEPORT_EN.message()))) {
         if(this.addon.configuration().hideTeleportMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if(plain.contains("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") || plain.equals("[MoneyMaker]")) {
+      if(plain.equals(ChatMessages.PARTING_LINE.message()) || plain.equals(ChatMessages.PREFIX.message())) {
         if(this.addon.configuration().hideEmptyMessages().get() || this.addon.configuration().shortBoosterMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if (plain.contains("[MoneyMaker] Glückwunsch! Du hast einen Booster gefunden:") || plain.contains("[MoneyMaker] Congratulations! You have found a booster:")) {
+      if (plain.equals(ChatMessages.BOOSTER_FOUND_DE.message()) || plain.equals(ChatMessages.BOOSTER_FOUND_EN.message())) {
         if(this.addon.configuration().shortBoosterMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if (plain.contains("Booster (") && plain.contains(")") && !(plain.contains(" wurde aktiviert") || plain.contains(" was activated"))) {
+      if (plain.contains("Booster (") && plain.contains(")") &&
+          !(plain.contains(ChatMessages.BOOSTER_ACTIVATED_DE_3.message()) || plain.contains(ChatMessages.BOOSTER_ACTIVATED_EN_3.message()))) {
         if(this.addon.configuration().shortBoosterMessage().get()) {
-          String boost = plain.replace("[MoneyMaker]", "");
-          Component component = Component.text(AddonSettings.prefix + "§a" + boost + " ").append(Component.translatable("moneymaker.text.found", TextColor.color(85, 255, 85)));
+          String boost = plain.replace(ChatMessages.PREFIX.message(), "");
+          Component component = Component.text(AddonSettings.prefix + "§a" + boost + " ").append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN));
           this.addon.displayMessage(component);
           event.setCancelled(true);
         }
@@ -92,16 +95,17 @@ public class ChatReceiveListener {
         Booster.insertLatestBooster(boost, time);
       }
 
-      if(plain.contains("[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet") || plain.contains("[MoneyMaker] The workplace was successfully unlocked")) {
+      if(plain.equals(ChatMessages.WORKPLACE_UNLOCKED_DE.message()) || plain.equals(ChatMessages.WORKPLACE_UNLOCKED_EN.message())) {
         AddonSettings.nextWorkerCost = "X";
         AddonSettings.workerNotifySent = false;
       }
-      if((plain.startsWith("[MoneyMaker] Das geröll wird in") & plain.contains("entfernt")) || (plain.contains("[MoneyMaker] Debris will be removed in"))) {
+      if((plain.startsWith(ChatMessages.DEBRIS_REMOVE_DE_1.message()) && plain.contains(ChatMessages.DEBRIS_REMOVE_DE_2.message())) ||
+          (plain.startsWith(ChatMessages.DEBRIS_REMOVE_EN.message()))) {
         AddonSettings.debrisCost = "X";
         AddonSettings.debrisNotifySent = false;
       }
 
-      if(plain.contains("[MoneyMaker] Du hast den Effekt dieses Arbeiters aktiviert") || plain.contains("[MoneyMaker] You have activated the effect of this worker")) {
+      if(plain.equals(ChatMessages.WORKER_EFFECT_DE.message()) || plain.equals(ChatMessages.WORKER_EFFECT_EN.message())) {
         if(this.addon.configuration().hideEffectMessage().get()) {
           event.setCancelled(true);
         }
@@ -112,7 +116,7 @@ public class ChatReceiveListener {
               timers.getAndIncrement();
             }
           });
-          TextComponent component = Component.text(AddonSettings.prefix + "§7").append(Component.translatable("moneymaker.text.effect-select", TextColor.color(170, 170, 170)))
+          TextComponent component = Component.text(AddonSettings.prefix + "§7").append(Component.translatable("moneymaker.text.effect-select", NamedTextColor.GRAY))
               .append(Component.text(" §8[§e5m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 5 Effekt-Timer-" + timers.get()))
                   .append(Component.text(" §8[§e10m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 10 Effekt-Timer-" + timers.get())))
                   .append(Component.text(" §8[§e15m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 15 Effekt-Timer-" + timers.get())))
@@ -122,7 +126,7 @@ public class ChatReceiveListener {
         }
       }
 
-      if(plain.contains("[MoneyMaker] Dein Booster-Inventar hat das Limit von") || plain.contains("[MoneyMaker] Your booster inventory has reached the limit of")) {
+      if(plain.startsWith(ChatMessages.BOOSTER_INVENTORY_DE.message()) || plain.startsWith(ChatMessages.BOOSTER_INVENTORY_EN.message())) {
         if(this.addon.configuration().hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
@@ -131,13 +135,16 @@ public class ChatReceiveListener {
       // DE: [MoneyMaker] Dein +30 % Booster (15 Minuten) wurde aktiviert
       // EN: [MoneyMaker] Your +30% booster (15 Minutes) was activated
 
-      if(plain.contains("[MoneyMaker] Dein +") & plain.contains(" % Booster (") & plain.contains(" wurde aktiviert")) {
+      if(plain.contains(ChatMessages.BOOSTER_ACTIVATED_DE_1.message()) && plain.contains(ChatMessages.BOOSTER_ACTIVATED_DE_2.message()) &&
+          plain.contains(ChatMessages.BOOSTER_ACTIVATED_DE_3.message())) {
 
         if(this.addon.configuration().hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
 
-        String message = plain.split(" \\(")[0].replace("[MoneyMaker] Dein +", "").replace(" % Booster", "");
+        String message = plain.split(" \\(")[0]
+            .replace(ChatMessages.BOOSTER_ACTIVATED_DE_1.message(), "")
+            .replace(ChatMessages.BOOSTER_ACTIVATED_DE_2.message(), "");
 
         try {
           int boost = Integer.parseInt(message);
@@ -146,13 +153,16 @@ public class ChatReceiveListener {
 
       }
 
-      if(plain.contains("[MoneyMaker] Your +") & plain.contains("% booster (") & plain.contains(" was activated")) {
+      if(plain.contains(ChatMessages.BOOSTER_ACTIVATED_EN_1.message()) && plain.contains(ChatMessages.BOOSTER_ACTIVATED_EN_2.message()) &&
+          plain.contains(ChatMessages.BOOSTER_ACTIVATED_EN_3.message())) {
 
         if(this.addon.configuration().hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
 
-        String message = plain.split(" \\(")[0].replace("[MoneyMaker] Your +", "").replace("% booster", "");
+        String message = plain.split(" \\(")[0]
+            .replace(ChatMessages.BOOSTER_ACTIVATED_EN_1.message(), "")
+            .replace(ChatMessages.BOOSTER_ACTIVATED_DE_2.message(), "");
 
         try {
           int boost = Integer.parseInt(message);
