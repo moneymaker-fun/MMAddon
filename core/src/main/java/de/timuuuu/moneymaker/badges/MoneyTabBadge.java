@@ -20,27 +20,18 @@ public class MoneyTabBadge extends BadgeRenderer {
     if(rank != null) {
       rank.getIcon().render(stack, x, y, 8.0F);
     }
-    /*if(visible(player)) {
-      Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png")).render(stack, x, y, 8.0F);
-    }*/
   }
 
   @Override
   protected boolean isVisible(NetworkPlayerInfo player) {
     return this.visibleRank(player) != null;
-    //return visible(player);
   }
 
   private MoneyRank visibleRank(NetworkPlayerInfo player) {
     if(player.profile().getUniqueId() == null) return null;
+    if(!this.addon.configuration().enabled().get()) return null;
     if(!this.addon.configuration().moneyBadgeConfiguration.tabListIcon().get()) return null;
     return AddonSettings.playerStatus.containsKey(player.profile().getUniqueId()) ? AddonSettings.playerStatus.get(player.profile().getUniqueId()).rank() : null;
   }
-
-  /*private boolean visible(NetworkPlayerInfo player) {
-    if(player.profile().getUniqueId() == null) return false;
-    if(!this.addon.configuration().moneyBadgeConfiguration.tabListIcon().get()) return false;
-    return AddonSettings.playerStatus.containsKey(player.profile().getUniqueId());
-  }*/
 
 }

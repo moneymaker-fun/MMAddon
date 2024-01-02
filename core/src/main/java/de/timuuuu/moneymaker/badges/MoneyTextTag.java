@@ -49,6 +49,7 @@ public class MoneyTextTag extends NameTag {
   private boolean visible(Entity entity) {
     if(!(entity instanceof Player player)) return false;
     if(player.profile().getUniqueId() == null) return false;
+    if(!this.addon.configuration().enabled().get()) return false;
     if(!this.addon.configuration().moneyBadgeConfiguration.textTag().get()) return false;
     if(!AddonSettings.playerStatus.containsKey(player.profile().getUniqueId())) return false;
     return AddonSettings.playerStatus.get(player.profile().getUniqueId()).rank() != MoneyRank.USER;
