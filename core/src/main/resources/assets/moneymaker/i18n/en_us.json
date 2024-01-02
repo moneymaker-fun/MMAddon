@@ -36,8 +36,6 @@
     },
     "text": {
       "found": "found.",
-      "user-farming-enter": "%s has joined the farming cave.",
-      "no-fetch-name": "The name for %s could not be retrieved.",
       "effect-select": "Select effect duration",
       "new-update": "§aA new addon update is available. §7The update will install when you close the game.",
       "timeUnit": {

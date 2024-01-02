@@ -36,8 +36,6 @@
     },
     "text": {
       "found": "gefunden.",
-      "user-farming-enter": "%s hat die Farming-Höhle betreten.",
-      "no-fetch-name": "Der Name für %s konnte nicht abgerufen werden.",
       "effect-select": "Effekt Dauer wählen",
       "new-update": "§aEin neues Addon-Update ist verfügbar. §7Das Update wird installiert, wenn du das Spiel schließt.",
       "timeUnit": {

@@ -26,8 +26,6 @@ public class NetworkPayloadListener {
     this.addon = addon;
   }
 
-  private boolean switched = false;
-
   @Subscribe
   public void onServerLogin(ServerLoginEvent event) {
     if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
@@ -47,7 +45,7 @@ public class NetworkPayloadListener {
 
   @Subscribe
   public void onSwitch(SubServerSwitchEvent event) {
-    switched = true;
+
   }
 
   @Subscribe
@@ -114,36 +112,6 @@ public class NetworkPayloadListener {
               AddonSettings.playingOn = gameMode;
 
             }
-          }
-
-        }
-
-        if(serverMessage.isJsonArray()) {
-          JsonArray array = serverMessage.getAsJsonArray();
-
-          if(messageKey.equals("account_subtitle")) {
-            if(AddonSettings.showJoins) {
-              if(switched) {
-                this.addon.displayMessage("§8----------------------------------");
-                switched = false;
-              }
-              array.forEach(data -> {
-                JsonObject object = data.getAsJsonObject();
-                Laby.labyAPI().labyNetController().loadNameByUniqueId(UUID.fromString(object.get("uuid").getAsString()), result -> {
-                  if (!result.hasException()) {
-                    Component component = Component.text(AddonSettings.prefix)
-                        .append(Component.translatable("moneymaker.text.user-farming-enter", Component.text(result.get())));
-                    this.addon.displayMessage(component);
-                  } else {
-                    Component component = Component.text(AddonSettings.prefix)
-                        .append(Component.translatable("moneymaker.text.no-fetch-name", Component.text(object.get("uuid").getAsString())));
-                    this.addon.displayMessage(component);
-                  }
-                });
-
-              });
-            }
-
           }
 
         }
