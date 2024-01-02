@@ -26,7 +26,6 @@ public class ScoreBoardListener {
 
   @Subscribe
   public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
-    if(!this.addon.configuration().enabled().get()) return;
     if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
 
     if(event.score().getValue() == MoneyScore.LANG_CHECK.score() & AddonSettings.playingOn.contains(MoneyScore.LANG_CHECK.neededServer())) {

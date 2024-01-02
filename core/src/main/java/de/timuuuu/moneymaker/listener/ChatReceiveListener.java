@@ -26,7 +26,6 @@ public class ChatReceiveListener {
   @Subscribe(Priority.LATEST)
   public void onChatReceive(ChatReceiveEvent event) {
     String plain = event.chatMessage().getOriginalPlainText();
-    if(!this.addon.configuration().enabled().get()) return;
     if (!AddonSettings.playingOn.contains("MoneyMaker")) return;
 
     if (plain.contains("[MoneyMaker]")) {
