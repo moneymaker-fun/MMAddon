@@ -49,7 +49,11 @@ public class TickListener {
         }
 
         if(mobsLine.startsWith("Getötete Mobs: ")) {
-          AddonSettings.swordMobs = mobsLine.split(" ")[2];
+          AddonSettings.swordMobs = Integer.parseInt(mobsLine.replace("Getötete Mobs: ", "").replace(".", "").replace(",", ""));
+        }
+
+        if(mobsLine.startsWith("Killed mobs: ")) {
+          AddonSettings.swordMobs = Integer.parseInt(mobsLine.replace("Killed mobs: ", "").replace(".", "").replace(",", ""));
         }
 
         return;
@@ -100,11 +104,9 @@ public class TickListener {
               JsonObject object = array.get(i).getAsJsonObject();
               if(object.has("text")) {
                 String text = object.get("text").getAsString();
-                if(!text.contains("Getötete Mobs: ")) {
-                  AddonSettings.swordMobs = text;
-                }
-                if(!text.contains("Killed mobs: ")) {
-                  AddonSettings.swordMobs = text;
+                this.addon.logger().info(text);
+                if(!(text.contains("Getötete Mobs: ") || text.contains("Killed mobs: "))) {
+                  AddonSettings.swordMobs = Integer.parseInt(text.replace(".", "").replace(",", ""));
                 }
               }
             }
@@ -113,13 +115,12 @@ public class TickListener {
         } catch (JsonSyntaxException ignored) {}
       }
 
-      if(!AddonSettings.swordMobs.equals("X")) {
+      if(AddonSettings.swordMobs != 0) {
         try {
-          int mobKills = Integer.parseInt(AddonSettings.swordMobs);
           if(AddonSettings.mobKills == 0) {
-            AddonSettings.mobKills = mobKills;
+            AddonSettings.mobKills = AddonSettings.swordMobs;
           } else {
-            int sessionKills = mobKills - AddonSettings.mobKills;
+            int sessionKills = AddonSettings.swordMobs - AddonSettings.mobKills;
             if(sessionKills >= 0) {
               AddonSettings.sessionKills = sessionKills;
             }

@@ -55,7 +55,7 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
     this.rankLine.setState(AddonSettings.inFarming && !AddonSettings.swordRanking.equals("X") ? State.VISIBLE : State.HIDDEN);
 
     this.mobsLine.updateAndFlush(AddonSettings.swordMobs);
-    this.mobsLine.setState(AddonSettings.inFarming && !AddonSettings.swordMobs.equals("X") ? State.VISIBLE : State.HIDDEN);
+    this.mobsLine.setState(AddonSettings.inFarming && AddonSettings.swordMobs != 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 

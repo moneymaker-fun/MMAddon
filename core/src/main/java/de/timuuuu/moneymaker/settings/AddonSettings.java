@@ -4,7 +4,6 @@ package de.timuuuu.moneymaker.settings;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class AddonSettings {
   public static String prefix = "§bMoneyMaker > ";
@@ -55,7 +54,7 @@ public class AddonSettings {
   public static String debrisCost = "X";
 
   public static String swordRanking = "X";
-  public static String swordMobs = "X";
+  public static int swordMobs = 0;
   public static int mobKills = 0;
   public static int sessionKills = 0;
 
