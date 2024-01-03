@@ -407,7 +407,9 @@
         "textColor": {
           "name": "Text color"
         },
-        "currentTimers": "Currently running timers:"
+        "currentTimers": "Currently running timers:",
+        "notConnected": "Not on MoneyMaker",
+        "noTimers": "No Timers aktiv"
       },
       "mm_booster_display": {
         "name": "Latest farmed boosters",
@@ -417,7 +419,9 @@
         "textColor": {
           "name": "Text color"
         },
-        "latestBoosters": "Latest farmed boosters:"
+        "latestBoosters": "Latest farmed boosters:",
+        "notConnected": "Not on MoneyMaker",
+        "noBoosters": "No Boosters found"
       },
       "mm_activated_boosters": {
         "name": "Activated Boosters"
