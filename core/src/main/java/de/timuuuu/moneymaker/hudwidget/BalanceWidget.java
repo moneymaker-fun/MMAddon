@@ -3,16 +3,17 @@ package de.timuuuu.moneymaker.hudwidget;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
-import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
 
-import java.util.Objects;
-
-public class BalanceWidget extends ItemHudWidget<HudWidgetConfig> {
+public class BalanceWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   private MoneyMakerAddon addon;
+  private TextLine textLine;
 
   public BalanceWidget(MoneyMakerAddon addon) {
     super("mm_balance");
@@ -22,23 +23,15 @@ public class BalanceWidget extends ItemHudWidget<HudWidgetConfig> {
   }
 
   @Override
-  public void load(HudWidgetConfig config) {
+  public void load(TextHudWidgetConfig config) {
     super.load(config);
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_balance.name"), "0");
   }
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.updateItemName(Component.text(AddonSettings.balance), isEditorContext);
-  }
-
-  @Override
-  public boolean isVisibleInGame() {
-    return (AddonSettings.inMine || AddonSettings.inFarming) && !Objects.equals(AddonSettings.balance, "X");
-  }
-
-  @Override
-  public Icon createPlaceholderIcon() {
-    return Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/coin.png"));
+    this.textLine.updateAndFlush(Component.text(AddonSettings.balance));
+    this.textLine.setState((AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.balance.equals("X") ? State.VISIBLE : State.HIDDEN);
   }
 
 }

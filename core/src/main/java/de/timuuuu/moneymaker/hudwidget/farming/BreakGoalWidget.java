@@ -2,18 +2,18 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
-import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 
 @SpriteSlot(x = 1)
-public class BreakGoalWidget extends ItemHudWidget<HudWidgetConfig> {
+public class BreakGoalWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   private MoneyMakerAddon addon;
+  private TextLine textLine;
 
   public BreakGoalWidget(MoneyMakerAddon addon) {
     super("mm_break_goal");
@@ -22,29 +22,21 @@ public class BreakGoalWidget extends ItemHudWidget<HudWidgetConfig> {
   }
 
   @Override
-  public void load(HudWidgetConfig config) {
+  public void load(TextHudWidgetConfig config) {
     super.load(config);
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_break_goal.name"), Component.text("0 ").append(Component.translatable("moneymaker.hudWidget.mm_break_goal.remaining")));
   }
 
   @Override
   public void onTick(boolean isEditorContext) {
     if(isEditorContext) {
-      this.updateItemName(Component.text("0/0"), true);
-      return;
+      this.textLine.updateAndFlush(Component.text("0 ").append(Component.translatable("moneymaker.hudWidget.mm_break_goal.remaining")));
+    } else {
+      int blocks = AddonSettings.breakGoalBlocks - AddonSettings.currentBrokenBlocks;
+      this.textLine.updateAndFlush(Component.text(blocks + " ").append(Component.translatable("moneymaker.hudWidget.mm_break_goal.remaining")));
     }
-    int blocks = AddonSettings.breakGoalBlocks - AddonSettings.currentBrokenBlocks;
-    this.updateItemName(Component.text(Util.format(blocks)), false);
+    this.textLine.setState(AddonSettings.inFarming && AddonSettings.breakGoalEnabled && AddonSettings.breakGoal > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
-  @Override
-  public boolean isVisibleInGame() {
-    return AddonSettings.inFarming && AddonSettings.breakGoalEnabled && AddonSettings.breakGoal > 0;
-  }
-
-  @Override
-  public Icon createPlaceholderIcon() {
-    return Icon.sprite16(
-        ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 0);
-  }
 
 }

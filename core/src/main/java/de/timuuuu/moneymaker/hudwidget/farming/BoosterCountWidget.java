@@ -4,16 +4,17 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
-import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 
 @SpriteSlot()
-public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
+public class BoosterCountWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   private MoneyMakerAddon addon;
+  private TextLine textLine;
 
   public BoosterCountWidget(MoneyMakerAddon addon) {
     super("mm_booster_count");
@@ -22,23 +23,15 @@ public class BoosterCountWidget extends ItemHudWidget<HudWidgetConfig> {
   }
 
   @Override
-  public void load(HudWidgetConfig config) {
+  public void load(TextHudWidgetConfig config) {
     super.load(config);
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_booster_count.name"), "0%");
   }
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.updateItemName(Component.text(Booster.sessionBoost.get()+"%"), isEditorContext);
-  }
-
-  @Override
-  public boolean isVisibleInGame() {
-    return AddonSettings.inFarming && Booster.sessionBoost.get() > 0;
-  }
-
-  @Override
-  public Icon createPlaceholderIcon() {
-    return Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 0);
+    this.textLine.updateAndFlush(Component.text(Booster.sessionBoost.get()+"%"));
+    this.textLine.setState(AddonSettings.inFarming && Booster.sessionBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

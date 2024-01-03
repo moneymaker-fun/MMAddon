@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
@@ -25,7 +26,7 @@ public class KillCountWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void load(TextHudWidgetConfig config) {
     super.load(config);
-    this.rankLine = createLine("Kill-Count", 0);
+    this.rankLine = createLine(Component.translatable("moneymaker.hudWidget.mm_kill_counter.name"), 0);
     this.updateLines();
   }
 

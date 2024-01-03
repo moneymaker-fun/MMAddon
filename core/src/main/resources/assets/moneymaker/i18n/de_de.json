@@ -364,7 +364,8 @@
         "block": "Block"
       },
       "mm_break_goal": {
-        "name": "Abbau Ziel"
+        "name": "Abbau Ziel",
+        "remaining": "verbleibend"
       },
       "mm_balance": {
         "name": "Kontostand"
@@ -424,7 +425,7 @@
         "noBoosters": "Keine Booster gefunden"
       },
       "mm_activated_boosters": {
-        "name": "Activated Boosters"
+        "name": "Aktivierte Booster"
       }
     }
   }

@@ -4,16 +4,17 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
-import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 
 @SpriteSlot(x = 2)
-public class DebrisPriceWidget extends ItemHudWidget<HudWidgetConfig> {
+public class DebrisPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   private MoneyMakerAddon addon;
+  private TextLine textLine;
 
   public DebrisPriceWidget(MoneyMakerAddon addon) {
     super("mm_debris_price");
@@ -22,8 +23,9 @@ public class DebrisPriceWidget extends ItemHudWidget<HudWidgetConfig> {
   }
 
   @Override
-  public void load(HudWidgetConfig config) {
+  public void load(TextHudWidgetConfig config) {
     super.load(config);
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_debris_price.name"), "0");
   }
 
   @Override
@@ -57,17 +59,8 @@ public class DebrisPriceWidget extends ItemHudWidget<HudWidgetConfig> {
 
     }
 
-    this.updateItemName(Component.text(itemName), isEditorContext);
-  }
-
-  @Override
-  public boolean isVisibleInGame() {
-    return (AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.balance.equals("X") && !AddonSettings.debrisCost.equals("X");
-  }
-
-  @Override
-  public Icon createPlaceholderIcon() {
-    return Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 2, 0);
+    this.textLine.updateAndFlush(itemName);
+    this.textLine.setState((AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.balance.equals("X") && !AddonSettings.debrisCost.equals("X") ? State.VISIBLE : State.HIDDEN);
   }
 
 }

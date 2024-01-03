@@ -3,14 +3,17 @@ package de.timuuuu.moneymaker.hudwidget;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
-import net.labymod.api.client.gui.hud.hudwidget.item.ItemHudWidget;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
+import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
 
-public class WorkerCountWidget extends ItemHudWidget<HudWidgetConfig> {
+public class WorkerCountWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   private MoneyMakerAddon addon;
+  private TextLine textLine;
 
   public WorkerCountWidget(MoneyMakerAddon addon) {
     super("mm_worker_count");
@@ -20,23 +23,15 @@ public class WorkerCountWidget extends ItemHudWidget<HudWidgetConfig> {
   }
 
   @Override
-  public void load(HudWidgetConfig config) {
+  public void load(TextHudWidgetConfig config) {
     super.load(config);
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_worker_count.name"), "0");
   }
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.updateItemName(Component.text(AddonSettings.workerCount + " ").append(Component.translatable("moneymaker.hudWidget.mm_worker_count.miners")), isEditorContext);
-  }
-
-  @Override
-  public boolean isVisibleInGame() {
-    return (AddonSettings.inMine || AddonSettings.inFarming) && AddonSettings.workerCount > 0;
-  }
-
-  @Override
-  public Icon createPlaceholderIcon() {
-    return Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/miner.png"));
+    this.textLine.updateAndFlush(Component.text(AddonSettings.workerCount + " ").append(Component.translatable("moneymaker.hudWidget.mm_worker_count.miners")));
+    this.textLine.setState((AddonSettings.inMine || AddonSettings.inFarming) && AddonSettings.workerCount > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

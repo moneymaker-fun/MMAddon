@@ -364,7 +364,8 @@
         "block": "Block"
       },
       "mm_break_goal": {
-        "name": "Break Goal"
+        "name": "Break Goal",
+        "remaining": "remaining"
       },
       "mm_balance": {
         "name": "Balance"

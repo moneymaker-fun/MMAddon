@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget.SwordHudWidgetConfig;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
@@ -54,7 +55,7 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
     this.rankLine.updateAndFlush(AddonSettings.swordRanking);
     this.rankLine.setState(AddonSettings.inFarming && !AddonSettings.swordRanking.equals("X") ? State.VISIBLE : State.HIDDEN);
 
-    this.mobsLine.updateAndFlush(AddonSettings.swordMobs);
+    this.mobsLine.updateAndFlush(Util.format(AddonSettings.swordMobs));
     this.mobsLine.setState(AddonSettings.inFarming && AddonSettings.swordMobs != 0 ? State.VISIBLE : State.HIDDEN);
   }
 
