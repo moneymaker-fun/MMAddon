@@ -71,7 +71,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     }
 
     if(!this.systemMessage) {
-      if(this.chatMessage != null & !this.chatMessage.deleted()) {
+      if(this.chatMessage != null && !this.chatMessage.deleted()) {
 
         // User is Staff member - add Mute button
         if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {

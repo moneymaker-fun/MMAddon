@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ScoreBoardListener {
 
   private boolean langWarningSent = false;
+  private boolean languageSupported = true;
 
   private MoneyMakerAddon addon;
 
@@ -30,9 +31,9 @@ public class ScoreBoardListener {
     if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
 
     if(event.score().getValue() == MoneyScore.LANG_CHECK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
-      AddonSettings.languageSupported = event.score().getName().contains(ChatMessages.SB_BALANCE_DE.message()) || event.score().getName().contains(ChatMessages.SB_BALANCE_EN.message());
+      languageSupported = event.score().getName().contains(ChatMessages.SB_BALANCE_DE.message()) || event.score().getName().contains(ChatMessages.SB_BALANCE_EN.message());
       Task.builder(() -> {
-        if(!AddonSettings.languageSupported & !langWarningSent) {
+        if(!languageSupported && !langWarningSent) {
           langWarningSent = true;
           this.addon.displayMessage(" ");
           this.addon.displayMessage(Component.translatable("moneymaker.text.languageNotSupported.line1",

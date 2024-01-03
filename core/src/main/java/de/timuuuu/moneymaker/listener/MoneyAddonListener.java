@@ -14,6 +14,8 @@ import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
+import net.labymod.api.event.client.network.server.ServerLoginEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
 
 public class MoneyAddonListener {
@@ -22,6 +24,39 @@ public class MoneyAddonListener {
 
   public MoneyAddonListener(MoneyMakerAddon addon) {
     this.addon = addon;
+  }
+
+  @Subscribe
+  public void onServerLogin(ServerLoginEvent event) {
+    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
+        event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
+        event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
+
+      JsonObject object = new JsonObject();
+      object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+      this.addon.chatClient().sendMessage("retrievePlayerData", object);
+
+      JsonObject muteCheckObject = new JsonObject();
+      muteCheckObject.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+      this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
+
+    }
+  }
+
+  @Subscribe
+  public void onDisconnect(ServerDisconnectEvent event){
+    AddonSettings.resetValues(true);
+
+    JsonObject data = new JsonObject();
+    data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+    data.addProperty("userName", this.addon.labyAPI().getName());
+    data.addProperty("server", "OFFLINE");
+    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+    this.addon.chatClient().sendMessage("playerStatus", data);
+
+    this.addon.discordAPI().removeCustom();
+    this.addon.discordAPI().removeSaved();
+    this.addon.discordAPI().cancelUpdater();
   }
 
   @Subscribe

@@ -47,16 +47,6 @@ public class SecretActivity extends SimpleActivity {
     chatReconnectSwitch.setValue(this.addon.configuration().chatReconnectButton().get());
     this.document.addChild(chatReconnectSwitch);
 
-    // Show Joins
-    /*ComponentWidget toggleJoinMessageTitle = ComponentWidget.i18n("moneymaker.ui.secret.toggleJoinMessageTitle").addId("showJoinsTitle");
-    this.document.addChild(toggleJoinMessageTitle);
-
-    SwitchWidget showJoinsSwitch = SwitchWidget.create(value -> {
-      AddonSettings.showJoins = value;
-    }).addId("showJoinsSwitch");
-    showJoinsSwitch.setValue(AddonSettings.showJoins);
-    this.document.addChild(showJoinsSwitch);*/
-
   }
 
   @Override

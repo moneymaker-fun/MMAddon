@@ -68,7 +68,7 @@ public class ChatActivity extends SimpleActivity {
     ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline")).addId("chat-status");
     this.document.addChild(statusWidget);
 
-    if(/*!ChatClient.online && */this.addon.configuration().chatReconnectButton().get()) {
+    if(this.addon.configuration().chatReconnectButton().get()) {
       ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
       reconnectButton.addId("chat-reconnect-button");
       reconnectButton.setPressable(() -> {
@@ -109,7 +109,6 @@ public class ChatActivity extends SimpleActivity {
     chatMessages.forEach(chatList::addChild);
 
     ScrollWidget chatScroll = new ScrollWidget(chatList, this.listSession).addId("chat-scroll");
-    //Task.builder(chatScroll::scrollToBottom).delay(50, TimeUnit.MILLISECONDS).build().execute();
     chatContainer.addChild(chatScroll);
 
     // Online Container

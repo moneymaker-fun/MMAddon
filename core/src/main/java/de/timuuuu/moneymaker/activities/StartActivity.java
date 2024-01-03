@@ -22,12 +22,14 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.render.matrix.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @AutoActivity
 @Links({@Link("start.lss"), @Link("buttons.lss")})
 public class StartActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
+  private AtomicInteger secretCount = new AtomicInteger(5);
 
   public StartActivity(MoneyMakerAddon addon) {
     this.addon = addon;
@@ -68,7 +70,6 @@ public class StartActivity extends SimpleActivity {
       container.addChild(breakGoalInputTitle);
 
       TextFieldWidget breakGoalInput = new TextFieldWidget().addId("break-goal-input");
-      //breakGoalInput.validator(this::validateInput);
       breakGoalInput.submitHandler(this::submitInput);
       if(AddonSettings.breakGoal > 0) {
         breakGoalInput.setText(String.valueOf(AddonSettings.breakGoal));
@@ -99,8 +100,8 @@ public class StartActivity extends SimpleActivity {
     //Toggle secret
     ButtonWidget secretButton = ButtonWidget.text("").addId("secret-button");
     secretButton.setActionListener(() -> {
-      AddonSettings.secretCount.decrementAndGet();
-      if (AddonSettings.secretCount.get() == 0) {
+      secretCount.decrementAndGet();
+      if (secretCount.get() == 0) {
         this.addon.mainActivity().registerSecret();
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);
       }
@@ -123,15 +124,6 @@ public class StartActivity extends SimpleActivity {
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.no-number", TextColor.color(255, 85, 85)));
     }
-  }
-
-  @SuppressWarnings("unused")
-  private boolean validateInput(String input) {
-    try {
-      Integer.parseInt(input);
-      return true;
-    } catch (NumberFormatException ignored) {}
-    return false;
   }
 
   @Override

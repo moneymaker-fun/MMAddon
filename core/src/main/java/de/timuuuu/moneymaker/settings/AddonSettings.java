@@ -12,11 +12,7 @@ public class AddonSettings {
   public static boolean inMine = false;
   public static boolean inFarming = false;
 
-  public static AtomicInteger secretCount = new AtomicInteger(5);
-
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
-
-  public static boolean languageSupported = true;
 
   public static void resetValues(boolean changePlaying) {
     if(changePlaying) {

@@ -9,8 +9,6 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
-import net.labymod.api.event.client.network.server.ServerLoginEvent;
-import net.labymod.api.event.client.network.server.SubServerSwitchEvent;
 import net.labymod.api.util.io.web.request.WebResolver;
 import net.labymod.serverapi.protocol.payload.exception.PayloadReaderException;
 import net.labymod.serverapi.protocol.payload.io.PayloadReader;
@@ -21,23 +19,6 @@ public class NetworkPayloadListener {
 
   public NetworkPayloadListener(MoneyMakerAddon addon) {
     this.addon = addon;
-  }
-
-  @Subscribe
-  public void onServerLogin(ServerLoginEvent event) {
-    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
-        event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
-        event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
-
-      JsonObject object = new JsonObject();
-      object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      this.addon.chatClient().sendMessage("retrievePlayerData", object);
-
-      JsonObject muteCheckObject = new JsonObject();
-      muteCheckObject.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
-
-    }
   }
 
   @Subscribe
