@@ -6,9 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.chat.ChatUtil;
 import net.labymod.api.event.Subscribe;
 
 public class TickListener {
@@ -24,7 +24,6 @@ public class TickListener {
 
   @Subscribe
   public void onSwordTick(SwordTickEvent event) {
-    if(!this.addon.configuration().enabled().get()) return;
     if(!AddonSettings.inFarming) return;
     tickCount++;
     if(tickCount == checkTick) {

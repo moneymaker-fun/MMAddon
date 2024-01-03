@@ -1,13 +1,13 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.event.ArmorStandRenderEvent;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.render.entity.EntityRenderEvent;
 import net.labymod.api.util.concurrent.task.Task;
 
 public class EntityRenderListener {
@@ -19,11 +19,11 @@ public class EntityRenderListener {
   }
 
   @Subscribe
-  public void onRender(EntityRenderEvent event) {
-    Entity entity = event.entity();
+  public void onArmorStandRender(ArmorStandRenderEvent event) {
     if(!AddonSettings.inMine) return;
+    Entity entity = event.entity();
 
-    String entityName = ChatUtil.stripColor(event.entity().toString().split("'")[1]);
+    String entityName = ChatUtil.stripColor(event.customName());
 
     if(entityName.contains("Kosten: ") || entityName.contains("Price: ")) {
       String costs = entityName.replace("Kosten: ","").replace("Price: ", "");
