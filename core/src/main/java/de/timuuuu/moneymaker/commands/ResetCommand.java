@@ -21,7 +21,7 @@ public class ResetCommand extends Command {
     if(prefix.equalsIgnoreCase("mm-reset")) {
       if(this.addon.configuration().enabled().get()) {
 
-        if(AddonSettings.playingOn.contains("MoneyMaker")) {
+        if(AddonSettings.inMine || AddonSettings.inFarming) {
           if(args.length == 1) {
             if(args[0].equalsIgnoreCase("booster")) {
 

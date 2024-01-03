@@ -35,9 +35,9 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
     this.setIcon(Icon.sprite16(
         ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 0, 2));
     this.addon = addon;
-    this.dummyTimers.add(new MoneyTimer("Timer", 30));
-    this.dummyTimers.add(new MoneyTimer("Anderer Timer", 10));
-    this.dummyTimers.add(new MoneyTimer("Noch ein Timer", 40));
+    this.dummyTimers.add(new MoneyTimer("Timer #1", 30));
+    this.dummyTimers.add(new MoneyTimer("Timer #2", 10));
+    this.dummyTimers.add(new MoneyTimer("Timer #3", 40));
   }
 
   @Override
@@ -50,14 +50,14 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
       return;
     }
 
-    if(!AddonSettings.playingOn.contains("MoneyMaker")) {
-      this.renderComponent(Component.text("Nicht auf MoneyMaker"), stack, size);
+    if(!(AddonSettings.inMine || AddonSettings.inFarming)) {
+      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_timer_display.notConnected"), stack, size);
       return;
     }
 
     List<MoneyTimer> timers = new ArrayList<>(Util.timers.values());
     if(timers.isEmpty()) {
-      this.renderComponent(Component.text("Keine Timer aktiv"), stack, size);
+      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_timer_display.noTimers"), stack, size);
       return;
     }
 
@@ -127,7 +127,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("MoneyMaker") && !Util.timers.isEmpty();
+    return (AddonSettings.inMine || AddonSettings.inFarming) && !Util.timers.isEmpty();
   }
 
   public static class TimerHudWidgetConfig extends HudWidgetConfig {

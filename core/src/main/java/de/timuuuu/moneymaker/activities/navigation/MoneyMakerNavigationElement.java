@@ -34,7 +34,7 @@ public class MoneyMakerNavigationElement extends ScreenNavigationElement {
 
   @Override
   public boolean isVisible() {
-    return this.addon.configuration().enabled().get() && (AddonSettings.playingOn.contains("MoneyMaker") || Util.isDev(this.addon.labyAPI().getUniqueId().toString()));
+    return this.addon.configuration().enabled().get() && (AddonSettings.inMine || AddonSettings.inFarming || Util.isDev(this.addon.labyAPI().getUniqueId().toString()));
   }
 
 }

@@ -27,7 +27,7 @@ public class ChatReceiveListener {
   @Subscribe(Priority.LATEST)
   public void onChatReceive(ChatReceiveEvent event) {
     String plain = event.chatMessage().getOriginalPlainText();
-    if (!AddonSettings.playingOn.contains("MoneyMaker")) return;
+    if (!(AddonSettings.inMine || AddonSettings.inFarming)) return;
 
     if (plain.contains(ChatMessages.PREFIX.message())) {
 

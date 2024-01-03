@@ -31,7 +31,7 @@ public class WorkerCountWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("MoneyMaker") && AddonSettings.workerCount > 0;
+    return (AddonSettings.inMine || AddonSettings.inFarming) && AddonSettings.workerCount > 0;
   }
 
   @Override

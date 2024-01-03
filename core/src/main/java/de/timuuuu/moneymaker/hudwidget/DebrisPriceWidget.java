@@ -29,7 +29,7 @@ public class DebrisPriceWidget extends ItemHudWidget<HudWidgetConfig> {
   @Override
   public void onTick(boolean isEditorContext) {
     String itemName = "N/A";
-    if(AddonSettings.playingOn.contains("MoneyMaker")) {
+    if(AddonSettings.inMine || AddonSettings.inFarming) {
 
       if(!AddonSettings.balance.equals("X")) {
         if(!AddonSettings.debrisCost.equals("X")) {
@@ -62,7 +62,7 @@ public class DebrisPriceWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("MoneyMaker") && !AddonSettings.balance.equals("X") && !AddonSettings.debrisCost.equals("X");
+    return (AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.balance.equals("X") && !AddonSettings.debrisCost.equals("X");
   }
 
   @Override

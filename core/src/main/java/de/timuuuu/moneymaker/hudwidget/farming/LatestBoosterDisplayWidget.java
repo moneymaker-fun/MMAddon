@@ -49,8 +49,8 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
       return;
     }
 
-    if(!AddonSettings.playingOn.contains("MoneyMaker")) {
-      this.renderComponent(Component.text("Nicht auf MoneyMaker"), stack, size);
+    if(!AddonSettings.inFarming) {
+      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_booster_display.notConnected"), stack, size);
       return;
     }
 
@@ -61,7 +61,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
     }
 
     if(Booster.latestFoundBoosters().isEmpty()) {
-      this.renderComponent(Component.text("Keine Booster gefunden"), stack, size);
+      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_booster_display.noBoosters"), stack, size);
       return;
     }
 
@@ -127,11 +127,9 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
     size.setHeight((float) y);
   }
 
-  // https://github.com/labymod-addons/teamspeak/blob/master/core/src/main/java/net/labymod/addons/teamspeak/core/hud/TeamSpeakHudWidget.java
-
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("Farming") && !Booster.latestFoundBoosters().isEmpty();
+    return AddonSettings.inFarming && !Booster.latestFoundBoosters().isEmpty();
   }
 
   public static class BoosterHudWidgetConfig extends HudWidgetConfig {

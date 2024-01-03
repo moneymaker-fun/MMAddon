@@ -53,7 +53,7 @@ public class DiscordAPI {
     if(this.busy) return;
     if(!this.addon.configuration().enabled().get()) return;
     if(!this.addon.configuration().moneyDiscordConfiguration.enabled().get()) return;
-    if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
+    if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
 
     this.busy = true;
 
@@ -91,9 +91,9 @@ public class DiscordAPI {
     if(this.updaterTask != null) return;
     this.updaterTask = Task.builder(() -> {
 
-      if(AddonSettings.playingOn.contains("MoneyMaker")) {
+      if(AddonSettings.inMine || AddonSettings.inFarming) {
         count.getAndAdd(1);
-        if(AddonSettings.playingOn.contains("Mine")) {
+        if(AddonSettings.inMine) {
           if(!imageUrl.equals(loreUrl)) {
             imageUrl = loreUrl;
           }
@@ -110,7 +110,7 @@ public class DiscordAPI {
           }
         }
 
-        if(AddonSettings.playingOn.contains("Farming")) {
+        if(AddonSettings.inFarming) {
           if(!imageUrl.equals(minerUrl)) {
             imageUrl = minerUrl;
           }

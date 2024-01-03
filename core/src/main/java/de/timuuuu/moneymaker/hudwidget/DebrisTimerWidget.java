@@ -29,7 +29,7 @@ public class DebrisTimerWidget extends ItemHudWidget<HudWidgetConfig> {
   @Override
   public void onTick(boolean isEditorContext) {
     String itemName = "N/A";
-    if(AddonSettings.playingOn.contains("MoneyMaker")) {
+    if(AddonSettings.inMine || AddonSettings.inFarming) {
 
       if(AddonSettings.debrisTime > 0) {
         itemName = Util.intToTime(AddonSettings.debrisTime);
@@ -42,7 +42,7 @@ public class DebrisTimerWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("MoneyMaker") && AddonSettings.debrisTime > 0;
+    return (AddonSettings.inMine || AddonSettings.inFarming) && AddonSettings.debrisTime > 0;
   }
 
   @Override

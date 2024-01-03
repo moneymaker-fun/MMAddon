@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.utils.ChatMessages;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
@@ -26,10 +27,10 @@ public class ScoreBoardListener {
 
   @Subscribe
   public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
-    if(!AddonSettings.playingOn.contains("MoneyMaker")) return;
+    if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
 
-    if(event.score().getValue() == MoneyScore.LANG_CHECK.score() & AddonSettings.playingOn.contains(MoneyScore.LANG_CHECK.neededServer())) {
-      AddonSettings.languageSupported = event.score().getName().contains("Kontostand") || event.score().getName().contains("Balance");
+    if(event.score().getValue() == MoneyScore.LANG_CHECK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
+      AddonSettings.languageSupported = event.score().getName().contains(ChatMessages.SB_BALANCE_DE.message()) || event.score().getName().contains(ChatMessages.SB_BALANCE_EN.message());
       Task.builder(() -> {
         if(!AddonSettings.languageSupported & !langWarningSent) {
           langWarningSent = true;
@@ -42,7 +43,7 @@ public class ScoreBoardListener {
       }).delay(5, TimeUnit.SECONDS).build().execute();
     }
 
-    if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() & AddonSettings.playingOn.contains(MoneyScore.BROKEN_BLOCKS.neededServer())) {
+    if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && AddonSettings.inFarming) {
       String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
       try {
         int blocks = Integer.parseInt(raw);
@@ -71,22 +72,22 @@ public class ScoreBoardListener {
       } catch (NumberFormatException ignored) {}
     }
 
-    if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() & AddonSettings.playingOn.contains(MoneyScore.PICKAXE_LEVEL.neededServer())) {
+    if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() && AddonSettings.inFarming) {
       AddonSettings.pickaxeLevel = ChatUtil.stripColor(event.score().getName());
     }
 
-    if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() & AddonSettings.playingOn.contains(MoneyScore.PICKAXE_RANKING.neededServer())) {
+    if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && AddonSettings.inFarming) {
       AddonSettings.pickaxeRanking = ChatUtil.stripColor(event.score().getName()).replace("Platz ", "").replace("Rank ", "");
     }
 
-    if(event.score().getValue() == MoneyScore.RANK.score() & AddonSettings.playingOn.contains(MoneyScore.RANK.neededServer())) {
+    if(event.score().getValue() == MoneyScore.RANK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
-      if(scoreName.startsWith("Rank") || scoreName.startsWith("Platz")) {
-        AddonSettings.rank = scoreName.replace("Rank ", "").replace("Platz ", "");
+      if(scoreName.startsWith(ChatMessages.SB_PLACE_DE.message()) || scoreName.startsWith(ChatMessages.SB_PLACE_EN.message())) {
+        AddonSettings.rank = scoreName.replace(ChatMessages.SB_PLACE_DE.message() + " ", "").replace(ChatMessages.SB_PLACE_EN.message() + " ", "");
       }
     }
 
-    if(event.score().getValue() == MoneyScore.BALANCE.score() & AddonSettings.playingOn.contains(MoneyScore.BALANCE.neededServer())) {
+    if(event.score().getValue() == MoneyScore.BALANCE.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
       AddonSettings.balance = ChatUtil.stripColor(event.score().getName());
 
       try {
@@ -133,31 +134,26 @@ public class ScoreBoardListener {
 
   public enum MoneyScore {
 
-    BROKEN_BLOCKS(3, "Farming"),
-    PICKAXE_LEVEL(6, "Farming"),
-    PICKAXE_RANKING(0, "Farming"),
+    BROKEN_BLOCKS(3),
+    PICKAXE_LEVEL(6),
+    PICKAXE_RANKING(0),
 
-    RANK(9, "MoneyMaker"),
+    RANK(9),
 
-    BALANCE(12, "MoneyMaker"),
+    BALANCE(12),
 
-    LANG_CHECK(13, "MoneyMaker");
+    LANG_CHECK(13);
 
     private final int score;
-    private final String neededServer;
 
-    MoneyScore(int score, String neededServer) {
+    MoneyScore(int score) {
       this.score = score;
-      this.neededServer = neededServer;
     }
 
     public int score() {
       return score;
     }
 
-    public String neededServer() {
-      return neededServer;
-    }
   }
 
 }

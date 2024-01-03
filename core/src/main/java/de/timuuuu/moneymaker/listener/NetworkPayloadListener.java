@@ -1,13 +1,10 @@
 package de.timuuuu.moneymaker.listener;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
-import java.util.UUID;
-import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
@@ -44,11 +41,6 @@ public class NetworkPayloadListener {
   }
 
   @Subscribe
-  public void onSwitch(SubServerSwitchEvent event) {
-
-  }
-
-  @Subscribe
   public void onNetworkPayload(NetworkPayloadEvent event) {
     if(event.identifier().getNamespace().equals("labymod3") & event.identifier().getPath().equals("main")) {
       try {
@@ -68,7 +60,7 @@ public class NetworkPayloadListener {
             if (obj.has("hasGame")) {
               String gameMode = obj.get("game_mode").getAsString();
 
-              if(AddonSettings.playingOn.contains("Farming") && gameMode.contains("Mine")) {
+              if(AddonSettings.inFarming && gameMode.contains("Mine")) {
                 if(AddonSettings.sessionBlocks > 0) {
                   MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
                       Component.translatable("moneymaker.notification.farming.left.reset-question", TextColor.color(170, 170, 170)),
@@ -102,14 +94,15 @@ public class NetworkPayloadListener {
                   this.addon.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.text.new-update")));
                 }*/
               } else {
-                if(AddonSettings.playingOn.contains("MoneyMaker")) {
+                if(AddonSettings.inMine || AddonSettings.inFarming) {
                   this.addon.discordAPI().cancelUpdater();
                   this.addon.discordAPI().removeCustom();
                   this.addon.discordAPI().removeSaved();
                 }
               }
 
-              AddonSettings.playingOn = gameMode;
+              AddonSettings.inMine = gameMode.contains("Mine");
+              AddonSettings.inFarming = gameMode.contains("Farming");
 
             }
           }

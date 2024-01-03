@@ -35,7 +35,7 @@ public class ActivatedBoosterWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   private void updateLine() {
     this.textLine.updateAndFlush(Booster.activatedBoost.get() + "%");
-    this.textLine.setState(AddonSettings.playingOn.contains("Farming") && Booster.activatedBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState(AddonSettings.inFarming && Booster.activatedBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

@@ -2,6 +2,11 @@ package de.timuuuu.moneymaker.utils;
 
 public enum ChatMessages {
 
+  SB_BALANCE_DE("Kontostand"),
+  SB_BALANCE_EN("Balance"),
+  SB_PLACE_DE("Platz"),
+  SB_PLACE_EN("Rank"),
+
   PREFIX("[MoneyMaker]"),
   WORKPLACE_UPGRADE_DE_1("[MoneyMaker] Du hast den Arbeitsplatz auf Level"),
   WORKPLACE_UPGRADE_DE_2("verbessert"),

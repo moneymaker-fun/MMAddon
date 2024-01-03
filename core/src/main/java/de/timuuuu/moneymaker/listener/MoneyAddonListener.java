@@ -37,10 +37,14 @@ public class MoneyAddonListener {
     data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
     this.addon.chatClient().sendMessage("playerStatus", data);
 
+    String server = "Other";
+    if(AddonSettings.inMine) server = "Mine";
+    if(AddonSettings.inFarming) server = "Farming";
+
     JsonObject data1 = new JsonObject();
     data1.addProperty("uuid", event.newSession().getUniqueId().toString());
     data1.addProperty("userName", event.newSession().getUsername());
-    data1.addProperty("server", AddonSettings.playingOn.contains("MoneyMaker") ? AddonSettings.playingOn : "Other");
+    data1.addProperty("server", server);
     data1.addProperty("addonVersion", this.addon.addonInfo().getVersion());
     this.addon.chatClient().sendMessage("playerStatus", data1);
 

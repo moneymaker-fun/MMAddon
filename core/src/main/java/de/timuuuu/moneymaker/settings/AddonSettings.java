@@ -8,7 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class AddonSettings {
   public static String prefix = "§bMoneyMaker > ";
-  public static String playingOn = "Hauptmenü";
+
+  public static boolean inMine = false;
+  public static boolean inFarming = false;
+
   public static AtomicInteger secretCount = new AtomicInteger(5);
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
@@ -17,7 +20,8 @@ public class AddonSettings {
 
   public static void resetValues(boolean changePlaying) {
     if(changePlaying) {
-      playingOn = "Hauptmenü";
+      inMine = false;
+      inFarming = false;
     }
     balance = "X";
     rank = "X";

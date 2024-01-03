@@ -42,16 +42,6 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
             : Component.translatable("moneymaker.hudWidget.mm_sword_stats.without-icon.kills"),
         "0"
     );
-    /*this.rankLine = createLine(
-        showIcon ? Component.icon(Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 3, 0), 10).append(Component.text(" Rang"))
-            : Component.text("Schwert Rang"),
-        "0"
-    );
-    this.mobsLine = createLine(
-        showIcon ? Component.icon(Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 3, 0), 10).append(Component.text(" Kills"))
-            : Component.text("Schwert Kills"),
-        "0"
-    );*/
     this.updateLines();
   }
 
@@ -62,10 +52,10 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
 
   private void updateLines() {
     this.rankLine.updateAndFlush(AddonSettings.swordRanking);
-    this.rankLine.setState(AddonSettings.playingOn.contains("Farming") && !AddonSettings.swordRanking.equals("X") ? State.VISIBLE : State.HIDDEN);
+    this.rankLine.setState(AddonSettings.inFarming && !AddonSettings.swordRanking.equals("X") ? State.VISIBLE : State.HIDDEN);
 
     this.mobsLine.updateAndFlush(AddonSettings.swordMobs);
-    this.mobsLine.setState(AddonSettings.playingOn.contains("Farming") && !AddonSettings.swordMobs.equals("X") ? State.VISIBLE : State.HIDDEN);
+    this.mobsLine.setState(AddonSettings.inFarming && !AddonSettings.swordMobs.equals("X") ? State.VISIBLE : State.HIDDEN);
   }
 
 

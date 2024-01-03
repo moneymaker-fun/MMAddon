@@ -32,7 +32,7 @@ public class BlockSessionWidget extends ItemHudWidget<HudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.playingOn.contains("Farming") && AddonSettings.sessionBlocks > 0;
+    return AddonSettings.inFarming && AddonSettings.sessionBlocks > 0;
   }
 
   @Override
