@@ -56,7 +56,7 @@ public class AddonSettings {
   public static String nextWorkerCost = "X";
   public static String debrisCost = "X";
 
-  public static String swordRanking = "X";
+  public static int swordRanking = 0;
   public static int swordMobs = 0;
   public static int mobKills = 0;
   public static int sessionKills = 0;

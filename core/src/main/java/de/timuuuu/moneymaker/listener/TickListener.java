@@ -45,11 +45,13 @@ public class TickListener {
         mobsLine = ChatUtil.stripColor(mobsLine);
 
         if(rankingLine.startsWith("Ranking: ")) {
-          AddonSettings.swordRanking = rankingLine.split(" ")[2];
+          AddonSettings.swordRanking = Integer.parseInt(rankingLine.split(" ")[2]
+              .replace(".", "").replace(",", ""));
         }
 
         if(mobsLine.startsWith("Getötete Mobs: ")) {
-          AddonSettings.swordMobs = Integer.parseInt(mobsLine.replace("Getötete Mobs: ", "").replace(".", "").replace(",", ""));
+          AddonSettings.swordMobs = Integer.parseInt(mobsLine.replace("Getötete Mobs: ", "")
+              .replace(".", "").replace(",", ""));
         }
 
         if(mobsLine.startsWith("Killed mobs: ")) {
@@ -76,10 +78,12 @@ public class TickListener {
               if(object.has("text")) {
                 String text = object.get("text").getAsString();
                 if(text.contains("Platz ")) {
-                  AddonSettings.swordRanking = text.replace("Platz ", "");
+                  AddonSettings.swordRanking = Integer.parseInt(text.replace("Platz ", "")
+                      .replace(".", "").replace(",", "").strip());
                 }
                 if(text.contains("Rank ")) {
-                  AddonSettings.swordRanking = text.replace("Rank ", "");
+                  AddonSettings.swordRanking = Integer.parseInt(text.replace("Rank ", "")
+                      .replace(".", "").replace(",", "").strip());
                 }
               }
             }
