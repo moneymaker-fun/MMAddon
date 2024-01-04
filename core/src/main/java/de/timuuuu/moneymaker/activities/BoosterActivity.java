@@ -142,7 +142,7 @@ public class BoosterActivity extends SimpleActivity {
       MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.booster-export.title"),
           Component.translatable("moneymaker.notification.booster-export.saved", TextColor.color(85, 255, 85)),
           Component.translatable("moneymaker.notification.booster-export.open-folder"), () -> {
-        OperatingSystem.getPlatform().openFile(new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile().getPath()));
+        OperatingSystem.getPlatform().openFile(folder);
       });
     } catch (IOException exception) {
       exception.printStackTrace();
