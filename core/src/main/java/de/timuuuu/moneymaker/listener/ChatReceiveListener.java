@@ -75,8 +75,7 @@ public class ChatReceiveListener {
           !(plain.contains(ChatMessages.BOOSTER_ACTIVATED_DE_3.message()) || plain.contains(ChatMessages.BOOSTER_ACTIVATED_EN_3.message()))) {
         if(this.addon.configuration().shortBoosterMessage().get()) {
           String boost = plain.replace(ChatMessages.PREFIX.message(), "");
-          Component component = Component.text(AddonSettings.prefix + "§a" + boost + " ").append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN));
-          this.addon.displayMessage(component);
+          this.addon.displayMessage(AddonSettings.prefix.append(Component.text("§a" + boost + " ")).append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN)));
           event.setCancelled(true);
         }
       }
@@ -116,7 +115,7 @@ public class ChatReceiveListener {
               timers.getAndIncrement();
             }
           });
-          TextComponent component = Component.text(AddonSettings.prefix + "§7").append(Component.translatable("moneymaker.text.effect-select", NamedTextColor.GRAY))
+          TextComponent component = AddonSettings.prefix.append(Component.translatable("moneymaker.text.effect-select", NamedTextColor.GRAY))
               .append(Component.text(" §8[§e5m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 5 Effekt-Timer-" + timers.get()))
                   .append(Component.text(" §8[§e10m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 10 Effekt-Timer-" + timers.get())))
                   .append(Component.text(" §8[§e15m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 15 Effekt-Timer-" + timers.get())))

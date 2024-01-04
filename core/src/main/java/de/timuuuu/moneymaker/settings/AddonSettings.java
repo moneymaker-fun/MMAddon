@@ -4,9 +4,12 @@ package de.timuuuu.moneymaker.settings;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.HashMap;
 import java.util.UUID;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.TextComponent;
 
 public class AddonSettings {
-  public static String prefix = "§bMoneyMaker > ";
+
+  public static TextComponent prefix = Component.text("§8‖ §6MoneyMaker §8» §7");
 
   public static boolean inMine = false;
   public static boolean inFarming = false;
