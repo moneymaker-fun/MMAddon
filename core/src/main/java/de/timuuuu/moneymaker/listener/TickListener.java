@@ -104,7 +104,6 @@ public class TickListener {
               JsonObject object = array.get(i).getAsJsonObject();
               if(object.has("text")) {
                 String text = object.get("text").getAsString();
-                this.addon.logger().info(text);
                 if(!(text.contains("Getötete Mobs: ") || text.contains("Killed mobs: "))) {
                   AddonSettings.swordMobs = Integer.parseInt(text.replace(".", "").replace(",", ""));
                 }
