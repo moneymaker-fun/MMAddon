@@ -74,17 +74,30 @@ public class ScoreBoardListener {
     }
 
     if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() && AddonSettings.inFarming) {
-      AddonSettings.pickaxeLevel = ChatUtil.stripColor(event.score().getName());
+      try {
+        AddonSettings.pickaxeLevel = Integer.parseInt(ChatUtil.stripColor(event.score().getName()));
+      } catch (NumberFormatException ignored) {}
     }
 
     if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && AddonSettings.inFarming) {
-      AddonSettings.pickaxeRanking = ChatUtil.stripColor(event.score().getName()).replace("Platz ", "").replace("Rank ", "");
+      String scoreName = ChatUtil.stripColor(event.score().getName());
+      if(scoreName.startsWith(ChatMessages.SB_PLACE_DE.message()) || scoreName.startsWith(ChatMessages.SB_PLACE_EN.message())) {
+        AddonSettings.pickaxeRanking = Integer.parseInt(scoreName
+            .replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
+            .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
+            .replace(".", "").replace(",", "")
+        );
+      }
     }
 
     if(event.score().getValue() == MoneyScore.RANK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(scoreName.startsWith(ChatMessages.SB_PLACE_DE.message()) || scoreName.startsWith(ChatMessages.SB_PLACE_EN.message())) {
-        AddonSettings.rank = scoreName.replace(ChatMessages.SB_PLACE_DE.message() + " ", "").replace(ChatMessages.SB_PLACE_EN.message() + " ", "");
+        AddonSettings.rank = Integer.parseInt(scoreName.
+            replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
+            .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
+            .replace(".", "").replace(",", "")
+        );
       }
     }
 

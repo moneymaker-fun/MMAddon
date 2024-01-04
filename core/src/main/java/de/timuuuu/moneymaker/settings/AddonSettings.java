@@ -22,9 +22,9 @@ public class AddonSettings {
       inFarming = false;
     }
     balance = "X";
-    rank = "X";
-    pickaxeLevel = "X";
-    pickaxeRanking = "X";
+    rank = 0;
+    pickaxeLevel = 0;
+    pickaxeRanking = 0;
     brokenBlocks = 0;
     sessionBlocks = 0;
     breakGoalEnabled = false;
@@ -38,10 +38,10 @@ public class AddonSettings {
   }
 
   public static String balance = "X";
-  public static String rank = "X";
+  public static int rank = 0;
 
-  public static String pickaxeLevel = "X";
-  public static String pickaxeRanking = "X";
+  public static int pickaxeLevel = 0;
+  public static int pickaxeRanking = 0;
 
   public static int brokenBlocks = 0;
   public static int sessionBlocks = 0;

@@ -125,14 +125,14 @@ public class DiscordAPI {
             this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Util.format(Booster.sessionBoosters.get()) + " (" + Util.format(Booster.sessionBoost.get()) + "%)";
           }
           if(count.get() == 4) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + AddonSettings.pickaxeRanking;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + Util.format(AddonSettings.pickaxeRanking);
           }
           if(count.get() == 5) {
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + AddonSettings.pickaxeLevel;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + Util.format(AddonSettings.pickaxeLevel);
           }
           if(count.get() >= 6) {
             count.set(0);
-            this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + AddonSettings.rank;
+            this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + Util.format(AddonSettings.rank);
           }
         }
 
