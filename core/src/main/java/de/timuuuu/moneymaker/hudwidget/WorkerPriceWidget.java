@@ -26,7 +26,7 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void load(TextHudWidgetConfig config) {
     super.load(config);
-    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_worker_price.name"), "0");
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_worker_price.display"), "0");
   }
 
   @Override

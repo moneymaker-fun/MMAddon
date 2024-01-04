@@ -26,7 +26,7 @@ public class KillCountWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void load(TextHudWidgetConfig config) {
     super.load(config);
-    this.rankLine = createLine(Component.translatable("moneymaker.hudWidget.mm_kill_counter.name"), 0);
+    this.rankLine = createLine(Component.translatable("moneymaker.hudWidget.mm_kill_counter.display"), 0);
     this.updateLines();
   }
 

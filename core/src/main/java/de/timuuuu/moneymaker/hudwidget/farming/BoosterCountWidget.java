@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
@@ -25,12 +26,12 @@ public class BoosterCountWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void load(TextHudWidgetConfig config) {
     super.load(config);
-    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_booster_count.name"), "0%");
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_booster_count.name"), "0 (0%)");
   }
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.textLine.updateAndFlush(Component.text(Booster.sessionBoost.get()+"%"));
+    this.textLine.updateAndFlush(Component.text(Util.format(Booster.sessionBoosters.get()) + " (" + Util.format(Booster.sessionBoost.get()) + "%)"));
     this.textLine.setState(AddonSettings.inFarming && Booster.sessionBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 

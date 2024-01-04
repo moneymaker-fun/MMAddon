@@ -381,7 +381,8 @@
         "name": "Debris Timer"
       },
       "mm_worker_price": {
-        "name": "Show worker price"
+        "name": "Show worker price",
+        "display": "Worker Price"
       },
       "mm_sword_stats": {
         "name": "Sword Statistics",
@@ -398,7 +399,8 @@
         }
       },
       "mm_kill_counter": {
-        "name": "Mob Kill Counter"
+        "name": "Mob Kill Counter",
+        "display": "Mob Kills"
       },
       "mm_timer_display": {
         "name": "Timer",

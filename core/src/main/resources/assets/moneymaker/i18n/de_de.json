@@ -381,7 +381,8 @@
         "name": "Geröll Timer"
       },
       "mm_worker_price": {
-        "name": "Arbeitsplatz Preis anzeigen"
+        "name": "Arbeitsplatz Preis anzeigen",
+        "display": "Arbeitsplatz Preis"
       },
       "mm_sword_stats": {
         "name": "Schwert Statistiken",
@@ -398,7 +399,8 @@
         }
       },
       "mm_kill_counter": {
-        "name": "Mob Kill Zähler"
+        "name": "Mob Kill Zähler",
+        "display": "Mob Kills"
       },
       "mm_timer_display": {
         "name": "Timer",
