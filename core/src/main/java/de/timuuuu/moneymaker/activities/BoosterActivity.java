@@ -124,8 +124,14 @@ public class BoosterActivity extends SimpleActivity {
       return;
     }
     try {
+
+      File folder = new File(Laby.labyAPI().labyModLoader().getGameDirectory().toFile(), "MoneyMaker");
+      if(!folder.exists()) {
+        folder.mkdir();
+      }
+
       String time = new SimpleDateFormat("dd_MM_yy-HH_mm").format(new Date());
-      File file = new File("BoosterExport_"+time+".csv");
+      File file = new File(folder, "BoosterExport_"+time+".csv");
       FileWriter writer = new FileWriter(file);
 
       writer.write("Anzahl;Booster;Zeit\n\n");
