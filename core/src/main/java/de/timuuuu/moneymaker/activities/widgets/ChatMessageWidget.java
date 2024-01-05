@@ -132,9 +132,6 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     VerticalListWidget<Widget> messageContentWidget = new VerticalListWidget<>().addId("message-content");
     ComponentWidget componentMessageWidget = ComponentWidget.text(chatMessage != null ? chatMessage.message() : customMessage).addId(new String[] {"component-message", "tile"});
     messageContentWidget.addChild(componentMessageWidget);
-    if(!this.systemMessage) {
-      messageContentWidget.addId("headless");
-    }
 
     flex.addChild(messageContentWidget);
     this.addContent(flex);
