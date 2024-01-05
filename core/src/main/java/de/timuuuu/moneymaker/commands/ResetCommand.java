@@ -30,21 +30,21 @@ public class ResetCommand extends Command {
               Booster.sessionBoosters.set(0);
               Booster.latestFoundBoosters().clear();
               Booster.boosterList().clear();
-              this.displayMessage(AddonSettings.prefix.append(Component.translatable("moneymaker.command.reset.booster", TextColor.color(85, 255, 85))));
+              this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset.booster", TextColor.color(85, 255, 85))));
 
             } else if(args[0].equalsIgnoreCase("arbeiter") || args[0].equalsIgnoreCase("miners")) {
 
               AddonSettings.workerCount = 0;
               AddonSettings.workerNotifySent = false;
               AddonSettings.nextWorkerCost = "X";
-              this.displayMessage(AddonSettings.prefix.append(Component.translatable("moneymaker.command.reset.miners", TextColor.color(85, 255, 85))));
+              this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset.miners", TextColor.color(85, 255, 85))));
 
             } else if(args[0].equalsIgnoreCase("geröll") || args[0].equalsIgnoreCase("debris")) {
 
               AddonSettings.debrisTime = 0;
               AddonSettings.debrisCost = "X";
               AddonSettings.debrisNotifySent = false;
-              this.displayMessage(AddonSettings.prefix.append(Component.translatable("moneymaker.command.reset.debris", TextColor.color(85, 255, 85))));
+              this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset.debris", TextColor.color(85, 255, 85))));
 
             } else if(args[0].equalsIgnoreCase("all")) {
               AddonSettings.resetValues(false);
@@ -52,14 +52,14 @@ public class ResetCommand extends Command {
               Booster.sessionBoost.set(0);
               Booster.latestFoundBoosters().clear();
               Booster.boosterList().clear();
-              this.displayMessage(AddonSettings.prefix.append(Component.translatable("moneymaker.command.reset.all", TextColor.color(85, 255, 85))));
+              this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset.all", TextColor.color(85, 255, 85))));
 
             }
           } else {
-            this.displayMessage(AddonSettings.prefix.append(Component.translatable("moneymaker.command.reset.usage", TextColor.color(255, 85, 85))));
+            this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.reset.usage", TextColor.color(255, 85, 85))));
           }
         } else {
-          this.displayMessage(AddonSettings.prefix.append(Component.translatable("moneymaker.command.notConnected", TextColor.color(255, 85, 85))));
+          this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.notConnected", TextColor.color(255, 85, 85))));
         }
 
       }
