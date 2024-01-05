@@ -325,7 +325,8 @@
         "boost-total": "Gesamt: %s",
         "average-boosters": "Durchschnittliche Booster (pro Sitzung): ",
         "sorting": "Sortierung",
-        "export": "Als CSV exportieren"
+        "export": "Als CSV exportieren",
+        "clear": "Booster Liste leeren"
       },
       "chat": {
         "title": "MoneyMaker Addon Chat",

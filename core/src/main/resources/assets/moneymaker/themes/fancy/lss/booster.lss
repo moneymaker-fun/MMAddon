@@ -70,9 +70,19 @@ Scroll {
    }
 }
 
-.exportBtn {
-  bottom:10;
-  right:40;
+.clear-button {
+  bottom: 10;
+  right: 10;
+  height: 15;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+}
+
+.export-button {
+  bottom: 30;
+  right: 10;
+  height: 15;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;

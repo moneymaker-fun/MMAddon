@@ -63,9 +63,19 @@ Scroll {
    }
 }
 
-.exportBtn {
+.clear-button {
   bottom: 5;
-  right: 60;
+  right: 5;
+  height: 15;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+}
+
+.export-button {
+  bottom: 25;
+  right: 5;
+  height: 15;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;

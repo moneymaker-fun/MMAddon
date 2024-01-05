@@ -21,7 +21,6 @@ import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
 import net.labymod.api.client.gui.screen.activity.types.SimpleActivity;
 import net.labymod.api.client.gui.screen.widget.action.ListSession;
-import net.labymod.api.client.gui.screen.widget.attributes.WidgetAlignment;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
@@ -98,10 +97,19 @@ public class BoosterActivity extends SimpleActivity {
 
     container.addChild(new ScrollWidget(listWidget, new ListSession<>()));
 
-    ButtonWidget exportBtnWidget = ButtonWidget.i18n("moneymaker.ui.booster.export").addId("exportBtn");
-    exportBtnWidget.alignmentX().set(WidgetAlignment.CENTER);
+    ButtonWidget exportBtnWidget = ButtonWidget.i18n("moneymaker.ui.booster.export").addId("export-button");
     exportBtnWidget.setPressable(() -> writeLinkedListToCSV(false));
 
+    ButtonWidget clearListButton = ButtonWidget.i18n("moneymaker.ui.booster.clear").addId("clear-button");
+    clearListButton.setPressable(() -> {
+      if(!Booster.boosterList().isEmpty()) {
+        Booster.boosterList().clear();
+        this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
+      }
+    });
+
+
+    container.addChild(clearListButton);
     container.addChild(exportBtnWidget);
 
     this.document.addChild(container);
