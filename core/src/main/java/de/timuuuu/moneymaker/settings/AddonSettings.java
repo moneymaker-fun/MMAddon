@@ -9,7 +9,7 @@ import net.labymod.api.client.component.TextComponent;
 
 public class AddonSettings {
 
-  public static TextComponent prefix = Component.text("§8‖ §6MoneyMaker §8» §7");
+  public static String prefix = "§8‖ §6MoneyMaker §8» §7";
 
   public static boolean inMine = false;
   public static boolean inFarming = false;
