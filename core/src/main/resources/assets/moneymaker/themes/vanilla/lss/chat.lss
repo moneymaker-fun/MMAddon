@@ -113,8 +113,8 @@
 .chat-scroll {
   top: 10;
   left: 10;
-  width: 95%;
-  height: 90%;
+  right: 0;
+  bottom: 5;
 
   Scrollbar {
     left: 0;
@@ -197,7 +197,6 @@
         height: fit-content;
         .component-message {
           padding: 2 3 2 2;
-          border-radius: 0 5 5 5;
         }
       }
 
@@ -241,7 +240,7 @@
         .message-content {
           .component-message {
             font-size: 0.8;
-            background-color: rgba(170, 170, 170, 0.1);
+            background-color: rgba(0, 0, 0, 0.7);
           }
         }
 
