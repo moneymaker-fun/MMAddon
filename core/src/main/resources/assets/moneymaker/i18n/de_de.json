@@ -148,7 +148,7 @@
         "invalid": {
           "title": "Ungültiges Feedback-Formular",
           "invalidDate": "Das eingegebene Datum ist ungültig. Bitte verwende %s als Format",
-          "descriptionShort": "Die eingegebene Beschreibung ist zu kurz. Mindestens 5 Zeichen erforderlich",
+          "descriptionShort": "Die eingegebene Beschreibung ist zu kurz. Mindestens %s Zeichen erforderlich",
           "noAvailability": "Bitte gebe eine Erreichbarkeit an",
           "noAttachment": "Bitte geben einen Anhang an, da du „Bugreport“ als Typ ausgewählt hast",
           "noUrl": "Du musst eine URL als Anhang eingeben"

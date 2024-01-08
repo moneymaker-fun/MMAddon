@@ -42,6 +42,7 @@ public class FeedbackActivity extends SimpleActivity {
   private TextFieldWidget availabilityInputWidget;
 
   private final String DATE_FORMATE = "dd.MM.yyyy HH:mm";
+  private final int MIN_DESCRIPTION_LENGTH = 50;
 
   public FeedbackActivity(MoneyMakerAddon addon, ScreenInstance previousScreen) {
     this.addon = addon;
@@ -197,10 +198,10 @@ public class FeedbackActivity extends SimpleActivity {
       return false;
     }
 
-    if(descriptionInputWidget.getText().length() < 5) {
+    if(descriptionInputWidget.getText().length() < this.MIN_DESCRIPTION_LENGTH) {
       this.addon.pushNotification(
           Component.translatable("moneymaker.feedback.form.invalid.title", NamedTextColor.DARK_RED),
-          Component.translatable("moneymaker.feedback.form.invalid.descriptionShort", NamedTextColor.RED)
+          Component.translatable("moneymaker.feedback.form.invalid.descriptionShort", NamedTextColor.RED, Component.text(this.MIN_DESCRIPTION_LENGTH))
       );
       return false;
     }

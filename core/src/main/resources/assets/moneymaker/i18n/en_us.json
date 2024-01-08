@@ -148,7 +148,7 @@
         "invalid": {
           "title": "Invalid Feedback Form",
           "invalidDate": "The entered date is not valid. Please use %s as format",
-          "descriptionShort": "The entered description is too short. At least 5 characters required",
+          "descriptionShort": "The entered description is too short. At least %s characters required",
           "noAvailability": "Please provide an availability",
           "noAttachment": "Please provide an attachment, since you selected Bugreport as Type",
           "noUrl": "You must enter a url as attachment"
