@@ -134,13 +134,34 @@
       height: fit-content;
       padding-bottom: 5;
 
+      .flex {
+        top: 0;
+        width: 100%;
+        height: fit-content;
+      }
+
       .message-header {
         height: 10;
+        width: 100%;
+
+        .avatar {
+          padding: 0 2 0 2;
+          alignment-y: center;
+          width: 10;
+          height: 10;
+        }
+
+        .sender {
+          margin-top: 1;
+          font-weight: 175;
+          font-size: 0.8;
+        }
 
         .timestamp {
           margin: 0 0 2 2;
-          alignment-x: right;
           alignment-y: bottom;
+          text-color: rgb(150, 150, 150);
+          font-size: 0.525;
         }
 
         .message-id {
@@ -195,56 +216,15 @@
       .message-content {
         width: 90%;
         height: fit-content;
+
         .component-message {
           padding: 2 3 2 2;
-        }
-      }
-
-      .avatar {
-        padding: 0 2 0 2;
-        alignment-y: center;
-        width: 10;
-        height: 10;
-
-        .timestamp {
-          text-color: rgba(150, 150, 150, 100);
-          left: 0;
-          top: 50%;
-          margin-left: 0;
-          margin-bottom: 0;
-          alignment-x: left;
-          alignment-y: center;
-
-          font-size: 0.5;
-        }
-      }
-
-      .flex {
-        width: 100%;
-        height: fit-content;
-        .message-header {
-          space-between-entries: 0;
-
-          .sender {
-            margin-top: 1;
-            font-weight: 175;
-            font-size: 0.8;
-          }
-
-          .timestamp {
-            text-color: rgb(150, 150, 150);
-            font-size: 0.525;
-          }
-        }
-
-        .message-content {
-          .component-message {
-            font-size: 0.8;
-            background-color: rgba(0, 0, 0, 0.7);
-          }
+          font-size: 0.8;
+          background-color: rgba(0, 0, 0, 0.7);
         }
 
       }
+
     }
   }
 }
