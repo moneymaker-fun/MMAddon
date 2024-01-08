@@ -44,7 +44,7 @@ public enum ChatMessages {
 
   PARTING_LINE("[MoneyMaker] eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
 
-  private String message;
+  private final String message;
 
   ChatMessages(String message) {
     this.message = message;
@@ -53,4 +53,17 @@ public enum ChatMessages {
   public String message() {
     return message;
   }
+
+  public boolean startWith(String text) {
+    return this.message.startsWith(text);
+  }
+
+  public boolean contains(String text) {
+    return this.message.contains(text);
+  }
+
+  public boolean equals(String text) {
+    return this.message.equals(text);
+  }
+
 }

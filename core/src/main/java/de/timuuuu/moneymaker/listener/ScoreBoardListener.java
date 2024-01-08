@@ -32,7 +32,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.LANG_CHECK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
       Task.builder(() -> {
-        languageSupported = event.score().getName().contains(ChatMessages.SB_BALANCE_DE.message()) || event.score().getName().contains(ChatMessages.SB_BALANCE_EN.message());
+        languageSupported = ChatMessages.SB_BALANCE_DE.contains(event.score().getName()) || ChatMessages.SB_BALANCE_EN.contains(event.score().getName());
         if(!languageSupported && !langWarningSent) {
           langWarningSent = true;
           this.addon.displayMessage(" ");
@@ -81,7 +81,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && AddonSettings.inFarming) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
-      if(scoreName.startsWith(ChatMessages.SB_PLACE_DE.message()) || scoreName.startsWith(ChatMessages.SB_PLACE_EN.message())) {
+      if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
         AddonSettings.pickaxeRanking = Integer.parseInt(scoreName
             .replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
             .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
@@ -92,7 +92,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.RANK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
-      if(scoreName.startsWith(ChatMessages.SB_PLACE_DE.message()) || scoreName.startsWith(ChatMessages.SB_PLACE_EN.message())) {
+      if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
         AddonSettings.rank = Integer.parseInt(scoreName.
             replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
             .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
