@@ -94,7 +94,7 @@ public class MoneyAddonListener {
     UUID uuid = event.uuid();
     MoneyPlayer player = event.player();
     if(!player.server().equals("OFFLINE")) {
-      if(!AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString())) {
+      if((AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString())) {
         this.addon.pushNotification(
             Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
             Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
@@ -104,7 +104,8 @@ public class MoneyAddonListener {
       }
       AddonSettings.playerStatus.put(uuid, player);
     } else {
-      if(AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString())) {
+      if((AddonSettings.inMine || AddonSettings.inFarming) && AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get() &&
+          !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString())) {
         this.addon.pushNotification(
             Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
             Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
@@ -120,6 +121,7 @@ public class MoneyAddonListener {
   public void onMoneyChatReceive(MoneyChatReceiveEvent event) {
     MoneyChatMessage chatMessage = event.chatMessage();
     this.addon.chatActivity().addChatMessage(chatMessage);
+    if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
       if(!chatMessage.systemMessage()) {
 
