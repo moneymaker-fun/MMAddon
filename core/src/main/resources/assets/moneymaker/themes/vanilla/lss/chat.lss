@@ -127,7 +127,7 @@
   .chat-messages {
     space-between-entries: 5;
     width: 90%;
-    height: 100%;
+    height: fit-content;
 
     ChatMessage {
       width: 90%;

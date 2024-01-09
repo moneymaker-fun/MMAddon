@@ -142,7 +142,7 @@
     top: 0;
     space-between-entries: 5;
     width: 90%;
-    height: 100%;
+    height: fit-content;
 
     ChatMessage {
       width: 90%;
@@ -187,7 +187,7 @@
 
         .mute-button {
           height: 9;
-          width: fit-content;
+          width: 20;
           padding: -1 2 0.5 1;
           margin: 2 0 0 0;
 
@@ -214,7 +214,7 @@
         .delete-button {
           height: 9;
           width: fit-content;
-          padding: 0 3 1 2;
+          padding: 0 3 0 2;
           margin: 2 0 0 0;
 
           .button-icon {
