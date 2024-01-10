@@ -55,15 +55,15 @@ public enum ChatMessages {
   }
 
   public boolean startWith(String text) {
-    return this.message.startsWith(text);
+    return text.startsWith(this.message);
   }
 
   public boolean contains(String text) {
-    return this.message.contains(text);
+    return text.contains(this.message);
   }
 
   public boolean equals(String text) {
-    return this.message.equals(text);
+    return text.equals(this.message);
   }
 
 }
