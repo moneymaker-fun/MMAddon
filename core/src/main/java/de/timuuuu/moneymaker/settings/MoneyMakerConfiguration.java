@@ -30,10 +30,16 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SpriteSlot(y = 7)
   public MoneyBadgeConfiguration moneyBadgeConfiguration = new MoneyBadgeConfiguration();
 
-  @IntroducedIn(value = "1.1.0", namespace = "moneymaker")
+
   @SettingSection(value = "other", center = true)
+
+  @IntroducedIn(value = "1.1.0", namespace = "moneymaker")
   @SwitchSetting
   private final ConfigProperty<Boolean> exportBoosterOnShutdown = new ConfigProperty<>(false);
+
+  @IntroducedIn(value = "1.2.3", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> farmingAutoReset = new ConfigProperty<>(false);
 
   @SettingSection(value = "gameplay", center = true)
 
@@ -87,6 +93,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> exportBoosterOnShutdown() {
     return exportBoosterOnShutdown;
+  }
+
+  public ConfigProperty<Boolean> farmingAutoReset() {
+    return farmingAutoReset;
   }
 
   // Gameplay Getters
