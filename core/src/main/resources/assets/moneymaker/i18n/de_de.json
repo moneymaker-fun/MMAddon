@@ -218,8 +218,13 @@
         "description": "Exportiert deine gefarmten Booster, wenn du das Spiel beendest.\nDie Datei wird im Ordner {spiel-verzeichnis}/MoneyMaker gespeichert."
       },
       "farmingAutoReset": {
-        "name": "Zähler beim verlassen der Farminghöhle auto. zurücksetzen",
-        "description": "Diese Einstellung setzt deine Block-, Kill- und Booster-Zähler automatisch zurück, wenn du die Farming-Höhle verlässt. Andernfalls wird eine Benachrichtigung angezeigt, ob du die Zähler zurücksetzen möchtest"
+        "name": "Zähler beim verlassen der Farminghöhle zurücksetzen",
+        "description": "Ändert das Verhalten zum Zurücksetzen der Zähler beim verlassen der Farminghöhle",
+        "type": {
+          "automatically": "Automatisch",
+          "ask": "Fragen (Notification)",
+          "hide": "Verstecken"
+        }
       },
       "hideEmptyMessages": {
         "name": "Leere Nachrichten verstecken",

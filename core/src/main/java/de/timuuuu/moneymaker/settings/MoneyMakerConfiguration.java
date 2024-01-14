@@ -1,7 +1,10 @@
 package de.timuuuu.moneymaker.settings;
 
+import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownEntryTranslationPrefix;
+import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
@@ -38,8 +41,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> exportBoosterOnShutdown = new ConfigProperty<>(false);
 
   @IntroducedIn(value = "1.2.3", namespace = "moneymaker")
-  @SwitchSetting
-  private final ConfigProperty<Boolean> farmingAutoReset = new ConfigProperty<>(false);
+  @DropdownSetting
+  @DropdownEntryTranslationPrefix("moneymaker.settings.farmingAutoReset.type")
+  private final ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset = new ConfigProperty<>(FarmingReset.ASK);
 
   @SettingSection(value = "gameplay", center = true)
 
@@ -95,7 +99,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return exportBoosterOnShutdown;
   }
 
-  public ConfigProperty<Boolean> farmingAutoReset() {
+  public ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset() {
     return farmingAutoReset;
   }
 

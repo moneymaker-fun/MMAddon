@@ -68,4 +68,10 @@ public class AddonSettings {
   public static boolean workerNotifySent = false;
   public static boolean debrisNotifySent = false;
 
+  // enums
+
+  public enum FarmingReset {
+    AUTOMATICALLY, ASK, HIDE
+  }
+
 }

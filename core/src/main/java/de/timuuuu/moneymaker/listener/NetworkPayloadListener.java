@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import de.timuuuu.moneymaker.utils.Booster;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -43,14 +44,17 @@ public class NetworkPayloadListener {
 
               if(AddonSettings.inFarming && gameMode.contains("Mine")) {
                 if(AddonSettings.sessionBlocks > 0 || AddonSettings.sessionKills > 0) {
-                  if(this.addon.configuration().farmingAutoReset().get()) {
+
+                  AddonSettings.FarmingReset farmingReset = this.addon.configuration().farmingAutoReset().get();
+                  if(farmingReset == FarmingReset.AUTOMATICALLY) {
                     AddonSettings.sessionBlocks = 0;
                     Booster.sessionBoost.set(0);
                     Booster.sessionBoosters.set(0);
                     AddonSettings.sessionKills = 0;
                     this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
                         Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
-                  } else {
+                  }
+                  if(farmingReset == FarmingReset.ASK) {
                     MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
                         Component.translatable("moneymaker.notification.farming.left.reset-question", TextColor.color(170, 170, 170)),
                         Component.translatable("moneymaker.notification.farming.left.reset-button"), () -> {
@@ -62,6 +66,7 @@ public class NetworkPayloadListener {
                               Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
                         });
                   }
+
                 }
               }
 

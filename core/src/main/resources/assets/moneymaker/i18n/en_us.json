@@ -215,8 +215,13 @@
         "description": "Exports your farmed boosters when you exit the game.\nThe file will be saved in {game-directory}/MoneyMaker"
       },
       "farmingAutoReset": {
-        "name": "Auto reset counters when leaving farming cave",
-        "description": "This setting will automatically reset your block, kill and booster counters when leaving the farming cave, otherwise a notification will be shown if you want to reset the counters"
+        "name": "Reset counters when leaving farming cave",
+        "description": "Change the behavior for resetting the counters when leaving the farming cave",
+        "type": {
+          "automatically": "Automatically Reset",
+          "ask": "Ask to Reset (Notification)",
+          "hide": "Hide completly"
+        }
       },
       "shortBoosterMessage": {
         "name": "Short booster messages"
