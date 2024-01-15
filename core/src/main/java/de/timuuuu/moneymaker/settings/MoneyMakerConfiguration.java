@@ -147,7 +147,14 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
 
+  private final ConfigProperty<Boolean> languageInfoClosed = new ConfigProperty<>(false);
+
   public ConfigProperty<Boolean> chatReconnectButton() {
     return chatReconnectButton;
   }
+
+  public ConfigProperty<Boolean> languageInfoClosed() {
+    return languageInfoClosed;
+  }
+
 }

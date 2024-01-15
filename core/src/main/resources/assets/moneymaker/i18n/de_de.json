@@ -43,10 +43,6 @@
         "minutes": "Minuten",
         "hour": "Stunde",
         "hours": "Stunden"
-      },
-      "languageNotSupported":{
-        "line1": "ℹ Du benutzt eine Sprache, die vom MoneyMaker-Addon NICHT unterstützt wird! ℹ",
-        "line2": "Bitte gehe in die Lobby und stelle die Sprach auf 'Deutsch' oder 'Englisch'."
       }
     },
     "discordPresence": {
@@ -67,6 +63,11 @@
           "level": "Spitzhacken Level: "
         }
       }
+    },
+    "language-info": {
+      "title": "MoneyMaker Addon",
+      "line1": "ℹ Das MoneyMaker Addon unterstützt aktuell nur Deutsch und Englisch ℹ",
+      "line2": "Eventuell musst du in der Lobby oder über '/language' die Sprache auf 'Deutsch' or 'Englisch' ändern."
     },
     "notification": {
       "booster-export": {

@@ -1,0 +1,57 @@
+.container {
+  left: 50%;
+  top: 50%;
+  width: 530;
+  height: 100;
+  alignment-x: center;
+  alignment-y: center;
+  box-shadow: classic left top right bottom;
+  renderer: "DirtBackground";
+
+  .header {
+    left: 50%;
+    width: 100%;
+    height: 25;
+    padding: 0 2 0 2;
+    space-between-entries: 5;
+    background-color: rgba(170, 0, 0, 0.3);
+
+    .title {
+      alignment: center;
+    }
+
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+    overwrite-width: false;
+
+    .description-container {
+      width: 100%;
+      height: fit-content;
+      margin-top: 10;
+
+      Component {
+        alignment-x: center;
+      }
+
+    }
+
+    .button-container {
+      orientation: horizontal;
+      margin-top: 10;
+      width: fit-content;
+      height: fit-content;
+      alignment-x: center;
+
+      .close-button {
+        width: 50;
+        height: 20;
+        margin-left: 5;
+      }
+
+    }
+
+  }
+}

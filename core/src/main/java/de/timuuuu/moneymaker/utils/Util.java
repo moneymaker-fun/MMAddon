@@ -1,14 +1,13 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.popup.FeedbackActivity;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
-
-import de.timuuuu.moneymaker.activities.popup.FeedbackActivity;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.component.Component;

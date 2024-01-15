@@ -3,16 +3,20 @@ package de.timuuuu.moneymaker.listener;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.popup.LanguageInfoActivity;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import de.timuuuu.moneymaker.utils.Booster;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
+import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.io.web.request.WebResolver;
 import net.labymod.serverapi.protocol.payload.exception.PayloadReaderException;
 import net.labymod.serverapi.protocol.payload.io.PayloadReader;
+import java.util.concurrent.TimeUnit;
 
 public class NetworkPayloadListener {
 
@@ -98,6 +102,14 @@ public class NetworkPayloadListener {
 
               AddonSettings.inMine = gameMode.contains("Mine");
               AddonSettings.inFarming = gameMode.contains("Farming");
+
+              if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.configuration().languageInfoClosed().get()) {
+                Task.builder(() -> {
+                  Laby.labyAPI().minecraft().executeNextTick(() -> {
+                    Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen()));
+                  });
+                }).delay(2, TimeUnit.SECONDS).build().execute();
+              }
 
             }
           }
