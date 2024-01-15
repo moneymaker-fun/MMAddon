@@ -1,24 +1,17 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatMessages;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
-import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
-import net.labymod.api.util.concurrent.task.Task;
-import java.util.concurrent.TimeUnit;
 
 public class ScoreBoardListener {
-
-  private boolean langWarningSent = false;
-  private boolean languageSupported = true;
 
   private MoneyMakerAddon addon;
 
@@ -29,20 +22,6 @@ public class ScoreBoardListener {
   @Subscribe
   public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
     if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
-
-    if(event.score().getValue() == MoneyScore.LANG_CHECK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
-      Task.builder(() -> {
-        languageSupported = ChatMessages.SB_BALANCE_DE.contains(event.score().getName()) || ChatMessages.SB_BALANCE_EN.contains(event.score().getName());
-        if(!languageSupported && !langWarningSent) {
-          langWarningSent = true;
-          this.addon.displayMessage(" ");
-          this.addon.displayMessage(Component.translatable("moneymaker.text.languageNotSupported.line1",
-              NamedTextColor.DARK_RED).decorate(TextDecoration.BOLD));
-          this.addon.displayMessage(Component.translatable("moneymaker.text.languageNotSupported.line2", NamedTextColor.GRAY));
-          this.addon.displayMessage(" ");
-        }
-      }).delay(5, TimeUnit.SECONDS).build().execute();
-    }
 
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && AddonSettings.inFarming) {
       String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
@@ -154,9 +133,7 @@ public class ScoreBoardListener {
 
     RANK(9),
 
-    BALANCE(12),
-
-    LANG_CHECK(13);
+    BALANCE(12);
 
     private final int score;
 
