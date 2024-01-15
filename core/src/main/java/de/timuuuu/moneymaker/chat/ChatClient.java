@@ -95,6 +95,12 @@ public class ChatClient {
         addon.chatActivity().reloadScreen();
         addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
             Component.translatable("moneymaker.notification.chat.timed", TextColor.color(255, 85, 85)));
+        if(socket != null && !socket.isClosed()) {
+            try {
+                socket.close();
+                serverOut = null;
+            } catch(IOException ignored) {}
+        }
       }
       if(status & !online) {
         connect(true);
