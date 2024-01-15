@@ -88,7 +88,7 @@ public class ChatClient {
     }
   }
 
-  public void heartBeat() {
+  public void checkStatus() {
     Task.builder(() -> {
       boolean status = isPortOpen(SERVER_IP, SERVER_PORT);
       if(!status && online) {
