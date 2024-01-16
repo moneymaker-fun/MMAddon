@@ -55,7 +55,7 @@ public class ChatReportActivity extends SimpleActivity {
     FlexibleContentWidget container = new FlexibleContentWidget().addId("container");
     HorizontalListWidget header = new HorizontalListWidget().addId("header");
 
-    IconWidget headWidget = new IconWidget(Icon.head(UUID.fromString(this.uuid), true, false)).addId("head");
+    IconWidget headWidget = new IconWidget(Icon.head(UUID.fromString(this.uuid)).enableHat()).addId("head");
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.report.form.title", this.userName).addId("title");
     header.addEntry(headWidget);
     header.addEntry(titleWidget);
