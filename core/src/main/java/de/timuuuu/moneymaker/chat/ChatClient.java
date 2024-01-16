@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -86,6 +87,15 @@ public class ChatClient {
     } catch (IOException ignored) {
       return false;
     }
+  }
+
+  public void sendHeartbeat() {
+    Task.builder(() -> {
+      JsonObject object = new JsonObject();
+      object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+      object.addProperty("server", this.currentServer());
+      this.sendMessage("heartbeat", object);
+    }).repeat(5, TimeUnit.MINUTES).build().execute();
   }
 
   public void checkStatus() {
@@ -178,6 +188,11 @@ public class ChatClient {
     return socket;
   }
 
+  public String currentServer() {
+    if(AddonSettings.inMine) return "MoneyMaker (Mine)";
+    if(AddonSettings.inFarming) return "MoneyMaker (Farming)";
+    return "Other";
+  }
 
   public enum ChatAction {
     CLEAR("CLEAR"),

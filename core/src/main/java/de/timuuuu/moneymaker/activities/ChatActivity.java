@@ -78,15 +78,10 @@ public class ChatActivity extends SimpleActivity {
             reconnectButton.setEnabled(true);
             this.addon.chatClient().connect(true);
             if(ChatClient.online) {
-
-              String server = "Other";
-              if(AddonSettings.inMine) server = "Mine";
-              if(AddonSettings.inFarming) server = "Farming";
-
               JsonObject data = new JsonObject();
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
               data.addProperty("userName", this.addon.labyAPI().getName());
-              data.addProperty("server", server);
+              data.addProperty("server", this.addon.chatClient().currentServer());
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               this.addon.chatClient().sendMessage("playerStatus", data);
 

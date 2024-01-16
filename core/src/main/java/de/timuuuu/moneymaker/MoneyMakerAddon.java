@@ -127,6 +127,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       if(this.chatClient.socket().isClosed() || this.chatClient.socket() == null) {
         this.chatClient.connect(false);
       }
+      this.chatClient.sendHeartbeat();
     }).delay(5, TimeUnit.SECONDS).build().execute();
 
     //AddonUpdater.checkVersion();
