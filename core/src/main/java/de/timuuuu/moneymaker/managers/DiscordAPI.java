@@ -69,7 +69,7 @@ public class DiscordAPI {
     if(this.addon.configuration().moneyDiscordConfiguration.showLocation().get()) {
       builder.details(this.line1);
     } else {
-      builder.details("MoneyMaker Addon v" + this.addon.addonInfo().getVersion());
+      builder.details("MoneyMaker Addon v" + this.addon.addonInfo().getVersion() + (this.addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment() ? " DEV" : ""));
     }
     if(this.addon.configuration().moneyDiscordConfiguration.showStats().get()) {
       builder.state(this.line2);
@@ -79,7 +79,7 @@ public class DiscordAPI {
 
     builder.largeAsset(Asset.of(
         this.imageUrl,
-        "MoneyMaker Addon v" + this.addon.addonInfo().getVersion()));
+        "MoneyMaker Addon v" + this.addon.addonInfo().getVersion() + (this.addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment() ? " DEV" : "")));
 
     this.addon.labyAPI().thirdPartyService().discord().displayActivity(builder.build());
     this.busy = false;
