@@ -134,14 +134,15 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     //AddonUpdater.downloadUpdater();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      this.chatClient.sendQuitData(this.labyAPI().getUniqueId().toString());
       JsonObject data = new JsonObject();
       data.addProperty("uuid", this.labyAPI().getUniqueId().toString());
       data.addProperty("userName", this.labyAPI().getName());
       data.addProperty("server", "OFFLINE");
       data.addProperty("addonVersion", this.addonInfo().getVersion());
       this.chatClient.sendMessage("playerStatus", data);
-      this.chatClient.sendQuitData(this.labyAPI().getUniqueId().toString());
 
+      this.chatClient.closeSocket();
       if(configuration().exportBoosterOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV(true);
       }
