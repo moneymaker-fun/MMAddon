@@ -152,25 +152,21 @@ public class ChatClient {
     return this.sendMessage("chatAction", object);
   }
 
-  public void sendLaunchData(String uuid, String userName) {
+  public void sendStatistics(boolean quit, String uuid, String userName) {
     if(serverOut == null || socket.isClosed()) return;
     JsonObject object = new JsonObject();
-    object.addProperty("data", "add");
-    object.addProperty("userName", userName);
-    object.addProperty("uuid", uuid);
-    object.addProperty("addonVersion", addon.addonInfo().getVersion());
-    object.addProperty("gameVersion", addon.labyAPI().minecraft().getVersion());
-    object.addProperty("development", addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment());
-    JsonObject data = new JsonObject();
-    data.add("addonStatistics", object);
-    serverOut.println(data);
-  }
-
-  public void sendQuitData(String uuid) {
-    if(serverOut == null || socket.isClosed()) return;
-    JsonObject object = new JsonObject();
-    object.addProperty("data", "remove");
-    object.addProperty("uuid", uuid);
+    if(!quit) {
+      object.addProperty("data", "add");
+      object.addProperty("userName", userName);
+      object.addProperty("uuid", uuid);
+      object.addProperty("addonVersion", addon.addonInfo().getVersion());
+      object.addProperty("gameVersion", addon.labyAPI().minecraft().getVersion());
+      object.addProperty("development", addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment());
+    } else {
+      object.addProperty("data", "remove");
+      object.addProperty("userName", userName);
+      object.addProperty("uuid", uuid);
+    }
     JsonObject data = new JsonObject();
     data.add("addonStatistics", object);
     serverOut.println(data);

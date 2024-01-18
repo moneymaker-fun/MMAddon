@@ -61,8 +61,8 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
-    this.addon.chatClient().sendQuitData(event.previousSession().getUniqueId().toString());
-    this.addon.chatClient().sendLaunchData(event.newSession().getUniqueId().toString(), event.newSession().getUsername());
+    this.addon.chatClient().sendStatistics(true, event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
+    this.addon.chatClient().sendStatistics(false, event.newSession().getUniqueId().toString(), event.newSession().getUsername());
     AddonSettings.playerStatus.remove(event.previousSession().getUniqueId());
 
     JsonObject data = new JsonObject();

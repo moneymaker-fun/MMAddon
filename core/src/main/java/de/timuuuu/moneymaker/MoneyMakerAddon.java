@@ -122,7 +122,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.chatClient.connect(false);
     this.chatClient.checkStatus();
-    this.chatClient.sendLaunchData(this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());
+    this.chatClient.sendStatistics(false, this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());
     Task.builder(() -> {
       if(this.chatClient.socket().isClosed() || this.chatClient.socket() == null) {
         this.chatClient.connect(false);
@@ -134,7 +134,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     //AddonUpdater.downloadUpdater();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      this.chatClient.sendQuitData(this.labyAPI().getUniqueId().toString());
+      this.chatClient.sendStatistics(true, this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());
       JsonObject data = new JsonObject();
       data.addProperty("uuid", this.labyAPI().getUniqueId().toString());
       data.addProperty("userName", this.labyAPI().getName());
