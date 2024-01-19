@@ -70,7 +70,7 @@ public class FeedbackActivity extends SimpleActivity {
 
     HorizontalListWidget nameInput = new HorizontalListWidget().addId("name-input");
 
-    IconWidget headWidget = new IconWidget(Icon.head(this.uuid, true, false)).addId("head");
+    IconWidget headWidget = new IconWidget(Icon.head(this.uuid)).addId("head");
 
     TextFieldWidget nameInputWidget = new TextFieldWidget().addId("username-input");
     nameInputWidget.setText(this.username);
