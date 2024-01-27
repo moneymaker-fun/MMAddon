@@ -54,7 +54,8 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
   private void updateLines() {
     String additional = "";
     if(this.getConfig().showRankingDifference().get() && AddonSettings.savedSwordRanking != 0) {
-      additional = " (-" + (AddonSettings.savedSwordRanking - AddonSettings.swordRanking) + ")";
+      int diff = AddonSettings.savedSwordRanking - AddonSettings.swordRanking;
+      additional = " (" + (diff == 0 ? "∓ " : diff > 0 ? "↑ " : "↓ ") + diff + ")";
     }
     this.rankLine.updateAndFlush(Util.format(AddonSettings.swordRanking) + additional);
     this.rankLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.swordRanking != 0 ? State.VISIBLE : State.HIDDEN);
