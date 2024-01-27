@@ -89,7 +89,43 @@ public class MoneyAddonListener {
   public void onPlayerStatusUpdate(MoneyPlayerStatusEvent event) {
     UUID uuid = event.uuid();
     MoneyPlayer player = event.player();
-    if(!player.server().equals("OFFLINE")) {
+
+    if(AddonSettings.playerStatus.containsKey(uuid)) {
+      String serverBefore = AddonSettings.playerStatus.get(uuid).server();
+
+      // Online
+      if(serverBefore.equalsIgnoreCase("Other") && player.server().contains("MoneyMaker")) {
+        if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get()) {
+          this.addon.pushNotification(
+              Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+              Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
+                  Component.text(player.userName(), TextColor.color(255, 255, 85))),
+              Icon.head(uuid).enableHat()
+          );
+        }
+      }
+
+      // Offline
+      if(serverBefore.contains("MoneyMaker") && (player.server().equalsIgnoreCase("Other") || player.server().equals("OFFLINE"))) {
+        if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get()) {
+          this.addon.pushNotification(
+              Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+              Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
+                  Component.text(player.userName(), TextColor.color(255, 255, 85))),
+              Icon.head(uuid).enableHat()
+          );
+        }
+      }
+
+      AddonSettings.playerStatus.put(uuid, player);
+
+    }
+
+    if(player.server().equals("OFFLINE")) {
+      AddonSettings.playerStatus.remove(uuid);
+    }
+
+    /*if(!player.server().equals("OFFLINE")) {
       if((AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.playerStatus.containsKey(uuid) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString())) {
         this.addon.pushNotification(
             Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
@@ -110,7 +146,7 @@ public class MoneyAddonListener {
         );
       }
       AddonSettings.playerStatus.remove(uuid);
-    }
+    }*/
   }
 
   @Subscribe
