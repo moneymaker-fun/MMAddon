@@ -118,16 +118,14 @@ public class TickListener {
       }
 
       if(AddonSettings.swordMobs != 0) {
-        try {
-          if(AddonSettings.mobKills == 0) {
-            AddonSettings.mobKills = AddonSettings.swordMobs;
-          } else {
-            int sessionKills = AddonSettings.swordMobs - AddonSettings.mobKills;
-            if(sessionKills >= 0) {
-              AddonSettings.sessionKills = sessionKills;
-            }
+        if(AddonSettings.mobKills == 0) {
+          AddonSettings.mobKills = AddonSettings.swordMobs;
+        } else {
+          int sessionKills = AddonSettings.swordMobs - AddonSettings.mobKills;
+          if(sessionKills >= 0) {
+            AddonSettings.sessionKills = sessionKills;
           }
-        } catch (NumberFormatException ignored) {}
+        }
       }
 
     }
