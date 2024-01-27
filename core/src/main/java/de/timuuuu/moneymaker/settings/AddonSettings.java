@@ -57,6 +57,11 @@ public class AddonSettings {
     debrisCost = "X";
     debrisNotifySent = false;
     workerNotifySent = false;
+    savedSwordRanking = 0;
+    swordRanking = 0;
+    swordMobs = 0;
+    mobKills = 0;
+    sessionKills = 0;
   }
 
   public static String balance = "X";
@@ -78,6 +83,7 @@ public class AddonSettings {
   public static String nextWorkerCost = "X";
   public static String debrisCost = "X";
 
+  public static int savedSwordRanking = 0;
   public static int swordRanking = 0;
   public static int swordMobs = 0;
   public static int mobKills = 0;
