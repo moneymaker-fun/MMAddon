@@ -28,9 +28,9 @@ public class TickListener {
     if(tickCount == AddonSettings.CHECK_TICK) {
       tickCount = 0;
 
+      if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
       String rankingLine = event.getLoreList().get(2);
       String mobsLine = event.getLoreList().get(3);
-      if(rankingLine == null || mobsLine == null) return;
 
       /*
       §bStatistiken: [Statistiken:]
@@ -44,8 +44,10 @@ public class TickListener {
         mobsLine = ChatUtil.stripColor(mobsLine);
 
         if(rankingLine.startsWith("Ranking: ")) {
-          AddonSettings.swordRanking = Integer.parseInt(rankingLine.split(" ")[2]
-              .replace(".", "").replace(",", ""));
+          if(!(rankingLine.contains("Lädt...") || rankingLine.contains("Loading..."))) {
+            AddonSettings.swordRanking = Integer.parseInt(rankingLine.split(" ")[2]
+                .replace(".", "").replace(",", ""));
+          }
         }
 
         if(mobsLine.startsWith("Getötete Mobs: ")) {
