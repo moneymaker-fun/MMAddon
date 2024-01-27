@@ -414,6 +414,9 @@
         "showIcons": {
           "name": "Mit Icons anzeigen"
         },
+        "showRankingDifference": {
+          "name": "Zeige Rang Differenz"
+        },
         "without-icon": {
           "rank": "Schwert Rang",
           "kills": "Schwert Kills"

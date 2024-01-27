@@ -128,6 +128,10 @@ public class TickListener {
         }
       }
 
+      if(AddonSettings.swordRanking != 0 && AddonSettings.savedSwordRanking == 0) {
+        AddonSettings.savedSwordRanking = AddonSettings.swordRanking;
+      }
+
     }
 
     /*

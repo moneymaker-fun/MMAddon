@@ -414,6 +414,9 @@
         "showIcons": {
           "name": "Show with icons"
         },
+        "showRankingDifference": {
+          "name": "Show Rank Difference"
+        },
         "without-icon": {
           "rank": "Sword Rank",
           "kills": "Sword Kills"

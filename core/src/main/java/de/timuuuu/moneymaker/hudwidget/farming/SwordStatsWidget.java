@@ -52,7 +52,11 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
   }
 
   private void updateLines() {
-    this.rankLine.updateAndFlush(Util.format(AddonSettings.swordRanking));
+    String additional = "";
+    if(this.getConfig().showRankingDifference().get() && AddonSettings.savedSwordRanking != 0) {
+      additional = " (-" + (AddonSettings.savedSwordRanking - AddonSettings.swordRanking) + ")";
+    }
+    this.rankLine.updateAndFlush(Util.format(AddonSettings.swordRanking) + additional);
     this.rankLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.swordRanking != 0 ? State.VISIBLE : State.HIDDEN);
 
     this.mobsLine.updateAndFlush(Util.format(AddonSettings.swordMobs));
@@ -65,12 +69,20 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
     @SwitchSetting
     private final ConfigProperty<Boolean> showIcons;
 
+    @SwitchSetting
+    private final ConfigProperty<Boolean> showRankingDifference;
+
     public SwordHudWidgetConfig() {
-      this.showIcons = new ConfigProperty<>(true);
+      this.showIcons = new ConfigProperty<>(false);
+      this.showRankingDifference = new ConfigProperty<>(false);
     }
 
     public ConfigProperty<Boolean> showIcons() {
       return showIcons;
+    }
+
+    public ConfigProperty<Boolean> showRankingDifference() {
+      return showRankingDifference;
     }
   }
 
