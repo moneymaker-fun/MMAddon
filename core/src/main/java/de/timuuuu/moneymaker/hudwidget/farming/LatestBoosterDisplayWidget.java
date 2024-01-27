@@ -49,7 +49,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
       return;
     }
 
-    if(!AddonSettings.inFarming) {
+    if(!(AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get())) {
       this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_booster_display.notConnected"), stack, size);
       return;
     }
