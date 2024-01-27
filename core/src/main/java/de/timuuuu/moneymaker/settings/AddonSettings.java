@@ -4,8 +4,6 @@ package de.timuuuu.moneymaker.settings;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.HashMap;
 import java.util.UUID;
-import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.TextComponent;
 
 public class AddonSettings {
 
@@ -14,7 +12,31 @@ public class AddonSettings {
   public static boolean inMine = false;
   public static boolean inFarming = false;
 
+  public static int CHECK_TICK = 5*20; // 5*20 (5 seconds)
+  public static int CHECK_RENDER = 20; // every 20 renders
+
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
+
+  public static void selectUpdateMode(UpdateMode updateMode) {
+    switch (updateMode) {
+      case INSTANT -> {
+        CHECK_TICK = 1; // check every tick
+        CHECK_RENDER = 1; // check every render
+      }
+      case FAST -> {
+        CHECK_TICK = 3*20; // check every 3 seconds
+        CHECK_RENDER = 10; // check every 10 renders
+      }
+      case NORMAL -> {
+        CHECK_TICK = 5*20; // check every 5 seconds
+        CHECK_RENDER = 20; // check every 20 renders
+      }
+      case SLOW -> {
+        CHECK_TICK = 10*20; // check every 20 seconds
+        CHECK_RENDER = 60; // check every 60 renders
+      }
+    }
+  }
 
   public static void resetValues(boolean changePlaying) {
     if(changePlaying) {
@@ -72,6 +94,10 @@ public class AddonSettings {
 
   public enum FarmingReset {
     AUTOMATICALLY, ASK, HIDE
+  }
+
+  public enum UpdateMode {
+    INSTANT, FAST, NORMAL, SLOW
   }
 
 }

@@ -32,7 +32,7 @@ public class BlockSessionWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void onTick(boolean isEditorContext) {
     this.textLine.updateAndFlush(Component.text(Util.format(AddonSettings.sessionBlocks) + " ").append(Component.translatable("moneymaker.hudWidget.mm_block_session." + (AddonSettings.sessionBlocks == 1 ? "block" : "blocks"))));
-    this.textLine.setState(AddonSettings.inFarming && AddonSettings.sessionBlocks > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.sessionBlocks > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

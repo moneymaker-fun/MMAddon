@@ -20,13 +20,12 @@ public class TickListener {
   }
 
   private int tickCount = 0;
-  private int checkTick = 5*20; // 5 Seconds
 
   @Subscribe
   public void onSwordTick(SwordTickEvent event) {
     if(!AddonSettings.inFarming) return;
     tickCount++;
-    if(tickCount == checkTick) {
+    if(tickCount == AddonSettings.CHECK_TICK) {
       tickCount = 0;
 
       String rankingLine = event.getLoreList().get(2);

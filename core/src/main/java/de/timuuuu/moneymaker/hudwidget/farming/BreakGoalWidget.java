@@ -35,7 +35,7 @@ public class BreakGoalWidget extends TextHudWidget<TextHudWidgetConfig> {
       int blocks = AddonSettings.breakGoalBlocks - AddonSettings.currentBrokenBlocks;
       this.textLine.updateAndFlush(Component.text(blocks + " ").append(Component.translatable("moneymaker.hudWidget.mm_break_goal.remaining")));
     }
-    this.textLine.setState(AddonSettings.inFarming && AddonSettings.breakGoalEnabled && AddonSettings.breakGoal > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.breakGoalEnabled && AddonSettings.breakGoal > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 

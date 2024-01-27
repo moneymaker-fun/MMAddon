@@ -37,7 +37,7 @@ public class KillCountWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   private void updateLines() {
     this.rankLine.updateAndFlush(Util.format(AddonSettings.sessionKills));
-    this.rankLine.setState(AddonSettings.inFarming && AddonSettings.sessionKills != 0 ? State.VISIBLE : State.HIDDEN);
+    this.rankLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.sessionKills != 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

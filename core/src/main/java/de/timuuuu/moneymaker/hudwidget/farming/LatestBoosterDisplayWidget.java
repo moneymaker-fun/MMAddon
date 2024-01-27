@@ -129,7 +129,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
 
   @Override
   public boolean isVisibleInGame() {
-    return AddonSettings.inFarming && !Booster.latestFoundBoosters().isEmpty();
+    return (AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && !Booster.latestFoundBoosters().isEmpty();
   }
 
   public static class BoosterHudWidgetConfig extends HudWidgetConfig {

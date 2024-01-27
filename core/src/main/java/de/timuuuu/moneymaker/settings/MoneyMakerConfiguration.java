@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.settings;
 
 import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
+import de.timuuuu.moneymaker.settings.AddonSettings.UpdateMode;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownEntryTranslationPrefix;
@@ -16,6 +17,10 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 @ConfigName("settings")
 @SpriteTexture("sprite/settings")
 public class MoneyMakerConfiguration extends AddonConfig {
+
+  public MoneyMakerConfiguration() {
+    this.updateMode.addChangeListener((type, oldValue, newValue) -> AddonSettings.selectUpdateMode(newValue));
+  }
 
   @SettingSection(value = "general", center = true)
 
@@ -44,6 +49,15 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @DropdownSetting
   @DropdownEntryTranslationPrefix("moneymaker.settings.farmingAutoReset.type")
   private final ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset = new ConfigProperty<>(FarmingReset.ASK);
+
+  @IntroducedIn(value = "1.2.4", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showWidgetsAlways = new ConfigProperty<>(false);
+
+  @IntroducedIn(value = "1.2.4", namespace = "moneymaker")
+  @DropdownSetting
+  @DropdownEntryTranslationPrefix("moneymaker.settings.updateMode.type")
+  private final ConfigProperty<AddonSettings.UpdateMode> updateMode = new ConfigProperty<>(UpdateMode.NORMAL);
 
   @SettingSection(value = "gameplay", center = true)
 
@@ -101,6 +115,14 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset() {
     return farmingAutoReset;
+  }
+
+  public ConfigProperty<Boolean> showWidgetsAlways() {
+    return showWidgetsAlways;
+  }
+
+  public ConfigProperty<AddonSettings.UpdateMode> updateMode() {
+    return updateMode;
   }
 
   // Gameplay Getters

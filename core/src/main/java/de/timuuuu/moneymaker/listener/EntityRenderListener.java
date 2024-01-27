@@ -18,53 +18,61 @@ public class EntityRenderListener {
     this.addon = addon;
   }
 
+  private int checkCount = 0;
+
   @Subscribe
   public void onArmorStandRender(ArmorStandRenderEvent event) {
     if(!AddonSettings.inMine) return;
     Entity entity = event.entity();
 
-    String entityName = ChatUtil.stripColor(event.customName());
+    checkCount++;
+    if(checkCount == AddonSettings.CHECK_RENDER) {
+      checkCount = 0;
 
-    if(entityName.contains("Kosten: ") || entityName.contains("Price: ")) {
-      String costs = entityName.replace("Kosten: ","").replace("Price: ", "");
+      String entityName = ChatUtil.stripColor(event.customName());
 
-      if(entity.getPosX() == 2.5D || entity.getPosX() == 1001.5D || entity.getPosZ() == -1.5D || entity.getPosZ() == 6.5D) {
-        if(!AddonSettings.nextWorkerCost.equals(costs)) {
-          AddonSettings.nextWorkerCost = costs;
+      if(entityName.contains("Kosten: ") || entityName.contains("Price: ")) {
+        String costs = entityName.replace("Kosten: ","").replace("Price: ", "");
+
+        if(entity.getPosX() == 2.5D || entity.getPosX() == 1001.5D || entity.getPosZ() == -1.5D || entity.getPosZ() == 6.5D) {
+          if(!AddonSettings.nextWorkerCost.equals(costs)) {
+            AddonSettings.nextWorkerCost = costs;
+          }
+        }
+
+        if(entity.getPosX() == 5.5D || entity.getPosX() == 1004.5D || entity.getPosZ() == -5.5D || entity.getPosZ() == 1.5) {
+          if(!AddonSettings.debrisCost.equals(costs)) {
+            AddonSettings.debrisCost = costs;
+          }
         }
       }
 
-      if(entity.getPosX() == 5.5D || entity.getPosX() == 1004.5D || entity.getPosZ() == -5.5D || entity.getPosZ() == 1.5) {
-        if(!AddonSettings.debrisCost.equals(costs)) {
-          AddonSettings.debrisCost = costs;
+      if((entityName.contains("Minen-Arbeitsplätze") || entityName.contains("mining workplaces")) & entityName.contains("/")) {
+        int count = Integer.parseInt(entityName.split("/")[0]);
+        if(AddonSettings.workerCount != count) {
+          AddonSettings.workerCount = count;
         }
       }
-    }
 
-    if((entityName.contains("Minen-Arbeitsplätze") || entityName.contains("mining workplaces")) & entityName.contains("/")) {
-      int count = Integer.parseInt(entityName.split("/")[0]);
-      if(AddonSettings.workerCount != count) {
-        AddonSettings.workerCount = count;
-      }
-    }
+      if(entityName.contains("Geröll entfernen ") || entityName.contains("Remove debris ")) {
+        String time = entityName.replace("Geröll entfernen ", "").replace("Remove debris ", "");
 
-    if(entityName.contains("Geröll entfernen ") || entityName.contains("Remove debris ")) {
-      String time = entityName.replace("Geröll entfernen ", "").replace("Remove debris ", "");
-
-      if((time.contains(" Stunde") && time.contains(" Minute")) || (time.contains(" hour") && time.contains(" minute"))) {
-        time = time.replace(" Stunden", "").replace(" Stunde", "").replace(" hours", "").replace(" hours", "");
-        time = time.replace(" Minuten", "").replace(" Minute", "").replace(" minutes", "").replace(" minute", "");
-        time = time.replace(" ", ":");
-        time = time + ":00";
-        if(AddonSettings.debrisTime == 0 & !timerRunning) {
-          AddonSettings.debrisTime = Util.timeToInt(time, true);
-          startTask();
+        if((time.contains(" Stunde") && time.contains(" Minute")) || (time.contains(" hour") && time.contains(" minute"))) {
+          time = time.replace(" Stunden", "").replace(" Stunde", "").replace(" hours", "").replace(" hours", "");
+          time = time.replace(" Minuten", "").replace(" Minute", "").replace(" minutes", "").replace(" minute", "");
+          time = time.replace(" ", ":");
+          time = time + ":00";
+          if(AddonSettings.debrisTime == 0 & !timerRunning) {
+            AddonSettings.debrisTime = Util.timeToInt(time, true);
+            startTask();
+          }
+        } else {
+          if(AddonSettings.debrisTime == 0 & !timerRunning) {
+            AddonSettings.debrisTime = Util.timeToInt(time, false);
+            startTask();
+          }
         }
-      } else {
-        if(AddonSettings.debrisTime == 0 & !timerRunning) {
-          AddonSettings.debrisTime = Util.timeToInt(time, false);
-          startTask();
-        }
+
       }
 
     }

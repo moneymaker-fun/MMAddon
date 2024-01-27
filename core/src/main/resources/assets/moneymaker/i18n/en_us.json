@@ -221,7 +221,21 @@
         "type": {
           "automatically": "Automatically Reset",
           "ask": "Ask to Reset (Notification)",
-          "hide": "Hide completly"
+          "hide": "Hide completely"
+        }
+      },
+      "showWidgetsAlways" : {
+        "name": "Show Widgets always",
+        "description": "Show widgets that are normally only visible in the farming cave also in the mine"
+      },
+      "updateMode": {
+        "name": "Data processing speed",
+        "description": "Data processing speed (rendering ArmorStands, querying sword statistics)",
+        "type": {
+          "instant": "Instant",
+          "fast": "Fast",
+          "normal": "Normal",
+          "slow": "Slow"
         }
       },
       "shortBoosterMessage": {

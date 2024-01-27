@@ -33,6 +33,7 @@ import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
 import de.timuuuu.moneymaker.managers.DiscordAPI;
+import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
@@ -129,6 +130,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       }
       this.chatClient.sendHeartbeat();
     }).delay(5, TimeUnit.SECONDS).build().execute();
+
+    AddonSettings.selectUpdateMode(this.configuration().updateMode().get());
 
     //AddonUpdater.checkVersion();
     //AddonUpdater.downloadUpdater();

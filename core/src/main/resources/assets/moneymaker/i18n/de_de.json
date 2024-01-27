@@ -227,6 +227,20 @@
           "hide": "Verstecken"
         }
       },
+      "showWidgetsAlways": {
+        "name": "Zeige Widgets immer an",
+        "description": "Zeige Widgets, welche normal nur in der Farminghöhle sichtbar sind, auch in der Mine an"
+      },
+      "updateMode": {
+        "name": "Verarbeitungsgeschwindigkeit",
+        "description": "Verarbeitungsgeschwindigkeit der Daten (Rendern der ArmorStands, Abfrage der Schwert-Statistiken)",
+        "type": {
+          "instant": "Direkt",
+          "fast": "Schnell",
+          "normal": "Normal",
+          "slow": "Langsam"
+        }
+      },
       "hideEmptyMessages": {
         "name": "Leere Nachrichten verstecken",
         "description": "Versteckt leere Nachrichten und Trennnachrichten"

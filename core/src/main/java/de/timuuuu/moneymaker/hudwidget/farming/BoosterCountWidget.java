@@ -32,7 +32,7 @@ public class BoosterCountWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void onTick(boolean isEditorContext) {
     this.textLine.updateAndFlush(Component.text(Util.format(Booster.sessionBoosters.get()) + " (" + Util.format(Booster.sessionBoost.get()) + "%)"));
-    this.textLine.setState(AddonSettings.inFarming && Booster.sessionBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && Booster.sessionBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }
