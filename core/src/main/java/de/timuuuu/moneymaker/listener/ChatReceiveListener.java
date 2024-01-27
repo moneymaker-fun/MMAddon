@@ -83,7 +83,7 @@ public class ChatReceiveListener {
       // EN: [MoneyMaker] +10% Booster (20 minutes)
       // DE: [MoneyMaker] +10 % Booster (20 Minuten)
 
-      if (plain.contains("[MoneyMaker] +") && plain.contains("Booster (")) {
+      if (plain.startsWith("[MoneyMaker] +") && plain.contains("Booster (")) {
         int boost = Integer.parseInt(plain.split(" ")[1].replace("%", "").replace("+", ""));
         Booster.sessionBoost.addAndGet(boost);
         Booster.sessionBoosters.addAndGet(1);
