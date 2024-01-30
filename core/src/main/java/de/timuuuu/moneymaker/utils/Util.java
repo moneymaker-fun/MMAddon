@@ -57,7 +57,7 @@ public class Util {
       textRenderer.text(RenderableComponent.of(
           Component.text("Addon-Version", NamedTextColor.GRAY)
               .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-              .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion() + (labyAPI.labyModLoader().isAddonDevelopmentEnvironment() ? " DEV" : ""), NamedTextColor.YELLOW))
+              .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
           ))
           .scale(0.8f)
           .pos(5, bounds.getHeight() -17)
