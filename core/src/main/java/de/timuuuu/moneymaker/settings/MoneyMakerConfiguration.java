@@ -42,23 +42,26 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SettingSection(value = "other", center = true)
 
   @IntroducedIn(value = "1.1.0", namespace = "moneymaker")
+  @SpriteSlot(y = 3, x = 3)
   @SwitchSetting
   private final ConfigProperty<Boolean> exportBoosterOnShutdown = new ConfigProperty<>(false);
 
   @IntroducedIn(value = "1.2.3", namespace = "moneymaker")
+  @SpriteSlot(y = 3, x = 2)
   @DropdownSetting
   @DropdownEntryTranslationPrefix("moneymaker.settings.farmingAutoReset.type")
   private final ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset = new ConfigProperty<>(FarmingReset.ASK);
 
   @IntroducedIn(value = "1.2.4", namespace = "moneymaker")
+  @SpriteSlot(y = 3, x = 1)
   @SwitchSetting
   private final ConfigProperty<Boolean> showWidgetsAlways = new ConfigProperty<>(false);
 
   @IntroducedIn(value = "1.2.4", namespace = "moneymaker")
+  @SpriteSlot(y = 3)
   @DropdownSetting
   @DropdownEntryTranslationPrefix("moneymaker.settings.updateMode.type")
   private final ConfigProperty<AddonSettings.UpdateMode> updateMode = new ConfigProperty<>(UpdateMode.NORMAL);
-
   @SettingSection(value = "gameplay", center = true)
 
   @SpriteSlot(y = 2, x = 1)
@@ -74,6 +77,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> hideWorkerUpgradeMessage = new ConfigProperty<>(false);
 
+  @SpriteSlot(y = 2, x = 7)
   @IntroducedIn(value = "0.0.6", namespace = "moneymaker")
   @SwitchSetting
   private final ConfigProperty<Boolean> hideBuySellWorkerMessage = new ConfigProperty<>(false);
