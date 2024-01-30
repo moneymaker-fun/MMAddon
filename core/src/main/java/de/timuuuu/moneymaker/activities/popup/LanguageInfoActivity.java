@@ -47,6 +47,7 @@ public class LanguageInfoActivity extends SimpleActivity {
     closeButton.setPressable(() -> {
       Laby.labyAPI().minecraft().minecraftWindow().displayScreen(this.previousScreen);
       this.addon.configuration().languageInfoClosed().set(true);
+      this.addon.saveConfiguration();
     });
 
     FlexibleContentWidget buttonContainer = new FlexibleContentWidget().addId("button-container");
