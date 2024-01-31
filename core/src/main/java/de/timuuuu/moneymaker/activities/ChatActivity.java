@@ -138,7 +138,7 @@ public class ChatActivity extends SimpleActivity {
       players.forEach(moneyPlayer -> {
         if(moneyPlayer.server().contains("MoneyMaker")) {
           Component component = Component.icon(Icon.head(moneyPlayer.uuid()), 10)
-              .append(Component.text(" " + moneyPlayer.rank().getOnlineColor() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
+              .append(Component.text(" " + moneyPlayer.rank().getChatPrefix() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
           component.clickEvent(ClickEvent.openUrl("https://laby.net/@" + moneyPlayer.userName()));
           if(Util.isDev(this.labyAPI.getUniqueId().toString())) {
             component.hoverEvent(HoverEvent.showText(Component.text("§7Nutzt §e" + moneyPlayer.addonVersion() + " §7als Addon-Version")));
