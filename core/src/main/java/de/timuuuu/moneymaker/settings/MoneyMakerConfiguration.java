@@ -179,7 +179,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> languageInfoClosed = new ConfigProperty<>(false);
 
   @Exclude
-  private final ConfigProperty<Long> timeChatRulesAccepted = new ConfigProperty<>(0L);
+  private final ConfigProperty<Integer> chatRulesVersion = new ConfigProperty<>(0);
 
   public ConfigProperty<Boolean> chatReconnectButton() {
     return chatReconnectButton;
@@ -189,7 +189,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return languageInfoClosed;
   }
 
-  public ConfigProperty<Long> timeChatRulesAccepted() {
-    return timeChatRulesAccepted;
+  public ConfigProperty<Integer> chatRulesVersion() {
+    return chatRulesVersion;
   }
 }

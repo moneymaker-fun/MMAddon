@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import java.util.function.Consumer;
 import net.labymod.api.Textures.SpriteCommon;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.ScreenInstance;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
@@ -23,7 +24,6 @@ import net.labymod.api.util.io.web.request.Request;
 @AutoActivity
 public class ChatRulesActivity extends SimpleActivity {
 
-  public static long RULES_TIME_COOLDOWN = 4 * 7 * 24 * 60 * 60 * 1000L;
   public static JsonObject CACHED_RULES;
 
   private MoneyMakerAddon addon;
@@ -93,6 +93,17 @@ public class ChatRulesActivity extends SimpleActivity {
 
     HorizontalListWidget footer = new HorizontalListWidget().addId("footer");
 
+    if(this.rules != null) {
+      if(this.rules.has("version") && this.rules.has("versiondate")) {
+        ComponentWidget versionComponent = ComponentWidget.component(
+          Component.translatable("moneymaker.chat-rules.version.name").append(Component.text(this.rules.get("version").getAsString()))
+              .append(Component.text(" | ").append(Component.translatable("moneymaker.chat-rules.version.date")).append(Component.text(this.rules.get("versiondate").getAsString())))
+        );
+        versionComponent.addId("version-info");
+        footer.addEntry(versionComponent);
+      }
+    }
+
     if(this.updateConfiguration) {
       ButtonWidget acceptButton = ButtonWidget.i18n("moneymaker.chat-rules.accept").addId("accept-button");
       acceptButton.setPressable(() -> closeScreen(true));
@@ -105,8 +116,8 @@ public class ChatRulesActivity extends SimpleActivity {
   }
 
   private void closeScreen(boolean accepted) {
-    if(accepted && this.updateConfiguration) {
-      this.addon.configuration().timeChatRulesAccepted().set(System.currentTimeMillis());
+    if(accepted && this.updateConfiguration && this.rules.has("version")) {
+      this.addon.configuration().chatRulesVersion().set(this.rules.get("version").getAsInt());
       this.addon.saveConfiguration();
     }
     this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(this.previousScreen);
@@ -132,4 +143,7 @@ public class ChatRulesActivity extends SimpleActivity {
         });
   }
 
+  public JsonObject rules() {
+    return rules;
+  }
 }

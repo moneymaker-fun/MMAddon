@@ -74,6 +74,12 @@
     background-color: rgba(10, 10, 10, 0.4);
     border-radius: 0 0 15 15;
 
+    .version-info {
+      padding-left: 5;
+      text-color: gray;
+      font-size: 0.5;
+    }
+
     .accept-button {
       padding-left: 5;
       padding-right: 5;

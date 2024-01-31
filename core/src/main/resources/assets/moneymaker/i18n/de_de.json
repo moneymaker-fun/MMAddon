@@ -72,7 +72,11 @@
     "chat-rules": {
       "button": "Regeln",
       "title": "MoneyMaker Addon Chat Regeln",
-      "accept": "Akzeptieren"
+      "accept": "Akzeptieren",
+      "version": {
+        "name": "Version: ",
+        "date": "Letztes Update: "
+      }
     },
     "notification": {
       "booster-export": {

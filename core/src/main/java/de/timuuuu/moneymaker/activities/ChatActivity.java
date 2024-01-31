@@ -185,16 +185,17 @@ public class ChatActivity extends SimpleActivity {
   public void onOpenScreen() {
     super.onOpenScreen();
 
-    long remainingTime = (this.addon.configuration().timeChatRulesAccepted().get() + ChatRulesActivity.RULES_TIME_COOLDOWN - System.currentTimeMillis());
-    if(remainingTime <= 0) {
-      try {
-        ChatRulesActivity.create(this.addon, this.addon.labyAPI().minecraft().minecraftWindow().currentScreen(), false, chatRulesActivity -> {
-          if(chatRulesActivity == null) return;
-          this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(chatRulesActivity);
-        });
-      } catch (Throwable ignored) {
+    try {
+      ChatRulesActivity.create(this.addon,
+          this.addon.labyAPI().minecraft().minecraftWindow().currentScreen(), true,
+          chatRulesActivity -> {
+            if (chatRulesActivity == null) return;
+            if(chatRulesActivity.rules().has("version") &&
+                this.addon.configuration().chatRulesVersion().get() == chatRulesActivity.rules().get("version").getAsInt()) return;
+            this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(chatRulesActivity);
+          });
+    } catch (Throwable ignored) {
 
-      }
     }
 
   }
