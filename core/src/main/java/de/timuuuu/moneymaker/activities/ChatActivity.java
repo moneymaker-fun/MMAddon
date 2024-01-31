@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.activities;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.badges.MoneyRank;
 import de.timuuuu.moneymaker.chat.ChatClient;
@@ -67,6 +68,20 @@ public class ChatActivity extends SimpleActivity {
 
     ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline")).addId("chat-status");
     this.document.addChild(statusWidget);
+
+    ButtonWidget rulesButton = ButtonWidget.i18n("moneymaker.chat-rules.button").addId("rules-button");
+    rulesButton.setPressable(() -> {
+      try {
+        ChatRulesActivity.create(this.addon, this.addon.labyAPI().minecraft().minecraftWindow().currentScreen(), false, chatRulesActivity -> {
+          if(chatRulesActivity == null) return;
+          this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(chatRulesActivity);
+        });
+      } catch (Throwable ignored) {
+
+      }
+    });
+
+    this.document.addChild(rulesButton);
 
     if(this.addon.configuration().chatReconnectButton().get()) {
       ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
@@ -163,6 +178,25 @@ public class ChatActivity extends SimpleActivity {
     if(!chatMessages.isEmpty()) {
       chatScroll.scrollToBottom();
     }
+
+  }
+
+  @Override
+  public void onOpenScreen() {
+    super.onOpenScreen();
+
+    long remainingTime = (this.addon.configuration().timeChatRulesAccepted().get() + ChatRulesActivity.RULES_TIME_COOLDOWN - System.currentTimeMillis());
+    if(remainingTime <= 0) {
+      try {
+        ChatRulesActivity.create(this.addon, this.addon.labyAPI().minecraft().minecraftWindow().currentScreen(), false, chatRulesActivity -> {
+          if(chatRulesActivity == null) return;
+          this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(chatRulesActivity);
+        });
+      } catch (Throwable ignored) {
+
+      }
+    }
+
   }
 
   private void submitMessage() {

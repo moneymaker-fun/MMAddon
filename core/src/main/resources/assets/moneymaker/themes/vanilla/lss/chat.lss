@@ -12,7 +12,15 @@
   padding: 1 5 1 5;
   height: 10;
   background-color: red !important;
-  border-color: dark_red !important;
+}
+
+.rules-button {
+  width: fit-content;
+  top: 28;
+  right: 20;
+  padding: 1 5 1 5;
+  height: 10;
+  background-color: red !important;
 }
 
 .chat-status {

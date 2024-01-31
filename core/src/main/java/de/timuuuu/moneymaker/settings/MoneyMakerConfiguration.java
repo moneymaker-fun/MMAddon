@@ -7,6 +7,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.Switc
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownEntryTranslationPrefix;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
 import net.labymod.api.configuration.loader.annotation.ConfigName;
+import net.labymod.api.configuration.loader.annotation.Exclude;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
@@ -171,9 +172,14 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   // Internal Settings
 
+  @Exclude
   private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
 
+  @Exclude
   private final ConfigProperty<Boolean> languageInfoClosed = new ConfigProperty<>(false);
+
+  @Exclude
+  private final ConfigProperty<Long> timeChatRulesAccepted = new ConfigProperty<>(0L);
 
   public ConfigProperty<Boolean> chatReconnectButton() {
     return chatReconnectButton;
@@ -183,4 +189,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return languageInfoClosed;
   }
 
+  public ConfigProperty<Long> timeChatRulesAccepted() {
+    return timeChatRulesAccepted;
+  }
 }

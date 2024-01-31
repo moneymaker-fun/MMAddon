@@ -69,6 +69,11 @@
       "line1": "ℹ The MoneyMaker Addon currently only supports German and English ℹ",
       "line2": "You may need to change the language to 'German' or 'English' in the lobby or via '/language'."
     },
+    "chat-rules": {
+      "button": "Rules",
+      "title": "MoneyMaker Addon Chat Rules",
+      "accept": "Accept"
+    },
     "notification": {
       "booster-export": {
         "title": "Booster-Export",
