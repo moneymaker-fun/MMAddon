@@ -103,7 +103,7 @@ public class ScoreBoardListener {
           }
         }
 
-        if(!AddonSettings.debrisCost.equals("X") && !AddonSettings.debrisNotifySent) {
+        if(!AddonSettings.debrisCost.equals("X") && AddonSettings.nextWorkerCost.equals("X") && !AddonSettings.debrisNotifySent) {
           String[] debrisSplit = AddonSettings.debrisCost.replace(".", "").split(" ");
           int debrisCost = Integer.parseInt(debrisSplit[0]);
           String debrisEinheit = debrisSplit[1];
