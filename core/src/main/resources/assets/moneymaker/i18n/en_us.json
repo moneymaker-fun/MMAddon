@@ -405,7 +405,8 @@
         "miners": "Miners"
       },
       "mm_debris_price": {
-        "name": "Debris Price"
+        "name": "Debris Price",
+        "unlock_last_miner": "Unlock Workplace"
       },
       "mm_debris_timer": {
         "name": "Debris Timer"

@@ -409,7 +409,8 @@
         "miners": "Minenarbeiter"
       },
       "mm_debris_price": {
-        "name": "Geröll Preis"
+        "name": "Geröll Preis",
+        "unlock_last_miner": "Arbeitsplatz freischalten"
       },
       "mm_debris_timer": {
         "name": "Geröll Timer"

@@ -9,6 +9,7 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
+import net.labymod.api.util.I18n;
 
 @SpriteSlot(x = 2)
 public class DebrisPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
@@ -33,8 +34,9 @@ public class DebrisPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
     String itemName = "N/A";
     if(AddonSettings.inMine || AddonSettings.inFarming) {
 
-      if(!AddonSettings.balance.equals("X")) {
-        if(!AddonSettings.debrisCost.equals("X")) {
+      if(!AddonSettings.balance.equals("X") && !AddonSettings.debrisCost.equals("X")) {
+
+        if(AddonSettings.nextWorkerCost.equals("X")) {
 
           //String KontoEinheit = AddonSettings.balance.replaceAll("\\d", "").substring(1);
           //String MinerEinheit = AddonSettings.nextWorkerCost.replaceAll("\\d", "").substring(1);
@@ -54,7 +56,10 @@ public class DebrisPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             }
           }
 
+        } else {
+          itemName = I18n.translate("moneymaker.hudWidget.mm_debris_price.unlock_last_miner");
         }
+
       }
 
     }
