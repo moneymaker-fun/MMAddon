@@ -34,8 +34,7 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
     String itemName = "N/A";
     if(AddonSettings.inMine || AddonSettings.inFarming) {
 
-      if(!AddonSettings.balance.equals("X")) {
-        if(!AddonSettings.nextWorkerCost.equals("X")) {
+      if(!AddonSettings.balance.equals("X") && !AddonSettings.nextWorkerCost.equals("X")) {
 
           //String KontoEinheit = AddonSettings.balance.replaceAll("\\d", "").substring(1);
           //String MinerEinheit = AddonSettings.nextWorkerCost.replaceAll("\\d", "").substring(1);
@@ -55,7 +54,6 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             }
           }
 
-        }
       }
 
     }
