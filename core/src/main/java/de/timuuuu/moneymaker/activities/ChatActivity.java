@@ -210,16 +210,20 @@ public class ChatActivity extends SimpleActivity {
         return;
       }
       if(this.sendToServer(message)) {
-        this.chatInput.setEditable(false);
-        this.chatInput.addId("blocked");
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
         this.chatInput.setText("");
-        Task.builder(() -> {
-          this.chatInput.setEditable(true);
-          this.chatInput.removeId("blocked");
-          this.reloadScreen();
+        if(!Util.isDev(this.labyAPI.getUniqueId().toString())) {
+          this.chatInput.setEditable(false);
+          this.chatInput.addId("blocked");
+          Task.builder(() -> {
+            this.chatInput.setEditable(true);
+            this.chatInput.removeId("blocked");
+            this.reloadScreen();
+            this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
+          }).delay(3, TimeUnit.SECONDS).build().execute();
+        } else {
           this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
-        }).delay(3, TimeUnit.SECONDS).build().execute();
+        }
       }
     }
   }
