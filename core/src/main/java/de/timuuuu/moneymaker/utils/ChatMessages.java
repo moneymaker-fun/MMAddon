@@ -18,7 +18,7 @@ public enum ChatMessages {
   TELEPORT_DE_2("teleportiert"),
   BOOSTER_FOUND_DE("[MoneyMaker] Glückwunsch! Du hast einen Booster gefunden:"),
   WORKPLACE_UNLOCKED_DE("[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet"),
-  DEBRIS_REMOVE_DE_1("[MoneyMaker] Das geröll wird in"),
+  DEBRIS_REMOVE_DE_1("[MoneyMaker] Das Geröll wird in"),
   DEBRIS_REMOVE_DE_2("entfernt"),
   WORKER_EFFECT_DE("[MoneyMaker] Du hast den Effekt dieses Arbeiters aktiviert"),
   BOOSTER_INVENTORY_DE("[MoneyMaker] Dein Booster-Inventar hat das Limit von"),
