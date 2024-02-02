@@ -354,6 +354,7 @@ public class ChatActivity extends SimpleActivity {
   }
 
   public void reloadScreen() {
+    if(!this.isOpen()) return;
     this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
   }
 
