@@ -117,9 +117,9 @@ public class MoneyAddonListener {
         }
       }
 
-      AddonSettings.playerStatus.put(uuid, player);
-
     }
+
+    AddonSettings.playerStatus.put(uuid, player);
 
     if(player.server().equals("OFFLINE")) {
       AddonSettings.playerStatus.remove(uuid);
