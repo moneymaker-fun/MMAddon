@@ -109,21 +109,25 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
 
           // User is normal - add Report button
         } else {
-          if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
-            ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
-            reportButton.setPressable(() -> {
-              Laby.labyAPI().minecraft().executeNextTick(() -> {
-                Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
-                    this.addon,
-                    Laby.labyAPI().getUniqueId(),
-                    Laby.labyAPI().getName(),
-                    this.chatMessage,
-                    Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
-                ));
+
+          if(!Util.isDev(this.chatMessage.uuid().toString())) {
+            if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
+              ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
+              reportButton.setPressable(() -> {
+                Laby.labyAPI().minecraft().executeNextTick(() -> {
+                  Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new ChatReportActivity(
+                      this.addon,
+                      Laby.labyAPI().getUniqueId(),
+                      Laby.labyAPI().getName(),
+                      this.chatMessage,
+                      Laby.labyAPI().minecraft().minecraftWindow().currentScreen()
+                  ));
+                });
               });
-            });
-            header.addEntry(reportButton);
+              header.addEntry(reportButton);
+            }
           }
+
         }
 
       }
