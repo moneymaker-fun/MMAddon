@@ -45,6 +45,8 @@ public class ChatActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
 
+  private int MESSAGE_LIMIT = 50;
+
   private TextFieldWidget chatInput;
   private static List<ChatMessageWidget> chatMessages = new ArrayList<>();
   private ListSession<Widget> listSession = new ListSession<>();
@@ -116,7 +118,14 @@ public class ChatActivity extends SimpleActivity {
 
     VerticalListWidget<ChatMessageWidget> chatList = new VerticalListWidget<>().addId("chat-messages");
 
-    chatMessages.forEach(chatList::addChild);
+    if(chatMessages.size() <= MESSAGE_LIMIT) {
+      chatMessages.forEach(chatList::addChild);
+    } else {
+      int size = chatMessages.size();
+      for(int i = size-MESSAGE_LIMIT; i != chatMessages.size(); i++) {
+        chatList.addChild(chatMessages.get(i));
+      }
+    }
 
     ScrollWidget chatScroll = new ScrollWidget(chatList, this.listSession).addId("chat-scroll");
     chatContainer.addChild(chatScroll);
@@ -312,7 +321,14 @@ public class ChatActivity extends SimpleActivity {
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-      chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage).addId("chat-message"));
+
+      if(chatMessages.size() <= MESSAGE_LIMIT) {
+        chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage).addId("chat-message"));
+      } else {
+        chatMessages.remove(0);
+        chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage).addId("chat-message"));
+      }
+
       this.reloadScreen();
     });
   }
@@ -322,7 +338,14 @@ public class ChatActivity extends SimpleActivity {
     if(message) {
       String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
       this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-        chatMessages.add(new ChatMessageWidget(this.addon, time, "§4" + I18n.translate("moneymaker.ui.chat.chatCleared")).addId("chat-message"));
+
+        if(chatMessages.size() <= MESSAGE_LIMIT) {
+          chatMessages.add(new ChatMessageWidget(this.addon, time, "§4" + I18n.translate("moneymaker.ui.chat.chatCleared")).addId("chat-message"));
+        } else {
+          chatMessages.remove(0);
+          chatMessages.add(new ChatMessageWidget(this.addon, time, "§4" + I18n.translate("moneymaker.ui.chat.chatCleared")).addId("chat-message"));
+        }
+
         this.reloadScreen();
       });
     }
@@ -352,7 +375,14 @@ public class ChatActivity extends SimpleActivity {
     if (chatMessage == null) return;
     String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-      chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage));
+
+      if(chatMessages.size() <= MESSAGE_LIMIT) {
+        chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage));
+      } else {
+        chatMessages.remove(0);
+        chatMessages.add(new ChatMessageWidget(this.addon, time, chatMessage));
+      }
+
       this.reloadScreen();
     });
   }
