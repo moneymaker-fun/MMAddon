@@ -74,13 +74,6 @@ public class NetworkPayloadListener {
                 }
               }
 
-              JsonObject data = new JsonObject();
-              data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-              data.addProperty("userName", this.addon.labyAPI().getName());
-              data.addProperty("server", gameMode.contains("MoneyMaker") ? gameMode : "Other");
-              data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              this.addon.chatClient().sendMessage("playerStatus", data);
-
               if(!gameMode.contains("Other")) {
                 this.addon.discordAPI().setSaved();
               }
@@ -102,6 +95,13 @@ public class NetworkPayloadListener {
 
               AddonSettings.inMine = gameMode.contains("Mine");
               AddonSettings.inFarming = gameMode.contains("Farming");
+
+              JsonObject data = new JsonObject();
+              data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+              data.addProperty("userName", this.addon.labyAPI().getName());
+              data.addProperty("server", this.addon.chatClient().currentServer());
+              data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+              this.addon.chatClient().sendMessage("playerStatus", data);
 
               if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.configuration().languageInfoClosed().get()) {
                 Task.builder(() -> {

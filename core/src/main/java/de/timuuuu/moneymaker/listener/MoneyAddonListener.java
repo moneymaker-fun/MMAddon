@@ -32,13 +32,18 @@ public class MoneyAddonListener {
         event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
 
-      JsonObject object = new JsonObject();
-      object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      this.addon.chatClient().sendMessage("retrievePlayerData", object);
+      String uuid = this.addon.labyAPI().getUniqueId().toString();
+      JsonObject retrievePlayerDataObject = new JsonObject();
+      retrievePlayerDataObject.addProperty("uuid", uuid);
+      this.addon.chatClient().sendMessage("retrievePlayerData", retrievePlayerDataObject);
 
       JsonObject muteCheckObject = new JsonObject();
-      muteCheckObject.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+      muteCheckObject.addProperty("uuid", uuid);
       this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
+
+      JsonObject retrieveChatHistoryObject = new JsonObject();
+      retrieveChatHistoryObject.addProperty("uuid", uuid);
+      this.addon.chatClient().sendMessage("retrieveChatMessages", retrieveChatHistoryObject);
 
     }
   }

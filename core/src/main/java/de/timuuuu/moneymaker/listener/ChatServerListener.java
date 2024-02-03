@@ -120,6 +120,12 @@ public class ChatServerListener {
       }
     }
 
+    if(message.has("clearChatForHistory")) {
+      if(message.get("clearChatForHistory").getAsBoolean()) {
+        this.addon.chatActivity().clearChat(false);
+      }
+    }
+
   }
 
 }
