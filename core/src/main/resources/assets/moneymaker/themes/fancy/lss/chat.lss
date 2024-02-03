@@ -239,6 +239,7 @@
       .message-content {
         width: 90%;
         height: fit-content;
+        margin-right: 10;
 
         .component-message {
           padding: 2 3 2 2;
