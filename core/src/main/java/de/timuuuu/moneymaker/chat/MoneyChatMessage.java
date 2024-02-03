@@ -15,14 +15,16 @@ public class MoneyChatMessage {
   private MoneyRank rank;
   private boolean systemMessage;
   private boolean deleted = false;
+  private boolean fromServerCache;
 
-  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank) {
+  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank, boolean fromServerCache) {
     this.messageId = messageId;
     this.uuid = uuid;
     this.userName = userName;
     this.message = message;
     this.rank = rank;
     this.systemMessage = uuid.toString().equals("00000000-0000-0000-0000-000000000000");
+    this.fromServerCache = fromServerCache;
   }
 
   public static MoneyChatMessage fromJson(JsonObject object) {
@@ -32,7 +34,8 @@ public class MoneyChatMessage {
           UUID.fromString(object.get("uuid").getAsString()),
           object.get("userName").getAsString(),
           object.get("message").getAsString(),
-          object.has("rank") ? MoneyPlayer.rankByName(object.get("rank").getAsString()) : MoneyRank.USER
+          object.has("rank") ? MoneyPlayer.rankByName(object.get("rank").getAsString()) : MoneyRank.USER,
+              object.has("fromCache") && object.get("fromCache").getAsBoolean()
           );
     }
     return null;
@@ -72,6 +75,10 @@ public class MoneyChatMessage {
 
   public boolean systemMessage() {
     return systemMessage;
+  }
+
+  public boolean fromServerCache() {
+    return fromServerCache;
   }
 
   public boolean deleted() {

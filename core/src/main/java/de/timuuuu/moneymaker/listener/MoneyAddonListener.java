@@ -154,6 +154,7 @@ public class MoneyAddonListener {
     MoneyChatMessage chatMessage = event.chatMessage();
     this.addon.chatActivity().addChatMessage(chatMessage);
     if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
+    if(chatMessage.fromServerCache()) return;
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
       if(!chatMessage.systemMessage()) {
 

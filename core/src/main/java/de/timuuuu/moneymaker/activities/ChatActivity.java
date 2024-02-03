@@ -398,7 +398,8 @@ public class ChatActivity extends SimpleActivity {
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message,
-        MoneyRank.USER);
+        MoneyRank.USER,
+        false);
     return this.addon.chatClient().sendChatMessage(chatMessage);
   }
 
