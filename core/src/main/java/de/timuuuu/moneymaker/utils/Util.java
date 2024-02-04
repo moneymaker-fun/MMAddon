@@ -8,11 +8,11 @@ import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
+import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.theme.Theme;
 import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.attributes.bounds.Bounds;
@@ -21,7 +21,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.font.text.TextRenderer;
 import net.labymod.api.client.render.matrix.Stack;
-import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.OperatingSystem;
 
 public class Util {
@@ -29,20 +28,19 @@ public class Util {
   public static HashMap<String, MoneyTimer> timers = new HashMap<>();
 
   public static void addFeedbackButton(Document document) {
-    ButtonWidget feedbackButton = ButtonWidget.text("§6Feedback §7/ §cBugreport");
+    ButtonWidget feedbackButton = ButtonWidget.component(
+        Component.text("Feedback", NamedTextColor.GOLD).append(Component.text(" / ", NamedTextColor.GRAY)).append(Component.text("Bugreport", NamedTextColor.RED)),
+        SpriteCommon.BUG
+    ).addId("feedback-button");
     feedbackButton.setPressable(() -> {
       //OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
-      Laby.labyAPI().minecraft().executeNextTick(() -> {
-        Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new FeedbackActivity(MoneyMakerAddon.instance(), Laby.labyAPI().minecraft().minecraftWindow().currentScreen()));
-      });
+      Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new FeedbackActivity(MoneyMakerAddon.instance(), Laby.labyAPI().minecraft().minecraftWindow().currentScreen())));
     });
-    feedbackButton.addId("feedback-button");
     document.addChild(feedbackButton);
   }
 
   public static Widget addDiscordButton() {
-    ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.start.discord", Icon.texture(
-        ResourceLocation.create("moneymaker", "textures/ui/discord.png"))).addId("discord-btn");
+    ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.start.discord", SpriteCommon.DISCORD).addId("discord-btn");
     discordButton.setPressable(() -> {
       OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd");
     });
