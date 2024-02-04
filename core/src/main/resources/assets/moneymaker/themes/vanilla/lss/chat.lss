@@ -172,11 +172,15 @@
           font-size: 0.525;
         }
 
+        .cache-info {
+          margin: 0 1 -2 0;
+        }
+
         .message-id {
           text-color: rgb(150, 150, 150);
           font-size: 0.525;
           alignment-y: bottom;
-          margin: 0 0 2 5;
+          margin: 0 0 2 0;
         }
 
         .mute-button {

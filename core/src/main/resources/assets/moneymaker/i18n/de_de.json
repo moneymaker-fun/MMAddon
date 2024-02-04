@@ -371,6 +371,9 @@
           "reconnect-button": "Neu verbinden",
           "error": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten"
         },
+        "info": {
+          "cache": "Nachricht wurde vom Server Speicher geladen"
+        },
         "chatCleared": "Der Chat wurde geleert.",
         "messageDeleted": "Diese Nachricht wurde gelöscht.",
         "muted": {

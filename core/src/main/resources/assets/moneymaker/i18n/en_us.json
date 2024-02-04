@@ -367,6 +367,9 @@
           "reconnect-button": "Reconnect",
           "error": "There was an error while contacting the Chat-Server"
         },
+        "info": {
+          "cache": "Message loaded from server cache"
+        },
         "chatCleared": "The chat has been cleared.",
         "messageDeleted": "This message has been deleted.",
         "muted": {

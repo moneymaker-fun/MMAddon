@@ -6,6 +6,7 @@ import de.timuuuu.moneymaker.activities.popup.ChatReportActivity;
 import de.timuuuu.moneymaker.activities.popup.MuteActivity;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.UUID;
 import net.labymod.api.Laby;
@@ -64,6 +65,11 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       header.addEntry(ComponentWidget.text("§4§lSYSTEM").addId("sender"));
     }
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
+    if(this.chatMessage != null && this.chatMessage.fromServerCache()) {
+      ComponentWidget cacheInfoWidget = ComponentWidget.component(Component.icon(SpriteCommon.EXCLAMATION_MARK, 5)).addId("cache-info");
+      cacheInfoWidget.setHoverComponent(Component.translatable("moneymaker.ui.chat.info.cache"));
+      header.addEntry(cacheInfoWidget);
+    }
     if(Util.isStaff(uuid) || Util.isDev(uuid.toString())) {
       if(this.chatMessage != null && !this.chatMessage.messageId().equals("UNKNOWN")) {
         header.addEntry(ComponentWidget.text("(ID: " + this.chatMessage.messageId() + ")").addId("message-id"));
