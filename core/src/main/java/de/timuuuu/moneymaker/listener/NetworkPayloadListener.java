@@ -81,10 +81,6 @@ public class NetworkPayloadListener {
               if(gameMode.contains("MoneyMaker")) {
                 this.addon.discordAPI().update();
                 this.addon.discordAPI().startUpdater();
-                /*if(AddonUpdater.updateAvailable() & !AddonUpdater.notified) {
-                  AddonUpdater.notified = true;
-                  this.addon.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.text.new-update")));
-                }*/
               } else {
                 if(AddonSettings.inMine || AddonSettings.inFarming) {
                   this.addon.discordAPI().cancelUpdater();

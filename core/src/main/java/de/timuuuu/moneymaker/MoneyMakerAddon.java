@@ -133,9 +133,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     AddonSettings.selectUpdateMode(this.configuration().updateMode().get());
 
-    //AddonUpdater.checkVersion();
-    //AddonUpdater.downloadUpdater();
-
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       this.chatClient.sendStatistics(true, this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());
       JsonObject data = new JsonObject();
@@ -149,7 +146,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       if(configuration().exportBoosterOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV(true);
       }
-      //AddonUpdater.executeUpdater();
     }));
   }
 
