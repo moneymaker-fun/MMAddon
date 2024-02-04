@@ -424,19 +424,15 @@
       },
       "mm_sword_stats": {
         "name": "Schwert Statistiken",
+        "display": {
+          "rank": "Schwert Rang",
+          "kills": "Schwert Kills"
+        },
         "showIcons": {
           "name": "Mit Icons anzeigen"
         },
         "showRankingDifference": {
           "name": "Zeige Rang Differenz"
-        },
-        "without-icon": {
-          "rank": "Schwert Rang",
-          "kills": "Schwert Kills"
-        },
-        "with-icon": {
-          "rank": " Rang",
-          "kills": " Kills"
         }
       },
       "mm_kill_counter": {

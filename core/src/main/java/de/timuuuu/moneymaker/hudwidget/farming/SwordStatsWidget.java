@@ -9,9 +9,7 @@ import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
-import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
-import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 
@@ -32,17 +30,8 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
   @Override
   public void load(SwordHudWidgetConfig config) {
     super.load(config);
-    boolean showIcon = this.getConfig().showIcons().get();
-    this.rankLine = createLine(
-        showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.translatable("moneymaker.hudWidget.mm_sword_stats.with-icon.rank"))
-            : Component.translatable("moneymaker.hudWidget.mm_sword_stats.without-icon.rank"),
-        "0"
-    );
-    this.mobsLine = createLine(
-        showIcon ? Component.icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/gold_sword.png")), 10).append(Component.translatable("moneymaker.hudWidget.mm_sword_stats.with-icon.kills"))
-            : Component.translatable("moneymaker.hudWidget.mm_sword_stats.without-icon.kills"),
-        "0"
-    );
+    this.rankLine = createLine(Component.translatable("moneymaker.hudWidget.mm_sword_stats.display.rank"), "0");
+    this.mobsLine = createLine(Component.translatable("moneymaker.hudWidget.mm_sword_stats.display.kills"), "0");
     this.updateLines();
   }
 
@@ -68,18 +57,10 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
   public static class SwordHudWidgetConfig extends TextHudWidgetConfig {
 
     @SwitchSetting
-    private final ConfigProperty<Boolean> showIcons;
-
-    @SwitchSetting
     private final ConfigProperty<Boolean> showRankingDifference;
 
     public SwordHudWidgetConfig() {
-      this.showIcons = new ConfigProperty<>(false);
       this.showRankingDifference = new ConfigProperty<>(false);
-    }
-
-    public ConfigProperty<Boolean> showIcons() {
-      return showIcons;
     }
 
     public ConfigProperty<Boolean> showRankingDifference() {

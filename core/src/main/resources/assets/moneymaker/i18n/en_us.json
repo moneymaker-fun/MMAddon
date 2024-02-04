@@ -420,19 +420,15 @@
       },
       "mm_sword_stats": {
         "name": "Sword Statistics",
+        "display": {
+          "rank": "Sword Rank",
+          "kills": "Sword Kills"
+        },
         "showIcons": {
           "name": "Show with icons"
         },
         "showRankingDifference": {
           "name": "Show Rank Difference"
-        },
-        "without-icon": {
-          "rank": "Sword Rank",
-          "kills": "Sword Kills"
-        },
-        "with-icon": {
-          "rank": " Rank",
-          "kills": " Kills"
         }
       },
       "mm_kill_counter": {
