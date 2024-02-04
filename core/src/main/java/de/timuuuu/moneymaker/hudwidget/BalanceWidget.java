@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
@@ -19,7 +20,7 @@ public class BalanceWidget extends TextHudWidget<TextHudWidgetConfig> {
     super("mm_balance");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/coin.png")));
+    this.setIcon(SpriteCommon.HUD_COIN);
   }
 
   @Override
