@@ -41,9 +41,7 @@ public class MoneyAddonListener {
       muteCheckObject.addProperty("uuid", uuid);
       this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
 
-      JsonObject retrieveChatHistoryObject = new JsonObject();
-      retrieveChatHistoryObject.addProperty("uuid", uuid);
-      this.addon.chatClient().sendMessage("retrieveChatMessages", retrieveChatHistoryObject);
+      this.addon.apiUtil().loadChatHistory();
 
     }
   }

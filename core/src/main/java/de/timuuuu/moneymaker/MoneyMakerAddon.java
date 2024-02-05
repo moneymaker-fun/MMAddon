@@ -35,6 +35,7 @@ import de.timuuuu.moneymaker.listener.TickListener;
 import de.timuuuu.moneymaker.managers.DiscordAPI;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
+import de.timuuuu.moneymaker.utils.ApiUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
@@ -64,6 +65,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private StartActivity startActivity;
 
   private DiscordAPI discordAPI;
+  private ApiUtil apiUtil;
 
   private static MoneyMakerAddon instance;
 
@@ -78,6 +80,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     instance = this;
     discordAPI = new DiscordAPI(this);
+    apiUtil = new ApiUtil(this);
 
     this.startActivity = new StartActivity(this);
     this.chatActivity = new ChatActivity(this);
@@ -142,7 +145,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       data.addProperty("addonVersion", this.addonInfo().getVersion());
       this.chatClient.sendMessage("playerStatus", data);
 
-      this.chatClient.closeSocket();
+      this.chatClient.closeConnection();
       if(configuration().exportBoosterOnShutdown().get()) {
         BoosterActivity.writeLinkedListToCSV(true);
       }
@@ -160,6 +163,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public DiscordAPI discordAPI() {
     return discordAPI;
+  }
+
+  public ApiUtil apiUtil() {
+    return apiUtil;
   }
 
   public MainActivity mainActivity() {
