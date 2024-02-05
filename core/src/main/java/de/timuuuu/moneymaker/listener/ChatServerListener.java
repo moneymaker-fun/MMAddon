@@ -56,8 +56,8 @@ public class ChatServerListener {
       if(data.has("uuid")) {
         String uuid = data.get("uuid").getAsString();
         if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
-          ChatClient.muted = true;
-          ChatClient.muteReason = data.get("reason").getAsString();
+          this.addon.chatClient().muted(true);
+          this.addon.chatClient().muteReason(data.get("reason").getAsString());
           this.addon.chatActivity().addCustomChatMessage("§cDu wurdest aus dem Chat ausgeschlossen.");
           this.addon.chatActivity().reloadScreen();
         }
@@ -66,11 +66,11 @@ public class ChatServerListener {
 
     if(message.has("chatUnMute") && message.get("chatUnMute").isJsonObject()) {
       JsonObject data = message.get("chatUnMute").getAsJsonObject();
-      if(data.has("uuid") && ChatClient.muted) {
+      if(data.has("uuid") && this.addon.chatClient().muted()) {
         String uuid = data.get("uuid").getAsString();
         if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
-          ChatClient.muted = false;
-          ChatClient.muteReason = "";
+          this.addon.chatClient().muted(false);
+          this.addon.chatClient().muteReason("");
           this.addon.chatActivity().addCustomChatMessage("§aDein Mute wurde aufgehoben.");
           this.addon.chatActivity().reloadScreen();
         }
@@ -81,11 +81,11 @@ public class ChatServerListener {
       JsonObject data = message.get("muteInfo").getAsJsonObject();
       if (data.has("muted") && data.has("reason")) {
         if (data.get("muted").getAsBoolean()) {
-          ChatClient.muted = true;
-          ChatClient.muteReason = data.get("reason").getAsString();
+          this.addon.chatClient().muted(true);
+          this.addon.chatClient().muteReason(data.get("reason").getAsString());
         } else {
-          ChatClient.muted = false;
-          ChatClient.muteReason = "";
+          this.addon.chatClient().muted(false);
+          this.addon.chatClient().muteReason("");
         }
         this.addon.chatActivity().reloadScreen();
       }

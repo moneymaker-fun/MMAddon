@@ -21,15 +21,15 @@ import net.labymod.api.util.concurrent.task.Task;
 
 public class ChatClient {
 
-  public static boolean muted = false;
-  public static String muteReason = "";
+  private boolean muted = false;
+  private String muteReason = "";
 
-  public static final String SERVER_IP = "chat.moneymaker.fun"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
-  private static final int SERVER_PORT = 12345;
+  private final String SERVER_IP = "chat.moneymaker.fun"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
+  private final int SERVER_PORT = 12345;
 
-  public static boolean online = false;
+  private boolean online = false;
   private Socket socket;
-  private static PrintWriter serverOut;
+  private PrintWriter serverOut;
 
   private static MoneyMakerAddon addon;
 
@@ -172,16 +172,43 @@ public class ChatClient {
     serverOut.println(data);
   }
 
-  public void closeSocket() {
+  public void closeConnection() {
+    if(this.serverOut != null) {
+      this.serverOut.close();
+      this.serverOut = null;
+    }
+
     try {
       if (socket != null && !socket.isClosed()) {
         socket.close();
+        socket = null;
       }
     } catch (IOException ignored) {}
+
   }
 
   public Socket socket() {
     return socket;
+  }
+
+  public boolean muted() {
+    return muted;
+  }
+
+  public void muted(boolean muted) {
+    this.muted = muted;
+  }
+
+  public String muteReason() {
+    return muteReason;
+  }
+
+  public void muteReason(String muteReason) {
+    this.muteReason = muteReason;
+  }
+
+  public boolean online() {
+    return online;
   }
 
   public String currentServer() {

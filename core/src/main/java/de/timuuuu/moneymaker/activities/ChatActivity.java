@@ -5,7 +5,6 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.badges.MoneyRank;
-import de.timuuuu.moneymaker.chat.ChatClient;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.settings.AddonSettings;
@@ -70,7 +69,7 @@ public class ChatActivity extends SimpleActivity {
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title").addId("chat-title");
     this.document.addChild(titleWidget);
 
-    ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (ChatClient.online ? "online" : "offline")).addId("chat-status");
+    ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (this.addon.chatClient().online() ? "online" : "offline")).addId("chat-status");
     this.document.addChild(statusWidget);
 
     ButtonWidget rulesButton = ButtonWidget.i18n("moneymaker.chat-rules.button").addId("rules-button");
@@ -91,12 +90,12 @@ public class ChatActivity extends SimpleActivity {
       ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
       reconnectButton.addId("chat-reconnect-button");
       reconnectButton.setPressable(() -> {
-        this.addon.chatClient().closeSocket();
+        this.addon.chatClient().closeConnection();
         reconnectButton.setEnabled(false);
           Task.builder(() -> {
             reconnectButton.setEnabled(true);
             this.addon.chatClient().connect(true);
-            if(ChatClient.online) {
+            if(this.addon.chatClient().online()) {
               JsonObject data = new JsonObject();
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
               data.addProperty("userName", this.addon.labyAPI().getName());
@@ -142,7 +141,7 @@ public class ChatActivity extends SimpleActivity {
 
     VerticalListWidget<ComponentWidget> onlineList = new VerticalListWidget<>().addId("online-list");
 
-    if(ChatClient.online) {
+    if(this.addon.chatClient().online()) {
       List<MoneyPlayer> players = new ArrayList<>(AddonSettings.playerStatus.values());
       players.sort(Comparator.comparing(o -> o.rank().getId()));
 
@@ -168,10 +167,10 @@ public class ChatActivity extends SimpleActivity {
 
     DivWidget inputContainer = new DivWidget().addId("input-container");
 
-    if(ChatClient.online) {
-      if(ChatClient.muted & !(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) {
+    if(this.addon.chatClient().online()) {
+      if(this.addon.chatClient().muted() & !(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) {
         ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.muted.title").addId("chat-muted-title");
-        ComponentWidget reasonWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.reason").append(Component.text(ChatClient.muteReason))).addId("chat-muted-reason");
+        ComponentWidget reasonWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.reason").append(Component.text(this.addon.chatClient().muteReason()))).addId("chat-muted-reason");
         inputContainer.addChild(componentWidget);
         inputContainer.addChild(reasonWidget);
       } else {
