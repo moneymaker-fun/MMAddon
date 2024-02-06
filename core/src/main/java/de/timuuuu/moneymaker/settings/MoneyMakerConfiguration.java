@@ -53,12 +53,12 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @DropdownEntryTranslationPrefix("moneymaker.settings.farmingAutoReset.type")
   private final ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset = new ConfigProperty<>(FarmingReset.ASK);
 
-  @IntroducedIn(value = "1.2.4", namespace = "moneymaker")
+  @IntroducedIn(value = "1.3.0", namespace = "moneymaker")
   @SpriteSlot(y = 3, x = 1)
   @SwitchSetting
   private final ConfigProperty<Boolean> showWidgetsAlways = new ConfigProperty<>(false);
 
-  @IntroducedIn(value = "1.2.4", namespace = "moneymaker")
+  @IntroducedIn(value = "1.3.0", namespace = "moneymaker")
   @SpriteSlot(y = 3)
   @DropdownSetting
   @DropdownEntryTranslationPrefix("moneymaker.settings.updateMode.type")
