@@ -38,7 +38,7 @@ public class ChatReceiveListener {
         }
       }
 
-      if((ChatMessages.BUY_WORKER_DE_1.startWith(plain) && ChatMessages.BUY_WORKER_DE_2.startWith(plain)) ||
+      if((ChatMessages.BUY_WORKER_DE_1.startWith(plain) && ChatMessages.BUY_WORKER_DE_2.contains(plain)) ||
           (ChatMessages.BUY_WORKER_EN.startWith(plain))) {
         if(this.addon.configuration().hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
