@@ -4,7 +4,6 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
-import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.client.entity.player.Player;
 import net.labymod.api.client.entity.player.tag.tags.NameTag;
