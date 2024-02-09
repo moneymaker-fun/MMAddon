@@ -103,6 +103,7 @@ public class TickListener {
           if(extraElement == null) return;
           if(!extraElement.isJsonObject()) return;
           JsonObject extraObject = extraElement.getAsJsonObject();
+          if(!extraObject.has("extra")) return;
           if(!extraObject.get("extra").isJsonArray()) return;
           JsonArray array = extraObject.get("extra").getAsJsonArray();
           for(int i = 0; i != array.size(); i++) {
