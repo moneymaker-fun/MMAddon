@@ -36,6 +36,7 @@ import de.timuuuu.moneymaker.managers.DiscordAPI;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.ApiUtil;
+import de.timuuuu.moneymaker.utils.Booster;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
@@ -77,6 +78,22 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   @Override
   protected void enable() {
     this.registerSettingCategory();
+
+    Booster.insertBooster(200, 45);
+    Booster.insertBooster(200, 15);
+    Booster.insertBooster(100, 30);
+    Booster.insertBooster(90, 10);
+    Booster.insertBooster(90, 10);
+    Booster.insertBooster(60, 20);
+    Booster.insertBooster(40, 60);
+    Booster.insertBooster(40, 15);
+    Booster.insertBooster(30, 60);
+    Booster.insertBooster(30, 45);
+    Booster.insertBooster(20, 6*60);
+    Booster.insertBooster(20, 45);
+    Booster.insertBooster(20, 15);
+    Booster.insertBooster(10, 60);
+    Booster.insertBooster(10, 45);
 
     instance = this;
     discordAPI = new DiscordAPI(this);

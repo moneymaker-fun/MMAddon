@@ -6,15 +6,15 @@
 }
 
 .booster-totalBoost {
-  left: 100;
-  top: 20;
+  left: 5;
+  top: 10;
   font-size: 1;
 }
 
 .booster-averageBoosters {
-  top: 31;
+  left: 5;
+  top: 25;
   font-size: 0.8;
-  left: 100;
 }
 
 .booster-sort-button {
@@ -29,6 +29,15 @@
   top: 40;
   bottom: 20;
   left: 20;
+  width: 70%;
+  box-shadow: classic left top right bottom;
+  renderer: "DirtBackground";
+}
+
+.booster-side-container {
+  top: 40;
+  bottom: 20;
+  width: 22%;
   right: 20;
   box-shadow: classic left top right bottom;
   renderer: "DirtBackground";
@@ -39,9 +48,47 @@
   top: 50;
 }
 
+.booster-grid {
+  left: 20;
+  top: 50;
+  width: 100%;
+  padding-right: 5;
+  height: fit-content;
+  space-between-entries: 10;
+  tiles-per-line: 6;
+  tile-height: 70;
+
+  Booster {
+    border-radius: 5;
+    border-thickness: 2;
+    border-color: rgba(255, 255, 85, 0.3);
+
+    .amount {
+      left: 5;
+      top: 5;
+    }
+
+    .icon {
+      alignment-x: center;
+      alignment-y: center;
+      top: 30;
+      height: 40;
+      width: 40;
+    }
+
+    .boost {
+      alignment-x: center;
+      bottom: 5;
+    }
+
+  }
+
+}
+
 Scroll {
    top: 10;
    left: 10;
+   right: 0;
    width: 100%;
    height: 90%;
 

@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.widgets.BoosterWidget;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Booster;
 import de.timuuuu.moneymaker.utils.Util;
@@ -25,6 +26,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.layout.TilesGridWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
@@ -54,20 +56,6 @@ public class BoosterActivity extends SimpleActivity {
     AtomicInteger boost = new AtomicInteger(0);
     Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost()));
 
-    ComponentWidget totalBoostWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.boost-total", TextColor.color(255, 255, 85),
-        Component.text(boost.get() + "%", TextColor.color(255, 170, 0))));
-    totalBoostWidget.addId("booster-totalBoost");
-    this.document.addChild(totalBoostWidget);
-
-    ComponentWidget averageBoostersWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.average-boosters", TextColor.color(255, 255, 85)).append(
-        Component.text(Booster.sessionBoosters.get() > 0 && AddonSettings.sessionBlocks > 0 ? (float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks + "(" + ((float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks) * 100 +  " %)" : "N/A", TextColor.color(255, 170, 0))
-    ));
-    averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + AddonSettings.sessionBlocks + " Blöcke"));
-    averageBoostersWidget.addId("booster-averageBoosters");
-    this.document.addChild(averageBoostersWidget);
-
-    VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>().addId("booster-list");
-
     ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting", TextColor.color(255, 170, 0))
         .append(Component.text(orderAscending ? " §b⬆" : " §b⬇")));
     sortButton.setPressable(() -> {
@@ -90,12 +78,31 @@ public class BoosterActivity extends SimpleActivity {
       list.addAll(Booster.boosterList());
     }
 
+    /*VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>().addId("booster-list");
     list.forEach(booster -> {
       String boosterMessage = "§6" + booster.amount() + " §7✗ §e" + booster.boost() + "%";
       listWidget.addChild(ComponentWidget.text(boosterMessage + " §8┃ §7" + booster.readableTime()).addId("booster-entry"));
-    });
+    });*/
+    //container.addChild(new ScrollWidget(listWidget, new ListSession<>()));
 
-    container.addChild(new ScrollWidget(listWidget, new ListSession<>()));
+    TilesGridWidget<BoosterWidget> boosters = new TilesGridWidget<>().addId("booster-grid");
+    list.forEach(booster -> boosters.addTile(new BoosterWidget(booster)));
+
+    container.addChild(new ScrollWidget(boosters, new ListSession<>()));
+
+    DivWidget sideContainer = new DivWidget().addId("booster-side-container");
+
+    ComponentWidget totalBoostWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.boost-total", TextColor.color(255, 255, 85),
+        Component.text(boost.get() + "%", TextColor.color(255, 170, 0))));
+    totalBoostWidget.addId("booster-totalBoost");
+    sideContainer.addChild(totalBoostWidget);
+
+    ComponentWidget averageBoostersWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.average-boosters", TextColor.color(255, 255, 85)).append(
+        Component.text(Booster.sessionBoosters.get() > 0 && AddonSettings.sessionBlocks > 0 ? "\n" + (float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks + " (" + ((float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks) * 100 +  " %)" : "\nN/A", TextColor.color(255, 170, 0))
+    ));
+    averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + AddonSettings.sessionBlocks + " Blöcke"));
+    averageBoostersWidget.addId("booster-averageBoosters");
+    sideContainer.addChild(averageBoostersWidget);
 
     ButtonWidget exportBtnWidget = ButtonWidget.i18n("moneymaker.ui.booster.export").addId("export-button");
     exportBtnWidget.setPressable(() -> writeLinkedListToCSV(false));
@@ -109,10 +116,11 @@ public class BoosterActivity extends SimpleActivity {
     });
 
 
-    container.addChild(clearListButton);
-    container.addChild(exportBtnWidget);
+    sideContainer.addChild(clearListButton);
+    sideContainer.addChild(exportBtnWidget);
 
     this.document.addChild(container);
+    this.document.addChild(sideContainer);
   }
 
   @Override
