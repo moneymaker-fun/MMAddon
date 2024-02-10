@@ -77,11 +77,11 @@ public class StartActivity extends SimpleActivity {
       container.addChild(breakGoalInput);
     }
 
+    DivWidget timerContainer = new DivWidget().addId("timer-container");
+
     ComponentWidget timerTitle = ComponentWidget.i18n("moneymaker.ui.start.current-timers").addId("timer-title");
 
-    container.addChild(timerTitle);
-
-    DivWidget timerContainer = new DivWidget().addId("timer-container");
+    timerContainer.addChild(timerTitle);
 
     VerticalListWidget<TimerWidget> timerList = new VerticalListWidget<>().addId("timer-list");
     Util.timers.values().forEach(timer -> {
@@ -91,7 +91,7 @@ public class StartActivity extends SimpleActivity {
     ScrollWidget scrollWidget = new ScrollWidget(timerList, new ListSession<>());
     timerContainer.addChild(scrollWidget);
 
-    container.addChild(timerContainer);
+    this.document.addChild(timerContainer);
 
     container.addChild(Util.addDiscordButton());
 

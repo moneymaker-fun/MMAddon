@@ -9,13 +9,13 @@
   top: 40;
   bottom: 20;
   left: 20;
-  right: 20;
+  width: 63%;
   box-shadow: classic left top right bottom;
   renderer: "DirtBackground";
 }
 
 .timer-container {
-  top: 20;
+  top: 40;
   bottom: 20;
   width: 30%;
   right: 20;
@@ -25,11 +25,11 @@
 .timer-title {
   text-color: green;
   top: 5;
-  right: 11%;
+  left: 50;
 }
 
 .timer-list {
-  height: 100%;
+  height: fit-content;
   width: 100%;
   tile-height: 20;
   tiles-per-line: 1;
@@ -38,7 +38,7 @@
 }
 
 Scroll {
-   top: 10;
+   top: 25;
    left: 10;
    width: 90%;
    height: 90%;
