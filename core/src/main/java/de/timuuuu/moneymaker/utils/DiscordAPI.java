@@ -73,7 +73,7 @@ public class DiscordAPI {
     if(this.addon.configuration().moneyDiscordConfiguration.showStats().get()) {
       builder.state(this.line2);
     } else {
-      builder.state("by MisterCore & Timuuuu");
+      builder.state("by MisterCore & Seelenverwandter");
     }
 
     builder.largeAsset(Asset.of(
