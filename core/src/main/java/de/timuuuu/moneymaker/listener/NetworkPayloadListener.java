@@ -22,6 +22,8 @@ public class NetworkPayloadListener {
 
   private final MoneyMakerAddon addon;
 
+  private boolean langInfoOpened = false;
+
   public NetworkPayloadListener(MoneyMakerAddon addon) {
     this.addon = addon;
   }
@@ -100,11 +102,14 @@ public class NetworkPayloadListener {
               this.addon.chatClient().sendMessage("playerStatus", data);
 
               if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.configuration().languageInfoClosed().get()) {
-                Task.builder(() -> {
-                  Laby.labyAPI().minecraft().executeNextTick(() -> {
-                    Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen()));
-                  });
-                }).delay(2, TimeUnit.SECONDS).build().execute();
+                if(!langInfoOpened) {
+                  langInfoOpened = true;
+                  Task.builder(() -> {
+                    Laby.labyAPI().minecraft().executeNextTick(() -> {
+                      Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen()));
+                    });
+                  }).delay(2, TimeUnit.SECONDS).build().execute();
+                }
               }
 
             }
