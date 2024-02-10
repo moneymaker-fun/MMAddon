@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.utils;
+package de.timuuuu.moneymaker.boosters;
 
 import net.labymod.api.util.I18n;
 import java.util.ArrayList;

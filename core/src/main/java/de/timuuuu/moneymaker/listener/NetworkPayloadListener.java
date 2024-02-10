@@ -6,7 +6,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.LanguageInfoActivity;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
-import de.timuuuu.moneymaker.utils.Booster;
+import de.timuuuu.moneymaker.boosters.Booster;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;

@@ -9,6 +9,7 @@ import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
 import de.timuuuu.moneymaker.badges.MoneyIconTag;
 import de.timuuuu.moneymaker.badges.MoneyTabBadge;
 import de.timuuuu.moneymaker.badges.MoneyTextTag;
+import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.chat.ChatClient;
 import de.timuuuu.moneymaker.commands.ResetCommand;
 import de.timuuuu.moneymaker.commands.TimerCommand;
@@ -36,7 +37,7 @@ import de.timuuuu.moneymaker.managers.DiscordAPI;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.ApiUtil;
-import de.timuuuu.moneymaker.utils.Booster;
+import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
@@ -79,6 +80,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   protected void enable() {
     this.registerSettingCategory();
 
+    //TODO: Remove Dummy boosters
     Booster.insertBooster(200, 45);
     Booster.insertBooster(200, 15);
     Booster.insertBooster(100, 30);
@@ -117,6 +119,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new TickListener(this));
 
     CurrencyUtil.setUnits();
+    BoosterUtil.loadData();
 
     labyAPI().navigationService().register("moneymaker_main_ui", new MoneyMakerNavigationElement(this));
 

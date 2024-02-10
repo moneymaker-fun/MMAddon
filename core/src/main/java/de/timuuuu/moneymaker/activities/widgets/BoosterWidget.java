@@ -1,13 +1,12 @@
 package de.timuuuu.moneymaker.activities.widgets;
 
-import de.timuuuu.moneymaker.utils.Booster;
+import de.timuuuu.moneymaker.boosters.Booster;
+import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.SimpleWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
-import net.labymod.api.client.resources.ResourceLocation;
 
 public class BoosterWidget extends SimpleWidget {
 
@@ -25,10 +24,9 @@ public class BoosterWidget extends SimpleWidget {
 
     ComponentWidget amountWidget = ComponentWidget.text("§6" + this.booster.amount() + " §7x").addId("amount");
     addChild(amountWidget);
-    IconWidget iconWidget = new IconWidget(Icon.texture(
-        ResourceLocation.create("moneymaker", "textures/hud/booster.png"))).addId("icon");
+    IconWidget iconWidget = new IconWidget(BoosterUtil.getIcon(this.booster)).addId("icon");
     addChild(iconWidget);
-    ComponentWidget boostWidget = ComponentWidget.text(this.booster.boost() + "%", NamedTextColor.YELLOW).addId("boost");
+    ComponentWidget boostWidget = ComponentWidget.text(this.booster.boost() + "% (" + this.booster.readableTime() + ")", NamedTextColor.YELLOW).addId("boost");
     addChild(boostWidget);
   }
 }
