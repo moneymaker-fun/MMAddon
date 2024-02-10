@@ -51,29 +51,40 @@ public class Util {
     TextRenderer textRenderer = labyAPI.renderPipeline().textRenderer();
     Theme currentTheme = labyAPI.themeService().currentTheme();
 
-    TextRenderer versionRenderer = textRenderer.text(
-        RenderableComponent.of(
-            Component.text("Addon-Version", NamedTextColor.GRAY)
-                .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
-        )
-    ).scale(0.8f);
-
-    TextRenderer developedRenderer = textRenderer.text(
-        RenderableComponent.of(
-            Component.text("Developed by ", NamedTextColor.GRAY)
-                .append(Component.text("MisterCore", NamedTextColor.YELLOW))
-                .append(Component.text(" & ", NamedTextColor.GRAY))
-                .append(Component.text("Seelenverwandter", NamedTextColor.YELLOW))
-        )
-    ).scale(0.8f);
-
     if(currentTheme.getId().equalsIgnoreCase("fancy")) {
-      versionRenderer.pos(5, bounds.getHeight() -17).render(stack);
-      developedRenderer.pos(5, bounds.getHeight() -7).render(stack);
+      textRenderer.text(
+          RenderableComponent.of(
+              Component.text("Addon-Version", NamedTextColor.GRAY)
+                  .append(Component.text(": ", NamedTextColor.DARK_GRAY))
+                  .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
+          )
+      ).scale(0.8f).pos(5, bounds.getHeight() -17).render(stack);
+
+      textRenderer.text(
+          RenderableComponent.of(
+              Component.text("Developed by ", NamedTextColor.GRAY)
+                  .append(Component.text("MisterCore", NamedTextColor.YELLOW))
+                  .append(Component.text(" & ", NamedTextColor.GRAY))
+                  .append(Component.text("Seelenverwandter", NamedTextColor.YELLOW))
+          )
+      ).scale(0.8f).pos(5, bounds.getHeight() -7).render(stack);
     } else {
-      versionRenderer.pos(5, bounds.getHeight() -18).render(stack);
-      developedRenderer.pos(5, bounds.getHeight() -8).render(stack);
+      textRenderer.text(
+          RenderableComponent.of(
+              Component.text("Addon-Version", NamedTextColor.GRAY)
+                  .append(Component.text(": ", NamedTextColor.DARK_GRAY))
+                  .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
+          )
+      ).scale(0.8f).pos(5, bounds.getHeight() -18).render(stack);
+
+      textRenderer.text(
+          RenderableComponent.of(
+              Component.text("Developed by ", NamedTextColor.GRAY)
+                  .append(Component.text("MisterCore", NamedTextColor.YELLOW))
+                  .append(Component.text(" & ", NamedTextColor.GRAY))
+                  .append(Component.text("Seelenverwandter", NamedTextColor.YELLOW))
+          )
+      ).scale(0.8f).pos(5, bounds.getHeight() -8).render(stack);
     }
   }
 
