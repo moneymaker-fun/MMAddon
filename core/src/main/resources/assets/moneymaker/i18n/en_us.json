@@ -363,7 +363,7 @@
       "booster": {
         "title": "List of farmed boosters",
         "boost-total": "Total: %s",
-        "average-boosters": "Average Boosters (per Session): ",
+        "average-boosters": "Average Boosters: ",
         "sorting": "Sorting",
         "export": "Export as CSV",
         "clear": "Clear Booster List"
