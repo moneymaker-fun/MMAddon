@@ -84,9 +84,7 @@ public class StartActivity extends SimpleActivity {
     timerContainer.addChild(timerTitle);
 
     VerticalListWidget<TimerWidget> timerList = new VerticalListWidget<>().addId("timer-list");
-    Util.timers.values().forEach(timer -> {
-      timerList.addChild(new TimerWidget(this.addon, timer));
-    });
+    Util.timers.values().forEach(timer -> timerList.addChild(new TimerWidget(this.addon, timer)));
 
     ScrollWidget scrollWidget = new ScrollWidget(timerList, new ListSession<>());
     timerContainer.addChild(scrollWidget);
