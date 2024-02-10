@@ -15,28 +15,28 @@ public class MoneyDiscordConfiguration extends Config {
   public MoneyDiscordConfiguration() {
 
     this.enabled.addChangeListener((type, oldValue, newValue) -> {
+      if(MoneyMakerAddon.instance() == null) return;
+      if(MoneyMakerAddon.instance().discordAPI() == null) return;
       DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
-      if(discordAPI != null) {
-        if(newValue) {
-          discordAPI.update();
-        } else {
-          discordAPI.removeCustom();
-        }
+      if(newValue) {
+        discordAPI.update();
+      } else {
+        discordAPI.removeCustom();
       }
     });
 
     this.showLocation.addChangeListener(aBoolean -> {
+      if(MoneyMakerAddon.instance() == null) return;
+      if(MoneyMakerAddon.instance().discordAPI() == null) return;
       DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
-      if(discordAPI != null) {
-        discordAPI.update();
-      }
+      discordAPI.update();
     });
 
     this.showStats.addChangeListener(aBoolean -> {
+      if(MoneyMakerAddon.instance() == null) return;
+      if(MoneyMakerAddon.instance().discordAPI() == null) return;
       DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
-      if(discordAPI != null) {
-        discordAPI.update();
-      }
+      discordAPI.update();
     });
 
   }
