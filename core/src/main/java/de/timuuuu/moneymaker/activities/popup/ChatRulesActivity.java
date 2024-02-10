@@ -49,9 +49,11 @@ public class ChatRulesActivity extends SimpleActivity {
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.chat-rules.title").addId("title");
     header.addEntry(titleWidget);
 
-    IconWidget closeButton = new IconWidget(SpriteCommon.SMALL_X_WITH_SHADOW).addId("close-button");
-    closeButton.setPressable(() -> closeScreen(false));
-    header.addEntry(closeButton);
+    if(!this.updateConfiguration) {
+      IconWidget closeButton = new IconWidget(SpriteCommon.SMALL_X_WITH_SHADOW).addId("close-button");
+      closeButton.setPressable(() -> closeScreen(false));
+      header.addEntry(closeButton);
+    }
 
     container.addContent(header);
 
