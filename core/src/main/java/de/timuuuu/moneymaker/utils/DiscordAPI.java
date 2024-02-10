@@ -3,7 +3,6 @@ package de.timuuuu.moneymaker.utils;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.boosters.Booster;
-import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
