@@ -3,12 +3,12 @@ package de.timuuuu.moneymaker.utils;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.FeedbackActivity;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.UUID;
-import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.component.Component;
@@ -62,9 +62,9 @@ public class Util {
           .render(stack);
       textRenderer.text(RenderableComponent.of(
           Component.text("Developed by ", NamedTextColor.GRAY)
-              .append(Component.text("Timuuuu", NamedTextColor.YELLOW))
-              .append(Component.text(" & ", NamedTextColor.GRAY))
               .append(Component.text("MisterCore", NamedTextColor.YELLOW))
+              .append(Component.text(" & ", NamedTextColor.GRAY))
+              .append(Component.text("Seelenverwandter", NamedTextColor.YELLOW))
           ))
           .scale(0.8f)
           .pos(5, bounds.getHeight() -7)
