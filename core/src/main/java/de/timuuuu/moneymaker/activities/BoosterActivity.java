@@ -47,7 +47,7 @@ public class BoosterActivity extends SimpleActivity {
     this.renderBackground = false;
 
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.booster.title");
-    titleWidget.addId("booster-title");
+    titleWidget.addId("title");
     this.document.addChild(titleWidget);
 
     Util.addFeedbackButton(this.document);
@@ -55,16 +55,7 @@ public class BoosterActivity extends SimpleActivity {
     AtomicInteger boost = new AtomicInteger(0);
     Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost()));
 
-    ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting", TextColor.color(255, 170, 0))
-        .append(Component.text(orderAscending ? " §b⬆" : " §b⬇")));
-    sortButton.setPressable(() -> {
-      orderAscending = !orderAscending;
-      this.reload();
-    });
-    sortButton.addId("booster-sort-button");
-    this.document.addChild(sortButton);
-
-    DivWidget container = new DivWidget().addId("booster-container");
+    DivWidget container = new DivWidget().addId("container");
 
     LinkedList<Booster> list = new LinkedList<>();
 
@@ -77,30 +68,23 @@ public class BoosterActivity extends SimpleActivity {
       list.addAll(Booster.boosterList());
     }
 
-    /*VerticalListWidget<ComponentWidget> listWidget = new VerticalListWidget<>().addId("booster-list");
-    list.forEach(booster -> {
-      String boosterMessage = "§6" + booster.amount() + " §7✗ §e" + booster.boost() + "%";
-      listWidget.addChild(ComponentWidget.text(boosterMessage + " §8┃ §7" + booster.readableTime()).addId("booster-entry"));
-    });*/
-    //container.addChild(new ScrollWidget(listWidget, new ListSession<>()));
-
     TilesGridWidget<BoosterWidget> boosters = new TilesGridWidget<>().addId("booster-grid");
     list.forEach(booster -> boosters.addTile(new BoosterWidget(booster)));
 
     container.addChild(new ScrollWidget(boosters, new ListSession<>()));
 
-    DivWidget sideContainer = new DivWidget().addId("booster-side-container");
+    DivWidget sideContainer = new DivWidget().addId("side-container");
 
     ComponentWidget totalBoostWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.boost-total", TextColor.color(255, 255, 85),
         Component.text(boost.get() + "%", TextColor.color(255, 170, 0))));
-    totalBoostWidget.addId("booster-totalBoost");
+    totalBoostWidget.addId("total-boost");
     sideContainer.addChild(totalBoostWidget);
 
     ComponentWidget averageBoostersWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.average-boosters", TextColor.color(255, 255, 85)).append(
         Component.text(Booster.sessionBoosters.get() > 0 && AddonSettings.sessionBlocks > 0 ? "\n" + (float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks + " (" + ((float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks) * 100 +  " %)" : "\nN/A", TextColor.color(255, 170, 0))
     ));
     averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + AddonSettings.sessionBlocks + " Blöcke"));
-    averageBoostersWidget.addId("booster-averageBoosters");
+    averageBoostersWidget.addId("average-boosters");
     sideContainer.addChild(averageBoostersWidget);
 
     ButtonWidget exportBtnWidget = ButtonWidget.i18n("moneymaker.ui.booster.export").addId("export-button");
@@ -114,7 +98,14 @@ public class BoosterActivity extends SimpleActivity {
       }
     });
 
+    ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting", TextColor.color(255, 170, 0))
+        .append(Component.text(orderAscending ? " §b⬆" : " §b⬇"))).addId("sort-button");
+    sortButton.setPressable(() -> {
+      orderAscending = !orderAscending;
+      this.reload();
+    });
 
+    sideContainer.addChild(sortButton);
     sideContainer.addChild(clearListButton);
     sideContainer.addChild(exportBtnWidget);
 

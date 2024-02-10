@@ -1,31 +1,23 @@
-.booster-title {
+.title {
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
   top: 10;
 }
 
-.booster-totalBoost {
+.total-boost {
   left: 5;
-  top: 10;
+  top: 25;
   font-size: 1;
 }
 
-.booster-averageBoosters {
+.average-boosters {
   left: 5;
-  top: 25;
+  top: 40;
   font-size: 0.8;
 }
 
-.booster-sort-button {
-  width: fit-content;
-  padding-left: 3;
-  left: 20;
-  padding-right: 3;
-  top: 20;
-}
-
-.booster-container {
+.container {
   top: 40;
   bottom: 20;
   left: 20;
@@ -34,7 +26,7 @@
   renderer: "DirtBackground";
 }
 
-.booster-side-container {
+.side-container {
   top: 40;
   bottom: 20;
   width: 22%;
@@ -43,19 +35,14 @@
   renderer: "DirtBackground";
 }
 
-.booster-list {
-  left: 20;
-  top: 50;
-}
-
 .booster-grid {
   left: 20;
   top: 50;
   width: 100%;
-  padding-right: 5;
+  padding-right: 10;
   height: fit-content;
   space-between-entries: 10;
-  tiles-per-line: 6;
+  tiles-per-line: 4;
   tile-height: 70;
 
   Booster {
@@ -72,8 +59,8 @@
       alignment-x: center;
       alignment-y: center;
       top: 30;
-      height: 40;
-      width: 40;
+      height: 32;
+      width: 32;
     }
 
     .boost {
@@ -92,15 +79,6 @@ Scroll {
    width: 100%;
    height: 90%;
 
-   .booster-entry {
-     top: 30;
-     left: 20;
-     height: 15;
-     width: 100%;
-     tiles-per-line: 5;
-     tile-height: 130;
-   }
-
    Scrollbar {
       left: 0;
       top: 0;
@@ -110,9 +88,18 @@ Scroll {
    }
 }
 
+.sort-button {
+  width: fit-content;
+  padding-left: 3;
+  height: 15;
+  left: 5;
+  padding-right: 3;
+  top: 5;
+}
+
 .clear-button {
   bottom: 5;
-  right: 5;
+  left: 5;
   height: 15;
   width: fit-content;
   padding-left: 3;
@@ -121,7 +108,7 @@ Scroll {
 
 .export-button {
   bottom: 25;
-  right: 5;
+  left: 5;
   height: 15;
   width: fit-content;
   padding-left: 3;
