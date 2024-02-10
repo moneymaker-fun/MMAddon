@@ -33,7 +33,7 @@ import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
-import de.timuuuu.moneymaker.managers.DiscordAPI;
+import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.ApiUtil;

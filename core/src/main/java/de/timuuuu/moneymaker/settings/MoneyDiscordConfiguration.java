@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.settings;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.managers.DiscordAPI;
+import de.timuuuu.moneymaker.utils.DiscordAPI;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ParentSwitch;

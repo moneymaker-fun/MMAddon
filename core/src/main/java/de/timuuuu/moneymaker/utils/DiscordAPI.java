@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.managers;
+package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
