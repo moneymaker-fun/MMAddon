@@ -295,6 +295,18 @@
       },
       "moneyChatConfiguration": {
         "name": "Chat Settings",
+        "header": {
+          "general": {
+            "name": "General Chat Settings"
+          },
+          "notifications": {
+            "name": "Chat Notification Settings"
+          }
+        },
+        "loadChatHistory": {
+          "name": "Load Chat History",
+          "description": "Load the Chat history when connecting to GommeHD.net. The History contains the last 50 sent messages and will be displayed in the MoneyMaker Chat Tab"
+        },
         "notification": {
           "name": "Notifications",
           "description": "Receive notification of new messages via the addon chat"

@@ -299,15 +299,27 @@
       },
       "moneyChatConfiguration": {
         "name": "Chat-Einstellungen",
-        "chatNotification": {
+        "header": {
+          "general": {
+            "name": "General Chat Settings"
+          },
+          "notifications": {
+            "name": "Chat Notification Settings"
+          }
+        },
+        "loadChatHistory": {
+          "name": "Chat Verlauf laden",
+          "description": "Lädt den Chat Verlauf, wenn du dich auf GommeHD.net verbindest. Der Verlauf enthält die letzten 50 gesendeten Nachrichten und werden im MoneyMaker Chat Tab angezeigt"
+        },
+        "notification": {
           "name": "Benachrichtigung",
           "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
         },
-        "chatNotificationSound": {
+        "notificationSound": {
           "name": "Benachrichtigungston",
           "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"
         },
-        "chatOnlineOfflineMessages": {
+        "onlineOfflineMessages": {
           "name": "Online/Offline Nachrichten anzeigen"
         }
       },
