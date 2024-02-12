@@ -93,6 +93,7 @@ public class ChatClient {
     Task.builder(() -> {
       JsonObject object = new JsonObject();
       object.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+      object.addProperty("userName", addon.labyAPI().getName());
       object.addProperty("server", this.currentServer());
       this.sendMessage("heartbeat", object);
     }).repeat(5, TimeUnit.MINUTES).build().execute();
