@@ -92,8 +92,8 @@
         "no-connection": "Keine Verbindung zum Chat-Server möglich.",
         "timed": "Verbindung zum Chat-Server verloren.",
         "user": {
-          "online": "%s ist nun online.",
-          "offline": "%s ist nun offline."
+          "online": "%s spielt nun MoneyMaker.",
+          "offline": "%s hat MoneyMaker verlassen."
         }
       },
       "timer": {
