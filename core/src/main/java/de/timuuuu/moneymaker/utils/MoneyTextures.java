@@ -5,6 +5,16 @@ import net.labymod.api.client.resources.ResourceLocation;
 
 public class MoneyTextures {
 
+  public static class Common {
+
+    public static final Icon ICON;
+
+    static {
+      ICON = Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"));
+    }
+
+  }
+
   public static class SpriteCommon {
     public static final ResourceLocation TEXTURE = ResourceLocation.create("moneymaker", "textures/common.png");
 

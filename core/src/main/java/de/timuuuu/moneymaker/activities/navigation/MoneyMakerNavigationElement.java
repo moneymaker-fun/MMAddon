@@ -2,11 +2,11 @@ package de.timuuuu.moneymaker.activities.navigation;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.navigation.elements.ScreenNavigationElement;
-import net.labymod.api.client.resources.ResourceLocation;
 
 public class MoneyMakerNavigationElement extends ScreenNavigationElement {
 
@@ -29,7 +29,7 @@ public class MoneyMakerNavigationElement extends ScreenNavigationElement {
 
   @Override
   public Icon getIcon() {
-    return Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"));
+    return Common.ICON;
   }
 
   @Override

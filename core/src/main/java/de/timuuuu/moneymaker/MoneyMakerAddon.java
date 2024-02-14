@@ -39,13 +39,13 @@ import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.ApiUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import java.util.concurrent.TimeUnit;
+import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
@@ -191,7 +191,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     Notification.Builder builder = Notification.builder()
         .title(title)
         .text(text)
-        .icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png")))
+        .icon(Common.ICON)
         .type(Type.SYSTEM);
     labyAPI().notificationController().push(builder.build());
   }
@@ -210,7 +210,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     Notification.Builder builder = Notification.builder()
         .title(title)
         .text(text)
-        .icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png")))
+        .icon(Common.ICON)
         .addButton(NotificationButton.of(buttonText, buttonAction))
         .type(Type.SYSTEM);
     Laby.labyAPI().notificationController().push(builder.build());
