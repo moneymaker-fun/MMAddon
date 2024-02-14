@@ -192,7 +192,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
         .title(title)
         .text(text)
         .icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png")))
-        .type(Type.ADVANCEMENT);
+        .type(Type.SYSTEM);
     labyAPI().notificationController().push(builder.build());
   }
 
@@ -201,7 +201,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
         .title(title)
         .text(text)
         .icon(icon)
-        .type(Type.ADVANCEMENT);
+        .type(Type.SYSTEM);
     labyAPI().notificationController().push(builder.build());
   }
 
@@ -212,7 +212,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
         .text(text)
         .icon(Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png")))
         .addButton(NotificationButton.of(buttonText, buttonAction))
-        .type(Type.ADVANCEMENT);
+        .type(Type.SYSTEM);
     Laby.labyAPI().notificationController().push(builder.build());
   }
 
