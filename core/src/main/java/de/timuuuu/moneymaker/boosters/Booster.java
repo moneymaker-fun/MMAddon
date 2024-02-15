@@ -1,7 +1,9 @@
 package de.timuuuu.moneymaker.boosters;
 
 import net.labymod.api.util.I18n;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,23 +28,24 @@ public class Booster {
   }
 
   public static void insertBooster(int boost, int time) {
-      for(Booster booster : boosterList) {
-          if(booster.boost() == boost && booster.time() == time) {
-              booster.addAmount();
-              return;
-          }
-      }
-    for (int i = 0; i < boosterList.size(); i++) {
-      if (boosterList.get(i).boost() < boost) {
-        boosterList.add(i, new Booster(boost, time));
-        return;
-      }
-      if (boosterList.get(i).boost() == boost && boosterList.get(i).time() < time) {
-        boosterList.add(i, new Booster(boost, time));
+    for(Booster booster : boosterList) {
+      if(booster.boost() == boost && booster.time() == time) {
+        booster.addAmount();
         return;
       }
     }
-    boosterList.add(new Booster(boost, time));
+    String CURRENT_TIME = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
+    for (int i = 0; i < boosterList.size(); i++) {
+      if (boosterList.get(i).boost() < boost) {
+        boosterList.add(i, new Booster(boost, time, CURRENT_TIME));
+        return;
+      }
+      if (boosterList.get(i).boost() == boost && boosterList.get(i).time() < time) {
+        boosterList.add(i, new Booster(boost, time, CURRENT_TIME));
+        return;
+      }
+    }
+    boosterList.add(new Booster(boost, time, CURRENT_TIME));
   }
 
   public static LinkedList<Booster> boosterList() {
@@ -58,11 +61,19 @@ public class Booster {
   private int amount;
 
   private int time;
+  private String farmDate = "";
 
   public Booster(int boost, int time) {
     this.boost = boost;
     this.amount = 1;
     this.time = time;
+  }
+
+  public Booster(int boost, int time, String farmDate) {
+    this.boost = boost;
+    this.amount = 1;
+    this.time = time;
+    this.farmDate = farmDate;
   }
 
   public int boost() {
@@ -71,6 +82,10 @@ public class Booster {
 
   public int time() {
     return this.time;
+  }
+
+  public String farmDate() {
+    return farmDate;
   }
 
   public int amount() {

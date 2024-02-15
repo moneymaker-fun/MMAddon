@@ -26,7 +26,9 @@ public class BoosterWidget extends SimpleWidget {
     addChild(amountWidget);
     IconWidget iconWidget = new IconWidget(BoosterUtil.getIcon(this.booster)).addId("icon");
     addChild(iconWidget);
-    ComponentWidget boostWidget = ComponentWidget.text(this.booster.boost() + "% (" + this.booster.readableTime() + ")", NamedTextColor.YELLOW).addId("boost");
+    ComponentWidget boostWidget = ComponentWidget.text(this.booster.boost() + "% (" + this.booster.readableTime() + ")", BoosterUtil.getColor(this.booster)).addId("boost");
     addChild(boostWidget);
+    ComponentWidget timeWidget = ComponentWidget.text(this.booster.farmDate(), NamedTextColor.GRAY).addId("date");
+    addChild(timeWidget);
   }
 }

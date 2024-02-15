@@ -76,6 +76,12 @@
       bottom: 5;
     }
 
+    .date {
+      top: 5;
+      right: 5;
+      font-size: 0.6;
+    }
+
   }
 
 }
