@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.listener;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -67,13 +66,7 @@ public class TickListener {
           JsonObject loreObject = JsonParser.parseString(rankingLine).getAsJsonObject();
           if(!loreObject.has("extra")) return;
           if(!loreObject.get("extra").isJsonArray()) return;
-          JsonElement extraElement = loreObject.get("extra").getAsJsonArray().get(0);
-          if(extraElement == null) return;
-          if(!extraElement.isJsonObject()) return;
-          JsonObject extraObject = extraElement.getAsJsonObject();
-          if(!extraObject.has("extra")) return;
-          if(!extraObject.get("extra").isJsonArray()) return;
-          JsonArray array = extraObject.get("extra").getAsJsonArray();
+          JsonArray array = loreObject.get("extra").getAsJsonArray();
           for(int i = 0; i != array.size(); i++) {
             if(array.get(i).isJsonObject()) {
               JsonObject object = array.get(i).getAsJsonObject();
@@ -99,19 +92,13 @@ public class TickListener {
           JsonObject loreObject = JsonParser.parseString(mobsLine).getAsJsonObject();
           if(!loreObject.has("extra")) return;
           if(!loreObject.get("extra").isJsonArray()) return;
-          JsonElement extraElement = loreObject.get("extra").getAsJsonArray().get(0);
-          if(extraElement == null) return;
-          if(!extraElement.isJsonObject()) return;
-          JsonObject extraObject = extraElement.getAsJsonObject();
-          if(!extraObject.has("extra")) return;
-          if(!extraObject.get("extra").isJsonArray()) return;
-          JsonArray array = extraObject.get("extra").getAsJsonArray();
+          JsonArray array = loreObject.get("extra").getAsJsonArray();
           for(int i = 0; i != array.size(); i++) {
             if(array.get(i).isJsonObject()) {
               JsonObject object = array.get(i).getAsJsonObject();
               if(object.has("text")) {
                 String text = object.get("text").getAsString();
-                if(!(text.contains("Getötete Mobs: ") || text.contains("Killed mobs: "))) {
+                if(!(text.equals("Getötete Mobs: ") || text.equals("Killed mobs: "))) {
                   AddonSettings.swordMobs = Integer.parseInt(text.replace(".", "").replace(",", ""));
                 }
               }
@@ -147,6 +134,14 @@ public class TickListener {
 
     Visualisation: https://jsonlint.com/
      */
+
+    /*
+    {"italic":false,"text":""},
+    {"italic":false,"color":"aqua","text":"Statistiken:"},
+    {"italic":false,"extra":[{"color":"gray","text":"Ranking: "},{"color":"gold","text":"Platz 215 "},{"color":"gray","text":"(Getötete Mobs)"}],"text":""},
+    {"italic":false,"extra":[{"color":"gray","text":"Getötete Mobs: "},{"color":"yellow","text":"6.243"}],"text":""}
+     */
+
   }
 
 }
