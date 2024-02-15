@@ -1,6 +1,8 @@
 package de.timuuuu.moneymaker.boosters;
 
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
+import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +15,31 @@ public class BoosterUtil {
   private static List<Booster> yellow = new ArrayList<>();
   private static List<Booster> blue = new ArrayList<>();
   private static List<Booster> purple = new ArrayList<>();
+
+  public static TextColor getColor(Booster booster) {
+    AtomicReference<TextColor> color = new AtomicReference<>(NamedTextColor.GRAY);
+    lime.forEach(saved -> {
+      if(booster.boost() == saved.boost() && booster.time() == saved.time()) {
+        color.set(NamedTextColor.GREEN);
+      }
+    });
+    yellow.forEach(saved -> {
+      if(booster.boost() == saved.boost() && booster.time() == saved.time()) {
+        color.set(NamedTextColor.YELLOW);
+      }
+    });
+    blue.forEach(saved -> {
+      if(booster.boost() == saved.boost() && booster.time() == saved.time()) {
+        color.set(NamedTextColor.BLUE);
+      }
+    });
+    purple.forEach(saved -> {
+      if(booster.boost() == saved.boost() && booster.time() == saved.time()) {
+        color.set(NamedTextColor.DARK_PURPLE);
+      }
+    });
+    return color.get();
+  }
 
   public static Icon getIcon(Booster booster) {
     AtomicReference<Icon> icon = new AtomicReference<>(SpriteCommon.BOOSTER_GRAY);

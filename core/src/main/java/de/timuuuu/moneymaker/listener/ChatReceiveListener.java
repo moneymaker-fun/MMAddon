@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.utils.ChatMessages;
@@ -11,6 +12,7 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Priority;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -74,8 +76,38 @@ public class ChatReceiveListener {
       if (plain.contains("Booster (") && plain.contains(")") &&
           !(ChatMessages.BOOSTER_ACTIVATED_DE_3.contains(plain) || ChatMessages.BOOSTER_ACTIVATED_EN_3.contains(plain))) {
         if(this.addon.configuration().shortBoosterMessage().get()) {
-          String boost = plain.replace(ChatMessages.PREFIX.message(), "");
-          this.addon.displayMessage(Component.text(AddonSettings.prefix).append(Component.text("§a" + boost + " ")).append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN)));
+          // Shorted DE: +70 % Booster (15 Minuten)
+          // Shorted EN: +40% Booster (20 minutes)
+          String boosterString = plain.replace(ChatMessages.PREFIX.message() + " ", "");
+          String boostString = boosterString.split("\\(")[0].replace("%", "").replace("+", "").split(" ")[0];
+          String timeString = plain.split(" \\(")[1].split(" ")[0];
+
+          Booster booster = null;
+
+          try {
+            int boost = Integer.parseInt(boostString);
+            int time = Integer.parseInt(timeString);
+            if (plain.contains("Stunde") || plain.contains("hour")) {
+              time *= 60;
+            }
+            booster = new Booster(boost, time);
+          } catch (NumberFormatException ignored) {}
+
+          if(booster != null) {
+            TextColor color = BoosterUtil.getColor(booster);
+            Component message = Component.text(AddonSettings.prefix);
+
+            Component boosterComponent = Component.text(boosterString + " ", color);
+            message.append(boosterComponent);
+
+            message.append(Component.icon(BoosterUtil.getIcon(booster), 10));
+
+            message.append(Component.text(" ")).append(Component.translatable("moneymaker.text.found", color));
+            this.addon.displayMessage(message);
+          } else {
+            this.addon.displayMessage(Component.text(AddonSettings.prefix).append(Component.text(boosterString + " ", NamedTextColor.GREEN)).append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN)));
+          }
+
           event.setCancelled(true);
         }
       }
