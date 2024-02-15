@@ -44,8 +44,6 @@ public class ChatActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
 
-  private String CURRENT_TIME = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
-
   private int MESSAGE_LIMIT = 50;
 
   private TextFieldWidget chatInput;
@@ -320,6 +318,7 @@ public class ChatActivity extends SimpleActivity {
 
   public void addChatMessage(MoneyChatMessage chatMessage) {
     if (chatMessage == null) return;
+    String CURRENT_TIME = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
 
       if(chatMessages.size() <= MESSAGE_LIMIT) {
@@ -336,6 +335,7 @@ public class ChatActivity extends SimpleActivity {
   public void clearChat(boolean message) {
     chatMessages.clear();
     if(message) {
+      String CURRENT_TIME = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
       this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
 
         if(chatMessages.size() <= MESSAGE_LIMIT) {
@@ -371,6 +371,7 @@ public class ChatActivity extends SimpleActivity {
 
   public void addCustomChatMessage(String chatMessage) {
     if (chatMessage == null) return;
+    String CURRENT_TIME = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
 
       if(chatMessages.size() <= MESSAGE_LIMIT) {
