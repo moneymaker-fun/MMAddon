@@ -28,4 +28,9 @@ public class MainActivity extends TabbedActivity {
     }
   }
 
+  public void openAndSwitchToChat() {
+    this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(this);
+    this.addon.labyAPI().minecraft().executeNextTick(() -> this.switchTab("moneymaker_chat"));
+  }
+
 }

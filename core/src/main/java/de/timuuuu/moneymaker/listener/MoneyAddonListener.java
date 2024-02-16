@@ -168,7 +168,7 @@ public class MoneyAddonListener {
               Icon.head(chatMessage.uuid()),
               Component.translatable("moneymaker.notification.chat.reply"),
               () -> {
-                this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(this.addon.mainActivity());
+                this.addon.mainActivity().openAndSwitchToChat();
               }
           );
           if(this.addon.configuration().moneyChatConfiguration.notificationSound().get()) {
