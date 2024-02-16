@@ -216,4 +216,15 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     Laby.labyAPI().notificationController().push(builder.build());
   }
 
+  public void pushNotification(Component title, Component text, Icon icon,
+      Component buttonText, Runnable buttonAction) {
+    Notification.Builder builder = Notification.builder()
+        .title(title)
+        .text(text)
+        .icon(icon)
+        .addButton(NotificationButton.of(buttonText, buttonAction))
+        .type(Type.SYSTEM);
+    Laby.labyAPI().notificationController().push(builder.build());
+  }
+
 }

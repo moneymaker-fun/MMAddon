@@ -165,7 +165,12 @@ public class MoneyAddonListener {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.new-message", TextColor.color(85, 255, 85)),
               Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
-              Icon.head(chatMessage.uuid()));
+              Icon.head(chatMessage.uuid()),
+              Component.translatable("moneymaker.notification.chat.reply"),
+              () -> {
+                this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(this.addon.mainActivity());
+              }
+          );
           if(this.addon.configuration().moneyChatConfiguration.notificationSound().get()) {
             this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
           }

@@ -91,6 +91,7 @@
         "connected": "Erfolgreich zum Chat-Server verbunden.",
         "no-connection": "Keine Verbindung zum Chat-Server möglich.",
         "timed": "Verbindung zum Chat-Server verloren.",
+        "reply": "Antworten",
         "user": {
           "online": "%s spielt nun MoneyMaker.",
           "offline": "%s hat MoneyMaker verlassen."
