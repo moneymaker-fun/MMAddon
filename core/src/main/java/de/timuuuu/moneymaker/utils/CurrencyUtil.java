@@ -5,7 +5,12 @@ import java.util.Map;
 
 public class CurrencyUtil {
 
-  public static Map<String, Integer> units = new HashMap<>();
+  private static Map<String, Integer> units = new HashMap<>();
+
+  public static int get(String unit) {
+    return units.getOrDefault(unit, 0);
+  }
+
   public static void setUnits() {
     units.put("K", 1);
     units.put("M", 2);
