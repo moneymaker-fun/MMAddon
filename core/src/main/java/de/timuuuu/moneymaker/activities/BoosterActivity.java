@@ -9,11 +9,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
@@ -29,6 +31,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.TilesGridWidget;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
+import net.labymod.api.util.I18n;
 
 @AutoActivity
 @Links({@Link("booster.lss"), @Link("buttons.lss")})
@@ -39,7 +42,7 @@ public class BoosterActivity extends SimpleActivity {
     this.addon = addon;
   }
 
-  private boolean orderAscending = true;
+  private Sorting sorting = Sorting.ASCENDING;
 
   @Override
   public void initialize(Parent parent) {
@@ -57,15 +60,12 @@ public class BoosterActivity extends SimpleActivity {
 
     DivWidget container = new DivWidget().addId("container");
 
-    LinkedList<Booster> list = new LinkedList<>();
-
-    if (this.orderAscending) {
-      for (int j = Booster.boosterList().size() - 1; j >= 0; j--) {
-        Booster booster = Booster.boosterList().get(j);
-        list.add(booster);
-      }
-    } else {
-      list.addAll(Booster.boosterList());
+    LinkedList<Booster> list = new LinkedList<>(Booster.boosterList());
+    if(this.sorting == Sorting.ASCENDING) {
+      list.sort(Comparator.comparing(Booster::boost));
+    }
+    if(this.sorting == Sorting.TIME) {
+      list.sort(Comparator.comparing(Booster::farmDate));
     }
 
     TilesGridWidget<BoosterWidget> boosters = new TilesGridWidget<>().addId("booster-grid");
@@ -98,10 +98,14 @@ public class BoosterActivity extends SimpleActivity {
       }
     });
 
-    ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting", TextColor.color(255, 170, 0))
-        .append(Component.text(orderAscending ? " §b⬆" : " §b⬇"))).addId("sort-button");
+    ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting.button", NamedTextColor.GOLD)
+        .append(Component.text(" §6(" + this.sortIcon() + "§6)"))).addId("sort-button");
     sortButton.setPressable(() -> {
-      orderAscending = !orderAscending;
+      switch (this.sorting) {
+        case DESCENDING -> this.sorting = Sorting.ASCENDING;
+        case ASCENDING -> this.sorting = Sorting.TIME;
+        case TIME -> this.sorting = Sorting.DESCENDING;
+      }
       this.reload();
     });
 
@@ -111,6 +115,16 @@ public class BoosterActivity extends SimpleActivity {
 
     this.document.addChild(container);
     this.document.addChild(sideContainer);
+  }
+
+  private String sortIcon() {
+    if(this.sorting == Sorting.ASCENDING) {
+      return "§b⬆";
+    }
+    if(this.sorting == Sorting.TIME) {
+      return "§b" + I18n.translate("moneymaker.ui.booster.sorting.time");
+    }
+    return "§b⬇";
   }
 
   @Override
@@ -154,4 +168,9 @@ public class BoosterActivity extends SimpleActivity {
       exception.printStackTrace();
     }
   }
+
+  public enum Sorting {
+    DESCENDING, ASCENDING, TIME
+  }
+
 }

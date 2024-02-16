@@ -369,7 +369,10 @@
         "title": "Liste der gefarmten Booster",
         "boost-total": "Gesamt: %s",
         "average-boosters": "Durchschnittliche Booster: ",
-        "sorting": "Sortierung",
+        "sorting": {
+          "button": "Sortierung",
+          "time": "Zeit"
+        },
         "export": "Als CSV exportieren",
         "clear": "Booster Liste leeren"
       },
