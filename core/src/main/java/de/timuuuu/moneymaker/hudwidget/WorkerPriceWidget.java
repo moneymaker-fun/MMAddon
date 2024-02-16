@@ -36,22 +36,35 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
 
       if(!AddonSettings.balance.equals("X") && !AddonSettings.nextWorkerCost.equals("X")) {
 
-          //String KontoEinheit = AddonSettings.balance.replaceAll("\\d", "").substring(1);
-          //String MinerEinheit = AddonSettings.nextWorkerCost.replaceAll("\\d", "").substring(1);
-
           String[] kontoSplit = AddonSettings.balance.split(" ");
           if(kontoSplit.length > 1) {
-            String KontoEinheit = kontoSplit[1];
-            String MinerEinheit = AddonSettings.nextWorkerCost.split(" ")[1];
+            String balanceUnit = kontoSplit[1];
+            String workerUnit = AddonSettings.nextWorkerCost.split(" ")[1];
 
-            if(CurrencyUtil.units.get(KontoEinheit) >= CurrencyUtil.units.get(MinerEinheit)) {
-              double d1 = Double.parseDouble(AddonSettings.balance.replaceAll("[^\\d.]", ""));
-              double d2 = Double.parseDouble(AddonSettings.nextWorkerCost.replaceAll("[^\\d.]", ""));
-              int difference = Double.compare(d1, d2);
+            double balance = Double.parseDouble(AddonSettings.balance.replaceAll("[^\\d.]", ""));
+            double cost = Double.parseDouble(AddonSettings.nextWorkerCost.replaceAll("[^\\d.]", ""));
+            int difference = Double.compare(balance, cost);
+
+            String color = "§c";
+            if(CurrencyUtil.get(balanceUnit) > CurrencyUtil.get(workerUnit)) {
+              color = "§a§l";
+            } else {
+              if(CurrencyUtil.get(balanceUnit) == CurrencyUtil.get(workerUnit)) {
+                if(difference >= 0) {
+                  color = "§a";
+                } else {
+                  color = "§6";
+                }
+              }
+            }
+
+            itemName = color + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
+
+            /*if(CurrencyUtil.get(KontoEinheit) >= CurrencyUtil.get(MinerEinheit)) {
               itemName = (difference >= 0 ? "§a" : "§6") + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
             } else {
               itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
-            }
+            }*/
           }
 
       }
