@@ -50,7 +50,7 @@ public class DebrisPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
               double d1 = Double.parseDouble(AddonSettings.balance.replaceAll("[^\\d.]", ""));
               double d2 = Double.parseDouble(AddonSettings.debrisCost.replaceAll("[^\\d.]", ""));
               int difference = Double.compare(d1, d2);
-              itemName = (difference >= 0 ? "§6" : "§c") + AddonSettings.balance + " / " + AddonSettings.debrisCost;
+              itemName = (difference >= 0 ? "§a" : "§6") + AddonSettings.balance + " / " + AddonSettings.debrisCost;
             } else {
               itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.debrisCost;
             }

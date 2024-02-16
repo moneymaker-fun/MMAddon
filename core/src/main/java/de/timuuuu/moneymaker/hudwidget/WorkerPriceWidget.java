@@ -48,7 +48,7 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
               double d1 = Double.parseDouble(AddonSettings.balance.replaceAll("[^\\d.]", ""));
               double d2 = Double.parseDouble(AddonSettings.nextWorkerCost.replaceAll("[^\\d.]", ""));
               int difference = Double.compare(d1, d2);
-              itemName = (difference >= 0 ? "§6" : "§c") + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
+              itemName = (difference >= 0 ? "§a" : "§6") + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
             } else {
               itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
             }
