@@ -95,10 +95,10 @@ Scroll {
 }
 
 .sort-button {
-  width: fit-content;
   padding-left: 3;
   height: 15;
   left: 5;
+  right: 5;
   padding-right: 3;
   top: 5;
 }
