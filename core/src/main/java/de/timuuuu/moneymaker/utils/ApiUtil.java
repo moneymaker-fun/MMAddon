@@ -4,8 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
-import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
-import net.labymod.api.Laby;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.util.io.web.request.Request;
@@ -35,6 +36,7 @@ public class ApiUtil {
             return;
           }
           JsonArray array = response.get();
+          List<MoneyChatMessage> messages = new ArrayList<>();
           array.forEach(jsonElement -> {
             if(jsonElement.isJsonObject()) {
               JsonObject object = jsonElement.getAsJsonObject();
@@ -49,11 +51,15 @@ public class ApiUtil {
                   chatMessage.addProperty("rank", object.get("Rang").getAsString());
                   chatMessage.addProperty("fromCache", true);
                   chatMessage.addProperty("timeStamp", object.get("formatted_timestamp").getAsString());
-                  Laby.fireEvent(new MoneyChatReceiveEvent(MoneyChatMessage.fromJson(chatMessage)));
+                  messages.add(MoneyChatMessage.fromJson(chatMessage));
                 }
               }
             }
           });
+          if(!messages.isEmpty()) {
+            Collections.reverse(messages);
+            messages.forEach(message -> this.addon.chatActivity().addChatMessage(message));
+          }
         });
   }
 
