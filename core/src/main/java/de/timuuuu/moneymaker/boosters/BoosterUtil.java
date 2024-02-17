@@ -13,7 +13,7 @@ public class BoosterUtil {
 
   private static List<Booster> lime = new ArrayList<>();
   private static List<Booster> yellow = new ArrayList<>();
-  private static List<Booster> blue = new ArrayList<>();
+  private static List<Booster> aqua = new ArrayList<>();
   private static List<Booster> purple = new ArrayList<>();
 
   public static TextColor getColor(Booster booster) {
@@ -28,9 +28,9 @@ public class BoosterUtil {
         color.set(NamedTextColor.YELLOW);
       }
     });
-    blue.forEach(saved -> {
+    aqua.forEach(saved -> {
       if(booster.boost() == saved.boost() && booster.time() == saved.time()) {
-        color.set(NamedTextColor.BLUE);
+        color.set(NamedTextColor.AQUA);
       }
     });
     purple.forEach(saved -> {
@@ -53,7 +53,7 @@ public class BoosterUtil {
         icon.set(SpriteCommon.BOOSTER_YELLOW);
       }
     });
-    blue.forEach(saved -> {
+    aqua.forEach(saved -> {
       if(booster.boost() == saved.boost() && booster.time() == saved.time()) {
         icon.set(SpriteCommon.BOOSTER_BLUE);
       }
@@ -119,7 +119,7 @@ public class BoosterUtil {
         new Booster(300, 60)
     ));
 
-    blue.addAll(Arrays.asList(
+    aqua.addAll(Arrays.asList(
        new Booster(40, 180),
 
        new Booster(50, 180),
