@@ -14,7 +14,7 @@ public class MoneyChatConfiguration extends Config {
 
   @SettingSection(value = "general", center = true)
 
-  @IntroducedIn(namespace = "moneymaker", value = "1.3.1")
+  @IntroducedIn(namespace = "moneymaker", value = "1.4.0")
   @SpriteSlot(x = 1)
   @SwitchSetting
   private final ConfigProperty<Boolean> loadChatHistory = new ConfigProperty<>(true);
