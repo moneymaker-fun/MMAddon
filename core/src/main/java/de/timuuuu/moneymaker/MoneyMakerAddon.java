@@ -136,7 +136,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       this.chatClient.sendHeartbeat();
     }).delay(5, TimeUnit.SECONDS).build().execute();
 
+    AddonSettings.setFallbackCoordinates(false);
     AddonSettings.selectUpdateMode(this.configuration().updateMode().get());
+    this.apiUtil.loadCoordinates();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
       this.chatClient.sendStatistics(true, this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());

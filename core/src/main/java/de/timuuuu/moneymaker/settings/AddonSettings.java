@@ -2,7 +2,10 @@ package de.timuuuu.moneymaker.settings;
 
 
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class AddonSettings {
@@ -12,10 +15,26 @@ public class AddonSettings {
   public static boolean inMine = false;
   public static boolean inFarming = false;
 
+  public static HashMap<String, List<Float>> workerCoordinates = new HashMap<>();
+  public static HashMap<String, List<Float>> debrisCoordinates = new HashMap<>();
+
   public static int CHECK_TICK = 5*20; // 5*20 (5 seconds)
   public static int CHECK_RENDER = 20; // every 20 renders
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
+
+  public static void setFallbackCoordinates(boolean fill) {
+    AddonSettings.workerCoordinates.put("x", new ArrayList<>());
+    AddonSettings.workerCoordinates.put("z", new ArrayList<>());
+    AddonSettings.debrisCoordinates.put("x", new ArrayList<>());
+    AddonSettings.debrisCoordinates.put("z", new ArrayList<>());
+    if(fill) {
+      workerCoordinates.get("x").addAll(Arrays.asList(2.5F, 1001.5F));
+      workerCoordinates.get("z").addAll(Arrays.asList(-1.5F, 6.5F));
+      debrisCoordinates.get("x").addAll(Arrays.asList(5.5F, 1004.5F));
+      debrisCoordinates.get("z").addAll(Arrays.asList(-5.5F, 1.5F));
+    }
+  }
 
   public static void selectUpdateMode(UpdateMode updateMode) {
     switch (updateMode) {

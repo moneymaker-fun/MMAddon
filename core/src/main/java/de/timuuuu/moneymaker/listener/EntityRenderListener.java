@@ -34,13 +34,13 @@ public class EntityRenderListener {
       if(entityName.contains("Kosten: ") || entityName.contains("Price: ")) {
         String costs = entityName.replace("Kosten: ","").replace("Price: ", "");
 
-        if(entity.getPosX() == 2.5D || entity.getPosX() == 1001.5D || entity.getPosZ() == -1.5D || entity.getPosZ() == 6.5D) {
+        if(AddonSettings.workerCoordinates.get("x").contains(entity.getPosX()) || AddonSettings.workerCoordinates.get("z").contains(entity.getPosZ())) {
           if(!AddonSettings.nextWorkerCost.equals(costs)) {
             AddonSettings.nextWorkerCost = costs;
           }
         }
 
-        if(entity.getPosX() == 5.5D || entity.getPosX() == 1004.5D || entity.getPosZ() == -5.5D || entity.getPosZ() == 1.5) {
+        if(AddonSettings.debrisCoordinates.get("x").contains(entity.getPosX()) || AddonSettings.workerCoordinates.get("z").contains(entity.getPosZ())) {
           if(!AddonSettings.debrisCost.equals(costs)) {
             AddonSettings.debrisCost = costs;
           }
