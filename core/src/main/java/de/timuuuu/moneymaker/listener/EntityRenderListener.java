@@ -40,7 +40,7 @@ public class EntityRenderListener {
           }
         }
 
-        if(AddonSettings.debrisCoordinates.get("x").contains(entity.getPosX()) || AddonSettings.workerCoordinates.get("z").contains(entity.getPosZ())) {
+        if(AddonSettings.debrisCoordinates.get("x").contains(entity.getPosX()) || AddonSettings.debrisCoordinates.get("z").contains(entity.getPosZ())) {
           if(!AddonSettings.debrisCost.equals(costs)) {
             AddonSettings.debrisCost = costs;
           }
