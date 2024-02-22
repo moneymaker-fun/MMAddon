@@ -42,7 +42,7 @@ public class BoosterActivity extends SimpleActivity {
     this.addon = addon;
   }
 
-  private Sorting sorting = Sorting.ASCENDING;
+  private Sorting sorting = Sorting.DESCENDING;
 
   @Override
   public void initialize(Parent parent) {
