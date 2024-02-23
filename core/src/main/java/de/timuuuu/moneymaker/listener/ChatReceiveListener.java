@@ -115,15 +115,37 @@ public class ChatReceiveListener {
       // EN: [MoneyMaker] +10% Booster (20 minutes)
       // DE: [MoneyMaker] +10 % Booster (20 Minuten)
 
+      // [MoneyMaker] +50% Booster (1 hour 30 minutes)
+
       if (plain.startsWith("[MoneyMaker] +") && plain.contains("Booster (")) {
-        int boost = Integer.parseInt(plain.split(" ")[1].replace("%", "").replace("+", ""));
-        Booster.sessionBoost.addAndGet(boost);
-        Booster.sessionBoosters.addAndGet(1);
-        int time = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
-        if (plain.contains("Stunde") || plain.contains("hour"))
-          time *= 60;
-        Booster.insertBooster(boost, time);
-        Booster.insertLatestBooster(boost, time);
+        int boost = 0;
+        int time = 0;
+        try {
+          boost = Integer.parseInt(plain.split(" ")[1].replace("%", "").replace("+", ""));
+
+          if((plain.contains("Stunde") && plain.contains("Minuten")) || (plain.contains("hour") && plain.contains("minutes"))) {
+            int hours = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
+            int minutes = Integer.parseInt(plain.split(" \\(")[1].split(" ")[2]);
+            time = minutes + (hours*60);
+          } else {
+            time = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
+            if(plain.contains("Stunde") || plain.contains("hour")) {
+              time *= 60;
+            }
+          }
+
+        } catch (NumberFormatException ignored) {
+
+        }
+        if(boost != 0 && time != 0) {
+          Booster.sessionBoost.addAndGet(boost);
+          Booster.sessionBoosters.addAndGet(1);
+          Booster.insertBooster(boost, time);
+          Booster.insertLatestBooster(boost, time);
+        }
+        //int time = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
+        //if (plain.contains("Stunde") || plain.contains("hour"))
+          //time *= 60;
       }
 
       if(ChatMessages.WORKPLACE_UNLOCKED_DE.equals(plain) || ChatMessages.WORKPLACE_UNLOCKED_EN.equals(plain)) {
