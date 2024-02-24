@@ -66,6 +66,15 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
+
+    if(!event.newSession().isPremium()) {
+      this.addon.chatClient().closeConnection();
+    } else {
+      if(!this.addon.chatClient().isConnected()) {
+        this.addon.chatClient().connect(true);
+      }
+    }
+
     this.addon.chatClient().sendStatistics(true, event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
     this.addon.chatClient().sendStatistics(false, event.newSession().getUniqueId().toString(), event.newSession().getUsername());
     AddonSettings.playerStatus.remove(event.previousSession().getUniqueId());
@@ -185,9 +194,7 @@ public class MoneyAddonListener {
               Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
               Icon.head(chatMessage.uuid()),
               Component.translatable("moneymaker.notification.chat.reply"),
-              () -> {
-                this.addon.mainActivity().openAndSwitchToChat();
-              }
+              () -> this.addon.mainActivity().openAndSwitchToChat()
           );
           if(this.addon.configuration().moneyChatConfiguration.notificationSound().get()) {
             this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);

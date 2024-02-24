@@ -38,6 +38,10 @@ public class ChatClient {
   }
 
   public void connect(boolean reconnect) {
+    if(!addon.labyAPI().minecraft().sessionAccessor().isPremium() && !addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()) {
+      addon.logger().info("[MoneyMaker - Chat] Not connecting to Chat-Server. Account is cracked account!");
+      return;
+    }
     try {
       socket = new Socket(SERVER_IP, SERVER_PORT);
       serverOut = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
@@ -81,6 +85,18 @@ public class ChatClient {
     }
   }
 
+  public void connectStartUp() {
+    this.connect(false);
+    this.checkStatus();
+    this.sendStatistics(false, addon.labyAPI().getUniqueId().toString(), addon.labyAPI().getName());
+    Task.builder(() -> {
+      if(!isConnected()) {
+        this.connect(false);
+      }
+      this.sendHeartbeat();
+    }).delay(5, TimeUnit.SECONDS).build().execute();
+  }
+
   public static boolean isPortOpen(String host, int port) {
     try (Socket ignored = new Socket(host, port)) {
       return true;
@@ -106,7 +122,7 @@ public class ChatClient {
         addon.chatActivity().reloadScreen();
         addon.pushNotification(Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
             Component.translatable("moneymaker.notification.chat.timed", TextColor.color(255, 85, 85)));
-        if(socket != null && !socket.isClosed()) {
+        if(this.isConnected()) {
             try {
                 socket.close();
                 serverOut = null;
@@ -118,6 +134,10 @@ public class ChatClient {
       }
       online = status;
     }).repeat(1, TimeUnit.MINUTES).build().execute();
+  }
+
+  public boolean isConnected() {
+    return this.socket != null && !this.socket.isClosed();
   }
 
   public boolean sendChatMessage(MoneyChatMessage chatMessage) {

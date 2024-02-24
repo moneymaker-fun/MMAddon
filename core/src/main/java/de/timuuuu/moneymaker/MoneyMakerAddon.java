@@ -1,7 +1,5 @@
 package de.timuuuu.moneymaker;
 
-import com.google.gson.JsonObject;
-import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
@@ -38,7 +36,6 @@ import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.ApiUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
-import java.util.concurrent.TimeUnit;
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
@@ -51,7 +48,6 @@ import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
 import net.labymod.api.revision.SimpleRevision;
-import net.labymod.api.util.concurrent.task.Task;
 import net.labymod.api.util.version.SemanticVersion;
 
 @AddonMain
@@ -126,15 +122,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.logger().info("Enabled the Addon");
 
-    this.chatClient.connect(false);
-    this.chatClient.checkStatus();
-    this.chatClient.sendStatistics(false, this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());
-    Task.builder(() -> {
-      if(this.chatClient.socket().isClosed() || this.chatClient.socket() == null) {
-        this.chatClient.connect(false);
-      }
-      this.chatClient.sendHeartbeat();
-    }).delay(5, TimeUnit.SECONDS).build().execute();
+    this.chatClient.connectStartUp();
 
     AddonSettings.setFallbackCoordinates(false);
     AddonSettings.selectUpdateMode(this.configuration().updateMode().get());
