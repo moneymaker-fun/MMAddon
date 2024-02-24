@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.settings.AddonSettings;
@@ -14,6 +15,7 @@ import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.lifecycle.GameShutdownEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.event.client.network.server.ServerLoginEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
@@ -86,6 +88,22 @@ public class MoneyAddonListener {
     muteCheckObject.addProperty("uuid", event.newSession().getUniqueId().toString());
     this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
 
+  }
+
+  @Subscribe
+  public void onShutdown(GameShutdownEvent event) {
+    this.addon.chatClient().sendStatistics(true, this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
+    JsonObject data = new JsonObject();
+    data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+    data.addProperty("userName", this.addon.labyAPI().getName());
+    data.addProperty("server", "OFFLINE");
+    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+    this.addon.chatClient().sendMessage("playerStatus", data);
+
+    this.addon.chatClient().closeConnection();
+    if(this.addon.configuration().exportBoosterOnShutdown().get()) {
+      BoosterActivity.writeLinkedListToCSV(true);
+    }
   }
 
   @Subscribe
