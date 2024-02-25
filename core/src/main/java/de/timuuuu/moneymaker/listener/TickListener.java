@@ -23,7 +23,7 @@ public class TickListener {
   public void onSwordTick(SwordTickEvent event) {
     if(!this.addon.addonUtil().inFarming()) return;
     tickCount++;
-    if(tickCount == this.addon.addonSettings().CHECK_TICK()) {
+    if(tickCount >= this.addon.addonSettings().CHECK_TICK()) {
       tickCount = 0;
 
       if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
