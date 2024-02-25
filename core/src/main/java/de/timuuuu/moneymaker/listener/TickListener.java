@@ -7,7 +7,9 @@ import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
+import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import net.labymod.api.event.Subscribe;
+import net.labymod.api.event.client.lifecycle.GameTickEvent;
 
 public class TickListener {
 
@@ -17,14 +19,49 @@ public class TickListener {
     this.addon = addon;
   }
 
-  private int tickCount = 0;
+  private int swordTickCount = 0;
+  private int generalTickCount = 0;
+
+  @Subscribe
+  public void onGameTick(GameTickEvent event) {
+    if(!this.addon.addonUtil().inFarming()) return;
+    if(this.addon.labyAPI().minecraft().getClientPlayer() == null) return;
+    generalTickCount++;
+    if(generalTickCount >= this.addon.addonSettings().CHECK_TICK()) {
+      generalTickCount = 0;
+
+      float playerY = this.addon.labyAPI().minecraft().getClientPlayer().position().getY();
+      // Gold Ebene
+      if(playerY > 198) {
+        if(this.addon.addonUtil().miningCave() != MiningCave.GOLD) {
+          this.addon.addonUtil().miningCave(MiningCave.GOLD);
+        }
+      // Kohle Ebene
+      } else if (playerY <= 198 && playerY > 160) {
+        if(this.addon.addonUtil().miningCave() != MiningCave.COAL) {
+          this.addon.addonUtil().miningCave(MiningCave.COAL);
+        }
+      // Eisen Ebene
+      } else if(playerY <= 160) {
+        if(this.addon.addonUtil().miningCave() != MiningCave.IRON) {
+          this.addon.addonUtil().miningCave(MiningCave.IRON);
+        }
+      // Unknown
+      } else {
+        if(this.addon.addonUtil().miningCave() != MiningCave.UNKNOWN) {
+          this.addon.addonUtil().miningCave(MiningCave.UNKNOWN);
+        }
+      }
+
+    }
+  }
 
   @Subscribe
   public void onSwordTick(SwordTickEvent event) {
     if(!this.addon.addonUtil().inFarming()) return;
-    tickCount++;
-    if(tickCount >= this.addon.addonSettings().CHECK_TICK()) {
-      tickCount = 0;
+    swordTickCount++;
+    if(swordTickCount >= this.addon.addonSettings().CHECK_TICK()) {
+      swordTickCount = 0;
 
       if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
       String rankingLine = event.getLoreList().get(2);

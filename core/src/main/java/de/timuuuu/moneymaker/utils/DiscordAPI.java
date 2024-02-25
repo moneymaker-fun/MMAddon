@@ -113,7 +113,7 @@ public class DiscordAPI {
         if (!imageUrl.equals(minerUrl)) {
           imageUrl = minerUrl;
         }
-        this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently");
+        this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently") + " - " + I18n.translate(this.addon.addonUtil().miningCave().translation());
         if (farmingCount.get() == 1) {
           this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + Util.format(this.addon.addonUtil().currentBrokenBlocks());
         }

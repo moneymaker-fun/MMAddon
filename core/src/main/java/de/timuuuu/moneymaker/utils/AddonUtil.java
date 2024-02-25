@@ -16,6 +16,7 @@ public class AddonUtil {
 
   private boolean inMine = false;
   private boolean inFarming = false;
+  private MiningCave miningCave = MiningCave.UNKNOWN;
 
   public void resetValues(boolean changePlaying) {
     if(changePlaying) {
@@ -72,6 +73,14 @@ public class AddonUtil {
 
   private boolean workerNotifySent = false;
   private boolean debrisNotifySent = false;
+
+  public MiningCave miningCave() {
+    return miningCave;
+  }
+
+  public void miningCave(MiningCave miningCave) {
+    this.miningCave = miningCave;
+  }
 
   public boolean connectedToMoneyMaker() {
     return inMine || inFarming;
@@ -244,4 +253,22 @@ public class AddonUtil {
   public void debrisNotifySent(boolean debrisNotifySent) {
     this.debrisNotifySent = debrisNotifySent;
   }
+
+  public enum MiningCave {
+    GOLD("moneymaker.farming-level.gold"),
+    COAL("moneymaker.farming-level.coal"),
+    IRON("moneymaker.farming-level.iron"),
+    UNKNOWN("moneymaker.farming-level.unknown");
+
+    private String translation;
+
+    MiningCave(String translation) {
+      this.translation = translation;
+    }
+
+    public String translation() {
+      return translation;
+    }
+  }
+
 }

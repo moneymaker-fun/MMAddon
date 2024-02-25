@@ -63,6 +63,12 @@
         }
       }
     },
+    "farming-level": {
+      "gold": "Gold Level",
+      "coal": "Coal Level",
+      "iron": "Iron Level",
+      "unknown": "Unknown Level"
+    },
     "language-info": {
       "title": "MoneyMaker Addon",
       "line1": "ℹ The MoneyMaker Addon currently only supports German and English ℹ",
