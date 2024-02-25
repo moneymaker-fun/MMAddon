@@ -55,6 +55,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static final HudWidgetCategory CATEGORY = new HudWidgetCategory("moneymaker");
 
+  public String prefix = "§8‖ §6MoneyMaker §8» §7";
+
   private ChatClient chatClient;
 
   private MainActivity mainActivity;

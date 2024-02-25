@@ -38,29 +38,29 @@ public class TimerCommand extends Command {
               if(timerName.length() <= MAX_NAME_LENGTH) {
                 if(!Util.timers.containsKey(timerName)) {
                   Util.timers.put(timerName, new MoneyTimer(timerName, minutes).start());
-                  this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.created", TextColor.color(170, 170, 170),
+                  this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.timer.created", TextColor.color(170, 170, 170),
                       Component.text(timerName, TextColor.color(255, 255, 85)), Component.text(minutes, TextColor.color(255, 255, 85))
                   )));
                   this.addon.startActivity().reloadScreen();
                   if(Util.timers.size() > WARNING_AMOUNT & !warningSent) {
                     warningSent = true;
-                    this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.performance", TextColor.color(255, 85, 85))));
+                    this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.timer.performance", TextColor.color(255, 85, 85))));
                   }
                 } else {
-                  this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.already-exists", TextColor.color(255, 85, 85))));
+                  this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.timer.already-exists", TextColor.color(255, 85, 85))));
                 }
               } else {
-                this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.max-length", TextColor.color(255, 85, 85),
+                this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.timer.max-length", TextColor.color(255, 85, 85),
                     Component.text(MAX_NAME_LENGTH))));
               }
             } catch (NumberFormatException ignored) {
-              this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.no-number", TextColor.color(255, 85, 85))));
+              this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.timer.no-number", TextColor.color(255, 85, 85))));
             }
           } else {
-            this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.timer.usage", TextColor.color(255, 85, 85))));
+            this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.timer.usage", TextColor.color(255, 85, 85))));
           }
         } else {
-          this.displayMessage(Component.text(AddonSettings.prefix).append(Component.translatable("moneymaker.command.notConnected", TextColor.color(255, 85, 85))));
+          this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.notConnected", TextColor.color(255, 85, 85))));
         }
       }
     }
