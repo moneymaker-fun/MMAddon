@@ -19,10 +19,6 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 @SpriteTexture("sprite/settings")
 public class MoneyMakerConfiguration extends AddonConfig {
 
-  public MoneyMakerConfiguration() {
-    this.updateMode.addChangeListener((type, oldValue, newValue) -> AddonSettings.selectUpdateMode(newValue));
-  }
-
   @SettingSection(value = "general", center = true)
 
   @SpriteSlot()
