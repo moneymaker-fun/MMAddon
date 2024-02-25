@@ -46,13 +46,13 @@
     },
     "discordPresence": {
       "mine": {
-        "currently": "Aktuell in der Mine",
+        "currently": "In der Mine",
         "balance": "Kontostand: ",
         "workers": "Minenarbeiter: ",
         "ranking": "Ranking: "
       },
       "farming": {
-        "currently": "Aktuell in der Farming Höhle",
+        "currently": "In der Farming Höhle",
         "blocks": "Blöcke: ",
         "sessionBlocks": "Blöcke (Aktuelle Session): ",
         "boosters": "Gefarmte Booster: ",
