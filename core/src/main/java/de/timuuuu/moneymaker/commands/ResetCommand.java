@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.commands;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.boosters.Booster;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.Component;
@@ -21,7 +20,7 @@ public class ResetCommand extends Command {
     if(prefix.equalsIgnoreCase("mm-reset")) {
       if(this.addon.configuration().enabled().get()) {
 
-        if(AddonSettings.inMine || AddonSettings.inFarming) {
+        if(this.addon.addonUtil().connectedToMoneyMaker()) {
           if(args.length == 1) {
             if(args[0].equalsIgnoreCase("booster")) {
 
@@ -34,20 +33,20 @@ public class ResetCommand extends Command {
 
             } else if(args[0].equalsIgnoreCase("arbeiter") || args[0].equalsIgnoreCase("miners")) {
 
-              AddonSettings.workerCount = 0;
-              AddonSettings.workerNotifySent = false;
-              AddonSettings.nextWorkerCost = "X";
+              this.addon.addonUtil().workerCount(0);
+              this.addon.addonUtil().workerNotifySent(false);
+              this.addon.addonUtil().nextWorkerCost("X");
               this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.reset.miners", TextColor.color(85, 255, 85))));
 
             } else if(args[0].equalsIgnoreCase("geröll") || args[0].equalsIgnoreCase("debris")) {
 
-              AddonSettings.debrisTime = 0;
-              AddonSettings.debrisCost = "X";
-              AddonSettings.debrisNotifySent = false;
+              this.addon.addonUtil().debrisTime(0);
+              this.addon.addonUtil().debrisCost("X");
+              this.addon.addonUtil().debrisNotifySent(false);
               this.displayMessage(Component.text(this.addon.prefix).append(Component.translatable("moneymaker.command.reset.debris", TextColor.color(85, 255, 85))));
 
             } else if(args[0].equalsIgnoreCase("all")) {
-              AddonSettings.resetValues(false);
+              this.addon.addonUtil().resetValues(false);
               Booster.activatedBoost.set(0);
               Booster.sessionBoost.set(0);
               Booster.latestFoundBoosters().clear();

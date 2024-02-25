@@ -1,33 +1,28 @@
 package de.timuuuu.moneymaker.settings;
 
-
-import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class AddonSettings {
 
-  public static String prefix = "§8‖ §6MoneyMaker §8» §7";
-
-  public static boolean inMine = false;
-  public static boolean inFarming = false;
+  //TODO: Add check in what mine player is (handle with y coordinates)
 
   public static HashMap<String, List<Float>> workerCoordinates = new HashMap<>();
   public static HashMap<String, List<Float>> debrisCoordinates = new HashMap<>();
 
-  public static int CHECK_TICK = 5*20; // 5*20 (5 seconds)
-  public static int CHECK_RENDER = 20; // every 20 renders
+  private int CHECK_TICK = 5*20; // 5*20 (5 seconds)
+  private int CHECK_RENDER = 20; // every 20 renders
 
-  public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
+  private boolean breakGoalEnabled = false;
+  private int breakGoal = 0;
 
-  public static void setFallbackCoordinates(boolean fill) {
-    AddonSettings.workerCoordinates.put("x", new ArrayList<>());
-    AddonSettings.workerCoordinates.put("z", new ArrayList<>());
-    AddonSettings.debrisCoordinates.put("x", new ArrayList<>());
-    AddonSettings.debrisCoordinates.put("z", new ArrayList<>());
+  public void setFallbackCoordinates(boolean fill) {
+    workerCoordinates.put("x", new ArrayList<>());
+    workerCoordinates.put("z", new ArrayList<>());
+    debrisCoordinates.put("x", new ArrayList<>());
+    debrisCoordinates.put("z", new ArrayList<>());
     if(fill) {
       workerCoordinates.get("x").addAll(Arrays.asList(2.5F, 1001.5F));
       workerCoordinates.get("z").addAll(Arrays.asList(-1.5F, 6.5F));
@@ -36,7 +31,7 @@ public class AddonSettings {
     }
   }
 
-  public static void selectUpdateMode(UpdateMode updateMode) {
+  public void selectUpdateMode(UpdateMode updateMode) {
     switch (updateMode) {
       case INSTANT -> {
         CHECK_TICK = 1; // check every tick
@@ -57,65 +52,29 @@ public class AddonSettings {
     }
   }
 
-  public static void resetValues(boolean changePlaying) {
-    if(changePlaying) {
-      inMine = false;
-      inFarming = false;
-    }
-    balance = "X";
-    rank = 0;
-    pickaxeLevel = 0;
-    pickaxeRanking = 0;
-    brokenBlocks = 0;
-    sessionBlocks = 0;
-    breakGoalEnabled = false;
-    breakGoal = 0;
-    breakGoalBlocks = 0;
-    workerCount = 0;
-    nextWorkerCost = "X";
-    debrisCost = "X";
-    debrisNotifySent = false;
-    workerNotifySent = false;
-    savedSwordRanking = 0;
-    swordRanking = 0;
-    swordMobs = 0;
-    mobKills = 0;
-    sessionKills = 0;
+  public int CHECK_RENDER() {
+    return CHECK_RENDER;
   }
 
-  public static String balance = "X";
-  public static int rank = 0;
+  public int CHECK_TICK() {
+    return CHECK_TICK;
+  }
 
-  public static int pickaxeLevel = 0;
-  public static int pickaxeRanking = 0;
+  public boolean breakGoalEnabled() {
+    return breakGoalEnabled;
+  }
 
-  public static int brokenBlocks = 0;
-  public static int sessionBlocks = 0;
-  public static int currentBrokenBlocks = 0;
+  public void breakGoalEnabled(boolean breakGoalEnabled) {
+    this.breakGoalEnabled = breakGoalEnabled;
+  }
 
-  public static boolean breakGoalEnabled = false;
-  public static int breakGoal = 0;
-  public static int breakGoalBlocks = 0;
+  public int breakGoal() {
+    return breakGoal;
+  }
 
-  public static int workerCount = 0;
-
-  public static String nextWorkerCost = "X";
-  public static String debrisCost = "X";
-
-  public static int savedSwordRanking = 0;
-  public static int swordRanking = 0;
-  public static int swordMobs = 0;
-  public static int mobKills = 0;
-  public static int sessionKills = 0;
-
-  public static int debrisTime = 0;
-
-  // Util
-
-  public static boolean workerNotifySent = false;
-  public static boolean debrisNotifySent = false;
-
-  // enums
+  public void breakGoal(int breakGoal) {
+    this.breakGoal = breakGoal;
+  }
 
   public enum FarmingReset {
     AUTOMATICALLY, ASK, HIDE

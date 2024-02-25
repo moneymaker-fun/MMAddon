@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.boosters.Booster;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -52,7 +51,7 @@ public class DiscordAPI {
     if(this.busy) return;
     if(!this.addon.configuration().enabled().get()) return;
     if(!this.addon.configuration().moneyDiscordConfiguration.enabled().get()) return;
-    if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
+    if(!(this.addon.addonUtil().inMine() || this.addon.addonUtil().inFarming())) return;
 
     this.busy = true;
 
@@ -91,48 +90,48 @@ public class DiscordAPI {
     if(this.updaterTask != null) return;
     this.updaterTask = Task.builder(() -> {
 
-      if (AddonSettings.inMine) {
+      if (this.addon.addonUtil().inMine()) {
         mineCount.getAndAdd(1);
         if (!imageUrl.equals(loreUrl)) {
           imageUrl = loreUrl;
         }
         this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently");
         if (mineCount.get() == 1) {
-          this.line2 = I18n.translate("moneymaker.discordPresence.mine.balance") + (AddonSettings.balance.equals("X") ? "?" : AddonSettings.balance);
+          this.line2 = I18n.translate("moneymaker.discordPresence.mine.balance") + (this.addon.addonUtil().balance().equals("X") ? "?" : this.addon.addonUtil().balance());
         }
         if (mineCount.get() == 2) {
-          this.line2 = I18n.translate("moneymaker.discordPresence.mine.workers") + AddonSettings.workerCount;
+          this.line2 = I18n.translate("moneymaker.discordPresence.mine.workers") + this.addon.addonUtil().workerCount();
         }
         if (mineCount.get() >= 3) {
           mineCount.set(0);
-          this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + AddonSettings.rank;
+          this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + this.addon.addonUtil().rank();
         }
       }
 
-      if (AddonSettings.inFarming) {
+      if (this.addon.addonUtil().inFarming()) {
         farmingCount.getAndAdd(1);
         if (!imageUrl.equals(minerUrl)) {
           imageUrl = minerUrl;
         }
         this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently");
         if (farmingCount.get() == 1) {
-          this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + Util.format(AddonSettings.currentBrokenBlocks);
+          this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + Util.format(this.addon.addonUtil().currentBrokenBlocks());
         }
         if (farmingCount.get() == 2) {
-          this.line2 = I18n.translate("moneymaker.discordPresence.farming.sessionBlocks") + Util.format(AddonSettings.sessionBlocks);
+          this.line2 = I18n.translate("moneymaker.discordPresence.farming.sessionBlocks") + Util.format(this.addon.addonUtil().sessionBlocks());
         }
         if (farmingCount.get() == 3) {
           this.line2 = I18n.translate("moneymaker.discordPresence.farming.boosters") + Util.format(Booster.sessionBoosters.get()) + " (" + Util.format(Booster.sessionBoost.get()) + "%)";
         }
         if (farmingCount.get() == 4) {
-          this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + Util.format(AddonSettings.pickaxeRanking);
+          this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.rank") + Util.format(this.addon.addonUtil().pickaxeRanking());
         }
         if (farmingCount.get() == 5) {
-          this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + Util.format(AddonSettings.pickaxeLevel);
+          this.line2 = I18n.translate("moneymaker.discordPresence.farming.pickaxe.level") + Util.format(this.addon.addonUtil().pickaxeLevel());
         }
         if (farmingCount.get() >= 6) {
           farmingCount.set(0);
-          this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + Util.format(AddonSettings.rank);
+          this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + Util.format(this.addon.addonUtil().rank());
         }
       }
 

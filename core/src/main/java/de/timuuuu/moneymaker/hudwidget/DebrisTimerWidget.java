@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -31,15 +30,15 @@ public class DebrisTimerWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void onTick(boolean isEditorContext) {
     String itemName = "N/A";
-    if(AddonSettings.inMine || AddonSettings.inFarming) {
+    if(this.addon.addonUtil().connectedToMoneyMaker()) {
 
-      if(AddonSettings.debrisTime > 0) {
-        itemName = Util.intToTime(AddonSettings.debrisTime);
+      if(this.addon.addonUtil().debrisTime() > 0) {
+        itemName = Util.intToTime(this.addon.addonUtil().debrisTime());
       }
 
     }
     this.textLine.updateAndFlush(itemName);
-    this.textLine.setState((AddonSettings.inMine || AddonSettings.inFarming) && AddonSettings.debrisTime > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState(this.addon.addonUtil().connectedToMoneyMaker() && this.addon.addonUtil().debrisTime() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

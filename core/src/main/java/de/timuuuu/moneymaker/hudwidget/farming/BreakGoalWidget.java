@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
@@ -32,10 +31,10 @@ public class BreakGoalWidget extends TextHudWidget<TextHudWidgetConfig> {
     if(isEditorContext) {
       this.textLine.updateAndFlush(Component.text("0 ").append(Component.translatable("moneymaker.hudWidget.mm_break_goal.remaining")));
     } else {
-      int blocks = AddonSettings.breakGoalBlocks - AddonSettings.currentBrokenBlocks;
+      int blocks = this.addon.addonUtil().breakGoalBlocks() - this.addon.addonUtil().currentBrokenBlocks();
       this.textLine.updateAndFlush(Component.text(blocks + " ").append(Component.translatable("moneymaker.hudWidget.mm_break_goal.remaining")));
     }
-    this.textLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.breakGoalEnabled && AddonSettings.breakGoal > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState((this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get()) && this.addon.addonSettings().breakGoalEnabled() && this.addon.addonSettings().breakGoal() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 

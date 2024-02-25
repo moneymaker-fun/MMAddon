@@ -22,11 +22,11 @@ public class EntityRenderListener {
 
   @Subscribe
   public void onArmorStandRender(ArmorStandRenderEvent event) {
-    if(!AddonSettings.inMine) return;
+    if(!this.addon.addonUtil().inMine()) return;
     Entity entity = event.entity();
 
     checkCount++;
-    if(checkCount >= AddonSettings.CHECK_RENDER) {
+    if(checkCount >= this.addon.addonSettings().CHECK_RENDER()) {
       checkCount = 0;
 
       String entityName = ChatUtil.stripColor(event.customName());
@@ -35,22 +35,22 @@ public class EntityRenderListener {
         String costs = entityName.replace("Kosten: ","").replace("Price: ", "");
 
         if(AddonSettings.workerCoordinates.get("x").contains(entity.getPosX()) || AddonSettings.workerCoordinates.get("z").contains(entity.getPosZ())) {
-          if(!AddonSettings.nextWorkerCost.equals(costs)) {
-            AddonSettings.nextWorkerCost = costs;
+          if(!this.addon.addonUtil().nextWorkerCost().equals(costs)) {
+            this.addon.addonUtil().nextWorkerCost(costs);
           }
         }
 
         if(AddonSettings.debrisCoordinates.get("x").contains(entity.getPosX()) || AddonSettings.debrisCoordinates.get("z").contains(entity.getPosZ())) {
-          if(!AddonSettings.debrisCost.equals(costs)) {
-            AddonSettings.debrisCost = costs;
+          if(!this.addon.addonUtil().debrisCost().equals(costs)) {
+            this.addon.addonUtil().debrisCost(costs);
           }
         }
       }
 
       if((entityName.contains("Minen-Arbeitsplätze") || entityName.contains("mining workplaces")) & entityName.contains("/")) {
         int count = Integer.parseInt(entityName.split("/")[0]);
-        if(AddonSettings.workerCount != count) {
-          AddonSettings.workerCount = count;
+        if(this.addon.addonUtil().workerCount() != count) {
+          this.addon.addonUtil().workerCount(count);
         }
       }
 
@@ -62,13 +62,13 @@ public class EntityRenderListener {
           time = time.replace(" Minuten", "").replace(" Minute", "").replace(" minutes", "").replace(" minute", "");
           time = time.replace(" ", ":");
           time = time + ":00";
-          if(AddonSettings.debrisTime == 0 & !timerRunning) {
-            AddonSettings.debrisTime = Util.timeToInt(time, true);
+          if(this.addon.addonUtil().debrisTime() == 0 & !timerRunning) {
+            this.addon.addonUtil().debrisTime(Util.timeToInt(time, true));
             startTask();
           }
         } else {
-          if(AddonSettings.debrisTime == 0 & !timerRunning) {
-            AddonSettings.debrisTime = Util.timeToInt(time, false);
+          if(this.addon.addonUtil().debrisTime() == 0 & !timerRunning) {
+            this.addon.addonUtil().debrisTime(Util.timeToInt(time, false));
             startTask();
           }
         }
@@ -85,8 +85,8 @@ public class EntityRenderListener {
   private void startTask() {
     timerRunning = true;
     debrisTask = Task.builder(() -> {
-      AddonSettings.debrisTime--;
-      if(AddonSettings.debrisTime <= 0) {
+      this.addon.addonUtil().debrisTime(this.addon.addonUtil().debrisTime() -1);
+      if(this.addon.addonUtil().debrisTime() <= 0) {
         debrisTask.cancel();
         timerRunning = false;
       }

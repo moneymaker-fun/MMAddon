@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.activities.navigation;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
@@ -34,7 +33,7 @@ public class MoneyMakerNavigationElement extends ScreenNavigationElement {
 
   @Override
   public boolean isVisible() {
-    return this.addon.configuration().enabled().get() && (AddonSettings.inMine || AddonSettings.inFarming || Util.isDev(this.addon.labyAPI().getUniqueId().toString()));
+    return this.addon.configuration().enabled().get() && (this.addon.addonUtil().connectedToMoneyMaker() || Util.isDev(this.addon.labyAPI().getUniqueId().toString()));
   }
 
 }

@@ -48,31 +48,27 @@ public class NetworkPayloadListener {
             if (obj.has("hasGame")) {
               String gameMode = obj.get("game_mode").getAsString();
 
-              if(AddonSettings.inFarming && gameMode.contains("Mine")) {
-                if(AddonSettings.sessionBlocks > 0 || AddonSettings.sessionKills > 0) {
-
-                  AddonSettings.FarmingReset farmingReset = this.addon.configuration().farmingAutoReset().get();
-                  if(farmingReset == FarmingReset.AUTOMATICALLY) {
-                    AddonSettings.sessionBlocks = 0;
-                    Booster.sessionBoost.set(0);
-                    Booster.sessionBoosters.set(0);
-                    AddonSettings.sessionKills = 0;
-                    this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                        Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
-                  }
-                  if(farmingReset == FarmingReset.ASK) {
-                    MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                        Component.translatable("moneymaker.notification.farming.left.reset-question", TextColor.color(170, 170, 170)),
-                        Component.translatable("moneymaker.notification.farming.left.reset-button"), () -> {
-                          AddonSettings.sessionBlocks = 0;
-                          Booster.sessionBoost.set(0);
-                          Booster.sessionBoosters.set(0);
-                          AddonSettings.sessionKills = 0;
-                          this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                              Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
-                        });
-                  }
-
+              if(this.addon.addonUtil().inFarming() && gameMode.contains("Mine")) {
+                AddonSettings.FarmingReset farmingReset = this.addon.configuration().farmingAutoReset().get();
+                if(farmingReset == FarmingReset.AUTOMATICALLY) {
+                  this.addon.addonUtil().sessionBlocks(0);
+                  this.addon.addonUtil().sessionKills(0);
+                  Booster.sessionBoost.set(0);
+                  Booster.sessionBoosters.set(0);
+                  this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
+                      Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
+                }
+                if(farmingReset == FarmingReset.ASK) {
+                  MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
+                      Component.translatable("moneymaker.notification.farming.left.reset-question", TextColor.color(170, 170, 170)),
+                      Component.translatable("moneymaker.notification.farming.left.reset-button"), () -> {
+                        this.addon.addonUtil().sessionBlocks(0);
+                        this.addon.addonUtil().sessionKills(0);
+                        Booster.sessionBoost.set(0);
+                        Booster.sessionBoosters.set(0);
+                        this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
+                            Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
+                  });
                 }
               }
 
@@ -84,15 +80,15 @@ public class NetworkPayloadListener {
                 this.addon.discordAPI().update();
                 this.addon.discordAPI().startUpdater();
               } else {
-                if(AddonSettings.inMine || AddonSettings.inFarming) {
+                if(this.addon.addonUtil().connectedToMoneyMaker()) {
                   this.addon.discordAPI().cancelUpdater();
                   this.addon.discordAPI().removeCustom();
                   this.addon.discordAPI().removeSaved();
                 }
               }
 
-              AddonSettings.inMine = gameMode.contains("Mine");
-              AddonSettings.inFarming = gameMode.contains("Farming");
+              this.addon.addonUtil().inMine(gameMode.contains("Mine"));
+              this.addon.addonUtil().inFarming(gameMode.contains("Farming"));
 
               JsonObject data = new JsonObject();
               data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
@@ -101,7 +97,7 @@ public class NetworkPayloadListener {
               data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
               this.addon.chatClient().sendMessage("playerStatus", data);
 
-              if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.configuration().languageInfoClosed().get()) {
+              if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.configuration().languageInfoClosed().get()) {
                 if(!langInfoOpened) {
                   langInfoOpened = true;
                   Task.builder(() -> {

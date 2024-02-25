@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.boosters.Booster;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -31,7 +30,7 @@ public class ActivatedBoosterWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void onTick(boolean isEditorContext) {
     this.textLine.updateAndFlush(Booster.activatedBoost.get() + "%");
-    this.textLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && Booster.activatedBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState((this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get()) && Booster.activatedBoost.get() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

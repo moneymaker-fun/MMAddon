@@ -7,6 +7,7 @@ import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
@@ -23,6 +24,7 @@ public class ApiUtil {
   }
 
   public void loadCoordinates() {
+    AtomicBoolean failed = new AtomicBoolean(false);
     Request.ofGson(JsonObject.class)
         .url(BASE_URL + "/locations/")
         .async()
@@ -30,45 +32,53 @@ public class ApiUtil {
         .readTimeout(5000)
         .addHeader("User-Agent", "MoneyMaker LabyMod 4 Addon")
         .execute(response -> {
-          if(response.getStatusCode() != 200 || response.hasException()) {
-            AddonSettings.setFallbackCoordinates(true);
-            this.addon.logger().debug("Loading Coordinates from internal. API got no response.");
-            return;
-          }
-          JsonObject object = response.get();
+          if(response.getStatusCode() == 200 && !response.hasException()) {
 
-          if(object.has("workers") && object.get("workers").isJsonArray()) {
-            JsonArray array = object.get("workers").getAsJsonArray();
-            array.forEach(jsonElement -> {
-              if(jsonElement.isJsonObject()) {
-                JsonObject workerObject = jsonElement.getAsJsonObject();
-                if(workerObject.has("x")) {
-                  AddonSettings.workerCoordinates.get("x").add(workerObject.get("x").getAsFloat());
-                }
-                if(workerObject.has("z")) {
-                  AddonSettings.workerCoordinates.get("z").add(workerObject.get("z").getAsFloat());
-                }
-              }
-            });
-            this.addon.logger().debug("Loaded Worker Coordinates from API.");
-          }
+            JsonObject object = response.get();
 
-          if(object.has("debris") && object.get("debris").isJsonArray()) {
-            JsonArray array = object.get("debris").getAsJsonArray();
-            array.forEach(jsonElement -> {
-              if(jsonElement.isJsonObject()) {
-                JsonObject workerObject = jsonElement.getAsJsonObject();
-                if(workerObject.has("x")) {
-                  AddonSettings.workerCoordinates.get("x").add(workerObject.get("x").getAsFloat());
+            if(object.has("workers") && object.get("workers").isJsonArray()) {
+              JsonArray array = object.get("workers").getAsJsonArray();
+              array.forEach(jsonElement -> {
+                if(jsonElement.isJsonObject()) {
+                  JsonObject workerObject = jsonElement.getAsJsonObject();
+                  if(workerObject.has("x")) {
+                    AddonSettings.workerCoordinates.get("x").add(workerObject.get("x").getAsFloat());
+                  }
+                  if(workerObject.has("z")) {
+                    AddonSettings.workerCoordinates.get("z").add(workerObject.get("z").getAsFloat());
+                  }
                 }
-                if(workerObject.has("z")) {
-                  AddonSettings.workerCoordinates.get("z").add(workerObject.get("z").getAsFloat());
+              });
+              this.addon.logger().debug("Loaded Worker Coordinates from API.");
+            } else {
+              failed.set(true);
+            }
+
+            if(object.has("debris") && object.get("debris").isJsonArray()) {
+              JsonArray array = object.get("debris").getAsJsonArray();
+              array.forEach(jsonElement -> {
+                if(jsonElement.isJsonObject()) {
+                  JsonObject workerObject = jsonElement.getAsJsonObject();
+                  if(workerObject.has("x")) {
+                    AddonSettings.workerCoordinates.get("x").add(workerObject.get("x").getAsFloat());
+                  }
+                  if(workerObject.has("z")) {
+                    AddonSettings.workerCoordinates.get("z").add(workerObject.get("z").getAsFloat());
+                  }
                 }
-              }
-            });
-            this.addon.logger().debug("Loaded Debris Coordinates from API.");
+              });
+              this.addon.logger().debug("Loaded Debris Coordinates from API.");
+            } else {
+              failed.set(true);
+            }
+
+          } else {
+            failed.set(true);
           }
         });
+    if(failed.get()) {
+      this.addon.addonSettings().setFallbackCoordinates(true);
+    }
   }
 
   public void loadChatHistory() {

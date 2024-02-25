@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.commands;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTimer;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.chat.command.Command;
@@ -26,7 +25,7 @@ public class TimerCommand extends Command {
   public boolean execute(String prefix, String[] arguments) {
     if(prefix.equalsIgnoreCase("mm-timer")) {
       if(this.addon.configuration().enabled().get()) {
-        if(AddonSettings.inMine || AddonSettings.inFarming) {
+        if(this.addon.addonUtil().connectedToMoneyMaker()) {
           if(arguments.length >= 2) {
             try {
               int minutes = Integer.parseInt(arguments[0]);

@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -32,17 +31,17 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
   @Override
   public void onTick(boolean isEditorContext) {
     String itemName = "N/A";
-    if(AddonSettings.inMine || AddonSettings.inFarming) {
+    if(this.addon.addonUtil().connectedToMoneyMaker()) {
 
-      if(!AddonSettings.balance.equals("X") && !AddonSettings.nextWorkerCost.equals("X")) {
+      if(!this.addon.addonUtil().balance().equals("X") && !this.addon.addonUtil().nextWorkerCost().equals("X")) {
 
-          String[] kontoSplit = AddonSettings.balance.split(" ");
+          String[] kontoSplit = this.addon.addonUtil().balance().split(" ");
           if(kontoSplit.length > 1) {
             String balanceUnit = kontoSplit[1];
-            String workerUnit = AddonSettings.nextWorkerCost.split(" ")[1];
+            String workerUnit = this.addon.addonUtil().nextWorkerCost().split(" ")[1];
 
-            double balance = Double.parseDouble(AddonSettings.balance.replaceAll("[^\\d.]", ""));
-            double cost = Double.parseDouble(AddonSettings.nextWorkerCost.replaceAll("[^\\d.]", ""));
+            double balance = Double.parseDouble(this.addon.addonUtil().balance().replaceAll("[^\\d.]", ""));
+            double cost = Double.parseDouble(this.addon.addonUtil().nextWorkerCost().replaceAll("[^\\d.]", ""));
             int difference = Double.compare(balance, cost);
 
             String color = "§c";
@@ -58,7 +57,7 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
               }
             }
 
-            itemName = color + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
+            itemName = color + this.addon.addonUtil().balance() + " / " + this.addon.addonUtil().nextWorkerCost();
 
             /*if(CurrencyUtil.get(KontoEinheit) >= CurrencyUtil.get(MinerEinheit)) {
               itemName = (difference >= 0 ? "§a" : "§6") + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
@@ -71,7 +70,7 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
 
     }
     this.textLine.updateAndFlush(itemName);
-    this.textLine.setState((AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.balance.equals("X") && !AddonSettings.nextWorkerCost.equals("X") ? State.VISIBLE : State.HIDDEN);
+    this.textLine.setState(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.addonUtil().balance().equals("X") && !this.addon.addonUtil().nextWorkerCost().equals("X") ? State.VISIBLE : State.HIDDEN);
   }
 
 }

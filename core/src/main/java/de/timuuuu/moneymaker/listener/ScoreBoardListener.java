@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.ChatMessages;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import net.labymod.api.Constants.Resources;
@@ -21,30 +20,30 @@ public class ScoreBoardListener {
 
   @Subscribe
   public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
-    if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
+    if(!this.addon.addonUtil().connectedToMoneyMaker()) return;
 
-    if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && AddonSettings.inFarming) {
+    if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && this.addon.addonUtil().inFarming()) {
       String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
       try {
         int blocks = Integer.parseInt(raw);
-        AddonSettings.currentBrokenBlocks = blocks;
-        if(AddonSettings.brokenBlocks == 0) {
-          AddonSettings.brokenBlocks = blocks;
+        this.addon.addonUtil().currentBrokenBlocks(blocks);
+        if(this.addon.addonUtil().brokenBlocks() == 0) {
+          this.addon.addonUtil().brokenBlocks(blocks);
         } else {
-            AddonSettings.sessionBlocks = blocks - AddonSettings.brokenBlocks;
-            if(AddonSettings.breakGoalEnabled && AddonSettings.breakGoal != 0) {
+            this.addon.addonUtil().sessionBlocks(blocks - this.addon.addonUtil().brokenBlocks());
+            if(this.addon.addonSettings().breakGoalEnabled() && this.addon.addonSettings().breakGoal() != 0) {
 
-              if(AddonSettings.breakGoalBlocks == 0) {
-                AddonSettings.breakGoalBlocks = blocks + AddonSettings.breakGoal;
+              if(this.addon.addonUtil().breakGoalBlocks() == 0) {
+                this.addon.addonUtil().breakGoalBlocks(blocks + this.addon.addonSettings().breakGoal());
               }
 
-              if(blocks == AddonSettings.breakGoalBlocks) {
+              if(blocks == this.addon.addonUtil().breakGoalBlocks()) {
                 this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
                 this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
                     Component.translatable("moneymaker.notification.break-goal.text", TextColor.color(85, 255, 85)));
-                AddonSettings.breakGoalEnabled = false;
-                AddonSettings.breakGoal = 0;
-                AddonSettings.breakGoalBlocks = 0;
+                this.addon.addonSettings().breakGoalEnabled(false);
+                this.addon.addonSettings().breakGoal(0);
+                this.addon.addonUtil().breakGoalBlocks(0);
               }
 
             }
@@ -52,50 +51,50 @@ public class ScoreBoardListener {
       } catch (NumberFormatException ignored) {}
     }
 
-    if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() && AddonSettings.inFarming) {
+    if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() && this.addon.addonUtil().inFarming()) {
       try {
-        AddonSettings.pickaxeLevel = Integer.parseInt(ChatUtil.stripColor(event.score().getName()));
+        this.addon.addonUtil().pickaxeLevel(Integer.parseInt(ChatUtil.stripColor(event.score().getName())));
       } catch (NumberFormatException ignored) {}
     }
 
-    if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && AddonSettings.inFarming) {
+    if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && this.addon.addonUtil().inFarming()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
-        AddonSettings.pickaxeRanking = Integer.parseInt(scoreName
+        this.addon.addonUtil().pickaxeRanking(Integer.parseInt(scoreName
             .replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
             .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
             .replace(".", "").replace(",", "")
-        );
+          ));
       }
     }
 
-    if(event.score().getValue() == MoneyScore.RANK.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
+    if(event.score().getValue() == MoneyScore.RANK.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
-        AddonSettings.rank = Integer.parseInt(scoreName.
+        this.addon.addonUtil().rank(Integer.parseInt(scoreName.
             replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
             .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
             .replace(".", "").replace(",", "")
-        );
+        ));
       }
     }
 
-    if(event.score().getValue() == MoneyScore.BALANCE.score() && (AddonSettings.inMine || AddonSettings.inFarming)) {
-      AddonSettings.balance = ChatUtil.stripColor(event.score().getName());
+    if(event.score().getValue() == MoneyScore.BALANCE.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
+      this.addon.addonUtil().balance(ChatUtil.stripColor(event.score().getName()));
 
       try {
-        String[] balSplit = AddonSettings.balance.replace(".", "").split(" ");
+        String[] balSplit = this.addon.addonUtil().balance().replace(".", "").split(" ");
         if(balSplit.length == 1) return;
         int balance = Integer.parseInt(balSplit[0]);
         String balEinheit = balSplit[1];
 
-        if(!AddonSettings.nextWorkerCost.equals("X") && !AddonSettings.workerNotifySent) {
-          String[] workerSplit = AddonSettings.nextWorkerCost.replace(".", "").split(" ");
+        if(!this.addon.addonUtil().nextWorkerCost().equals("X") && !this.addon.addonUtil().workerNotifySent()) {
+          String[] workerSplit = this.addon.addonUtil().nextWorkerCost().replace(".", "").split(" ");
           int workerCost = Integer.parseInt(workerSplit[0]);
           String workerEinheit = workerSplit[1];
           if(CurrencyUtil.get(balEinheit) >= CurrencyUtil.get(workerEinheit) && balance >= workerCost) {
             if(this.addon.configuration().notifyOnMoneyReached().get()) {
-              AddonSettings.workerNotifySent = true;
+              this.addon.addonUtil().workerNotifySent(true);
               this.addon.pushNotification(Component.translatable("moneymaker.notification.balance-reached.miner.title", TextColor.color(85, 255, 85)),
                   Component.translatable("moneymaker.notification.balance-reached.miner.text", TextColor.color(170, 170, 170)));
               this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
@@ -103,13 +102,13 @@ public class ScoreBoardListener {
           }
         }
 
-        if(!AddonSettings.debrisCost.equals("X") && AddonSettings.nextWorkerCost.equals("X") && !AddonSettings.debrisNotifySent) {
-          String[] debrisSplit = AddonSettings.debrisCost.replace(".", "").split(" ");
+        if(!this.addon.addonUtil().debrisCost().equals("X") && this.addon.addonUtil().nextWorkerCost().equals("X") && !this.addon.addonUtil().debrisNotifySent()) {
+          String[] debrisSplit = this.addon.addonUtil().debrisCost().replace(".", "").split(" ");
           int debrisCost = Integer.parseInt(debrisSplit[0]);
           String debrisEinheit = debrisSplit[1];
           if(CurrencyUtil.get(balEinheit) >= CurrencyUtil.get(debrisEinheit) && balance >= debrisCost) {
             if(this.addon.configuration().notifyOnMoneyReached().get()) {
-              AddonSettings.debrisNotifySent = true;
+              this.addon.addonUtil().debrisNotifySent(true);
               this.addon.pushNotification(Component.translatable("moneymaker.notification.balance-reached.debris.title", TextColor.color(85, 255, 85)),
                   Component.translatable("moneymaker.notification.balance-reached.debris.text", TextColor.color(170, 170, 170)));
               this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);

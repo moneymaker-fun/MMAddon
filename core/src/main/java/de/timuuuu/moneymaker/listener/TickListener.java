@@ -7,7 +7,6 @@ import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.event.Subscribe;
 
 public class TickListener {
@@ -22,9 +21,9 @@ public class TickListener {
 
   @Subscribe
   public void onSwordTick(SwordTickEvent event) {
-    if(!AddonSettings.inFarming) return;
+    if(!this.addon.addonUtil().inFarming()) return;
     tickCount++;
-    if(tickCount == AddonSettings.CHECK_TICK) {
+    if(tickCount == this.addon.addonSettings().CHECK_TICK()) {
       tickCount = 0;
 
       if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
@@ -44,18 +43,19 @@ public class TickListener {
 
         if(rankingLine.startsWith("Ranking: ")) {
           if(!(rankingLine.contains("Lädt...") || rankingLine.contains("Loading..."))) {
-            AddonSettings.swordRanking = Integer.parseInt(rankingLine.split(" ")[2]
-                .replace(".", "").replace(",", ""));
+            this.addon.addonUtil().swordRanking(Integer.parseInt(rankingLine.split(" ")[2]
+                .replace(".", "").replace(",", "")));
           }
         }
 
         if(mobsLine.startsWith("Getötete Mobs: ")) {
-          AddonSettings.swordMobs = Integer.parseInt(mobsLine.replace("Getötete Mobs: ", "")
-              .replace(".", "").replace(",", ""));
+          this.addon.addonUtil().swordMobs(Integer.parseInt(mobsLine.replace("Getötete Mobs: ", "")
+              .replace(".", "").replace(",", "")));
         }
 
         if(mobsLine.startsWith("Killed mobs: ")) {
-          AddonSettings.swordMobs = Integer.parseInt(mobsLine.replace("Killed mobs: ", "").replace(".", "").replace(",", ""));
+          this.addon.addonUtil().swordMobs(Integer.parseInt(mobsLine.replace("Killed mobs: ", "")
+              .replace(".", "").replace(",", "")));
         }
 
         return;
@@ -73,12 +73,12 @@ public class TickListener {
               if(object.has("text")) {
                 String text = object.get("text").getAsString();
                 if(text.contains("Platz ")) {
-                  AddonSettings.swordRanking = Integer.parseInt(text.replace("Platz ", "")
-                      .replace(".", "").replace(",", "").strip());
+                  this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Platz ", "")
+                      .replace(".", "").replace(",", "").strip()));
                 }
                 if(text.contains("Rank ")) {
-                  AddonSettings.swordRanking = Integer.parseInt(text.replace("Rank ", "")
-                      .replace(".", "").replace(",", "").strip());
+                  this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Rank ", "")
+                      .replace(".", "").replace(",", "").strip()));
                 }
               }
             }
@@ -99,7 +99,7 @@ public class TickListener {
               if(object.has("text")) {
                 String text = object.get("text").getAsString();
                 if(!(text.equals("Getötete Mobs: ") || text.equals("Killed mobs: "))) {
-                  AddonSettings.swordMobs = Integer.parseInt(text.replace(".", "").replace(",", ""));
+                  this.addon.addonUtil().swordMobs(Integer.parseInt(text.replace(".", "").replace(",", "")));
                 }
               }
             }
@@ -108,19 +108,19 @@ public class TickListener {
         } catch (JsonSyntaxException ignored) {}
       }
 
-      if(AddonSettings.swordMobs != 0) {
-        if(AddonSettings.mobKills == 0) {
-          AddonSettings.mobKills = AddonSettings.swordMobs;
+      if(this.addon.addonUtil().swordMobs() != 0) {
+        if(this.addon.addonUtil().mobKills() == 0) {
+          this.addon.addonUtil().mobKills(this.addon.addonUtil().swordMobs());
         } else {
-          int sessionKills = AddonSettings.swordMobs - AddonSettings.mobKills;
+          int sessionKills = this.addon.addonUtil().swordMobs() - this.addon.addonUtil().mobKills();
           if(sessionKills >= 0) {
-            AddonSettings.sessionKills = sessionKills;
+            this.addon.addonUtil().sessionKills(sessionKills);
           }
         }
       }
 
-      if(AddonSettings.swordRanking != 0 && AddonSettings.savedSwordRanking == 0) {
-        AddonSettings.savedSwordRanking = AddonSettings.swordRanking;
+      if(this.addon.addonUtil().swordRanking() != 0 && this.addon.addonUtil().savedSwordRanking() == 0) {
+        this.addon.addonUtil().savedSwordRanking(this.addon.addonUtil().swordRanking());
       }
 
     }

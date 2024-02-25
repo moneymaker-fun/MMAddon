@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.BoosterWidget;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.utils.Util;
 import java.io.File;
@@ -81,9 +80,9 @@ public class BoosterActivity extends SimpleActivity {
     sideContainer.addChild(totalBoostWidget);
 
     ComponentWidget averageBoostersWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.average-boosters", TextColor.color(255, 255, 85)).append(
-        Component.text(Booster.sessionBoosters.get() > 0 && AddonSettings.sessionBlocks > 0 ? "\n" + (float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks + " (" + ((float) Booster.sessionBoosters.get() / AddonSettings.sessionBlocks) * 100 +  " %)" : "\nN/A", TextColor.color(255, 170, 0))
+        Component.text(Booster.sessionBoosters.get() > 0 && this.addon.addonUtil().sessionBlocks() > 0 ? "\n" + (float) Booster.sessionBoosters.get() / this.addon.addonUtil().sessionBlocks() + " (" + ((float) Booster.sessionBoosters.get() / this.addon.addonUtil().sessionBlocks()) * 100 +  " %)" : "\nN/A", TextColor.color(255, 170, 0))
     ));
-    averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + AddonSettings.sessionBlocks + " Blöcke"));
+    averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + this.addon.addonUtil().sessionBlocks() + " Blöcke"));
     averageBoostersWidget.addId("average-boosters");
     sideContainer.addChild(averageBoostersWidget);
 

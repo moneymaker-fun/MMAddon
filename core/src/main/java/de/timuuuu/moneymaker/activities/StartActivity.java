@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.TimerWidget;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
@@ -53,26 +52,26 @@ public class StartActivity extends SimpleActivity {
     container.addChild(breakGoalTitle);
 
     SwitchWidget breakGoalSwitch = SwitchWidget.create(value -> {
-      AddonSettings.breakGoalEnabled = value;
-      AddonSettings.breakGoalBlocks = 0;
+      this.addon.addonSettings().breakGoalEnabled(value);
+      this.addon.addonUtil().breakGoalBlocks(0);
       if(!value) {
-        AddonSettings.breakGoal = 0;
+        this.addon.addonSettings().breakGoal(0);
       }
       this.reload();
     }).addId("break-goal-switch");
-    breakGoalSwitch.setValue(AddonSettings.breakGoalEnabled);
+    breakGoalSwitch.setValue(this.addon.addonSettings().breakGoalEnabled());
     breakGoalSwitch.setHoverComponent(Component.translatable("moneymaker.ui.start.break-goal.description"));
     container.addChild(breakGoalSwitch);
 
-    if(AddonSettings.breakGoalEnabled) {
+    if(this.addon.addonSettings().breakGoalEnabled()) {
       ComponentWidget breakGoalInputTitle = ComponentWidget.i18n("moneymaker.ui.start.break-goal.input-title").addId("break-goal-input-title");
       breakGoalInputTitle.setHoverComponent(Component.translatable("moneymaker.ui.start.break-goal.input-description"));
       container.addChild(breakGoalInputTitle);
 
       TextFieldWidget breakGoalInput = new TextFieldWidget().addId("break-goal-input");
       breakGoalInput.submitHandler(this::submitInput);
-      if(AddonSettings.breakGoal > 0) {
-        breakGoalInput.setText(String.valueOf(AddonSettings.breakGoal));
+      if(this.addon.addonSettings().breakGoal() > 0) {
+        breakGoalInput.setText(String.valueOf(this.addon.addonSettings().breakGoal()));
       }
       container.addChild(breakGoalInput);
     }
@@ -111,9 +110,9 @@ public class StartActivity extends SimpleActivity {
   private void submitInput(String input) {
     try {
       int count = Integer.parseInt(input);
-      AddonSettings.breakGoal = count;
-      if(AddonSettings.currentBrokenBlocks > 0) {
-        AddonSettings.breakGoalBlocks = AddonSettings.currentBrokenBlocks + count;
+      this.addon.addonSettings().breakGoal(count);
+      if(this.addon.addonUtil().currentBrokenBlocks() > 0) {
+        this.addon.addonUtil().breakGoalBlocks(this.addon.addonUtil().currentBrokenBlocks() + count);
       }
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.set", TextColor.color(170, 170, 170),

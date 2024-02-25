@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.FeedbackActivity;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -97,8 +96,8 @@ public class Util {
   }
 
   public static boolean isStaff(UUID uuid) {
-    if(!AddonSettings.playerStatus.containsKey(uuid)) return false;
-    return AddonSettings.playerStatus.get(uuid).rank().isStaff();
+    if(!AddonUtil.playerStatus.containsKey(uuid)) return false;
+    return AddonUtil.playerStatus.get(uuid).rank().isStaff();
   }
 
   public static int timeToInt(String input, boolean hours) {

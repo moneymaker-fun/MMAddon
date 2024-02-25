@@ -3,10 +3,10 @@ package de.timuuuu.moneymaker.listener;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
+import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
-import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
 import net.labymod.api.Constants.Resources;
@@ -50,7 +50,7 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onDisconnect(ServerDisconnectEvent event) {
-    AddonSettings.resetValues(true);
+    this.addon.addonUtil().resetValues(true);
 
     JsonObject data = new JsonObject();
     data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
@@ -77,7 +77,7 @@ public class MoneyAddonListener {
 
     this.addon.chatClient().sendStatistics(true, event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
     this.addon.chatClient().sendStatistics(false, event.newSession().getUniqueId().toString(), event.newSession().getUsername());
-    AddonSettings.playerStatus.remove(event.previousSession().getUniqueId());
+    AddonUtil.playerStatus.remove(event.previousSession().getUniqueId());
 
     JsonObject data = new JsonObject();
     data.addProperty("uuid", event.previousSession().getUniqueId().toString());
@@ -120,12 +120,12 @@ public class MoneyAddonListener {
     UUID uuid = event.uuid();
     MoneyPlayer player = event.player();
 
-    if(AddonSettings.playerStatus.containsKey(uuid)) {
-      String serverBefore = AddonSettings.playerStatus.get(uuid).server();
+    if(AddonUtil.playerStatus.containsKey(uuid)) {
+      String serverBefore = AddonUtil.playerStatus.get(uuid).server();
 
       // Online
       if(serverBefore.equalsIgnoreCase("Other") && player.server().contains("MoneyMaker")) {
-        if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get()) {
+        if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get()) {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
               Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
@@ -137,7 +137,7 @@ public class MoneyAddonListener {
 
       // Offline
       if(serverBefore.contains("MoneyMaker") && (player.server().equalsIgnoreCase("Other") || player.server().equals("OFFLINE"))) {
-        if((AddonSettings.inMine || AddonSettings.inFarming) && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get()) {
+        if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get()) {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
               Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
@@ -149,10 +149,10 @@ public class MoneyAddonListener {
 
     }
 
-    AddonSettings.playerStatus.put(uuid, player);
+    AddonUtil.playerStatus.put(uuid, player);
 
     if(player.server().equals("OFFLINE")) {
-      AddonSettings.playerStatus.remove(uuid);
+      AddonUtil.playerStatus.remove(uuid);
     }
 
     /*if(!player.server().equals("OFFLINE")) {
@@ -183,7 +183,7 @@ public class MoneyAddonListener {
   public void onMoneyChatReceive(MoneyChatReceiveEvent event) {
     MoneyChatMessage chatMessage = event.chatMessage();
     this.addon.chatActivity().addChatMessage(chatMessage);
-    if(!(AddonSettings.inMine || AddonSettings.inFarming)) return;
+    if(!this.addon.addonUtil().connectedToMoneyMaker()) return;
     if(chatMessage.fromServerCache()) return;
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
       if(!chatMessage.systemMessage()) {

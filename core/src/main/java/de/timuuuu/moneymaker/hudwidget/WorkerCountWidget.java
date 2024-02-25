@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
@@ -30,8 +29,8 @@ public class WorkerCountWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.textLine.updateAndFlush(Component.text(AddonSettings.workerCount + " ").append(Component.translatable("moneymaker.hudWidget.mm_worker_count.miners")));
-    this.textLine.setState((AddonSettings.inMine || AddonSettings.inFarming) && AddonSettings.workerCount > 0 ? State.VISIBLE : State.HIDDEN);
+    this.textLine.updateAndFlush(Component.text(this.addon.addonUtil().workerCount() + " ").append(Component.translatable("moneymaker.hudWidget.mm_worker_count.miners")));
+    this.textLine.setState(this.addon.addonUtil().connectedToMoneyMaker() && this.addon.addonUtil().workerCount() > 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

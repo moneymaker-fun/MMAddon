@@ -7,7 +7,7 @@ import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.badges.MoneyRank;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
-import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import de.timuuuu.moneymaker.utils.Util;
 import java.text.SimpleDateFormat;
@@ -140,7 +140,7 @@ public class ChatActivity extends SimpleActivity {
     VerticalListWidget<ComponentWidget> onlineList = new VerticalListWidget<>().addId("online-list");
 
     if(this.addon.chatClient().online()) {
-      List<MoneyPlayer> players = new ArrayList<>(AddonSettings.playerStatus.values());
+      List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
       players.sort(Comparator.comparing(o -> o.rank().getId()));
 
       players.forEach(moneyPlayer -> {

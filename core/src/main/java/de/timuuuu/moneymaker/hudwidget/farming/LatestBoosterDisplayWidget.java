@@ -1,10 +1,9 @@
 package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.hudwidget.farming.LatestBoosterDisplayWidget.BoosterHudWidgetConfig;
-import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.boosters.Booster;
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.client.component.Component;
@@ -50,7 +49,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
       return;
     }
 
-    if(!(AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get())) {
+    if(!(this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get())) {
       this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_booster_display.notConnected"), stack, size);
       return;
     }
@@ -128,7 +127,7 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
 
   @Override
   public boolean isVisibleInGame() {
-    return (AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && !Booster.latestFoundBoosters().isEmpty();
+    return (this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get()) && !Booster.latestFoundBoosters().isEmpty();
   }
 
   public static class BoosterHudWidgetConfig extends HudWidgetConfig {

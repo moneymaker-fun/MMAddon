@@ -2,9 +2,10 @@ package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.hudwidget.TimerDisplayWidget.TimerHudWidgetConfig;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTimer;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.ArrayList;
+import java.util.List;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
@@ -20,8 +21,6 @@ import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.util.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
 
@@ -50,7 +49,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
       return;
     }
 
-    if(!(AddonSettings.inMine || AddonSettings.inFarming)) {
+    if(!this.addon.addonUtil().connectedToMoneyMaker()) {
       this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_timer_display.notConnected"), stack, size);
       return;
     }
@@ -127,7 +126,7 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
 
   @Override
   public boolean isVisibleInGame() {
-    return (AddonSettings.inMine || AddonSettings.inFarming) && !Util.timers.isEmpty();
+    return this.addon.addonUtil().connectedToMoneyMaker() && !Util.timers.isEmpty();
   }
 
   public static class TimerHudWidgetConfig extends HudWidgetConfig {

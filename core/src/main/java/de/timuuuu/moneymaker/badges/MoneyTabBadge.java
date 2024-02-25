@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.badges;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.AddonUtil;
 import net.labymod.api.client.entity.player.badge.renderer.BadgeRenderer;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.render.matrix.Stack;
@@ -31,7 +31,7 @@ public class MoneyTabBadge extends BadgeRenderer {
     if(player.profile().getUniqueId() == null) return null;
     if(!this.addon.configuration().enabled().get()) return null;
     if(!this.addon.configuration().moneyBadgeConfiguration.tabListIcon().get()) return null;
-    return AddonSettings.playerStatus.containsKey(player.profile().getUniqueId()) ? AddonSettings.playerStatus.get(player.profile().getUniqueId()).rank() : null;
+    return AddonUtil.playerStatus.containsKey(player.profile().getUniqueId()) ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
   }
 
 }

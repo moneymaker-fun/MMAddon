@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget.SwordHudWidgetConfig;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -42,15 +41,15 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
 
   private void updateLines() {
     String additional = "";
-    if(this.getConfig().showRankingDifference().get() && AddonSettings.savedSwordRanking != 0) {
-      int diff = AddonSettings.savedSwordRanking - AddonSettings.swordRanking;
+    if(this.getConfig().showRankingDifference().get() && this.addon.addonUtil().savedSwordRanking() != 0) {
+      int diff = this.addon.addonUtil().savedSwordRanking() - this.addon.addonUtil().swordRanking();
       additional = " (" + (diff == 0 ? "∓ " : diff > 0 ? "↑ " : "↓ ") + diff + ")";
     }
-    this.rankLine.updateAndFlush(Util.format(AddonSettings.swordRanking) + additional);
-    this.rankLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.swordRanking != 0 ? State.VISIBLE : State.HIDDEN);
+    this.rankLine.updateAndFlush(Util.format(this.addon.addonUtil().swordRanking()) + additional);
+    this.rankLine.setState((this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get()) && this.addon.addonUtil().swordRanking() != 0 ? State.VISIBLE : State.HIDDEN);
 
-    this.mobsLine.updateAndFlush(Util.format(AddonSettings.swordMobs));
-    this.mobsLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.swordMobs != 0 ? State.VISIBLE : State.HIDDEN);
+    this.mobsLine.updateAndFlush(Util.format(this.addon.addonUtil().swordMobs()));
+    this.mobsLine.setState((this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get()) && this.addon.addonUtil().swordMobs() != 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 

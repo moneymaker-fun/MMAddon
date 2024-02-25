@@ -1,15 +1,12 @@
 package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
 
 public class BalanceWidget extends TextHudWidget<TextHudWidgetConfig> {
 
@@ -31,8 +28,8 @@ public class BalanceWidget extends TextHudWidget<TextHudWidgetConfig> {
 
   @Override
   public void onTick(boolean isEditorContext) {
-    this.textLine.updateAndFlush(Component.text(AddonSettings.balance));
-    this.textLine.setState((AddonSettings.inMine || AddonSettings.inFarming) && !AddonSettings.balance.equals("X") ? State.VISIBLE : State.HIDDEN);
+    this.textLine.updateAndFlush(Component.text(this.addon.addonUtil().balance()));
+    this.textLine.setState(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.addonUtil().balance().equals("X") ? State.VISIBLE : State.HIDDEN);
   }
 
 }

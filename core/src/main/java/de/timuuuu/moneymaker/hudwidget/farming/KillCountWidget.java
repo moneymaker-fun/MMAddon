@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker.hudwidget.farming;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
@@ -36,8 +35,8 @@ public class KillCountWidget extends TextHudWidget<TextHudWidgetConfig> {
   }
 
   private void updateLines() {
-    this.rankLine.updateAndFlush(Util.format(AddonSettings.sessionKills));
-    this.rankLine.setState((AddonSettings.inFarming || this.addon.configuration().showWidgetsAlways().get()) && AddonSettings.sessionKills != 0 ? State.VISIBLE : State.HIDDEN);
+    this.rankLine.updateAndFlush(Util.format(this.addon.addonUtil().sessionKills()));
+    this.rankLine.setState((this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get()) && this.addon.addonUtil().sessionKills() != 0 ? State.VISIBLE : State.HIDDEN);
   }
 
 }

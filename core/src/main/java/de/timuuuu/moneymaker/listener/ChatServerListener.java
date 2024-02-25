@@ -3,12 +3,12 @@ package de.timuuuu.moneymaker.listener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.chat.ChatClient;
+import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.events.ChatServerMessageReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
-import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.chat.ChatClient;
-import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
 import net.labymod.api.Laby;
@@ -108,7 +108,7 @@ public class ChatServerListener {
           for (int i = 0; i < array.size(); i++) {
             JsonObject playerData = array.get(i).getAsJsonObject();
             UUID uuid = UUID.fromString(playerData.get("uuid").getAsString());
-            AddonSettings.playerStatus.put(uuid, new MoneyPlayer(
+            AddonUtil.playerStatus.put(uuid, new MoneyPlayer(
                 uuid,
                 playerData.get("userName").getAsString(),
                 playerData.get("server").getAsString(),

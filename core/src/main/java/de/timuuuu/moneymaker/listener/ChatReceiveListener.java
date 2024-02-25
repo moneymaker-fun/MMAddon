@@ -1,9 +1,8 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.boosters.BoosterUtil;
-import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.boosters.Booster;
+import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.utils.ChatMessages;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +28,7 @@ public class ChatReceiveListener {
   @Subscribe(Priority.LATEST)
   public void onChatReceive(ChatReceiveEvent event) {
     String plain = event.chatMessage().getOriginalPlainText();
-    if (!(AddonSettings.inMine || AddonSettings.inFarming)) return;
+    if (!this.addon.addonUtil().connectedToMoneyMaker()) return;
 
     if (ChatMessages.PREFIX.contains(plain)) {
 
@@ -149,14 +148,14 @@ public class ChatReceiveListener {
       }
 
       if(ChatMessages.WORKPLACE_UNLOCKED_DE.equals(plain) || ChatMessages.WORKPLACE_UNLOCKED_EN.equals(plain)) {
-        AddonSettings.nextWorkerCost = "X";
-        AddonSettings.workerNotifySent = false;
+        this.addon.addonUtil().nextWorkerCost("X");
+        this.addon.addonUtil().workerNotifySent(false);
       }
 
       if((ChatMessages.DEBRIS_REMOVE_DE_1.startWith(plain) && ChatMessages.DEBRIS_REMOVE_DE_2.contains(plain)) ||
           (ChatMessages.DEBRIS_REMOVE_EN.startWith(plain))) {
-        AddonSettings.debrisCost = "X";
-        AddonSettings.debrisNotifySent = false;
+        this.addon.addonUtil().debrisCost("X");
+        this.addon.addonUtil().debrisNotifySent(false);
       }
 
       if(ChatMessages.WORKER_EFFECT_DE.equals(plain) || ChatMessages.WORKER_EFFECT_EN.equals(plain)) {

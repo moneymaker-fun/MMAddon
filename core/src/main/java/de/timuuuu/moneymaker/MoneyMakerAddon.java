@@ -31,6 +31,7 @@ import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
+import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
@@ -66,6 +67,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private DiscordAPI discordAPI;
   private ApiUtil apiUtil;
 
+  private AddonSettings addonSettings;
+  private AddonUtil addonUtil;
+
   private static MoneyMakerAddon instance;
 
   @Override
@@ -78,8 +82,11 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerSettingCategory();
 
     instance = this;
-    discordAPI = new DiscordAPI(this);
-    apiUtil = new ApiUtil(this);
+    this.discordAPI = new DiscordAPI(this);
+    this.apiUtil = new ApiUtil(this);
+
+    this.addonSettings = new AddonSettings();
+    this.addonUtil = new AddonUtil(this);
 
     this.startActivity = new StartActivity(this);
     this.chatActivity = new ChatActivity(this);
@@ -126,9 +133,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.chatClient.connectStartUp();
 
-    AddonSettings.setFallbackCoordinates(false);
-    AddonSettings.selectUpdateMode(this.configuration().updateMode().get());
-    this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> AddonSettings.selectUpdateMode(newValue));
+    this.addonSettings.setFallbackCoordinates(false);
+    this.addonSettings.selectUpdateMode(this.configuration().updateMode().get());
+    this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
     this.apiUtil.loadCoordinates();
 
     /*Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -162,6 +169,14 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public ApiUtil apiUtil() {
     return apiUtil;
+  }
+
+  public AddonUtil addonUtil() {
+    return addonUtil;
+  }
+
+  public AddonSettings addonSettings() {
+    return addonSettings;
   }
 
   public MainActivity mainActivity() {
