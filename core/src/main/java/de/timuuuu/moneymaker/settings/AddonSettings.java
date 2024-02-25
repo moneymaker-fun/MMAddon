@@ -7,8 +7,6 @@ import java.util.List;
 
 public class AddonSettings {
 
-  //TODO: Add check in what mine player is (handle with y coordinates)
-
   public static HashMap<String, List<Float>> workerCoordinates = new HashMap<>();
   public static HashMap<String, List<Float>> debrisCoordinates = new HashMap<>();
 
