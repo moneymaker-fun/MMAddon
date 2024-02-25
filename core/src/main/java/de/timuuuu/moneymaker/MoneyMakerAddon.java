@@ -126,6 +126,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     AddonSettings.setFallbackCoordinates(false);
     AddonSettings.selectUpdateMode(this.configuration().updateMode().get());
+    this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> AddonSettings.selectUpdateMode(newValue));
     this.apiUtil.loadCoordinates();
 
     /*Runtime.getRuntime().addShutdownHook(new Thread(() -> {

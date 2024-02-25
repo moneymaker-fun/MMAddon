@@ -26,7 +26,7 @@ public class EntityRenderListener {
     Entity entity = event.entity();
 
     checkCount++;
-    if(checkCount == AddonSettings.CHECK_RENDER) {
+    if(checkCount >= AddonSettings.CHECK_RENDER) {
       checkCount = 0;
 
       String entityName = ChatUtil.stripColor(event.customName());
