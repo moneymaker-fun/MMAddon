@@ -260,7 +260,7 @@ public class AddonUtil {
     IRON("moneymaker.farming-level.iron"),
     UNKNOWN("moneymaker.farming-level.unknown");
 
-    private String translation;
+    private final String translation;
 
     MiningCave(String translation) {
       this.translation = translation;
