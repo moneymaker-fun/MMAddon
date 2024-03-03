@@ -27,6 +27,7 @@ import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.ChatServerListener;
 import de.timuuuu.moneymaker.listener.EntityRenderListener;
+import de.timuuuu.moneymaker.listener.InventoryListener;
 import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
@@ -104,6 +105,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new ScoreBoardListener(this));
     this.registerListener(new EntityRenderListener(this));
     this.registerListener(new TickListener(this));
+    this.registerListener(new InventoryListener(this));
 
     CurrencyUtil.setUnits();
     BoosterUtil.loadData();
