@@ -8,9 +8,9 @@ import net.labymod.api.client.resources.ResourceLocation;
 public enum MoneyRank {
 
   USER(4, "user", false, "§e", "§e", null, Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"))),
-  DONATOR(3, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"))),
-  STAFF(2, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"))),
-  DEVELOPER(1, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png")));
+  DONATOR(3, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_orange.png"))),
+  STAFF(2, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_light_red.png"))),
+  DEVELOPER(1, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_red.png")));
 
   private final int id;
   private final String name;
