@@ -150,7 +150,7 @@ public class MoneyAddonListener {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
               Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
-                  Component.text(player.userName(), TextColor.color(255, 255, 85))),
+                  Component.text(player.rank().getChatPrefix() + player.userName())),
               Icon.head(uuid)
           );
         }
@@ -162,7 +162,7 @@ public class MoneyAddonListener {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
               Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
-                  Component.text(player.userName(), TextColor.color(255, 255, 85))),
+                  Component.text(player.rank().getChatPrefix() + player.userName())),
               Icon.head(uuid)
           );
         }
