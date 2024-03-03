@@ -36,19 +36,19 @@ public class TickListener {
       MiningCave currentCave = this.addon.addonUtil().miningCave();
 
       // Gold Ebene
-      if(playerY > 198) {
+      if(playerY > MiningCave.GOLD.minY()) {
         if(currentCave != MiningCave.GOLD) {
           Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.GOLD));
         }
 
       // Kohle Ebene
-      } else if (playerY <= 198 && playerY > 160) {
+      } else if (playerY <= MiningCave.COAL.maxY() && playerY > MiningCave.COAL.minY()) {
         if(currentCave != MiningCave.COAL) {
           Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.COAL));
         }
 
       // Eisen Ebene
-      } else if(playerY <= 160) {
+      } else if(playerY <= MiningCave.IRON.maxY()) {
         if(currentCave != MiningCave.IRON) {
           Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.IRON));
         }

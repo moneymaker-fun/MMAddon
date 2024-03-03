@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import de.timuuuu.moneymaker.settings.AddonSettings;
+import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.util.io.web.request.Request;
@@ -49,7 +50,7 @@ public class ApiUtil {
                   }
                 }
               });
-              this.addon.logger().debug("Loaded Worker Coordinates from API.");
+              this.addon.logger().debug("[MoneyMaker] Loaded Worker Coordinates from API.");
             } else {
               failed.set(true);
             }
@@ -67,9 +68,27 @@ public class ApiUtil {
                   }
                 }
               });
-              this.addon.logger().debug("Loaded Debris Coordinates from API.");
+              this.addon.logger().debug("[MoneyMaker] Loaded Debris Coordinates from API.");
+
             } else {
               failed.set(true);
+            }
+
+            if(object.has("cave_levels") && object.get("cave_levels").isJsonArray()) {
+              JsonArray array = object.get("cave_levels").getAsJsonArray();
+              array.forEach(jsonElement -> {
+                if(jsonElement.isJsonObject()) {
+                  JsonObject levelObject = jsonElement.getAsJsonObject();
+                  if(levelObject.has("name") && levelObject.has("min") && levelObject.has("max")) {
+                    MiningCave cave = this.addon.addonUtil().caveByName(levelObject.get("name").getAsString());
+                    if(cave != MiningCave.UNKNOWN) {
+                      cave.minY(levelObject.get("min").getAsFloat());
+                      cave.maxY(levelObject.get("max").getAsFloat());
+                    }
+                  }
+                }
+              });
+              this.addon.logger().debug("[MoneyMaker] Loaded Cave Levels from API.");
             }
 
           } else {

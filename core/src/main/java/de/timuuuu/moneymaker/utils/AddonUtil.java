@@ -265,17 +265,21 @@ public class AddonUtil {
   }
 
   public enum MiningCave {
-    GOLD("Gold", "moneymaker.farming-level.gold"),
-    COAL("Coal", "moneymaker.farming-level.coal"),
-    IRON("Iron", "moneymaker.farming-level.iron"),
-    UNKNOWN("Unknown", "moneymaker.farming-level.unknown");
+    GOLD("Gold", "moneymaker.farming-level.gold", 198f, 255f),
+    COAL("Coal", "moneymaker.farming-level.coal", 160f, 198f),
+    IRON("Iron", "moneymaker.farming-level.iron", 0f, 160f),
+    UNKNOWN("Unknown", "moneymaker.farming-level.unknown", 0f, 0f);
 
     private final String internalName;
     private final String translation;
+    private float minY;
+    private float maxY;
 
-    MiningCave(String internalName, String translation) {
+    MiningCave(String internalName, String translation, float minY, float maxY) {
       this.internalName = internalName;
       this.translation = translation;
+      this.minY = minY;
+      this.maxY = maxY;
     }
 
     public String internalName() {
@@ -284,6 +288,22 @@ public class AddonUtil {
 
     public String translation() {
       return translation;
+    }
+
+    public float minY() {
+      return minY;
+    }
+
+    public float maxY() {
+      return maxY;
+    }
+
+    public void minY(float minY) {
+      this.minY = minY;
+    }
+
+    public void maxY(float maxY) {
+      this.maxY = maxY;
     }
   }
 
