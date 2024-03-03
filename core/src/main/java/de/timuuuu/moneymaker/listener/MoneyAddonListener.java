@@ -11,6 +11,7 @@ import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -21,6 +22,7 @@ import net.labymod.api.event.client.lifecycle.GameShutdownEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.event.client.network.server.ServerLoginEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
+import net.labymod.api.util.concurrent.task.Task;
 
 public class MoneyAddonListener {
 
@@ -147,12 +149,14 @@ public class MoneyAddonListener {
       // Online
       if(serverBefore.equalsIgnoreCase("Other") && player.server().contains("MoneyMaker")) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().moneyChatConfiguration.onlineOfflineMessages().get()) {
-          this.addon.pushNotification(
-              Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
-              Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
-                  Component.text(player.rank().getChatPrefix() + player.userName())),
-              Icon.head(uuid)
-          );
+          Task.builder(() -> {
+            this.addon.pushNotification(
+                Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+                Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
+                    Component.text(player.rank().getChatPrefix() + player.userName())),
+                Icon.head(uuid)
+            );
+          }).delay(2, TimeUnit.SECONDS).build().execute();
         }
       }
 
