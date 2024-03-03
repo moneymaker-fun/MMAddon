@@ -8,6 +8,7 @@ import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil;
+import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
 import net.labymod.api.Constants.Resources;
@@ -117,10 +118,13 @@ public class MoneyAddonListener {
   }
 
   private long lastLevelUpdate = System.currentTimeMillis();
+  private MiningCave lastCave = MiningCave.UNKNOWN;
 
   @Subscribe
   public void onCaveLevelChange(CaveLevelChangeEvent event) {
-    if(event.newCave() == event.previousCave()) return;
+    if(this.lastCave == event.newCave()) return;
+    this.lastCave = event.newCave();
+    this.addon.addonUtil().miningCave(event.newCave());
     if(((this.lastLevelUpdate + 10*1000 - System.currentTimeMillis())) <= 0) {
       this.lastLevelUpdate = System.currentTimeMillis();
       JsonObject data = new JsonObject();

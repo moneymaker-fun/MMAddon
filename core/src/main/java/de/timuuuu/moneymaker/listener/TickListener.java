@@ -34,29 +34,29 @@ public class TickListener {
 
       float playerY = this.addon.labyAPI().minecraft().getClientPlayer().position().getY();
       MiningCave currentCave = this.addon.addonUtil().miningCave();
+
       // Gold Ebene
       if(playerY > 198) {
         if(currentCave != MiningCave.GOLD) {
           Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.GOLD));
-          this.addon.addonUtil().miningCave(MiningCave.GOLD);
         }
+
       // Kohle Ebene
       } else if (playerY <= 198 && playerY > 160) {
         if(currentCave != MiningCave.COAL) {
           Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.COAL));
-          this.addon.addonUtil().miningCave(MiningCave.COAL);
         }
+
       // Eisen Ebene
       } else if(playerY <= 160) {
         if(currentCave != MiningCave.IRON) {
           Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.IRON));
-          this.addon.addonUtil().miningCave(MiningCave.IRON);
         }
+
       // Unknown
       } else {
         if(currentCave != MiningCave.UNKNOWN) {
           Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.UNKNOWN));
-          this.addon.addonUtil().miningCave(MiningCave.UNKNOWN);
         }
       }
 
