@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
+import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
 import de.timuuuu.moneymaker.badges.MoneyRank;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
@@ -19,9 +20,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.event.ClickEvent;
-import net.labymod.api.client.component.event.HoverEvent;
-import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
@@ -111,6 +109,48 @@ public class ChatActivity extends SimpleActivity {
       this.document.addChild(reconnectButton);
     }
 
+    // Online Container
+
+    ComponentWidget onlineTextWidget = ComponentWidget.i18n("moneymaker.ui.chat.online").addId("chat-online-text");
+    this.document.addChild(onlineTextWidget);
+
+    DivWidget onlineContainer = new DivWidget();
+    onlineContainer.addId("online-container");
+
+    VerticalListWidget<OnlineEntryWidget> onlineList = new VerticalListWidget<>().addId("online-list");
+
+    if(this.addon.chatClient().online()) {
+      List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
+      players.sort(Comparator.comparing(o -> o.rank().getId()));
+
+      players.forEach(moneyPlayer -> {
+        String server = moneyPlayer.server();
+        // TODO: Remove server#contains("MoneyMaker") after new update
+        if(server.contains("MoneyMaker") || server.startsWith("Mine") || server.startsWith("Farming")) {
+          OnlineEntryWidget entryWidget = new OnlineEntryWidget(this.addon, moneyPlayer);
+          onlineList.addChild(entryWidget);
+          /*if(server.startsWith("Farming")) {
+            if(server.split(" - ").length == 2) {
+              String cave = server.split(" - ")[1];
+              server = "Farming - " + I18n.translate(this.addon.addonUtil().caveByName(cave).translation());
+            }
+          }
+          Component component = Component.icon(Icon.head(moneyPlayer.uuid()), 10)
+              .append(Component.text(" " + moneyPlayer.rank().getChatPrefix() + moneyPlayer.userName() + " §8- §b(" + server + ") "));
+          component.clickEvent(ClickEvent.openUrl("https://laby.net/@" + moneyPlayer.userName()));
+          if(Util.isDev(this.labyAPI.getUniqueId().toString())) {
+            component.hoverEvent(HoverEvent.showText(Component.text("§7Nutzt §e" + moneyPlayer.addonVersion() + " §7als Addon-Version")));
+          }
+          ComponentWidget componentWidget = ComponentWidget.component(component);
+          componentWidget.addId("online-entry");
+          onlineList.addChild(componentWidget);*/
+        }
+      });
+    }
+
+    ScrollWidget onlineScroll = new ScrollWidget(onlineList, new ListSession<>()).addId("online-scroll");
+    onlineContainer.addChild(onlineScroll);
+
     // Chat Container
 
     DivWidget chatContainer = new DivWidget().addId("chat-container");
@@ -128,38 +168,6 @@ public class ChatActivity extends SimpleActivity {
 
     ScrollWidget chatScroll = new ScrollWidget(chatList, this.listSession).addId("chat-scroll");
     chatContainer.addChild(chatScroll);
-
-    // Online Container
-
-    ComponentWidget onlineTextWidget = ComponentWidget.i18n("moneymaker.ui.chat.online").addId("chat-online-text");
-    this.document.addChild(onlineTextWidget);
-
-    DivWidget onlineContainer = new DivWidget();
-    onlineContainer.addId("online-container");
-
-    VerticalListWidget<ComponentWidget> onlineList = new VerticalListWidget<>().addId("online-list");
-
-    if(this.addon.chatClient().online()) {
-      List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
-      players.sort(Comparator.comparing(o -> o.rank().getId()));
-
-      players.forEach(moneyPlayer -> {
-        if(moneyPlayer.server().contains("MoneyMaker")) {
-          Component component = Component.icon(Icon.head(moneyPlayer.uuid()), 10)
-              .append(Component.text(" " + moneyPlayer.rank().getChatPrefix() + moneyPlayer.userName() + " §8- §b" + moneyPlayer.server().replace("MoneyMaker", "") + " "));
-          component.clickEvent(ClickEvent.openUrl("https://laby.net/@" + moneyPlayer.userName()));
-          if(Util.isDev(this.labyAPI.getUniqueId().toString())) {
-            component.hoverEvent(HoverEvent.showText(Component.text("§7Nutzt §e" + moneyPlayer.addonVersion() + " §7als Addon-Version")));
-          }
-          ComponentWidget componentWidget = ComponentWidget.component(component);
-          componentWidget.addId("online-entry");
-          onlineList.addChild(componentWidget);
-        }
-      });
-    }
-
-    ScrollWidget onlineScroll = new ScrollWidget(onlineList, new ListSession<>()).addId("online-scroll");
-    onlineContainer.addChild(onlineScroll);
 
     // Input Container
 

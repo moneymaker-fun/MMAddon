@@ -53,6 +53,55 @@
   renderer: "DirtBackground";
 }
 
+.online-scroll {
+  top: 5;
+  left: 5;
+  width: 90%;
+  height: 95%;
+
+  .online-list {
+    height: 100%;
+    width: 100%;
+  }
+
+  OnlineEntry {
+    height: 22;
+    width: 100%;
+
+    .head {
+      height: 10;
+      width: 100%;
+
+      .avatar {
+        padding: 0 2 0 2;
+        width: 10;
+        height: 10;
+      }
+
+    }
+
+    .data {
+      margin-top: 5;
+
+      .currentServer {
+      margin-left: 5;
+        text-color: rgb(150, 150, 150);
+      }
+
+    }
+
+
+  }
+
+  Scrollbar {
+    left: 0;
+    top: 0;
+    width: 5;
+    height: 100%;
+    margin-right: 5;
+  }
+}
+
 .input-container {
   bottom: 5;
   left: 20;
@@ -89,33 +138,6 @@
     font-size: 1.0;
   }
 
-}
-
-.online-scroll {
-  top: 5;
-  left: 5;
-  width: 90%;
-  height: 95%;
-
-  .online-list {
-    height: 100%;
-    width: 100%;
-  }
-
-  .online-entry {
-    top: 30;
-    left: 20;
-    height: 15;
-    width: 100%;
-  }
-
-  Scrollbar {
-    left: 0;
-    top: 0;
-    width: 5;
-    height: 100%;
-    margin-right: 5;
-  }
 }
 
 .chat-scroll {

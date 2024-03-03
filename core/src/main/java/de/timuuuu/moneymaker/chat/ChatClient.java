@@ -13,6 +13,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -232,9 +233,13 @@ public class ChatClient {
   }
 
   public String currentServer() {
-    if(addon.addonUtil().inMine()) return "MoneyMaker (Mine)";
-    if(addon.addonUtil().inFarming()) return "MoneyMaker (Farming)";
+    if(addon.addonUtil().inMine()) return "Mine";
+    if(addon.addonUtil().inFarming()) return currentCave(addon.addonUtil().miningCave());
     return "Other";
+  }
+
+  public String currentCave(MiningCave cave) {
+    return "Farming - " + cave.internalName();
   }
 
   public enum ChatAction {
