@@ -90,12 +90,14 @@ public class NetworkPayloadListener {
               this.addon.addonUtil().inMine(gameMode.contains("Mine"));
               this.addon.addonUtil().inFarming(gameMode.contains("Farming"));
 
-              JsonObject data = new JsonObject();
-              data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-              data.addProperty("userName", this.addon.labyAPI().getName());
-              data.addProperty("server", this.addon.chatClient().currentServer());
-              data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              this.addon.chatClient().sendMessage("playerStatus", data);
+              if(!this.addon.addonUtil().inFarming()) {
+                JsonObject data = new JsonObject();
+                data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+                data.addProperty("userName", this.addon.labyAPI().getName());
+                data.addProperty("server", this.addon.chatClient().currentServer());
+                data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+                this.addon.chatClient().sendMessage("playerStatus", data);
+              }
 
               if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.configuration().languageInfoClosed().get()) {
                 if(!langInfoOpened) {

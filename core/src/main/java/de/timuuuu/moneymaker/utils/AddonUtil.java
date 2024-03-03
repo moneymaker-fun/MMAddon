@@ -254,16 +254,32 @@ public class AddonUtil {
     this.debrisNotifySent = debrisNotifySent;
   }
 
-  public enum MiningCave {
-    GOLD("moneymaker.farming-level.gold"),
-    COAL("moneymaker.farming-level.coal"),
-    IRON("moneymaker.farming-level.iron"),
-    UNKNOWN("moneymaker.farming-level.unknown");
+  public MiningCave caveByName(String internalName) {
+    MiningCave cave = MiningCave.UNKNOWN;
+    for(MiningCave miningCaves : MiningCave.values()) {
+      if(miningCaves.internalName().equals(internalName)) {
+        cave = miningCaves;
+      }
+    }
+    return cave;
+  }
 
+  public enum MiningCave {
+    GOLD("Gold", "moneymaker.farming-level.gold"),
+    COAL("Coal", "moneymaker.farming-level.coal"),
+    IRON("Iron", "moneymaker.farming-level.iron"),
+    UNKNOWN("Unknown", "moneymaker.farming-level.unknown");
+
+    private final String internalName;
     private final String translation;
 
-    MiningCave(String translation) {
+    MiningCave(String internalName, String translation) {
+      this.internalName = internalName;
       this.translation = translation;
+    }
+
+    public String internalName() {
+      return internalName;
     }
 
     public String translation() {

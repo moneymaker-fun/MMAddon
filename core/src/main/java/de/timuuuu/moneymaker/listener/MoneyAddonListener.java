@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil;
@@ -112,6 +113,22 @@ public class MoneyAddonListener {
     this.addon.chatClient().closeConnection();
     if(this.addon.configuration().exportBoosterOnShutdown().get()) {
       BoosterActivity.writeLinkedListToCSV(true);
+    }
+  }
+
+  private long lastLevelUpdate = System.currentTimeMillis();
+
+  @Subscribe
+  public void onCaveLevelChange(CaveLevelChangeEvent event) {
+    if(event.newCave() == event.previousCave()) return;
+    if(((this.lastLevelUpdate + 10*1000 - System.currentTimeMillis())) <= 0) {
+      this.lastLevelUpdate = System.currentTimeMillis();
+      JsonObject data = new JsonObject();
+      data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+      data.addProperty("userName", this.addon.labyAPI().getName());
+      data.addProperty("server", this.addon.chatClient().currentCave(event.newCave()));
+      data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
+      this.addon.chatClient().sendMessage("playerStatus", data);
     }
   }
 

@@ -7,7 +7,9 @@ import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
+import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
 
@@ -31,24 +33,29 @@ public class TickListener {
       generalTickCount = 0;
 
       float playerY = this.addon.labyAPI().minecraft().getClientPlayer().position().getY();
+      MiningCave currentCave = this.addon.addonUtil().miningCave();
       // Gold Ebene
       if(playerY > 198) {
-        if(this.addon.addonUtil().miningCave() != MiningCave.GOLD) {
+        if(currentCave != MiningCave.GOLD) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.GOLD));
           this.addon.addonUtil().miningCave(MiningCave.GOLD);
         }
       // Kohle Ebene
       } else if (playerY <= 198 && playerY > 160) {
-        if(this.addon.addonUtil().miningCave() != MiningCave.COAL) {
+        if(currentCave != MiningCave.COAL) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.COAL));
           this.addon.addonUtil().miningCave(MiningCave.COAL);
         }
       // Eisen Ebene
       } else if(playerY <= 160) {
-        if(this.addon.addonUtil().miningCave() != MiningCave.IRON) {
+        if(currentCave != MiningCave.IRON) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.IRON));
           this.addon.addonUtil().miningCave(MiningCave.IRON);
         }
       // Unknown
       } else {
-        if(this.addon.addonUtil().miningCave() != MiningCave.UNKNOWN) {
+        if(currentCave != MiningCave.UNKNOWN) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.UNKNOWN));
           this.addon.addonUtil().miningCave(MiningCave.UNKNOWN);
         }
       }
