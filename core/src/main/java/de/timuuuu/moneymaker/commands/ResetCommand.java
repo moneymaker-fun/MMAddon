@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.commands;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.boosters.Booster;
+import de.timuuuu.moneymaker.listener.InventoryListener;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -22,6 +23,9 @@ public class ResetCommand extends Command {
 
         if(this.addon.addonUtil().connectedToMoneyMaker()) {
           if(args.length == 1) {
+            if(args[0].equalsIgnoreCase("getBoost")) {
+              InventoryListener.getBoost();
+            }
             if(args[0].equalsIgnoreCase("booster")) {
 
               Booster.activatedBoost.set(0);
