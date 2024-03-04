@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({AbstractContainerScreen.class})
-public abstract class InventoryMixin {
+public class InventoryMixin {
 
   @Inject(
       method = {"renderSlot"},

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Mixin({AbstractContainerScreen.class})
-public abstract class InventoryMixin {
+public class InventoryMixin {
 
   @Inject(
       method = {"renderSlot"},
