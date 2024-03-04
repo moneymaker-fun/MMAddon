@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({GuiContainer.class})
-public abstract class InventoryMixin {
+public class InventoryMixin {
 
   @Shadow
   public Container inventorySlots;
@@ -29,16 +29,18 @@ public abstract class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryRender(Slot slot, CallbackInfo ci) {
-    if(slot.getStack().getItem() == Items.SKULL) {
-      if(slot.getStack().getTagCompound() != null) {
-        NBTTagCompound compoundTag = slot.getStack().getTagCompound().getCompoundTag("display");
-        String name = slot.getStack().getDisplayName();
-        List<String> loreList = new ArrayList<>();
-        NBTTagList listTag = compoundTag.getTagList("Lore", 8);
-        for(int i = 0; i != listTag.tagCount(); i++) {
-          loreList.add(listTag.getStringTagAt(i));
+    if(slot.getStack() != null) {
+      if(slot.getStack().getItem() == Items.SKULL) {
+        if(slot.getStack().getTagCompound() != null) {
+          NBTTagCompound compoundTag = slot.getStack().getTagCompound().getCompoundTag("display");
+          String name = slot.getStack().getDisplayName();
+          List<String> loreList = new ArrayList<>();
+          NBTTagList listTag = compoundTag.getTagList("Lore", 8);
+          for(int i = 0; i != listTag.tagCount(); i++) {
+            loreList.add(listTag.getStringTagAt(i));
+          }
+          Laby.fireEvent(new BoosterInventoryRenderSlotEvent(slot.inventory.getName(), slot.slotNumber, name, loreList, "1.12"));
         }
-        Laby.fireEvent(new BoosterInventoryRenderSlotEvent(slot.inventory.getName(), slot.slotNumber, name, loreList, "1.12"));
       }
     }
   }
