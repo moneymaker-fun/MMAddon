@@ -59,6 +59,11 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @DropdownSetting
   @DropdownEntryTranslationPrefix("moneymaker.settings.updateMode.type")
   private final ConfigProperty<AddonSettings.UpdateMode> updateMode = new ConfigProperty<>(UpdateMode.NORMAL);
+
+  @IntroducedIn(value = "1.4.2", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showTotalBoostMessage = new ConfigProperty<>(true);
+
   @SettingSection(value = "gameplay", center = true)
 
   @SpriteSlot(y = 2, x = 1)
@@ -124,6 +129,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<AddonSettings.UpdateMode> updateMode() {
     return updateMode;
+  }
+
+  public ConfigProperty<Boolean> showTotalBoostMessage() {
+    return showTotalBoostMessage;
   }
 
   // Gameplay Getters

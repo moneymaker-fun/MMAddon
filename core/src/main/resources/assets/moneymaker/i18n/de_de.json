@@ -262,6 +262,10 @@
           "slow": "Langsam"
         }
       },
+      "showTotalBoostMessage": {
+        "name": "Gesamt Booster Nachricht anzeigen",
+        "description": "Zeigt eine Nachricht im Chat mit dem gesamt Boost deiner Booster im Booster-Inventar an, wenn du das Booster-Inventar schließt"
+      },
       "hideEmptyMessages": {
         "name": "Leere Nachrichten verstecken",
         "description": "Versteckt leere Nachrichten und Trennnachrichten"

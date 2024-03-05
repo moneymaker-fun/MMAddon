@@ -259,6 +259,10 @@
           "slow": "Slow"
         }
       },
+      "showTotalBoostMessage": {
+        "name": "Show total boost message",
+        "description": "Displays a message in chat with the total boost of your boosters in the booster inventory when you close the booster inventory"
+      },
       "shortBoosterMessage": {
         "name": "Short booster messages"
       },

@@ -61,6 +61,7 @@ public class InventoryListener {
 
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
     if(!(event.getDisplayName().contains("Booster") || event.getDisplayName().contains("booster"))) return;
+    if(!this.addon.configuration().showTotalBoostMessage().get()) return;
 
     // 1.8 - 1.12
     // Display Name: §b+150 % Booster §7(1)
@@ -122,6 +123,7 @@ public class InventoryListener {
   @Subscribe
   public void onInventoryClose(InventoryCloseEvent event) {
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
+    if(!this.addon.configuration().showTotalBoostMessage().get()) return;
     int boost = getBoost();
     if(boost > 0) {
       this.addon.displayMessage(
