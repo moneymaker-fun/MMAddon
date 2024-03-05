@@ -23,6 +23,10 @@ public class InventoryListener {
     this.addon = addon;
   }
 
+  public static void clearAlreadyRendered() {
+    alreadyRendered.clear();
+  }
+
   public int getBoost() {
     AtomicInteger boost = new AtomicInteger(0);
     if(!alreadyRendered.isEmpty()) {
