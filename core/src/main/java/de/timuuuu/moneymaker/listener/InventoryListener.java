@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class InventoryListener {
 
   private static List<SlotItem> alreadyRendered = new ArrayList<>();
+  private static int totalBoosters = 0;
 
   private MoneyMakerAddon addon;
 
@@ -25,6 +26,7 @@ public class InventoryListener {
 
   public static void clearAlreadyRendered() {
     alreadyRendered.clear();
+    totalBoosters = 0;
   }
 
   public int getBoost() {
@@ -84,6 +86,15 @@ public class InventoryListener {
       ]
      */
 
+    // Inventory Name: DE > Booster-Übersicht (§e328§7/§61.000§r) | EN > Booster overview (§e328§7/§61,000§r)
+    String inventoryName = ChatUtil.stripColor(event.getInventoryName()); // DE > Booster-Übersicht (328/1.000) | EN > Booster overview (328/1,000)
+    String[] rawInvName = inventoryName.split("\\(");
+    if(rawInvName.length == 2) {
+      try {
+        totalBoosters = Integer.parseInt(rawInvName[1].split("/")[0]);
+      } catch (NumberFormatException ignored) {}
+    }
+
     if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
       if(event.getLoreList().size() >= 9) {
         String displayName = event.getDisplayName();
@@ -129,12 +140,12 @@ public class InventoryListener {
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
     if(!this.addon.configuration().showTotalBoostMessage().get()) return;
     int boost = getBoost();
-    if(boost > 0) {
+    if(boost > 0 && totalBoosters > 0) {
       this.addon.displayMessage(
           Component.text(this.addon.prefix)
               .append(Component.translatable(
                   "moneymaker.text.booster.inventory.total", NamedTextColor.GRAY,
-                  Component.text(alreadyRendered.size(), NamedTextColor.YELLOW),
+                  Component.text(totalBoosters, NamedTextColor.YELLOW),
                   Component.text(boost, NamedTextColor.YELLOW)
               ))
               .hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.text.booster.inventory.info", NamedTextColor.GRAY)))
