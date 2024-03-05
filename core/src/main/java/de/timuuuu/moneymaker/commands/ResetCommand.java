@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.commands;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.boosters.Booster;
-import de.timuuuu.moneymaker.listener.InventoryListener;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
