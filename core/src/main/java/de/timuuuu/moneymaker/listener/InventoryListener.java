@@ -146,7 +146,7 @@ public class InventoryListener {
               .append(Component.translatable(
                   "moneymaker.text.booster.inventory.total", NamedTextColor.GRAY,
                   Component.text(Util.format(totalBoosters), NamedTextColor.YELLOW),
-                  Component.text(Util.format(boost), NamedTextColor.YELLOW)
+                  Component.text(Util.format(boost) + "%", NamedTextColor.YELLOW)
               ))
               .hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.text.booster.inventory.info", NamedTextColor.GRAY)))
       );
