@@ -5,6 +5,9 @@ import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.BoosterInventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.event.HoverEvent;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.event.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +17,13 @@ public class InventoryListener {
 
   private static List<SlotItem> alreadyRendered = new ArrayList<>();
 
-  private static MoneyMakerAddon addon;
+  private MoneyMakerAddon addon;
 
   public InventoryListener(MoneyMakerAddon addon) {
-    InventoryListener.addon = addon;
+    this.addon = addon;
   }
 
-  public static int getBoost() {
+  public int getBoost() {
     AtomicInteger boost = new AtomicInteger(0);
     if(!alreadyRendered.isEmpty()) {
       alreadyRendered.forEach(slotItem -> {
@@ -43,16 +46,12 @@ public class InventoryListener {
               int boosting = Integer.parseInt(rawBooster[0]);
               int amount = Integer.parseInt(rawBooster[1].replace(")", ""));
               int finalBoost = boosting * amount;
-              addon.logger().debug("Total Boost (" + boosting + " * " + amount + ") = " + finalBoost);
               boost.getAndAdd(finalBoost);
             } catch (NumberFormatException ignored) {}
           }
         }
 
       });
-    }
-    if(boost.get() > 0) {
-      addon.logger().debug("Final Total Boost: " + boost.get());
     }
     return boost.get();
   }
@@ -87,7 +86,6 @@ public class InventoryListener {
         SlotItem slotItem = new SlotItem(displayName, durationLore, event.getGameVersion());
         if(!alreadyRendered.contains(slotItem)) {
           alreadyRendered.add(slotItem);
-          addon.logger().debug("[1.8-1.12] Slot >> " + event.getSlot() + " | Item Name >> " + event.getDisplayName() + " | Item Lore >> " + event.getLoreList());
         }
       }
       return;
@@ -99,7 +97,6 @@ public class InventoryListener {
       SlotItem slotItem = new SlotItem(displayName, durationLore, event.getGameVersion());
       if(!alreadyRendered.contains(slotItem)) {
         alreadyRendered.add(slotItem);
-        addon.logger().debug("[1.16+] Slot >> " + event.getSlot() + " | Item Name >> " + event.getDisplayName() + " | Item Lore >> " + event.getLoreList());
       }
     }
 
@@ -124,7 +121,19 @@ public class InventoryListener {
 
   @Subscribe
   public void onInventoryClose(InventoryCloseEvent event) {
-
+    if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
+    int boost = getBoost();
+    if(boost > 0) {
+      this.addon.displayMessage(
+          Component.text(this.addon.prefix)
+              .append(Component.translatable(
+                  "moneymaker.text.booster.inventory.total", NamedTextColor.GRAY,
+                  Component.text(alreadyRendered.size(), NamedTextColor.YELLOW),
+                  Component.text(boost, NamedTextColor.YELLOW)
+              ))
+              .hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.text.booster.inventory.info", NamedTextColor.GRAY)))
+      );
+    }
   }
 
   private static class SlotItem {

@@ -42,6 +42,12 @@
         "minutes": "Minuten",
         "hour": "Stunde",
         "hours": "Stunden"
+      },
+      "booster": {
+        "inventory": {
+          "total": "Du hast insgesamt %s Booster in deinem Booster-Inventar, dies entspricht einem Boost von %s.",
+          "info": "Bitte beachte, dass nur Booster erfasst werden,\ndie aktuell im Inventar sichtbar sind."
+        }
       }
     },
     "discordPresence": {
