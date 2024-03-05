@@ -23,9 +23,6 @@ public class ResetCommand extends Command {
 
         if(this.addon.addonUtil().connectedToMoneyMaker()) {
           if(args.length == 1) {
-            if(args[0].equalsIgnoreCase("getBoost")) {
-              InventoryListener.getBoost();
-            }
             if(args[0].equalsIgnoreCase("booster")) {
 
               Booster.activatedBoost.set(0);
