@@ -1,12 +1,11 @@
 package de.timuuuu.moneymaker.v1_8_9.mixins;
 
-import de.timuuuu.moneymaker.event.BoosterInventoryRenderSlotEvent;
+import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.Laby;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -30,17 +29,15 @@ public class InventoryMixin {
   )
   private void moneymaker$fireInventoryRender(Slot slot, CallbackInfo ci) {
     if(slot.getStack() != null) {
-      if(slot.getStack().getItem() == Items.skull) {
-        if(slot.getStack().getTagCompound() != null) {
-          NBTTagCompound compoundTag = slot.getStack().getTagCompound().getCompoundTag("display");
-          String name = slot.getStack().getDisplayName();
-          List<String> loreList = new ArrayList<>();
-          NBTTagList listTag = compoundTag.getTagList("Lore", 8);
-          for(int i = 0; i != listTag.tagCount(); i++) {
-            loreList.add(listTag.getStringTagAt(i));
-          }
-          Laby.fireEvent(new BoosterInventoryRenderSlotEvent(slot.inventory.getName(), slot.slotNumber, name, loreList, "1.8"));
+      if(slot.getStack().getTagCompound() != null) {
+        NBTTagCompound compoundTag = slot.getStack().getTagCompound().getCompoundTag("display");
+        String name = slot.getStack().getDisplayName();
+        List<String> loreList = new ArrayList<>();
+        NBTTagList listTag = compoundTag.getTagList("Lore", 8);
+        for(int i = 0; i != listTag.tagCount(); i++) {
+          loreList.add(listTag.getStringTagAt(i));
         }
+        Laby.fireEvent(new InventoryRenderSlotEvent(slot.inventory.getName(), slot.slotNumber, name, loreList, "1.8"));
       }
     }
   }

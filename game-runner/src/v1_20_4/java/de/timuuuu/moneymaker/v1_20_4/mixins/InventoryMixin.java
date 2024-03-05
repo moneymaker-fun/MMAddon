@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.v1_20_4.mixins;
 
-import de.timuuuu.moneymaker.event.BoosterInventoryRenderSlotEvent;
+import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,17 +24,15 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryRender(GuiGraphics $$0, Slot slot, CallbackInfo ci) {
-    if(slot.getItem().is(Items.PLAYER_HEAD)) {
-      CompoundTag compoundTag = slot.getItem().getOrCreateTagElement("display");
-      String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
-      List<String> loreList = new ArrayList<>();
-      ListTag listTag = compoundTag.getList(ItemStack.TAG_LORE, 8);
-      for(int i = 0; i != listTag.size(); i++) {
-        loreList.add(listTag.getString(i));
-      }
-      AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-      Laby.fireEvent(new BoosterInventoryRenderSlotEvent(screen.getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.20"));
+    CompoundTag compoundTag = slot.getItem().getOrCreateTagElement("display");
+    String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
+    List<String> loreList = new ArrayList<>();
+    ListTag listTag = compoundTag.getList(ItemStack.TAG_LORE, 8);
+    for(int i = 0; i != listTag.size(); i++) {
+      loreList.add(listTag.getString(i));
     }
+    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
+    Laby.fireEvent(new InventoryRenderSlotEvent(screen.getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.20"));
   }
 
   @Inject(

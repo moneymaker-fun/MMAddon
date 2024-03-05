@@ -3,7 +3,7 @@ package de.timuuuu.moneymaker.event;
 import net.labymod.api.event.Event;
 import java.util.List;
 
-public class BoosterInventoryRenderSlotEvent implements Event {
+public class InventoryRenderSlotEvent implements Event {
 
   private String inventoryName;
   private int slot;
@@ -11,7 +11,7 @@ public class BoosterInventoryRenderSlotEvent implements Event {
   private List<String> loreList;
   private String gameVersion;
 
-  public BoosterInventoryRenderSlotEvent(String inventoryName, int slot, String displayName, List<String> loreList,
+  public InventoryRenderSlotEvent(String inventoryName, int slot, String displayName, List<String> loreList,
       String gameVersion) {
     this.inventoryName = inventoryName;
     this.slot = slot;

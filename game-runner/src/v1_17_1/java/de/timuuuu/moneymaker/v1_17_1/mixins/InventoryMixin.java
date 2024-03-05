@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.v1_17_1.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.timuuuu.moneymaker.event.BoosterInventoryRenderSlotEvent;
+import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,17 +25,15 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryRender(PoseStack lvt_1_1_, Slot slot, CallbackInfo ci) {
-    if(slot.getItem().is(Items.PLAYER_HEAD)) {
-      CompoundTag compoundTag = slot.getItem().getOrCreateTagElement("display");
-      String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
-      List<String> loreList = new ArrayList<>();
-      ListTag listTag = compoundTag.getList(ItemStack.TAG_LORE, 8);
-      for(int i = 0; i != listTag.size(); i++) {
-        loreList.add(listTag.getString(i));
-      }
-      AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-      Laby.fireEvent(new BoosterInventoryRenderSlotEvent(screen.getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.17"));
+    CompoundTag compoundTag = slot.getItem().getOrCreateTagElement("display");
+    String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
+    List<String> loreList = new ArrayList<>();
+    ListTag listTag = compoundTag.getList(ItemStack.TAG_LORE, 8);
+    for(int i = 0; i != listTag.size(); i++) {
+      loreList.add(listTag.getString(i));
     }
+    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
+    Laby.fireEvent(new InventoryRenderSlotEvent(screen.getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.17"));
   }
 
   @Inject(

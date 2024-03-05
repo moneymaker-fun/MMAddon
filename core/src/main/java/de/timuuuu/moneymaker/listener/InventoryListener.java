@@ -2,7 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
-import de.timuuuu.moneymaker.event.BoosterInventoryRenderSlotEvent;
+import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
@@ -61,7 +61,7 @@ public class InventoryListener {
   }
 
   @Subscribe
-  public void onInventoryRenderSlot(BoosterInventoryRenderSlotEvent event) {
+  public void onInventoryRenderSlot(InventoryRenderSlotEvent event) {
 
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
     if(!(event.getDisplayName().contains("Booster") || event.getDisplayName().contains("booster"))) return;
