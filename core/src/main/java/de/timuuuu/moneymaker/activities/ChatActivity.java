@@ -129,21 +129,6 @@ public class ChatActivity extends SimpleActivity {
         if(server.contains("MoneyMaker") || server.startsWith("Mine") || server.startsWith("Farming")) {
           OnlineEntryWidget entryWidget = new OnlineEntryWidget(this.addon, moneyPlayer);
           onlineList.addChild(entryWidget);
-          /*if(server.startsWith("Farming")) {
-            if(server.split(" - ").length == 2) {
-              String cave = server.split(" - ")[1];
-              server = "Farming - " + I18n.translate(this.addon.addonUtil().caveByName(cave).translation());
-            }
-          }
-          Component component = Component.icon(Icon.head(moneyPlayer.uuid()), 10)
-              .append(Component.text(" " + moneyPlayer.rank().getChatPrefix() + moneyPlayer.userName() + " §8- §b(" + server + ") "));
-          component.clickEvent(ClickEvent.openUrl("https://laby.net/@" + moneyPlayer.userName()));
-          if(Util.isDev(this.labyAPI.getUniqueId().toString())) {
-            component.hoverEvent(HoverEvent.showText(Component.text("§7Nutzt §e" + moneyPlayer.addonVersion() + " §7als Addon-Version")));
-          }
-          ComponentWidget componentWidget = ComponentWidget.component(component);
-          componentWidget.addId("online-entry");
-          onlineList.addChild(componentWidget);*/
         }
       });
     }
