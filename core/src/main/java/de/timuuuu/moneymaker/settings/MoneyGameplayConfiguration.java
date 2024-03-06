@@ -7,12 +7,9 @@ import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
 import net.labymod.api.configuration.settings.annotation.SettingRequires;
-import net.labymod.api.configuration.settings.annotation.SettingSection;
 
 @SpriteTexture("sprite/settings")
 public class MoneyGameplayConfiguration extends Config {
-
-  @SettingSection(value = "gameplay", center = true)
 
   @SpriteSlot(y = 2, x = 1)
   @SwitchSetting
