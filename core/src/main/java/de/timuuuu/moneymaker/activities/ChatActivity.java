@@ -123,14 +123,26 @@ public class ChatActivity extends SimpleActivity {
       List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
       players.sort(Comparator.comparing(o -> o.rank().getId()));
 
+      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString())) {
+        onlineList.addChild(new OnlineEntryWidget(this.addon, "§8→ §7Online auf MoneyMaker"));
+      }
       players.forEach(moneyPlayer -> {
         String server = moneyPlayer.server();
         // TODO: Remove server#contains("MoneyMaker") after new update
         if(server.contains("MoneyMaker") || server.startsWith("Mine") || server.startsWith("Farming")) {
-          OnlineEntryWidget entryWidget = new OnlineEntryWidget(this.addon, moneyPlayer);
-          onlineList.addChild(entryWidget);
+          onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, false));
         }
       });
+
+      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString())) {
+        onlineList.addChild(new OnlineEntryWidget(this.addon, "§8→ §7Online andere Server"));
+        players.forEach(moneyPlayer -> {
+          if(moneyPlayer.server().equalsIgnoreCase("Other")) {
+            onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, true));
+          }
+        });
+      }
+
     }
 
     ScrollWidget onlineScroll = new ScrollWidget(onlineList, new ListSession<>()).addId("online-scroll");

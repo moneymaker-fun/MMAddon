@@ -64,6 +64,10 @@
     width: 100%;
   }
 
+  .placeholder {
+    margin: 5 0 -5 0;
+  }
+
   OnlineEntry {
     height: 22;
     width: 100%;
