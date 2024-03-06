@@ -229,6 +229,14 @@
     },
     "settings": {
       "name": "MoneyMaker",
+      "header": {
+        "general": {
+          "name": "General Settings"
+        },
+        "other": {
+          "name": "Other Settings"
+        }
+      },
       "enabled": {
         "name": "Enabled"
       },
@@ -263,44 +271,36 @@
         "name": "Show total boost message",
         "description": "Displays a message in chat with the total boost of your boosters in the booster inventory when you close the booster inventory"
       },
-      "shortBoosterMessage": {
-        "name": "Short booster messages"
-      },
-      "hideEmptyMessages": {
-        "name": "Hide Empty Messages",
-        "description": "Hides empty messages and divider messages"
-      },
-      "hideWorkerUpgradeMessage": {
-        "name": "Hide Upgrade messages from workers"
-      },
-      "hideBuySellWorkerMessage": {
-        "name": "Hide Buy/Sell Messages from workers"
-      },
-      "hideTeleportMessage": {
-        "name": "Hide teleport messages"
-      },
-      "notifyOnMoneyReached": {
-        "name": "Notification when money for workers/debris reached"
-      },
-      "hideEffectMessage": {
-        "name": "Hide Effect Messages"
-      },
-      "showTimersOnEffect": {
-        "name": "Show clickable timers in chat",
-        "description": "Displays a clickable message in chat to activate a timer when a worker's effect activates."
-      },
-      "hideFullBoosterInventory": {
-        "name": "Hide Full Booster Inventory Message"
-      },
-      "header": {
-        "general": {
-          "name": "General Settings"
+      "gameplayConfiguration": {
+        "name": "Gameplay Settings",
+        "shortBoosterMessage": {
+          "name": "Short booster messages"
         },
-        "other": {
-          "name": "Other Settings"
+        "hideEmptyMessages": {
+          "name": "Hide Empty Messages",
+          "description": "Hides empty messages and divider messages"
         },
-        "gameplay": {
-          "name": "Gameplay Settings"
+        "hideWorkerUpgradeMessage": {
+          "name": "Hide Upgrade messages from workers"
+        },
+        "hideBuySellWorkerMessage": {
+          "name": "Hide Buy/Sell Messages from workers"
+        },
+        "hideTeleportMessage": {
+          "name": "Hide teleport messages"
+        },
+        "notifyOnMoneyReached": {
+          "name": "Notification when money for workers/debris reached"
+        },
+        "hideEffectMessage": {
+          "name": "Hide Effect Messages"
+        },
+        "showTimersOnEffect": {
+          "name": "Show clickable timers in chat",
+          "description": "Displays a clickable message in chat to activate a timer when a worker's effect activates."
+        },
+        "hideFullBoosterInventory": {
+          "name": "Hide Full Booster Inventory Message"
         }
       },
       "moneyDiscordConfiguration": {

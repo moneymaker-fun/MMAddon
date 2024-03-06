@@ -229,11 +229,16 @@
     },
     "settings": {
       "name": "MoneyMaker",
+      "header": {
+        "general": {
+          "name": "Allgemeine Einstellungen"
+        },
+        "other": {
+          "name": "Andere Einstellungen"
+        }
+      },
       "enabled": {
         "name": "Aktiviert"
-      },
-      "shortBoosterMessage": {
-        "name": "Booster Nachrichten kürzen"
       },
       "exportBoosterOnShutdown": {
         "name": "Exportiere die gefarmten Booster beim beenden",
@@ -266,41 +271,36 @@
         "name": "Gesamt Booster Nachricht anzeigen",
         "description": "Zeigt eine Nachricht im Chat mit dem gesamt Boost deiner Booster im Booster-Inventar an, wenn du das Booster-Inventar schließt"
       },
-      "hideEmptyMessages": {
-        "name": "Leere Nachrichten verstecken",
-        "description": "Versteckt leere Nachrichten und Trennnachrichten"
-      },
-      "hideWorkerUpgradeMessage": {
-        "name": "Upgrade Nachrichten von Arbeitern verstecken"
-      },
-      "hideBuySellWorkerMessage": {
-        "name": "Kauf/Verkauf Nachrichten von Arbeitern verstecken"
-      },
-      "hideTeleportMessage": {
-        "name": "Teleport Nachrichten verstecken"
-      },
-      "notifyOnMoneyReached": {
-        "name": "Benachrichtigung wenn Geld für Arbeiter/Geröll erreicht"
-      },
-      "hideEffectMessage": {
-        "name": "Effekt Nachrichten verstecken"
-      },
-      "showTimersOnEffect": {
-        "name": "Klickbare Timer im Chat anzeigen",
-        "description": "Zeigt eine klickbare Nachricht im Chat an um einen Timer zu aktivieren, wenn der Effekt eines Arbeiters aktiviert wird."
-      },
-      "hideFullBoosterInventory": {
-        "name": "Volle Booster Inventar Nachricht verstecken"
-      },
-      "header": {
-        "general": {
-          "name": "Allgemeine Einstellungen"
+      "gameplayConfiguration": {
+        "name": "Gameplay Einstellungen",
+        "shortBoosterMessage": {
+          "name": "Booster Nachrichten kürzen"
         },
-        "other": {
-          "name": "Andere Einstellungen"
+        "hideEmptyMessages": {
+          "name": "Leere Nachrichten verstecken",
+          "description": "Versteckt leere Nachrichten und Trennnachrichten"
         },
-        "gameplay": {
-          "name": "Gameplay Einstellungen"
+        "hideWorkerUpgradeMessage": {
+          "name": "Upgrade Nachrichten von Arbeitern verstecken"
+        },
+        "hideBuySellWorkerMessage": {
+          "name": "Kauf/Verkauf Nachrichten von Arbeitern verstecken"
+        },
+        "hideTeleportMessage": {
+          "name": "Teleport Nachrichten verstecken"
+        },
+        "notifyOnMoneyReached": {
+          "name": "Benachrichtigung wenn Geld für Arbeiter/Geröll erreicht"
+        },
+        "hideEffectMessage": {
+          "name": "Effekt Nachrichten verstecken"
+        },
+        "showTimersOnEffect": {
+          "name": "Klickbare Timer im Chat anzeigen",
+          "description": "Zeigt eine klickbare Nachricht im Chat an um einen Timer zu aktivieren, wenn der Effekt eines Arbeiters aktiviert wird."
+        },
+        "hideFullBoosterInventory": {
+          "name": "Volle Booster Inventar Nachricht verstecken"
         }
       },
       "moneyDiscordConfiguration": {

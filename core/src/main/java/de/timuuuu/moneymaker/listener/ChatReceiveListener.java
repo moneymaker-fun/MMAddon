@@ -34,47 +34,47 @@ public class ChatReceiveListener {
 
       if((ChatMessages.WORKPLACE_UPGRADE_DE_1.startWith(plain) && ChatMessages.WORKPLACE_UPGRADE_DE_2.contains(plain)) ||
           (ChatMessages.WORKPLACE_UPGRADE_EN.startWith(plain))) {
-        if(this.addon.configuration().hideWorkerUpgradeMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideWorkerUpgradeMessage().get()) {
           event.setCancelled(true);
         }
       }
 
       if((ChatMessages.BUY_WORKER_DE_1.startWith(plain) && ChatMessages.BUY_WORKER_DE_2.contains(plain)) ||
           (ChatMessages.BUY_WORKER_EN.startWith(plain))) {
-        if(this.addon.configuration().hideBuySellWorkerMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
         }
       }
 
       if((ChatMessages.SELL_WORKER_DE_1.startWith(plain) && ChatMessages.SELL_WORKER_DE_2.contains(plain)) ||
           (ChatMessages.SELL_WORKER_EN.startWith(plain))) {
-        if(this.addon.configuration().hideBuySellWorkerMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
         }
       }
 
       if((ChatMessages.TELEPORT_DE_1.startWith(plain) && ChatMessages.TELEPORT_DE_2.contains(plain)) ||
           (ChatMessages.TELEPORT_EN.startWith(plain))) {
-        if(this.addon.configuration().hideTeleportMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideTeleportMessage().get()) {
           event.setCancelled(true);
         }
       }
 
       if(ChatMessages.PARTING_LINE.equals(plain) || ChatMessages.PREFIX.equals(plain)) {
-        if(this.addon.configuration().hideEmptyMessages().get() || this.addon.configuration().shortBoosterMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideEmptyMessages().get() || this.addon.configuration().gameplayConfiguration.shortBoosterMessage().get()) {
           event.setCancelled(true);
         }
       }
 
       if (ChatMessages.BOOSTER_FOUND_DE.equals(plain) || ChatMessages.BOOSTER_FOUND_EN.equals(plain)) {
-        if(this.addon.configuration().shortBoosterMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.shortBoosterMessage().get()) {
           event.setCancelled(true);
         }
       }
 
       if (plain.contains("Booster (") && plain.contains(")") &&
           !(ChatMessages.BOOSTER_ACTIVATED_DE_3.contains(plain) || ChatMessages.BOOSTER_ACTIVATED_EN_3.contains(plain))) {
-        if(this.addon.configuration().shortBoosterMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.shortBoosterMessage().get()) {
           // Shorted DE: +70 % Booster (15 Minuten)
           // Shorted EN: +40% Booster (20 minutes)
           String boosterString = plain.replace(ChatMessages.PREFIX.message() + " ", "");
@@ -159,10 +159,10 @@ public class ChatReceiveListener {
       }
 
       if(ChatMessages.WORKER_EFFECT_DE.equals(plain) || ChatMessages.WORKER_EFFECT_EN.equals(plain)) {
-        if(this.addon.configuration().hideEffectMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideEffectMessage().get()) {
           event.setCancelled(true);
         }
-        if(this.addon.configuration().showTimersOnEffect().get() && !this.addon.configuration().hideEffectMessage().get()) {
+        if(this.addon.configuration().gameplayConfiguration.showTimersOnEffect().get() && !this.addon.configuration().gameplayConfiguration.hideEffectMessage().get()) {
           AtomicInteger timers = new AtomicInteger();
           Util.timers.values().forEach(timer -> {
             if(timer.name().contains("Effekt-Timer-")) {
@@ -180,7 +180,7 @@ public class ChatReceiveListener {
       }
 
       if(ChatMessages.BOOSTER_INVENTORY_DE.startWith(plain) || ChatMessages.BOOSTER_INVENTORY_EN.startWith(plain)) {
-        if(this.addon.configuration().hideFullBoosterInventory().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
       }
@@ -191,7 +191,7 @@ public class ChatReceiveListener {
       if(ChatMessages.BOOSTER_ACTIVATED_DE_1.contains(plain) && ChatMessages.BOOSTER_ACTIVATED_DE_2.contains(plain) &&
           ChatMessages.BOOSTER_ACTIVATED_DE_3.contains(plain)) {
 
-        if(this.addon.configuration().hideFullBoosterInventory().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
 
@@ -209,7 +209,7 @@ public class ChatReceiveListener {
       if(ChatMessages.BOOSTER_ACTIVATED_EN_1.contains(plain) && ChatMessages.BOOSTER_ACTIVATED_EN_2.contains(plain) &&
           ChatMessages.BOOSTER_ACTIVATED_EN_3.contains(plain)) {
 
-        if(this.addon.configuration().hideFullBoosterInventory().get()) {
+        if(this.addon.configuration().gameplayConfiguration.hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
 

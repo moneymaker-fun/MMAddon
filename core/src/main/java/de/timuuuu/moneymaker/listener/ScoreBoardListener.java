@@ -93,7 +93,7 @@ public class ScoreBoardListener {
           int workerCost = Integer.parseInt(workerSplit[0]);
           String workerEinheit = workerSplit[1];
           if(CurrencyUtil.get(balEinheit) >= CurrencyUtil.get(workerEinheit) && balance >= workerCost) {
-            if(this.addon.configuration().notifyOnMoneyReached().get()) {
+            if(this.addon.configuration().gameplayConfiguration.notifyOnMoneyReached().get()) {
               this.addon.addonUtil().workerNotifySent(true);
               this.addon.pushNotification(Component.translatable("moneymaker.notification.balance-reached.miner.title", TextColor.color(85, 255, 85)),
                   Component.translatable("moneymaker.notification.balance-reached.miner.text", TextColor.color(170, 170, 170)));
@@ -107,7 +107,7 @@ public class ScoreBoardListener {
           int debrisCost = Integer.parseInt(debrisSplit[0]);
           String debrisEinheit = debrisSplit[1];
           if(CurrencyUtil.get(balEinheit) >= CurrencyUtil.get(debrisEinheit) && balance >= debrisCost) {
-            if(this.addon.configuration().notifyOnMoneyReached().get()) {
+            if(this.addon.configuration().gameplayConfiguration.notifyOnMoneyReached().get()) {
               this.addon.addonUtil().debrisNotifySent(true);
               this.addon.pushNotification(Component.translatable("moneymaker.notification.balance-reached.debris.title", TextColor.color(85, 255, 85)),
                   Component.translatable("moneymaker.notification.balance-reached.debris.text", TextColor.color(170, 170, 170)));
