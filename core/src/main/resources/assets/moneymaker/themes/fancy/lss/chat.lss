@@ -64,7 +64,7 @@
 
 .online-scroll {
   top: 10;
-  left: 10;
+  left: 5;
   right: 0;
   bottom: 5;
 
