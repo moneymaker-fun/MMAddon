@@ -99,9 +99,11 @@ public class ChatReceiveListener {
             Component boosterComponent = Component.text(boosterString + " ", color);
             message.append(boosterComponent);
 
-            message.append(Component.icon(BoosterUtil.getIcon(booster), 10));
+            if(this.addon.configuration().gameplayConfiguration.showBoosterIcon().get()) {
+              message.append(Component.icon(BoosterUtil.getIcon(booster), 10)).append(Component.text(" "));
+            }
 
-            message.append(Component.text(" ")).append(Component.translatable("moneymaker.text.found", color));
+            message.append(Component.translatable("moneymaker.text.found", color));
             this.addon.displayMessage(message);
           } else {
             this.addon.displayMessage(Component.text(this.addon.prefix).append(Component.text(boosterString + " ", NamedTextColor.GREEN)).append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN)));

@@ -276,6 +276,10 @@
         "shortBoosterMessage": {
           "name": "Booster Nachrichten kürzen"
         },
+        "showBoosterIcon": {
+          "name": "Booster Icon anzeigen",
+          "description": "Zeigt das Icon des gefundenen Boosters in der gekürzten Booster Nachricht an"
+        },
         "hideEmptyMessages": {
           "name": "Leere Nachrichten verstecken",
           "description": "Versteckt leere Nachrichten und Trennnachrichten"

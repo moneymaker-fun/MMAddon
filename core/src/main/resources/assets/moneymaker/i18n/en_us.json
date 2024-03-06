@@ -276,6 +276,10 @@
         "shortBoosterMessage": {
           "name": "Short booster messages"
         },
+        "showBoosterIcon": {
+          "name": "Show Booster Icon",
+          "description": "Displays the icon of the found booster in the shortened booster message"
+        },
         "hideEmptyMessages": {
           "name": "Hide Empty Messages",
           "description": "Hides empty messages and divider messages"

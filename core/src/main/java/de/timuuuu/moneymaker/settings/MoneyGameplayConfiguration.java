@@ -15,6 +15,12 @@ public class MoneyGameplayConfiguration extends Config {
   @SwitchSetting
   private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(false);
 
+  @IntroducedIn(value = "1.4.2", namespace = "moneymaker")
+  @SettingRequires(value = "shortBoosterMessage")
+  @SpriteSlot(y = 3, x = 4)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showBoosterIcon = new ConfigProperty<>(true);
+
   @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
   @SpriteSlot(y = 2, x = 3)
   @SwitchSetting
@@ -49,6 +55,10 @@ public class MoneyGameplayConfiguration extends Config {
   @SpriteSlot(y = 2, x = 2)
   @SwitchSetting
   private final ConfigProperty<Boolean> hideFullBoosterInventory = new ConfigProperty<>(false);
+
+  public ConfigProperty<Boolean> showBoosterIcon() {
+    return showBoosterIcon;
+  }
 
   public ConfigProperty<Boolean> shortBoosterMessage() {
     return shortBoosterMessage;
