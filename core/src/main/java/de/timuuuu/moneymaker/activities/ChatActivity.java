@@ -123,7 +123,7 @@ public class ChatActivity extends SimpleActivity {
       List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
       players.sort(Comparator.comparing(o -> o.rank().getId()));
 
-      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString())) {
+      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
         onlineList.addChild(new OnlineEntryWidget(this.addon, "§8→ §7Online auf MoneyMaker"));
       }
       players.forEach(moneyPlayer -> {
@@ -134,7 +134,7 @@ public class ChatActivity extends SimpleActivity {
         }
       });
 
-      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString())) {
+      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
         onlineList.addChild(new OnlineEntryWidget(this.addon, "§8→ §7Online andere Server"));
         players.forEach(moneyPlayer -> {
           if(moneyPlayer.server().equalsIgnoreCase("Other")) {

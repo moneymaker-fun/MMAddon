@@ -418,8 +418,10 @@
       },
       "secret": {
         "title": "Super Secret Einstellungen",
-        "toggleJoinMessageTitle": "Join Nachrichten",
-        "chat-reconnect": "Chat Reconnect Knopf"
+        "chat": {
+          "reconnect": "Chat Reconnect Knopf",
+          "all-players": "Alle Spieler in Onlineliste anzeigen"
+        }
       }
     },
     "hudWidget": {
