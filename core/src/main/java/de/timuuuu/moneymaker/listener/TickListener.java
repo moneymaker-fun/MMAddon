@@ -1,17 +1,15 @@
 package de.timuuuu.moneymaker.listener;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
+import java.util.List;
 
 public class TickListener {
 
@@ -106,50 +104,25 @@ public class TickListener {
       }
 
       if(rankingLine.contains("Ranking: ")) {
-        try {
-          JsonObject loreObject = JsonParser.parseString(rankingLine).getAsJsonObject();
-          if(!loreObject.has("extra")) return;
-          if(!loreObject.get("extra").isJsonArray()) return;
-          JsonArray array = loreObject.get("extra").getAsJsonArray();
-          for(int i = 0; i != array.size(); i++) {
-            if(array.get(i).isJsonObject()) {
-              JsonObject object = array.get(i).getAsJsonObject();
-              if(object.has("text")) {
-                String text = object.get("text").getAsString();
-                if(text.contains("Platz ")) {
-                  this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Platz ", "")
-                      .replace(".", "").replace(",", "").strip()));
-                }
-                if(text.contains("Rank ")) {
-                  this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Rank ", "")
-                      .replace(".", "").replace(",", "").strip()));
-                }
-              }
-            }
-          }
-
-        } catch (JsonSyntaxException ignored) {}
+        List<String> line = Util.getTextFromJsonObject(rankingLine);
+        if(line.size() != 3) return;
+        if(line.get(1) == null) return;
+        String text = line.get(1);
+        if(text.contains("Platz ")) {
+          this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Platz ", "")
+              .replace(".", "").replace(",", "").strip()));
+        }
+        if(text.contains("Rank ")) {
+          this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Rank ", "")
+              .replace(".", "").replace(",", "").strip()));
+        }
       }
 
       if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
-        try {
-          JsonObject loreObject = JsonParser.parseString(mobsLine).getAsJsonObject();
-          if(!loreObject.has("extra")) return;
-          if(!loreObject.get("extra").isJsonArray()) return;
-          JsonArray array = loreObject.get("extra").getAsJsonArray();
-          for(int i = 0; i != array.size(); i++) {
-            if(array.get(i).isJsonObject()) {
-              JsonObject object = array.get(i).getAsJsonObject();
-              if(object.has("text")) {
-                String text = object.get("text").getAsString();
-                if(!(text.equals("Getötete Mobs: ") || text.equals("Killed mobs: "))) {
-                  this.addon.addonUtil().swordMobs(Integer.parseInt(text.replace(".", "").replace(",", "")));
-                }
-              }
-            }
-          }
-
-        } catch (JsonSyntaxException ignored) {}
+        List<String> line = Util.getTextFromJsonObject(mobsLine);
+        if(line.size() != 2) return;
+        if(line.get(1) == null) return;
+        this.addon.addonUtil().swordMobs(Integer.parseInt(line.get(1).replace(".", "").replace(",", "")));
       }
 
       if(this.addon.addonUtil().swordMobs() != 0) {
@@ -171,15 +144,8 @@ public class TickListener {
 
     /*
     Lore-List:
-    {"italic":false,"text":""}
-    {"italic":false,"extra":[{"color":"aqua","text":"Statistiken:"}],"text":""}
-    {"italic":false,"extra":[{"extra":[{"color":"gray","text":"Ranking: "},{"color":"gold","text":"Platz 9.523 "},{"color":"gray","text":"(Getötete Mobs)"}],"text":""}],"text":""}
-    {"italic":false,"extra":[{"extra":[{"color":"gray","text":"Getötete Mobs: "},{"color":"yellow","text":"101"}],"text":""}],"text":""}
-
     Visualisation: https://jsonlint.com/
-     */
 
-    /*
     {"italic":false,"text":""},
     {"italic":false,"color":"aqua","text":"Statistiken:"},
     {"italic":false,"extra":[{"color":"gray","text":"Ranking: "},{"color":"gold","text":"Platz 215 "},{"color":"gray","text":"(Getötete Mobs)"}],"text":""},
