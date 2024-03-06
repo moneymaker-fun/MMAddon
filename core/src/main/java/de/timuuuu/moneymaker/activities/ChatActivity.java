@@ -128,8 +128,7 @@ public class ChatActivity extends SimpleActivity {
       }
       players.forEach(moneyPlayer -> {
         String server = moneyPlayer.server();
-        // TODO: Remove server#contains("MoneyMaker") after new update
-        if(server.contains("MoneyMaker") || server.startsWith("Mine") || server.startsWith("Farming")) {
+        if(server.startsWith("Mine") || server.startsWith("Farming")) {
           onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, false));
         }
       });
