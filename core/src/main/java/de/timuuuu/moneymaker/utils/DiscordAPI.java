@@ -50,7 +50,7 @@ public class DiscordAPI {
   public void update() {
     if(this.busy) return;
     if(!this.addon.configuration().enabled().get()) return;
-    if(!this.addon.configuration().moneyDiscordConfiguration.enabled().get()) return;
+    if(!this.addon.configuration().discordConfiguration.enabled().get()) return;
     if(!(this.addon.addonUtil().inMine() || this.addon.addonUtil().inFarming())) return;
 
     this.busy = true;
@@ -64,12 +64,12 @@ public class DiscordAPI {
       builder.start(current.getStartTime());
     }
 
-    if(this.addon.configuration().moneyDiscordConfiguration.showLocation().get()) {
+    if(this.addon.configuration().discordConfiguration.showLocation().get()) {
       builder.details(this.line1);
     } else {
       builder.details("MoneyMaker Addon v" + this.addon.addonInfo().getVersion() + (this.addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment() ? " DEV" : ""));
     }
-    if(this.addon.configuration().moneyDiscordConfiguration.showStats().get()) {
+    if(this.addon.configuration().discordConfiguration.showStats().get()) {
       builder.state(this.line2);
     } else {
       builder.state("by MisterCore & Seelenverwandter");

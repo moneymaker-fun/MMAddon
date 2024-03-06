@@ -101,7 +101,7 @@ public class ApiUtil {
   }
 
   public void loadChatHistory() {
-    if(!this.addon.configuration().moneyChatConfiguration.loadChatHistory().get()) return;
+    if(!this.addon.configuration().chatConfiguration.loadChatHistory().get()) return;
     Request.ofGson(JsonArray.class)
         .url(BASE_URL + "/chat/history/")
         .async()

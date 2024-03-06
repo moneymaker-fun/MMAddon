@@ -25,14 +25,14 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
   @SpriteSlot(y = 1)
-  public MoneyDiscordConfiguration moneyDiscordConfiguration = new MoneyDiscordConfiguration();
+  public MoneyDiscordConfiguration discordConfiguration = new MoneyDiscordConfiguration();
 
   @SpriteSlot(x = 1)
-  public MoneyChatConfiguration moneyChatConfiguration = new MoneyChatConfiguration();
+  public MoneyChatConfiguration chatConfiguration = new MoneyChatConfiguration();
 
   @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
   @SpriteSlot(y = 7)
-  public MoneyBadgeConfiguration moneyBadgeConfiguration = new MoneyBadgeConfiguration();
+  public MoneyBadgeConfiguration badgeConfiguration = new MoneyBadgeConfiguration();
 
   @IntroducedIn(value = "1.4.2", namespace = "moneymaker")
   public MoneyGameplayConfiguration gameplayConfiguration = new MoneyGameplayConfiguration();

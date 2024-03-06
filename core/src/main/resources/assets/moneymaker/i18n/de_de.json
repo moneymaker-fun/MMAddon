@@ -303,7 +303,7 @@
           "name": "Volle Booster Inventar Nachricht verstecken"
         }
       },
-      "moneyDiscordConfiguration": {
+      "discordConfiguration": {
         "name": "Eigene Discord Rich Presence",
         "showLocation": {
           "name": "Zeige aktuelle Position",
@@ -314,7 +314,7 @@
           "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, Gefarmte Booster, Spitzhacken Rang & Level, Ranking"
         }
       },
-      "moneyChatConfiguration": {
+      "chatConfiguration": {
         "name": "Chat-Einstellungen",
         "header": {
           "general": {
@@ -340,7 +340,7 @@
           "name": "Online/Offline Nachrichten anzeigen"
         }
       },
-      "moneyBadgeConfiguration": {
+      "badgeConfiguration": {
         "name": "Tag Einstellungen",
         "header": {
           "general": {

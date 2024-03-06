@@ -21,7 +21,7 @@ public class MoneyTextTag extends NameTag {
   @Override
   protected @Nullable RenderableComponent getRenderableComponent() {
     if(!visible(entity)) return null;
-    Component component = Component.text("MoneyMaker-Addon", TextColor.color(this.addon.configuration().moneyBadgeConfiguration.textColor().get().get()));
+    Component component = Component.text("MoneyMaker-Addon", TextColor.color(this.addon.configuration().badgeConfiguration.textColor().get().get()));
     MoneyRank rank = AddonUtil.playerStatus.get(entity.getUniqueId()).rank();
     if(rank.getNameTag() != null) {
       component.append(rank.getNameTag());
@@ -48,7 +48,7 @@ public class MoneyTextTag extends NameTag {
     if(!(entity instanceof Player player)) return false;
     if(player.profile().getUniqueId() == null) return false;
     if(!this.addon.configuration().enabled().get()) return false;
-    if(!this.addon.configuration().moneyBadgeConfiguration.textTag().get()) return false;
+    if(!this.addon.configuration().badgeConfiguration.textTag().get()) return false;
     if(!AddonUtil.playerStatus.containsKey(player.profile().getUniqueId())) return false;
     return AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() != MoneyRank.USER;
   }
