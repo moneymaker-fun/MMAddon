@@ -54,6 +54,18 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onDisconnect(ServerDisconnectEvent event) {
+    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
+        event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
+        event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
+      JsonObject leaderBoard = new JsonObject();
+      leaderBoard.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+      leaderBoard.addProperty("userName", this.addon.labyAPI().getName());
+      leaderBoard.addProperty("ranking", this.addon.addonUtil().rank());
+      leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
+      leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
+      this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
+    }
+
     this.addon.addonUtil().resetValues(true);
 
     JsonObject data = new JsonObject();
@@ -112,6 +124,14 @@ public class MoneyAddonListener {
     data.addProperty("server", "OFFLINE");
     data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
     this.addon.chatClient().sendMessage("playerStatus", data);
+
+    JsonObject leaderBoard = new JsonObject();
+    leaderBoard.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
+    leaderBoard.addProperty("userName", this.addon.labyAPI().getName());
+    leaderBoard.addProperty("ranking", this.addon.addonUtil().rank());
+    leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
+    leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
+    this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
 
     this.addon.chatClient().closeConnection();
     if(this.addon.configuration().exportBoosterOnShutdown().get()) {
