@@ -163,6 +163,10 @@ public class MoneyAddonListener {
     UUID uuid = event.uuid();
     MoneyPlayer player = event.player();
 
+    if(uuid.equals(this.addon.labyAPI().getUniqueId())) {
+      this.addon.addonUtil().rank(player.rank());
+    }
+
     if(AddonUtil.playerStatus.containsKey(uuid)) {
       String serverBefore = AddonUtil.playerStatus.get(uuid).server();
 

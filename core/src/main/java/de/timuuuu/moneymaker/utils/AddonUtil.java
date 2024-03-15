@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.badges.MoneyRank;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -13,6 +14,8 @@ public class AddonUtil {
   }
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
+
+  private MoneyRank rank = MoneyRank.USER;
 
   private boolean inMine = false;
   private boolean inFarming = false;
@@ -73,6 +76,14 @@ public class AddonUtil {
 
   private boolean workerNotifySent = false;
   private boolean debrisNotifySent = false;
+
+  public MoneyRank rank() {
+    return rank;
+  }
+
+  public void rank(MoneyRank rank) {
+    this.rank = rank;
+  }
 
   public MiningCave miningCave() {
     return miningCave;
