@@ -1,16 +1,16 @@
 package de.timuuuu.moneymaker.badges;
 
+import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
 
 public enum MoneyRank {
 
-  USER(4, "user", false, "§e", "§e", null, Icon.texture(ResourceLocation.create("moneymaker", "textures/icon.png"))),
-  DONATOR(3, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_orange.png"))),
-  STAFF(2, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_light_red.png"))),
-  DEVELOPER(1, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)), Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_red.png")));
+  USER(4, "user", false, "§e", "§e", null, Common.ICON),
+  DONATOR(3, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0)), Common.ICON_ORANGE),
+  STAFF(2, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85)), Common.ICON_RED),
+  DEVELOPER(1, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)), Common.ICON_DARK_RED);
 
   private final int id;
   private final String name;
