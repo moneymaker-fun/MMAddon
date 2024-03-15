@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.badges.MoneyRank;
 import de.timuuuu.moneymaker.boosters.Booster;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,13 +21,12 @@ public class DiscordAPI {
   private Task updaterTask;
 
   private final String minerUrl = "https://cdn.terramc.net/moneymaker/miner.png";
-  private final String loreUrl = "https://cdn.terramc.net/moneymaker/lore.png";
 
   public DiscordAPI(MoneyMakerAddon addon) {
     this.addon = addon;
   }
 
-  private String imageUrl = loreUrl;
+  private String imageUrl = MoneyRank.USER.getIconUrl();
   private String line1 = "";
   private String line2 = "";
 
@@ -92,8 +92,8 @@ public class DiscordAPI {
 
       if (this.addon.addonUtil().inMine()) {
         mineCount.getAndAdd(1);
-        if (!imageUrl.equals(loreUrl)) {
-          imageUrl = loreUrl;
+        if (!imageUrl.equals(this.addon.addonUtil().rank().getIconUrl())) {
+          imageUrl = this.addon.addonUtil().rank().getIconUrl();
         }
         this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently");
         if (mineCount.get() == 1) {
