@@ -60,7 +60,6 @@ public class ChatActivity extends SimpleActivity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
-    this.renderBackground = false;
 
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title").addId("chat-title");
     this.document.addChild(titleWidget);

@@ -25,7 +25,6 @@ public class InfoActivity extends SimpleActivity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
-    this.renderBackground = false;
 
     Util.addFeedbackButton(this.document);
 

@@ -46,7 +46,6 @@ public class BoosterActivity extends SimpleActivity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
-    this.renderBackground = false;
 
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.booster.title");
     titleWidget.addId("title");
