@@ -71,7 +71,7 @@ public class ScoreBoardListener {
     if(event.score().getValue() == MoneyScore.RANK.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
-        this.addon.addonUtil().rank(Integer.parseInt(scoreName.
+        this.addon.addonUtil().ranking(Integer.parseInt(scoreName.
             replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
             .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
             .replace(".", "").replace(",", "")

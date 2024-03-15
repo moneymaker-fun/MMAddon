@@ -24,7 +24,7 @@ public class AddonUtil {
       inFarming = false;
     }
     balance = "X";
-    rank = 0;
+    ranking = 0;
     pickaxeLevel = 0;
     pickaxeRanking = 0;
     brokenBlocks = 0;
@@ -45,7 +45,7 @@ public class AddonUtil {
   }
 
   private String balance = "X";
-  private int rank = 0;
+  private int ranking = 0;
 
   private int pickaxeLevel = 0;
   private int pickaxeRanking = 0;
@@ -110,12 +110,12 @@ public class AddonUtil {
     this.balance = balance;
   }
 
-  public int rank() {
-    return rank;
+  public int ranking() {
+    return ranking;
   }
 
-  public void rank(int rank) {
-    this.rank = rank;
+  public void ranking(int ranking) {
+    this.ranking = ranking;
   }
 
   public int pickaxeLevel() {

@@ -104,7 +104,7 @@ public class DiscordAPI {
         }
         if (mineCount.get() >= 3) {
           mineCount.set(0);
-          this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + this.addon.addonUtil().rank();
+          this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + this.addon.addonUtil().ranking();
         }
       }
 
@@ -131,7 +131,7 @@ public class DiscordAPI {
         }
         if (farmingCount.get() >= 6) {
           farmingCount.set(0);
-          this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + Util.format(this.addon.addonUtil().rank());
+          this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + Util.format(this.addon.addonUtil().ranking());
         }
       }
 

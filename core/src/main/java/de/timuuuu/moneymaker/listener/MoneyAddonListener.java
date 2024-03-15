@@ -60,7 +60,7 @@ public class MoneyAddonListener {
       JsonObject leaderBoard = new JsonObject();
       leaderBoard.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
       leaderBoard.addProperty("userName", this.addon.labyAPI().getName());
-      leaderBoard.addProperty("ranking", this.addon.addonUtil().rank());
+      leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
       leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
       leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
       this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
@@ -128,7 +128,7 @@ public class MoneyAddonListener {
     JsonObject leaderBoard = new JsonObject();
     leaderBoard.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
     leaderBoard.addProperty("userName", this.addon.labyAPI().getName());
-    leaderBoard.addProperty("ranking", this.addon.addonUtil().rank());
+    leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
     leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
     leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
     this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
