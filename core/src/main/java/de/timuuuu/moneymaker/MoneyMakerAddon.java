@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker;
 
+import com.google.gson.Gson;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
@@ -50,6 +51,7 @@ import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
 import net.labymod.api.revision.SimpleRevision;
+import net.labymod.api.util.GsonUtil;
 import net.labymod.api.util.version.SemanticVersion;
 
 @AddonMain
@@ -73,6 +75,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   private static MoneyMakerAddon instance;
 
+  private Gson gson;
+
   @Override
   protected void preConfigurationLoad() {
     Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("1.4.1"), "2024-03-03"));
@@ -94,6 +98,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.mainActivity = new MainActivity(this);
 
     this.chatClient = new ChatClient(this);
+
+    this.gson = GsonUtil.DEFAULT_GSON;
 
     this.registerCommand(new TimerCommand(this));
     this.registerCommand(new ResetCommand(this));
@@ -163,6 +169,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static MoneyMakerAddon instance() {
     return instance;
+  }
+
+  public Gson gson() {
+    return gson;
   }
 
   public DiscordAPI discordAPI() {
