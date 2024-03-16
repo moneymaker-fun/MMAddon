@@ -159,9 +159,7 @@ public class BoosterActivity extends SimpleActivity {
       writer.close();
       MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.booster-export.title"),
           Component.translatable("moneymaker.notification.booster-export.saved", TextColor.color(85, 255, 85)),
-          Component.translatable("moneymaker.notification.booster-export.open-folder"), () -> {
-        OperatingSystem.getPlatform().openFile(folder);
-      });
+          Component.translatable("moneymaker.notification.booster-export.open-folder"), () -> OperatingSystem.getPlatform().openFile(folder));
     } catch (IOException exception) {
       exception.printStackTrace();
     }
