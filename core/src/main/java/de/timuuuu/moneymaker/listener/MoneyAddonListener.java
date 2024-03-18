@@ -114,6 +114,20 @@ public class MoneyAddonListener {
     muteCheckObject.addProperty("uuid", event.newSession().getUniqueId().toString());
     this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
 
+    JsonObject leaderBoard = new JsonObject();
+    leaderBoard.addProperty("uuid", event.previousSession().getUniqueId().toString());
+    leaderBoard.addProperty("userName", event.previousSession().getUsername());
+    leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
+    leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
+    leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
+    leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
+    this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
+
+    this.addon.addonUtil().ranking(0);
+    this.addon.addonUtil().breakGoalBlocks(0);
+    this.addon.addonUtil().pickaxeRanking(0);
+    this.addon.addonUtil().swordRanking(0);
+
   }
 
   @Subscribe
@@ -132,6 +146,7 @@ public class MoneyAddonListener {
     leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
     leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
     leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
+    leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
     this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
 
     this.addon.chatClient().closeConnection();
