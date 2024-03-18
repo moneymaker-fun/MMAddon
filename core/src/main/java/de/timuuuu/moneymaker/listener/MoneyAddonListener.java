@@ -63,6 +63,7 @@ public class MoneyAddonListener {
       leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
       leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
       leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
+      leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
       this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
     }
 
