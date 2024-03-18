@@ -174,14 +174,12 @@ public class MoneyAddonListener {
       // Online
       if(serverBefore.equalsIgnoreCase("Other") && player.server().contains("MoneyMaker")) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().chatConfiguration.onlineOfflineMessages().get()) {
-          Task.builder(() -> {
-            this.addon.pushNotification(
-                Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
-                Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
-                    Component.text(player.rank().getChatPrefix() + player.userName())),
-                Icon.head(uuid)
-            );
-          }).delay(2, TimeUnit.SECONDS).build().execute();
+          Task.builder(() -> this.addon.pushNotification(
+              Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+              Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
+                  Component.text(player.rank().getChatPrefix() + player.userName())),
+              Icon.head(uuid)
+          )).delay(2, TimeUnit.SECONDS).build().execute();
         }
       }
 
