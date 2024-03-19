@@ -142,6 +142,13 @@
           "title": "Geld für Geröll erreicht!",
           "text": "Du hast das Geld zum entfernen des Geröll erreicht."
         }
+      },
+      "leaderboard": {
+        "title": "MoneyMaker - Leaderboard",
+        "blocks": {
+          "enabled": "Deine Blöcke werden nun angezeigt.",
+          "disabled": "Deine Blöcke werden nun versteckt."
+        }
       }
     },
     "feedback": {
@@ -239,6 +246,11 @@
       },
       "enabled": {
         "name": "Aktiviert"
+      },
+      "showBlocksInLeaderboard": {
+        "name": "Eigene Blöcke im Leaderboard anzeigen",
+        "description": "Lass deine Blöcke im Leaderboard auf der Webseite anzeigen (Standardmäßig aktiviert)",
+        "text": "Ändern"
       },
       "exportBoosterOnShutdown": {
         "name": "Exportiere die gefarmten Booster beim beenden",

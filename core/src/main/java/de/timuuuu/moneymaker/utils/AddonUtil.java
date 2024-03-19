@@ -47,6 +47,8 @@ public class AddonUtil {
     sessionKills = 0;
   }
 
+  private boolean leaderboardShowBlocks = true;
+
   private String balance = "X";
   private int ranking = 0;
 
@@ -111,6 +113,14 @@ public class AddonUtil {
 
   public void inFarming(boolean inFarming) {
     this.inFarming = inFarming;
+  }
+
+  public boolean leaderboardShowBlocks() {
+    return leaderboardShowBlocks;
+  }
+
+  public void leaderboardShowBlocks(boolean leaderboardShowBlocks) {
+    this.leaderboardShowBlocks = leaderboardShowBlocks;
   }
 
   public String balance() {

@@ -64,6 +64,7 @@ public class MoneyAddonListener {
       leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
       leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
       leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
+      leaderBoard.addProperty("show_blocks", this.addon.addonUtil().leaderboardShowBlocks());
       this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
     }
 
@@ -121,6 +122,7 @@ public class MoneyAddonListener {
     leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
     leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
     leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
+    leaderBoard.addProperty("show_blocks", this.addon.addonUtil().leaderboardShowBlocks());
     this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
 
     this.addon.addonUtil().ranking(0);
@@ -147,6 +149,7 @@ public class MoneyAddonListener {
     leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
     leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
     leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
+    leaderBoard.addProperty("show_blocks", this.addon.addonUtil().leaderboardShowBlocks());
     this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
 
     this.addon.chatClient().closeConnection();

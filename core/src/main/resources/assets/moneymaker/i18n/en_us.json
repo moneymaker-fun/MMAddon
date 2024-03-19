@@ -142,6 +142,13 @@
           "title": "Money for debris reached!",
           "text": "You have reached the money to remove the debris."
         }
+      },
+      "leaderboard": {
+        "title": "MoneyMaker - Leaderboard",
+        "blocks": {
+          "enabled": "Your blocks will now be shown.",
+          "disabled": "Your blocks will now be hidden."
+        }
       }
     },
     "feedback": {
@@ -239,6 +246,11 @@
       },
       "enabled": {
         "name": "Enabled"
+      },
+      "showBlocksInLeaderboard": {
+        "name": "Show own Blocks in Leaderboard",
+        "description": "Show your blocks in the leaderboard on the website (enabled by default)",
+        "text": "Change"
       },
       "exportBoosterOnShutdown": {
         "name": "Export farmed boosters on shutdown",
