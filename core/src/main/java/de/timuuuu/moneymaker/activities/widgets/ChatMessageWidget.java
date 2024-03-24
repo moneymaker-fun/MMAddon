@@ -11,6 +11,7 @@ import de.timuuuu.moneymaker.utils.Util;
 import java.util.UUID;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
@@ -58,7 +59,9 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     if (!this.systemMessage) {
       String prefix = chatMessage.rank().getChatPrefix();
       header.addEntry(new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar"));
-      header.addEntry(ComponentWidget.text(prefix + chatMessage.userName()).addId("sender"));
+      Component senderComponent = Component.text(prefix + chatMessage.userName());
+      senderComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.chatMessage().userName()));
+      header.addEntry(ComponentWidget.component(senderComponent).addId("sender"));
     } else {
       header.addEntry(new IconWidget(Icon.sprite16(
           ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2)).addId("avatar"));
