@@ -17,6 +17,10 @@ public class InventoryListener {
 
   private static List<SlotItem> alreadyRendered = new ArrayList<>();
   private static int totalBoosters = 0;
+  private int previousBoost = -1;
+  private int previousTotalBoost = -1;
+  private long lastDisplayTime = 0; // Initialize last display time to 0
+
 
   private MoneyMakerAddon addon;
 
@@ -134,13 +138,14 @@ public class InventoryListener {
      */
 
   }
-
   @Subscribe
   public void onInventoryClose(InventoryCloseEvent event) {
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
     if(!this.addon.configuration().showTotalBoostMessage().get()) return;
+
     int boost = getBoost();
-    if(boost > 0 && totalBoosters > 0) {
+    long currentTime = System.currentTimeMillis();
+    if(boost > 0 && totalBoosters > 0 && (boost != previousBoost || totalBoosters != previousTotalBoost || currentTime - lastDisplayTime >= 30000)) {
       this.addon.displayMessage(
           Component.text(this.addon.prefix)
               .append(Component.translatable(
@@ -150,9 +155,15 @@ public class InventoryListener {
               ))
               .hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.text.booster.inventory.info", NamedTextColor.GRAY)))
       );
+
+      previousBoost = boost;
+      previousTotalBoost = totalBoosters;
+      lastDisplayTime = currentTime;
     }
+
     clearAlreadyRendered();
   }
+
 
   private static class SlotItem {
 
