@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.hudwidget.event.EasterEventWidget;
 import de.timuuuu.moneymaker.utils.ChatMessages;
+import de.timuuuu.moneymaker.utils.EventChatMessages;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,17 +36,17 @@ public class ChatReceiveListener {
 
       // Event Messages
 
-      if((ChatMessages.EVENT_EASTER_DE_1.startWith(plain) && ChatMessages.EVENT_EASTER_DE_2.contains(plain)) || (ChatMessages.EVENT_EASTER_EN_1.startWith(plain) && ChatMessages.EVENT_EASTER_EN_2.contains(plain))) {
-        String count = plain.replace(ChatMessages.EVENT_EASTER_DE_1.message(), "")
-            .replace(ChatMessages.EVENT_EASTER_DE_2.message(), "")
-            .replace(ChatMessages.EVENT_EASTER_EN_1.message(), "")
-            .replace(ChatMessages.EVENT_EASTER_EN_2.message(), "");
+      if((EventChatMessages.EVENT_EASTER_DE_1.startWith(plain) && EventChatMessages.EVENT_EASTER_DE_2.contains(plain)) || (EventChatMessages.EVENT_EASTER_EN_1.startWith(plain) && EventChatMessages.EVENT_EASTER_EN_2.contains(plain))) {
+        String count = plain.replace(EventChatMessages.EVENT_EASTER_DE_1.message(), "")
+            .replace(EventChatMessages.EVENT_EASTER_DE_2.message(), "")
+            .replace(EventChatMessages.EVENT_EASTER_EN_1.message(), "")
+            .replace(EventChatMessages.EVENT_EASTER_EN_2.message(), "");
         try {
           EasterEventWidget.eggs = Integer.parseInt(count);
         } catch (NumberFormatException ignored) {}
       }
 
-      if(this.addon.addonUtil().currentEvent().equals("EASTER") && (ChatMessages.EVENT_EASTER_BOOSTER_DE.contains(plain) || ChatMessages.EVENT_EASTER_BOOSTER_EN.contains(plain))) {
+      if(this.addon.addonUtil().currentEvent().equals("EASTER") && (EventChatMessages.EVENT_EASTER_BOOSTER_DE.contains(plain) || EventChatMessages.EVENT_EASTER_BOOSTER_EN.contains(plain))) {
         if(EasterEventWidget.eggs >= 5) {
           EasterEventWidget.eggs -=5;
         }
