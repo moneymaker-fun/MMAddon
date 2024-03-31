@@ -63,6 +63,8 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             } else {
               itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
             }*/
+          } else {
+            itemName = "§c" + this.addon.addonUtil().balance() + " / " + this.addon.addonUtil().nextWorkerCost();
           }
 
       }

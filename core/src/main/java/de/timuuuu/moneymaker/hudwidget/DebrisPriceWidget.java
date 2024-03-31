@@ -66,6 +66,8 @@ public class DebrisPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             } else {
               itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.debrisCost;
             }*/
+          } else {
+            itemName = "§c" + this.addon.addonUtil().balance() + " / " + this.addon.addonUtil().debrisCost();
           }
 
         } else {
