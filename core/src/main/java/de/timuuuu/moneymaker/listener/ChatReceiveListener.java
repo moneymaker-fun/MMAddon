@@ -84,11 +84,23 @@ public class ChatReceiveListener {
           Booster booster = null;
 
           try {
+            int time;
+
+            if((plain.contains("Stunde") && plain.contains("Minuten")) || (plain.contains("hour") && plain.contains("minutes"))) {
+              int hours = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
+              int minutes = Integer.parseInt(plain.split(" \\(")[1].split(" ")[2]);
+              time = minutes + (hours*60);
+            } else {
+              time = Integer.parseInt(timeString);
+              if(plain.contains("Stunde") || plain.contains("hour")) {
+                time *= 60;
+              }
+            }
             int boost = Integer.parseInt(boostString);
-            int time = Integer.parseInt(timeString);
+            /*int time = Integer.parseInt(timeString);
             if (plain.contains("Stunde") || plain.contains("hour")) {
               time *= 60;
-            }
+            }*/
             booster = new Booster(boost, time);
           } catch (NumberFormatException ignored) {}
 
