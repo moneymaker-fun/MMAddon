@@ -168,8 +168,10 @@ public class ChatReceiveListener {
 
       if((ChatMessages.DEBRIS_REMOVE_DE_1.startWith(plain) && ChatMessages.DEBRIS_REMOVE_DE_2.contains(plain)) ||
           (ChatMessages.DEBRIS_REMOVE_EN.startWith(plain))) {
-        this.addon.addonUtil().debrisCost("X");
-        this.addon.addonUtil().debrisNotifySent(false);
+        Task.builder(() -> {
+          this.addon.addonUtil().debrisCost("X");
+          this.addon.addonUtil().debrisNotifySent(false);
+        }).delay(3, TimeUnit.SECONDS).build().execute();
       }
 
       if(ChatMessages.WORKER_EFFECT_DE.equals(plain) || ChatMessages.WORKER_EFFECT_EN.equals(plain)) {
