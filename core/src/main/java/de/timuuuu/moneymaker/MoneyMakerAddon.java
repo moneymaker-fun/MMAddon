@@ -33,12 +33,12 @@ import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
-import de.timuuuu.moneymaker.utils.AddonUtil;
-import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
+import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.ApiUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
+import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
@@ -132,6 +132,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new TimerDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new LatestBoosterDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new ActivatedBoosterWidget(this));
+
+    this.apiUtil.loadSettings();
 
     labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag(this));
     labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag(this));

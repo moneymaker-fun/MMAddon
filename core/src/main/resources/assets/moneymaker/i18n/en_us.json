@@ -514,6 +514,10 @@
       },
       "mm_activated_boosters": {
         "name": "Activated Boosters"
+      },
+
+      "mm_event_easter": {
+        "name": "Easter Eggs"
       }
     }
   }

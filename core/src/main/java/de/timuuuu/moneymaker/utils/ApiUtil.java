@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import de.timuuuu.moneymaker.hudwidget.event.EasterEventWidget;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import net.labymod.api.client.component.Component;
@@ -24,6 +25,39 @@ public class ApiUtil {
     this.addon = addon;
   }
 
+  public void loadSettings() {
+    Request.ofGson(JsonObject.class)
+        .url(BASE_URL + "/settings/")
+        .async()
+        .connectTimeout(5000)
+        .readTimeout(5000)
+        .addHeader("User-Agent", "MoneyMaker LabyMod 4 Addon")
+        .execute(response -> {
+          if(response.getStatusCode() == 200 && !response.hasException()) {
+
+            JsonObject object = response.get();
+
+            if(object.has("settings") && object.get("settings").isJsonObject()) {
+              JsonObject settingsObject = object.get("settings").getAsJsonObject();
+
+              if(settingsObject.has("event")) {
+                String event = settingsObject.get("event").getAsString();
+                this.addon.addonUtil().currentEvent(event);
+
+                this.addon.logger().info("[MoneyMaker - Event] Loaded Event Type '" + event + "' as current Event");
+
+                if(event.equals("EASTER")) {
+                  this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new EasterEventWidget(this.addon)));
+                  this.addon.logger().info("Registered Easter Event Widget...");
+                }
+
+              }
+
+            }
+
+          }
+        });
+  }
   public void loadCoordinates() {
     AtomicBoolean failed = new AtomicBoolean(false);
     Request.ofGson(JsonObject.class)

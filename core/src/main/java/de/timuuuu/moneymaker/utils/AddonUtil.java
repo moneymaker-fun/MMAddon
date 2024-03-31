@@ -13,6 +13,16 @@ public class AddonUtil {
     this.addon = addon;
   }
 
+  private String currentEvent = "NONE";
+
+  public String currentEvent() {
+    return currentEvent;
+  }
+
+  public void currentEvent(String currentEvent) {
+    this.currentEvent = currentEvent;
+  }
+
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
 
   private MoneyRank rank = MoneyRank.USER;

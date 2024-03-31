@@ -514,6 +514,10 @@
       },
       "mm_activated_boosters": {
         "name": "Aktivierte Booster"
+      },
+
+      "mm_event_easter": {
+        "name": "Ostereier"
       }
     }
   }
