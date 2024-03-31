@@ -411,7 +411,7 @@
       "chat": {
         "title": "MoneyMaker Addon Chat",
         "server-offline": "Der Chat-Server ist aktuell nicht erreichbar.",
-        "online": "§bAktuell Online",
+        "online": "§bAktuell Online - %s",
         "server": {
           "online": "§aChat-Server ist online",
           "offline": "§cChat-Server ist offline",

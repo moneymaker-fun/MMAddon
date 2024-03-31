@@ -18,8 +18,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
@@ -110,7 +112,16 @@ public class ChatActivity extends SimpleActivity {
 
     // Online Container
 
-    ComponentWidget onlineTextWidget = ComponentWidget.i18n("moneymaker.ui.chat.online").addId("chat-online-text");
+    AtomicInteger onlineCount = new AtomicInteger(0);
+    AddonUtil.playerStatus.values().forEach(moneyPlayer -> {
+      String server = moneyPlayer.server();
+      if(server.startsWith("Mine") || server.startsWith("Farming")) {
+        onlineCount.getAndIncrement();
+      }
+    });
+
+
+    ComponentWidget onlineTextWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.online", Component.text(onlineCount, NamedTextColor.YELLOW))).addId("chat-online-text");
     this.document.addChild(onlineTextWidget);
 
     DivWidget onlineContainer = new DivWidget();
