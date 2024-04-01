@@ -9,7 +9,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import de.timuuuu.moneymaker.event.EventChatListener;
+import de.timuuuu.moneymaker.event.hudwidget.ChristmasEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.EasterEventWidget;
+import de.timuuuu.moneymaker.event.hudwidget.FruitsHudWidget;
+import de.timuuuu.moneymaker.event.hudwidget.HalloweenEventWidget;
+import de.timuuuu.moneymaker.event.hudwidget.ValentineEventWidget;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import net.labymod.api.client.component.Component;
@@ -49,10 +53,41 @@ public class ApiUtil {
                   this.addon.logger().info("[MoneyMaker - Event] Loaded Event Type '" + event + "' as current Event");
                   this.addon.labyAPI().eventBus().registerListener(new EventChatListener(this.addon));
 
-                  if(event.equals("EASTER")) {
-                    this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new EasterEventWidget(this.addon)));
-                    this.addon.logger().info("Registered Easter Event Widget...");
+                  event = "ALL";
+
+                  switch (event) {
+                    case "VALENTINE":
+                      this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new ValentineEventWidget(this.addon)));
+                      this.addon.logger().info("Registered Valentine Event Widget...");
+
+                    case "EASTER":
+                      this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new EasterEventWidget(this.addon)));
+                      this.addon.logger().info("Registered Easter Event Widget...");
+
+                    case "SUMMER":
+                    case "CARIBBEAN":
+                      this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new FruitsHudWidget(this.addon)));
+                      this.addon.logger().info("Registered Summer/Caribbean Event Widget...");
+
+                    case "HALLOWEEN":
+                      this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new HalloweenEventWidget(this.addon)));
+                      this.addon.logger().info("Registered Halloween Event Widget...");
+
+                    case "CHRISTMAS":
+                      this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new ChristmasEventWidget(this.addon)));
+                      this.addon.logger().info("Registered Christmas Event Widget...");
+
+                    case "ALL":
+                      this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
+                        this.addon.labyAPI().hudWidgetRegistry().register(new ValentineEventWidget(this.addon));
+                        this.addon.labyAPI().hudWidgetRegistry().register(new EasterEventWidget(this.addon));
+                        this.addon.labyAPI().hudWidgetRegistry().register(new FruitsHudWidget(this.addon));
+                        this.addon.labyAPI().hudWidgetRegistry().register(new HalloweenEventWidget(this.addon));
+                        this.addon.labyAPI().hudWidgetRegistry().register(new ChristmasEventWidget(this.addon));
+                      });
+
                   }
+
                 }
 
               }
