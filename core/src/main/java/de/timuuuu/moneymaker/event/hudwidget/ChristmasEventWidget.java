@@ -19,7 +19,7 @@ public class ChristmasEventWidget extends TextHudWidget<TextHudWidgetConfig> {
     super("mm_event_christmas");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(SpriteCommon.HUD_EASTER_EGG);
+    this.setIcon(SpriteCommon.HUD_GIFT);
   }
 
   @Override

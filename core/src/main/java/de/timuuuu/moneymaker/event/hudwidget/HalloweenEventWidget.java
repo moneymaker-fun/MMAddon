@@ -19,7 +19,7 @@ public class HalloweenEventWidget extends TextHudWidget<TextHudWidgetConfig> {
     super("mm_event_halloween");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(SpriteCommon.HUD_EASTER_EGG);
+    this.setIcon(SpriteCommon.HUD_CANDIES);
   }
 
   @Override
