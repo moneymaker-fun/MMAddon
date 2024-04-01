@@ -19,13 +19,13 @@ public class EasterEventWidget extends TextHudWidget<TextHudWidgetConfig> {
     super("mm_event_easter");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(SpriteCommon.HUD_COIN);
+    this.setIcon(SpriteCommon.HUD_EASTER_EGG);
   }
 
   @Override
   public void load(TextHudWidgetConfig config) {
     super.load(config);
-    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_event_easter.name"), "0");
+    this.textLine = createLine(Component.translatable("moneymaker.hudWidget.mm_event_easter.display"), "0");
   }
 
   @Override
