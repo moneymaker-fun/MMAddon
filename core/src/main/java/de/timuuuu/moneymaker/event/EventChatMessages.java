@@ -27,13 +27,16 @@ public enum EventChatMessages {
   // Halloween
 
   HALLOWEEN_DE(" Süßigkeiten"),
-  HALLOWEEN_EN(" candies");
+  HALLOWEEN_EN(" candies"),
+
+  CHRISTMAS_DE(" Geschenke"),
+  CHRISTMAS_EN(" gifts");
 
   // Christmas
 
     /*
 
-    easter-egg-plural X
+    easter-egg-plural
 
     %prefix% §aYou have found an §eeaster egg§a!
     %prefix% §aYou now have §e{0} easter eggs
@@ -42,7 +45,7 @@ public enum EventChatMessages {
     %prefix% §aDu besitzt nun §e{0} Ostereier
 
 
-    caribbean-fruit-plural X
+    caribbean-fruit-plural
 
     %prefix% §aYou have found a §efruit§a!
     %prefix% §aYou now have §e{0} fruits
@@ -50,7 +53,7 @@ public enum EventChatMessages {
     %prefix% §aDu hast eine §eFrucht §agefunden!
     %prefix% §aDu besitzt nun §e{0} Früchte
 
-    halloween-candy-plural X
+    halloween-candy-plural
 
     %prefix% §aYou have found a §ecandy§a!
     %prefix% §aYou now have §e{0} candies
@@ -73,6 +76,11 @@ public enum EventChatMessages {
 
     %prefix% §aDu hast eine §eFrucht §agefunden!
     %prefix% §aDu besitzt nun §e{0} Früchte
+
+    christmas-fruit-plural
+
+    %prefix% §aYou have found a §egift§a!
+    %prefix% §aYou now have §e{0} gifts
 
      */
 
