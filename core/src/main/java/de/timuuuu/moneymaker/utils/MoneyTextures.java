@@ -33,6 +33,9 @@ public class MoneyTextures {
     public static final Icon HUD_COIN;
     public static final Icon HUD_GOLD_ORE;
 
+    public static final Icon HUD_EASTER_EGG;
+    public static final Icon HUD_FLOWER;
+
     public static final Icon BOOSTER_LIME;
     public static final Icon BOOSTER_BLUE;
     public static final Icon BOOSTER_YELLOW;
@@ -46,6 +49,9 @@ public class MoneyTextures {
 
       HUD_COIN = sprite64(TEXTURE, 0, 3);
       HUD_GOLD_ORE = sprite64(TEXTURE, 1, 3);
+
+      HUD_EASTER_EGG = sprite64(TEXTURE, 0, 4);
+      HUD_FLOWER = sprite64(TEXTURE, 1, 4);
 
       BOOSTER_LIME = sprite64(TEXTURE, 0, 7);
       BOOSTER_BLUE = sprite64(TEXTURE, 1, 7);
