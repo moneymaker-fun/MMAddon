@@ -53,8 +53,6 @@ public class ApiUtil {
                   this.addon.logger().info("[MoneyMaker - Event] Loaded Event Type '" + event + "' as current Event");
                   this.addon.labyAPI().eventBus().registerListener(new EventChatListener(this.addon));
 
-                  event = "ALL";
-
                   switch (event) {
                     case "VALENTINE":
                       this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new ValentineEventWidget(this.addon)));
