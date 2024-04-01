@@ -43,7 +43,7 @@ public class SwordStatsWidget extends TextHudWidget<SwordHudWidgetConfig> {
     String additional = "";
     if(this.getConfig().showRankingDifference().get() && this.addon.addonUtil().savedSwordRanking() != 0) {
       int diff = this.addon.addonUtil().savedSwordRanking() - this.addon.addonUtil().swordRanking();
-      additional = " (" + (diff == 0 ? "∓ " : diff > 0 ? "↑ " : "↓ ") + diff + ")";
+      additional = " (" + (diff == 0 ? "" : diff > 0 ? "↑ " : "↓ ") + diff + ")";
     }
     this.rankLine.updateAndFlush(Util.format(this.addon.addonUtil().swordRanking()) + additional);
     this.rankLine.setState((this.addon.addonUtil().inFarming() || this.addon.configuration().showWidgetsAlways().get()) && this.addon.addonUtil().swordRanking() != 0 ? State.VISIBLE : State.HIDDEN);
