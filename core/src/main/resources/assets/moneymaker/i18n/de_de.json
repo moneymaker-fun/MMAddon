@@ -517,7 +517,24 @@
       },
 
       "mm_event_easter": {
-        "name": "Ostereier"
+        "name": "Event - Ostern",
+        "display": "Ostereier"
+      },
+      "mm_event_valentine": {
+        "name": "Event - Valentinstag",
+        "display": "Blumen"
+      },
+      "mm_event_fruits": {
+        "name": "Event - Früchte",
+        "display": "Früchte"
+      },
+      "mm_event_halloween": {
+        "name": "Event - Halloween",
+        "display": "Süßigkeiten"
+      },
+      "mm_event_christmas": {
+        "name": "Event - Weihnachten",
+        "display": "Geschenke"
       }
     }
   }
