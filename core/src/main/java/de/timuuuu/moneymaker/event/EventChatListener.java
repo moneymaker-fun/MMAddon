@@ -78,11 +78,24 @@ public class EventChatListener {
     }
 
     if(EventChatMessages.BOOSTER_DE.contains(plain) || EventChatMessages.BOOSTER_EN.contains(plain)) {
-      if(this.addon.addonUtil().currentEvent().equals("EASTER")) {
-        if(EasterEventWidget.eggs >= 5) {
-          EasterEventWidget.eggs -=5;
-        }
+
+      if(this.addon.addonUtil().currentEvent().equals(EventChatMessages.EVENT_VALENTINE.message()) && ValentineEventWidget.flowers >= 5) {
+        ValentineEventWidget.flowers -= 5;
       }
+      if(this.addon.addonUtil().currentEvent().equals(EventChatMessages.EVENT_EASTER.message()) && EasterEventWidget.eggs >= 5) {
+        EasterEventWidget.eggs -= 5;
+      }
+      if((this.addon.addonUtil().currentEvent().equals(EventChatMessages.EVENT_SUMMER.message()) ||
+          this.addon.addonUtil().currentEvent().equals(EventChatMessages.EVENT_CARIBBEAN.message())) && FruitsHudWidget.fruits >= 5) {
+        FruitsHudWidget.fruits -= 5;
+      }
+      if(this.addon.addonUtil().currentEvent().equals(EventChatMessages.EVENT_HALLOWEEN.message()) && HalloweenEventWidget.candies >= 5) {
+        HalloweenEventWidget.candies -= 5;
+      }
+      if(this.addon.addonUtil().currentEvent().equals(EventChatMessages.EVENT_CHRISTMAS.message()) && ChristmasEventWidget.gifts >= 5) {
+        ChristmasEventWidget.gifts -= 5;
+      }
+
     }
 
   }
