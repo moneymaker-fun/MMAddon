@@ -106,7 +106,7 @@ public class ChatReceiveListener {
 
           if(booster != null) {
             TextColor color = BoosterUtil.getColor(booster);
-            Component message = Component.text(this.addon.prefix);
+            Component message = this.addon.prefix.copy();
 
             Component boosterComponent = Component.text(boosterString + " ", color);
             message.append(boosterComponent);
@@ -118,7 +118,7 @@ public class ChatReceiveListener {
             message.append(Component.translatable("moneymaker.text.found", color));
             this.addon.displayMessage(message);
           } else {
-            this.addon.displayMessage(Component.text(this.addon.prefix).append(Component.text(boosterString + " ", NamedTextColor.GREEN)).append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN)));
+            this.addon.displayMessage(this.addon.prefix.copy().append(Component.text(boosterString + " ", NamedTextColor.GREEN)).append(Component.translatable("moneymaker.text.found", NamedTextColor.GREEN)));
           }
 
           event.setCancelled(true);
@@ -185,11 +185,15 @@ public class ChatReceiveListener {
               timers.getAndIncrement();
             }
           });
-          TextComponent component = Component.text(this.addon.prefix).append(Component.translatable("moneymaker.text.effect-select", NamedTextColor.GRAY))
-              .append(Component.text(" §8[§e5m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 5 Effekt-Timer-" + timers.get()))
-                  .append(Component.text(" §8[§e10m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 10 Effekt-Timer-" + timers.get())))
-                  .append(Component.text(" §8[§e15m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 15 Effekt-Timer-" + timers.get())))
-                  .append(Component.text(" §8[§e20m§8]").clickEvent(ClickEvent.runCommand("/mm-timer 20 Effekt-Timer-" + timers.get())))
+          Component timer5m = Component.text(" [", NamedTextColor.DARK_GRAY).append(Component.text("5m", NamedTextColor.YELLOW).append(Component.text("]", NamedTextColor.DARK_GRAY)));
+          Component timer10m = Component.text(" [", NamedTextColor.DARK_GRAY).append(Component.text("10m", NamedTextColor.YELLOW).append(Component.text("]", NamedTextColor.DARK_GRAY)));
+          Component timer15m = Component.text(" [", NamedTextColor.DARK_GRAY).append(Component.text("15m", NamedTextColor.YELLOW).append(Component.text("]", NamedTextColor.DARK_GRAY)));
+          Component timer20m = Component.text(" [", NamedTextColor.DARK_GRAY).append(Component.text("20m", NamedTextColor.YELLOW).append(Component.text("]", NamedTextColor.DARK_GRAY)));
+          Component component = this.addon.prefix.copy().append(Component.translatable("moneymaker.text.effect-select", NamedTextColor.GRAY))
+              .append(timer5m.clickEvent(ClickEvent.runCommand("/mm-timer 5 Effekt-Timer-" + timers.get()))
+              .append(timer10m.clickEvent(ClickEvent.runCommand("/mm-timer 10 Effekt-Timer-" + timers.get())))
+              .append(timer15m.clickEvent(ClickEvent.runCommand("/mm-timer 15 Effekt-Timer-" + timers.get())))
+              .append(timer20m.clickEvent(ClickEvent.runCommand("/mm-timer 20 Effekt-Timer-" + timers.get())))
               );
           Task.builder(() -> this.addon.displayMessage(component)).delay(50, TimeUnit.MILLISECONDS).build().execute();
         }

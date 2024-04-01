@@ -395,7 +395,16 @@
       "info": {
         "title": "MoneyMaker Information",
         "commandsTitle": "Commands of the Addon",
-        "commands": "§b/mm-timer <Minutes> <Timer Name> §6Creates a timer\n§b/mm-reset <booster, miners, debris, all> §6Reset the collected data"
+        "commands": {
+          "timer": {
+            "command": "/mm-timer <Minutes> <Timer Name>",
+            "description": " Creates a timer"
+          },
+          "reset": {
+            "command": "/mm-reset <booster, miners, debris, all> ",
+            "description": " Reset the collected data"
+          }
+        }
       },
       "booster": {
         "title": "List of farmed boosters",
@@ -411,10 +420,10 @@
       "chat": {
         "title": "MoneyMaker Addon Chat",
         "server-offline": "The chat server is currently not available.",
-        "online": "§bCurrently online - %s",
+        "online": "Currently online - %s",
         "server": {
-          "online": "§aChat-Server is online",
-          "offline": "§cChat-Server is offline",
+          "online": "Chat-Server is online",
+          "offline": "Chat-Server is offline",
           "reconnect-button": "Reconnect",
           "error": "There was an error while contacting the Chat-Server"
         },

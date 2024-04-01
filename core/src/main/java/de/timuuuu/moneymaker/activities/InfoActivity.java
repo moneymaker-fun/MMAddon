@@ -2,6 +2,8 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
@@ -37,8 +39,13 @@ public class InfoActivity extends SimpleActivity {
     ComponentWidget commandsTitle = ComponentWidget.i18n("moneymaker.ui.info.commandsTitle").addId("commands-title");
     container.addChild(commandsTitle);
 
-    ComponentWidget commands = ComponentWidget.i18n("moneymaker.ui.info.commands").addId("commands");
-    container.addChild(commands);
+    Component commands = Component.translatable("moneymaker.ui.info.commands.timer.command", NamedTextColor.AQUA)
+        .append(Component.translatable("moneymaker.ui.info.commands.timer.description", NamedTextColor.GOLD)).append(Component.text("\n"))
+        .append(Component.translatable("moneymaker.ui.info.commands.reset.command", NamedTextColor.AQUA))
+        .append(Component.translatable("moneymaker.ui.info.commands.reset.description", NamedTextColor.GOLD));
+
+    ComponentWidget commandsWidget = ComponentWidget.component(commands).addId("commands");
+    container.addChild(commandsWidget);
 
     container.addChild(Util.addDiscordButton());
 

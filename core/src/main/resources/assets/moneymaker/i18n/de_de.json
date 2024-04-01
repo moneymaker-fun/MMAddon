@@ -395,7 +395,16 @@
       "info": {
         "title": "MoneyMaker Informationen",
         "commandsTitle": "Befehle des Addons",
-        "commands": "§b/mm-timer <Minuten> <Timer Name> §6Erstelle einen Timer\n§b/mm-reset <booster, arbeiter, geröll, all> §6Setzt die gesammelten Daten zurück"
+        "commands": {
+          "timer": {
+            "command": "/mm-timer <Minuten> <Timer Name>",
+            "description": " Erstelle einen Timer"
+          },
+          "reset": {
+            "command": "/mm-reset <booster, arbeiter, geröll, all>",
+            "description": " Setzt die gesammelten Daten zurück"
+          }
+        }
       },
       "booster": {
         "title": "Liste der gefarmten Booster",
@@ -411,10 +420,10 @@
       "chat": {
         "title": "MoneyMaker Addon Chat",
         "server-offline": "Der Chat-Server ist aktuell nicht erreichbar.",
-        "online": "§bAktuell Online - %s",
+        "online": "Aktuell Online - %s",
         "server": {
-          "online": "§aChat-Server ist online",
-          "offline": "§cChat-Server ist offline",
+          "online": "Chat-Server ist online",
+          "offline": "Chat-Server ist offline",
           "reconnect-button": "Neu verbinden",
           "error": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten"
         },

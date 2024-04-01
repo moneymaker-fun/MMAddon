@@ -43,6 +43,7 @@ import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.icon.Icon;
@@ -59,7 +60,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static final HudWidgetCategory CATEGORY = new HudWidgetCategory("moneymaker");
 
-  public String prefix = "§8‖ §6MoneyMaker §8» §7";
+  public Component prefix = Component.text("‖ ", NamedTextColor.DARK_GRAY)
+      .append(Component.text("MoneyMaker ", NamedTextColor.GOLD))
+      .append(Component.text("» ", NamedTextColor.DARK_GRAY));
 
   private ChatClient chatClient;
 

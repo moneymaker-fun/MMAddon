@@ -30,7 +30,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.TilesGridWidget;
 import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
-import net.labymod.api.util.I18n;
 
 @AutoActivity
 @Links({@Link("booster.lss"), @Link("buttons.lss")})
@@ -97,7 +96,7 @@ public class BoosterActivity extends SimpleActivity {
     });
 
     ButtonWidget sortButton = ButtonWidget.component(Component.translatable("moneymaker.ui.booster.sorting.button", NamedTextColor.GOLD)
-        .append(Component.text(" §6(" + this.sortIcon() + "§6)"))).addId("sort-button");
+        .append(Component.text(" (", NamedTextColor.DARK_GRAY).append(this.sortIcon()).append(Component.text(")", NamedTextColor.DARK_GRAY)))).addId("sort-button");
     sortButton.setPressable(() -> {
       switch (this.sorting) {
         case DESCENDING -> this.sorting = Sorting.ASCENDING;
@@ -115,14 +114,14 @@ public class BoosterActivity extends SimpleActivity {
     this.document.addChild(sideContainer);
   }
 
-  private String sortIcon() {
+  private Component sortIcon() {
     if(this.sorting == Sorting.ASCENDING) {
-      return "§b⬆";
+      return Component.text("⬆", NamedTextColor.AQUA);
     }
     if(this.sorting == Sorting.TIME) {
-      return "§b" + I18n.translate("moneymaker.ui.booster.sorting.time");
+      return Component.translatable("moneymaker.ui.booster.sorting.time", NamedTextColor.AQUA);
     }
-    return "§b⬇";
+    return Component.text("⬇", NamedTextColor.AQUA);
   }
 
   @Override

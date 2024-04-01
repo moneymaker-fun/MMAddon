@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.activities.widgets;
 
 import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
+import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.SimpleWidget;
@@ -22,7 +23,7 @@ public class BoosterWidget extends SimpleWidget {
 
     addId("booster");
 
-    ComponentWidget amountWidget = ComponentWidget.text("§6" + this.booster.amount() + " §7x").addId("amount");
+    ComponentWidget amountWidget = ComponentWidget.component(Component.text(this.booster.amount(), NamedTextColor.GOLD).append(Component.text(" x", NamedTextColor.GRAY))).addId("amount");
     addChild(amountWidget);
     IconWidget iconWidget = new IconWidget(BoosterUtil.getIcon(this.booster)).addId("icon");
     addChild(iconWidget);

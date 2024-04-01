@@ -66,7 +66,14 @@ public class ChatActivity extends SimpleActivity {
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title").addId("chat-title");
     this.document.addChild(titleWidget);
 
-    ComponentWidget statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server." + (this.addon.chatClient().online() ? "online" : "offline")).addId("chat-status");
+    ComponentWidget statusWidget;
+    if(this.addon.chatClient().online()) {
+      statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server.online", NamedTextColor.GREEN);
+    } else {
+      statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server.offline", NamedTextColor.RED);
+    }
+
+    statusWidget.addId("chat-status");
     this.document.addChild(statusWidget);
 
     ButtonWidget rulesButton = ButtonWidget.i18n("moneymaker.chat-rules.button").addId("rules-button");
@@ -121,7 +128,7 @@ public class ChatActivity extends SimpleActivity {
     });
 
 
-    ComponentWidget onlineTextWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.online", Component.text(onlineCount, NamedTextColor.YELLOW))).addId("chat-online-text");
+    ComponentWidget onlineTextWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.online", NamedTextColor.AQUA, Component.text(onlineCount, NamedTextColor.YELLOW))).addId("chat-online-text");
     this.document.addChild(onlineTextWidget);
 
     DivWidget onlineContainer = new DivWidget();
@@ -134,7 +141,7 @@ public class ChatActivity extends SimpleActivity {
       players.sort(Comparator.comparing(o -> o.rank().getId()));
 
       if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
-        onlineList.addChild(new OnlineEntryWidget(this.addon, "§8→ §7Online auf MoneyMaker"));
+        onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online auf MoneyMaker", NamedTextColor.GRAY))));
       }
       players.forEach(moneyPlayer -> {
         String server = moneyPlayer.server();
@@ -144,7 +151,7 @@ public class ChatActivity extends SimpleActivity {
       });
 
       if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
-        onlineList.addChild(new OnlineEntryWidget(this.addon, "§8→ §7Online andere Server"));
+        onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online andere Server", NamedTextColor.GRAY))));
         players.forEach(moneyPlayer -> {
           if(moneyPlayer.server().equalsIgnoreCase("Other")) {
             onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, true));
@@ -272,14 +279,14 @@ public class ChatActivity extends SimpleActivity {
 
         Result<UUID> requestUuid = this.labyAPI.labyNetController().loadUniqueIdByNameSync(playerName);
         if(requestUuid.hasException()) {
-          this.addCustomChatMessage("§4Failed to get uuid from " + playerName + ".");
-          this.addCustomChatMessage(requestUuid.exception().getMessage());
+          this.addCustomChatMessage(Component.text("Failed to get uuid from " + playerName + ":", NamedTextColor.DARK_RED));
+          this.addCustomChatMessage(Component.text(requestUuid.exception().getMessage(), NamedTextColor.RED));
           return;
         }
         UUID uuid = requestUuid.get();
 
         if(Util.isDev(uuid.toString()) || Util.isStaff(uuid)) {
-          this.addCustomChatMessage("§cDu kannst keine Teammitglieder muten.");
+          this.addCustomChatMessage(Component.text("Du kannst keine Teammitglieder muten.", NamedTextColor.RED));
           return;
         }
 
@@ -290,11 +297,18 @@ public class ChatActivity extends SimpleActivity {
 
         successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.MUTE, object);
         if(successful) {
-          this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich gemutet.");
-          this.addCustomChatMessage("§7Grund: §e" + reason);
+          this.addCustomChatMessage(
+              Component.text("Du hast ", NamedTextColor.GRAY)
+                  .append(Component.text(playerName, NamedTextColor.YELLOW))
+                  .append(Component.text(" erfolgreich gemutet.", NamedTextColor.GRAY))
+          );
+          this.addCustomChatMessage(
+              Component.text("Grund: ", NamedTextColor.GRAY)
+                  .append(Component.text(reason, NamedTextColor.YELLOW))
+          );
         }
       } else {
-        this.addCustomChatMessage("§cBitte nutze /mute <Spieler> <Grund>");
+        this.addCustomChatMessage(Component.text("Bitte nutze /mute <Spieler> <Grund>", NamedTextColor.RED));
         return;
       }
     }
@@ -306,8 +320,8 @@ public class ChatActivity extends SimpleActivity {
 
         Result<UUID> requestUuid = this.labyAPI.labyNetController().loadUniqueIdByNameSync(playerName);
         if(requestUuid.hasException()) {
-          this.addCustomChatMessage("§4Failed to get uuid from " + playerName + ":");
-          this.addCustomChatMessage(requestUuid.exception().getMessage());
+          this.addCustomChatMessage(Component.text("Failed to get uuid from " + playerName + ":", NamedTextColor.DARK_RED));
+          this.addCustomChatMessage(Component.text(requestUuid.exception().getMessage(), NamedTextColor.RED));
           return;
         }
 
@@ -317,16 +331,23 @@ public class ChatActivity extends SimpleActivity {
 
         successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.UNMUTE, object);
         if(successful) {
-          this.addCustomChatMessage("§7Du hast §e" + playerName + " §7erfolgreich entmutet.");
+          this.addCustomChatMessage(
+              Component.text("Du hast ", NamedTextColor.GRAY)
+                  .append(Component.text(playerName, NamedTextColor.YELLOW))
+                  .append(Component.text(" erfolgreich entmutet.", NamedTextColor.GRAY))
+          );
         }
       } else {
-        this.addCustomChatMessage("§cBitte nutze /unmute <Spieler>");
+        this.addCustomChatMessage(Component.text("Bitte nutze /unmute <Spieler>", NamedTextColor.RED));
         return;
       }
     }
 
     if(!successful) {
-      this.addCustomChatMessage("§cBefehl konnte nicht ausgeführt werden. §7(Nur für dich sichtbar)");
+      this.addCustomChatMessage(
+          Component.text("Befehl konnte nicht ausgeführt werden. ", NamedTextColor.RED)
+              .append(Component.text("(Nur für dich sichtbar)", NamedTextColor.GRAY))
+      );
     }
   }
 
@@ -351,13 +372,7 @@ public class ChatActivity extends SimpleActivity {
     if(message) {
       String CURRENT_TIME = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
       this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-
-        if(chatMessages.size() <= MESSAGE_LIMIT) {
-          chatMessages.add(new ChatMessageWidget(this.addon, CURRENT_TIME, "§4" + I18n.translate("moneymaker.ui.chat.chatCleared")).addId("chat-message"));
-        } else {
-          chatMessages.remove(0);
-          chatMessages.add(new ChatMessageWidget(this.addon, CURRENT_TIME, "§4" + I18n.translate("moneymaker.ui.chat.chatCleared")).addId("chat-message"));
-        }
+        chatMessages.add(new ChatMessageWidget(this.addon, CURRENT_TIME, Component.translatable("moneymaker.ui.chat.chatCleared", NamedTextColor.DARK_RED)).addId("chat-message"));
       });
     }
     this.reloadScreen();
@@ -383,7 +398,7 @@ public class ChatActivity extends SimpleActivity {
     this.reloadScreen();
   }
 
-  public void addCustomChatMessage(String chatMessage) {
+  public void addCustomChatMessage(Component chatMessage) {
     if (chatMessage == null) return;
     String CURRENT_TIME = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
     this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {

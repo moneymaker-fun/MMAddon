@@ -147,7 +147,7 @@ public class InventoryListener {
     long currentTime = System.currentTimeMillis();
     if(boost > 0 && totalBoosters > 0 && (boost != previousBoostx || totalBoosters != previousTotalBoost || currentTime - lastDisplayTime >= 30000)) {
       this.addon.displayMessage(
-          Component.text(this.addon.prefix)
+          this.addon.prefix.copy()
               .append(Component.translatable(
                   "moneymaker.text.booster.inventory.total", NamedTextColor.GRAY,
                   Component.text(Util.format(totalBoosters), NamedTextColor.YELLOW),

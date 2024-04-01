@@ -2,15 +2,15 @@ package de.timuuuu.moneymaker.badges;
 
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.icon.Icon;
 
 public enum MoneyRank {
 
   USER(4, "user", false, "§e", "§e", null, Common.ICON, "https://cdn.terramc.net/moneymaker/lore.png"),
-  DONATOR(3, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", TextColor.color(255, 170, 0)), Common.ICON_ORANGE, "https://cdn.terramc.net/moneymaker/lore_orange.png"),
-  STAFF(2, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", TextColor.color(255, 85, 85)), Common.ICON_RED, "https://cdn.terramc.net/moneymaker/lore_light_red.png"),
-  DEVELOPER(1, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", TextColor.color(170, 0, 0)), Common.ICON_DARK_RED, "https://cdn.terramc.net/moneymaker/lore_red.png");
+  DONATOR(3, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", NamedTextColor.GOLD), Common.ICON_ORANGE, "https://cdn.terramc.net/moneymaker/lore_orange.png"),
+  STAFF(2, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", NamedTextColor.RED), Common.ICON_RED, "https://cdn.terramc.net/moneymaker/lore_light_red.png"),
+  DEVELOPER(1, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", NamedTextColor.DARK_RED), Common.ICON_DARK_RED, "https://cdn.terramc.net/moneymaker/lore_red.png");
 
   private final int id;
   private final String name;

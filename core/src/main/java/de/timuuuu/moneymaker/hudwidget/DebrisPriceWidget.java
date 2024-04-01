@@ -46,6 +46,9 @@ public class DebrisPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             double cost = Double.parseDouble(this.addon.addonUtil().debrisCost().replaceAll("[^\\d.]", ""));
             int difference = Double.compare(balance, cost);
 
+            // -> Colors are not working when using as a Component
+            // -> however Text Decorations are working fine
+
             String color = "§c";
             if(CurrencyUtil.get(balanceUnit) > CurrencyUtil.get(debrisUnit)) {
               color = "§a§l";

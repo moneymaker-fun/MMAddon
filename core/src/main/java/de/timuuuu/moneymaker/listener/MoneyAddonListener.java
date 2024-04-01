@@ -14,6 +14,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
@@ -257,7 +258,7 @@ public class MoneyAddonListener {
         if(this.addon.configuration().chatConfiguration.notification().get()) {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.new-message", TextColor.color(85, 255, 85)),
-              Component.text("§e" + chatMessage.userName() + "§8: §7" + chatMessage.message()),
+              Component.text(chatMessage.userName(), NamedTextColor.YELLOW).append(Component.text(": ", NamedTextColor.DARK_GRAY)).append(Component.text(chatMessage.message(), NamedTextColor.GRAY)),
               Icon.head(chatMessage.uuid()),
               Component.translatable("moneymaker.notification.chat.reply"),
               () -> this.addon.mainActivity().openAndSwitchToChat()
@@ -271,7 +272,7 @@ public class MoneyAddonListener {
 
         this.addon.pushNotification(
             Component.translatable("moneymaker.notification.chat.system-message", TextColor.color(255, 85, 85)),
-            Component.text("§c" + chatMessage.message()),
+            Component.text(chatMessage.message(), NamedTextColor.RED),
             Icon.sprite16(
                 ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2));
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.35F, 1.0F);

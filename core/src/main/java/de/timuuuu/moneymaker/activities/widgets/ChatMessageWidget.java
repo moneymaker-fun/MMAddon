@@ -13,6 +13,8 @@ import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextDecoration;
+import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.Widget;
@@ -30,7 +32,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
 
   private String time;
   private MoneyChatMessage chatMessage = null;
-  private String customMessage;
+  private Component customMessage;
   private boolean systemMessage;
 
   public ChatMessageWidget(MoneyMakerAddon addon, String time, MoneyChatMessage chatMessage) {
@@ -40,7 +42,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     this.systemMessage = chatMessage.systemMessage();
   }
 
-  public ChatMessageWidget(MoneyMakerAddon addon, String time, String customMessage) {
+  public ChatMessageWidget(MoneyMakerAddon addon, String time, Component customMessage) {
     this.addon = addon;
     this.time = time;
     this.customMessage = customMessage;
@@ -65,7 +67,8 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     } else {
       header.addEntry(new IconWidget(Icon.sprite16(
           ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2)).addId("avatar"));
-      header.addEntry(ComponentWidget.text("§4§lSYSTEM").addId("sender"));
+      Component component = Component.text("SYSTEM", NamedTextColor.DARK_RED).decorate(TextDecoration.BOLD);
+      header.addEntry(ComponentWidget.component(component).addId("sender"));
     }
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
     if(this.chatMessage != null && this.chatMessage.fromServerCache()) {
@@ -145,7 +148,14 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     flex.addChild(header);
 
     VerticalListWidget<Widget> messageContentWidget = new VerticalListWidget<>().addId("message-content");
-    ComponentWidget componentMessageWidget = ComponentWidget.text(chatMessage != null ? chatMessage.message() : customMessage).addId(new String[] {"component-message", "tile"});
+    ComponentWidget componentMessageWidget;
+    if(chatMessage != null) {
+      componentMessageWidget = ComponentWidget.component(PlainTextComponentSerializer.plainUrl()
+          .deserialize(chatMessage.message()));
+    } else {
+      componentMessageWidget = ComponentWidget.component(customMessage);
+    }
+    componentMessageWidget.addId("component-message", "tile");
     messageContentWidget.addChild(componentMessageWidget);
 
     flex.addChild(messageContentWidget);

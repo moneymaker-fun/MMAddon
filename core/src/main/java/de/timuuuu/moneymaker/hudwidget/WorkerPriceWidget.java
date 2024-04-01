@@ -43,6 +43,9 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             double cost = Double.parseDouble(this.addon.addonUtil().nextWorkerCost().replaceAll("[^\\d.]", ""));
             int difference = Double.compare(balance, cost);
 
+            // -> Colors are not working when using as a Component
+            // -> however Text Decorations are working fine
+
             String color = "§c";
             if(CurrencyUtil.get(balanceUnit) > CurrencyUtil.get(workerUnit)) {
               color = "§a§l";

@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
@@ -22,7 +23,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
   private MoneyPlayer player;
 
   private boolean placeholder = false;
-  private String placeholderTitle = "";
+  private Component placeholderTitle = Component.text("");
 
   public OnlineEntryWidget(MoneyMakerAddon addon, MoneyPlayer player, boolean otherServers) {
     this.addon = addon;
@@ -30,7 +31,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
     this.otherServers = otherServers;
   }
 
-  public OnlineEntryWidget(MoneyMakerAddon addon, String placeholderTitle) {
+  public OnlineEntryWidget(MoneyMakerAddon addon, Component placeholderTitle) {
     this.addon = addon;
     this.placeholder = true;
     this.placeholderTitle = placeholderTitle;
@@ -54,10 +55,13 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
       entry.addEntry(ComponentWidget.component(nameComponent).addId("userName"));
 
       if(Util.isDev(this.labyAPI.getUniqueId().toString())) {
-        entry.addEntry(ComponentWidget.text("§8(§e" + this.player.addonVersion() + "§8)").addId("addonVersion"));
+        Component component = Component.text("(", NamedTextColor.DARK_GRAY)
+                .append(Component.text(this.player.addonVersion(), NamedTextColor.YELLOW))
+                .append(Component.text(")", NamedTextColor.DARK_GRAY));
+        entry.addEntry(ComponentWidget.component(component).addId("addonVersion"));
       }
     } else {
-      entry.addEntry(ComponentWidget.text(this.placeholderTitle).addId("userName"));
+      entry.addEntry(ComponentWidget.component(this.placeholderTitle).addId("userName"));
     }
 
     HorizontalListWidget data = new HorizontalListWidget().addId("data");
@@ -70,7 +74,11 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
           server = "Farming - " + I18n.translate(this.addon.addonUtil().caveByName(cave).translation());
         }
       }
-      data.addEntry(ComponentWidget.text("§8➥ §7Server§8: §7" + server).addId("currentServer"));
+      Component component = Component.text("➥ ", NamedTextColor.DARK_GRAY)
+              .append(Component.text("Server", NamedTextColor.GRAY))
+              .append(Component.text(":", NamedTextColor.DARK_GRAY))
+              .append(Component.text(server, NamedTextColor.GRAY));
+      data.addEntry(ComponentWidget.component(component).addId("currentServer"));
     }
 
     this.addContent(entry);

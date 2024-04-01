@@ -7,6 +7,7 @@ import de.timuuuu.moneymaker.hudwidget.farming.LatestBoosterDisplayWidget.Booste
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.SimpleHudWidget;
@@ -109,7 +110,10 @@ public class LatestBoosterDisplayWidget extends SimpleHudWidget<BoosterHudWidget
       }
 
       timerX += rowHeight +4;
-      RenderableComponent timerName = RenderableComponent.of(Component.text("§e" + booster.boost() + "% §8┃ §7" + booster.readableTime()));
+      Component component = Component.text(booster.boost() + "%", NamedTextColor.YELLOW)
+          .append(Component.text(" ┃ ", NamedTextColor.DARK_GRAY))
+          .append(Component.text(booster.readableTime(), NamedTextColor.GRAY));
+      RenderableComponent timerName = RenderableComponent.of(component);
       if(stack != null) {
         componentRenderer.builder()
             .text(timerName)
