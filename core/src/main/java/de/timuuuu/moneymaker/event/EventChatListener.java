@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.event;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.hudwidget.ChristmasEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.EasterEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.FruitsHudWidget;
 import de.timuuuu.moneymaker.event.hudwidget.HalloweenEventWidget;
@@ -61,6 +62,16 @@ public class EventChatListener {
             .replace(EventChatMessages.HALLOWEEN_EN.message(), "");
         try {
           HalloweenEventWidget.candies = Integer.parseInt(count);
+        } catch (NumberFormatException ignored) {}
+      }
+
+      if(EventChatMessages.CHRISTMAS_DE.contains(plain) || EventChatMessages.CHRISTMAS_EN.contains(plain)) {
+        String count = plain.replace(EventChatMessages.NOW_DE.message(), "")
+            .replace(EventChatMessages.CHRISTMAS_DE.message(), "")
+            .replace(EventChatMessages.NOW_EN.message(), "")
+            .replace(EventChatMessages.CHRISTMAS_EN.message(), "");
+        try {
+          ChristmasEventWidget.gifts = Integer.parseInt(count);
         } catch (NumberFormatException ignored) {}
       }
 
