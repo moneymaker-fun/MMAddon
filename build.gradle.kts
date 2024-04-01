@@ -21,7 +21,7 @@ labyMod {
         author = "Timuuuu, MisterCore"
         description = "Adds some features to the MoneyMaker IdleGame on GommeHD.net"
         minecraftVersion = "*"
-        version = System.getenv().getOrDefault("VERSION", "1.4.1")
+        version = System.getenv().getOrDefault("VERSION", "1.5.0")
     }
 
     minecraft {
