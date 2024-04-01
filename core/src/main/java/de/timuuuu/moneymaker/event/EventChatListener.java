@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.event;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.hudwidget.EasterEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.FruitsHudWidget;
+import de.timuuuu.moneymaker.event.hudwidget.HalloweenEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.ValentineEventWidget;
 import net.labymod.api.event.Priority;
 import net.labymod.api.event.Subscribe;
@@ -50,6 +51,16 @@ public class EventChatListener {
             .replace(EventChatMessages.SUMMER_EN.message(), "");
         try {
           FruitsHudWidget.fruits = Integer.parseInt(count);
+        } catch (NumberFormatException ignored) {}
+      }
+
+      if(EventChatMessages.HALLOWEEN_DE.contains(plain) || EventChatMessages.HALLOWEEN_EN.contains(plain)) {
+        String count = plain.replace(EventChatMessages.NOW_DE.message(), "")
+            .replace(EventChatMessages.HALLOWEEN_DE.message(), "")
+            .replace(EventChatMessages.NOW_EN.message(), "")
+            .replace(EventChatMessages.HALLOWEEN_EN.message(), "");
+        try {
+          HalloweenEventWidget.candies = Integer.parseInt(count);
         } catch (NumberFormatException ignored) {}
       }
 
