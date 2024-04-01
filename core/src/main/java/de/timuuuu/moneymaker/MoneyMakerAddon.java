@@ -101,6 +101,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.gson = GsonUtil.DEFAULT_GSON;
 
+    this.apiUtil.loadSettings();
+
     this.registerCommand(new TimerCommand(this));
     this.registerCommand(new ResetCommand(this));
 
@@ -132,8 +134,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new TimerDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new LatestBoosterDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new ActivatedBoosterWidget(this));
-
-    this.apiUtil.loadSettings();
 
     labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag(this));
     labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag(this));

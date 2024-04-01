@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.hudwidget.event;
+package de.timuuuu.moneymaker.event.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;

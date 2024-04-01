@@ -3,9 +3,9 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
-import de.timuuuu.moneymaker.hudwidget.event.EasterEventWidget;
+import de.timuuuu.moneymaker.event.hudwidget.EasterEventWidget;
 import de.timuuuu.moneymaker.utils.ChatMessages;
-import de.timuuuu.moneymaker.utils.EventChatMessages;
+import de.timuuuu.moneymaker.event.EventChatMessages;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,31 +29,10 @@ public class ChatReceiveListener {
 
   @Subscribe(Priority.LATEST)
   public void onChatReceive(ChatReceiveEvent event) {
-    String plain = event.chatMessage().getOriginalPlainText();
     if (!this.addon.addonUtil().connectedToMoneyMaker()) return;
+    String plain = event.chatMessage().getOriginalPlainText();
 
     if (ChatMessages.PREFIX.contains(plain)) {
-
-      // Event Messages
-
-      if((EventChatMessages.EVENT_EASTER_DE_1.startWith(plain) && EventChatMessages.EVENT_EASTER_DE_2.contains(plain)) || (EventChatMessages.EVENT_EASTER_EN_1.startWith(plain) && EventChatMessages.EVENT_EASTER_EN_2.contains(plain))) {
-        String count = plain.replace(EventChatMessages.EVENT_EASTER_DE_1.message(), "")
-            .replace(EventChatMessages.EVENT_EASTER_DE_2.message(), "")
-            .replace(EventChatMessages.EVENT_EASTER_EN_1.message(), "")
-            .replace(EventChatMessages.EVENT_EASTER_EN_2.message(), "");
-        try {
-          EasterEventWidget.eggs = Integer.parseInt(count);
-        } catch (NumberFormatException ignored) {}
-      }
-
-      if(this.addon.addonUtil().currentEvent().equals("EASTER") && (EventChatMessages.EVENT_EASTER_BOOSTER_DE.contains(plain) || EventChatMessages.EVENT_EASTER_BOOSTER_EN.contains(plain))) {
-        if(EasterEventWidget.eggs >= 5) {
-          EasterEventWidget.eggs -=5;
-        }
-      }
-
-
-      // Normal Messages
 
       if((ChatMessages.WORKPLACE_UPGRADE_DE_1.startWith(plain) && ChatMessages.WORKPLACE_UPGRADE_DE_2.contains(plain)) ||
           (ChatMessages.WORKPLACE_UPGRADE_EN.startWith(plain))) {
