@@ -2,9 +2,14 @@ package de.timuuuu.moneymaker.event;
 
 public enum EventChatMessages {
 
-  // Valentine
-
-  // Easter
+  EVENT_NONE("NONE"),
+  EVENT_VALENTINE("VALENTINE"),
+  EVENT_EASTER("EASTER"),
+  EVENT_SUMMER("SUMMER"),
+  EVENT_CARIBBEAN("CARIBBEAN"),
+  EVENT_HALLOWEEN("HALLOWEEN"),
+  EVENT_CHRISTMAS("CHRISTMAS"),
+  EVENT_ALL("ALL"),
 
   NOW_DE("[MoneyMaker] Du besitzt nun "),
   NOW_EN("[MoneyMaker] You now have "),
