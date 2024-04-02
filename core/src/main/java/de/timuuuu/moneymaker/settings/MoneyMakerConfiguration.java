@@ -123,7 +123,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
 
   @Exclude
-  private final ConfigProperty<Boolean> chatShowAllPlayers = new ConfigProperty<>(true);
+  private final ConfigProperty<Boolean> chatShowAllPlayers = new ConfigProperty<>(false);
 
   @Exclude
   private final ConfigProperty<Boolean> languageInfoClosed = new ConfigProperty<>(false);

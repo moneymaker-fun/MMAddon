@@ -73,8 +73,6 @@ public class StartActivity extends SimpleActivity {
         breakGoalInput.setText(String.valueOf(this.addon.addonSettings().breakGoal()));
       }
       container.addChild(breakGoalInput);
-    }else {
-      this.addon.addonUtil().breakGoalBlocks(0);
     }
 
     DivWidget timerContainer = new DivWidget().addId("timer-container");
