@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.component.Component;
@@ -179,4 +180,19 @@ public class Util {
     return list;
   }
 
+  public static String convertToReadableFormat(long milliseconds) {
+    long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+    long minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+    long seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60;
+
+    if (hours > 0) {
+      return hours + "h " + minutes + "m";
+    } else {
+      if (minutes > 0) {
+        return minutes + "m " + seconds + "s";
+      } else {
+        return seconds + "s";
+      }
+    }
+  }
 }

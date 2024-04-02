@@ -10,6 +10,8 @@ import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
 
+import static de.timuuuu.moneymaker.utils.Util.convertToReadableFormat;
+
 public class ScoreBoardListener {
 
   private MoneyMakerAddon addon;
@@ -39,8 +41,10 @@ public class ScoreBoardListener {
 
               if(blocks == this.addon.addonUtil().breakGoalBlocks()) {
                 this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_MARKER_NOTIFY, 0.5F, 1.0F);
+                String readableTimeDifference = convertToReadableFormat(System.currentTimeMillis() - this.addon.addonUtil().startTimestamp());
                 this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
-                    Component.translatable("moneymaker.notification.break-goal.text", TextColor.color(85, 255, 85)));
+                    Component.translatable("moneymaker.notification.break-goal.text", TextColor.color(170, 170, 170),
+                        Component.text(readableTimeDifference, TextColor.color(255, 255, 85))));
                 this.addon.addonSettings().breakGoalEnabled(false);
                 this.addon.addonSettings().breakGoal(0);
                 this.addon.addonUtil().breakGoalBlocks(0);

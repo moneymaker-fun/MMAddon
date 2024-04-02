@@ -129,7 +129,7 @@
       },
       "break-goal": {
         "title": "Abbau Ziel",
-        "text": "Du hast dein Abbau Ziel erreicht!",
+        "text": "Du hast dein Abbau Ziel in %s erreicht!",
         "set": "Du hast dein Abbau Ziel auf %s Blöcke gesetzt.",
         "no-number": "Bitte gebe eine Zahl als Input ein."
       },

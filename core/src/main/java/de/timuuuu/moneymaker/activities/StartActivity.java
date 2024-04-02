@@ -115,6 +115,7 @@ public class StartActivity extends SimpleActivity {
       if(this.addon.addonUtil().currentBrokenBlocks() > 0) {
         this.addon.addonUtil().breakGoalBlocks(this.addon.addonUtil().currentBrokenBlocks() + count);
       }
+      this.addon.addonUtil().startTimestamp(System.currentTimeMillis());
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.set", TextColor.color(170, 170, 170),
               Component.text(Util.format(count), TextColor.color(255, 255, 85))));
