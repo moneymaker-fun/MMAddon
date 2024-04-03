@@ -83,6 +83,7 @@ public class AddonUtil {
   private int sessionKills = 0;
 
   private int debrisTime = 0;
+  private long startTimestamp = 0;
 
   // Util
 
@@ -195,6 +196,14 @@ public class AddonUtil {
 
   public void breakGoalBlocks(int breakGoalBlocks) {
     this.breakGoalBlocks = breakGoalBlocks;
+  }
+
+  public long startTimestamp() {
+    return startTimestamp;
+  }
+
+  public void startTimestamp(long startTimestamp) {
+    this.startTimestamp = startTimestamp;
   }
 
   public int workerCount() {
