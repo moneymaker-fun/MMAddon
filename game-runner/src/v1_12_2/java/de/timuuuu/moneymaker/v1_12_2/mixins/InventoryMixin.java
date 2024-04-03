@@ -1,11 +1,13 @@
 package de.timuuuu.moneymaker.v1_12_2.mixins;
 
+import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.Laby;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -40,6 +42,24 @@ public class InventoryMixin {
         Laby.fireEvent(new InventoryRenderSlotEvent(slot.inventory.getName(), slot.slotNumber, name, loreList, "1.12"));
       }
     }
+  }
+
+  @Inject(
+      method = {"handleMouseClick"},
+      at = {@At("HEAD")}
+  )
+  private void moneymaker$fireInventoryClick(Slot clickedSlot, int $$1, int $$2, ClickType $$3, CallbackInfo ci) {
+    if(clickedSlot == null) return;
+    if(clickedSlot.getStack() == null) return;
+    if(clickedSlot.getStack().getTagCompound() == null) return;
+    NBTTagCompound compoundTag = clickedSlot.getStack().getTagCompound().getCompoundTag("display");
+    String itemName = clickedSlot.getStack().getDisplayName();
+    List<String> loreList = new ArrayList<>();
+    NBTTagList listTag = compoundTag.getTagList("Lore", 8);
+    for(int i = 0; i != listTag.tagCount(); i++) {
+      loreList.add(listTag.getStringTagAt(i));
+    }
+    Laby.fireEvent(new InventoryClickEvent(clickedSlot.inventory.getName(), clickedSlot.slotNumber, itemName, loreList, "1.12"));
   }
 
   @Inject(

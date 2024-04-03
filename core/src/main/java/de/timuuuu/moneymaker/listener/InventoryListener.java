@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import de.timuuuu.moneymaker.utils.Util;
@@ -26,6 +27,10 @@ public class InventoryListener {
 
   public InventoryListener(MoneyMakerAddon addon) {
     this.addon = addon;
+  }
+
+  @Subscribe
+  public void onInventoryClick(InventoryClickEvent event) {
   }
 
   public static void clearAlreadyRendered() {
