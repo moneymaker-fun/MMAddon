@@ -381,6 +381,10 @@
       }
     },
     "ui": {
+      "button": {
+        "discord": "Discord",
+        "leaderboard": "Leaderboard"
+      },
       "start": {
         "title": "MoneyMaker Hauptmenü",
         "current-timers": "Aktuell laufende Timer",
@@ -389,8 +393,7 @@
           "description": "Soll die Funktion für das Abbau Ziel aktiviert sein?",
           "input-title": "Abbau Ziel eingeben",
           "input-description": "Gebe dein Abbau Ziel ein, welches du erreichen willst."
-        },
-        "discord": "Discord"
+        }
       },
       "info": {
         "title": "MoneyMaker Informationen",

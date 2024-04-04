@@ -129,7 +129,7 @@
       },
       "break-goal": {
         "title": "Break Goal",
-        "text": "You have reached your break goal!",
+        "text": "You have reached your break goal in %s!",
         "set": "You have set your break goal to %s blocks.",
         "no-number": "Please enter a number as input."
       },
@@ -381,6 +381,10 @@
       }
     },
     "ui": {
+      "button": {
+        "discord": "Discord",
+        "leaderboard": "Leaderboard"
+      },
       "start": {
         "title": "MoneyMaker Main Menu",
         "current-timers": "Currently active timers",
@@ -389,8 +393,7 @@
           "description": "Should the break goal function be activated?",
           "input-title": "Enter Break Goal",
           "input-description": "Enter the break goal you want to achieve."
-        },
-        "discord": "Discord"
+        }
       },
       "info": {
         "title": "MoneyMaker Information",

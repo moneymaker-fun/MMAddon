@@ -30,8 +30,6 @@ public class SecretActivity extends SimpleActivity {
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.secret.title").addId("secret-title");
     this.document.addChild(titleWidget);
 
-    Util.addFeedbackButton(this.document);
-
     DivWidget container = new DivWidget();
     container.addId("secret-container");
     this.document.addChild(container);
@@ -55,6 +53,10 @@ public class SecretActivity extends SimpleActivity {
       chatShowAllPlayersSwitch.setValue(this.addon.configuration().chatShowAllPlayers().get());
       this.document.addChild(chatShowAllPlayersSwitch);
     }
+
+    this.document.addChild(Util.feedbackButton());
+    this.document.addChild(Util.leaderboardButton());
+    this.document.addChild(Util.discordButton());
 
   }
 

@@ -38,8 +38,6 @@ public class StartActivity extends SimpleActivity {
   public void initialize(Parent parent) {
     super.initialize(parent);
 
-    Util.addFeedbackButton(this.document);
-
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title").addId("start-title");
     this.document.addChild(titleWidget);
 
@@ -89,7 +87,9 @@ public class StartActivity extends SimpleActivity {
 
     this.document.addChild(timerContainer);
 
-    container.addChild(Util.addDiscordButton());
+    this.document.addChild(Util.feedbackButton());
+    container.addChild(Util.discordButton());
+    container.addChild(Util.leaderboardButton());
 
     this.document.addChild(container);
 

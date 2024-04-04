@@ -1,6 +1,6 @@
 @import super();
 
-.discord-btn {
+.discord-button {
   bottom: 10;
   left: 10;
   width: fit-content;
@@ -22,4 +22,14 @@
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
+}
+
+.leaderboard-button {
+  bottom: 26;
+  left: 10;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+  height: 15;
+  border-color: #FFFF55;
 }

@@ -50,8 +50,6 @@ public class BoosterActivity extends SimpleActivity {
     titleWidget.addId("title");
     this.document.addChild(titleWidget);
 
-    Util.addFeedbackButton(this.document);
-
     AtomicInteger boost = new AtomicInteger(0);
     Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost()));
 
@@ -112,6 +110,7 @@ public class BoosterActivity extends SimpleActivity {
 
     this.document.addChild(container);
     this.document.addChild(sideContainer);
+    this.document.addChild(Util.feedbackButton());
   }
 
   private Component sortIcon() {
