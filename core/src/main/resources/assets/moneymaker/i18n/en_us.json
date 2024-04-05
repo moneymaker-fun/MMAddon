@@ -119,12 +119,16 @@
           "text": "The timer %s has been deleted."
         }
       },
-      "farming": {
-        "left": {
+      "dataReset": {
+        "farming": {
           "title": "Leave farming cave",
-          "reset-question": "Do you want to reset the block, kill and booster counters?",
-          "reset-button": "Reset",
-          "reset": "Your block, kill and booster counters have been reset."
+          "question": "Do you want to reset the block, kill and booster counters?",
+          "button": "Reset",
+          "done": "Your block, kill and booster counters have been reset."
+        },
+        "profile": {
+          "title": "Profile switch detected",
+          "text": "The collected data has been reset due to the profile switch"
         }
       },
       "break-goal": {
@@ -264,6 +268,10 @@
           "ask": "Ask to Reset (Notification)",
           "hide": "Hide completely"
         }
+      },
+      "resetOnProfileSwitch": {
+        "name": "Reset data on profile switch",
+        "description": "Resets the collected data automatically when switching the profile"
       },
       "showWidgetsAlways" : {
         "name": "Show Widgets always",

@@ -136,8 +136,15 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onProfileChange(ProfileSwitchEvent event) {
-    String oldProfile = event.oldProfile();
-    String newProfile = event.newProfile();
+
+    if(this.addon.configuration().resetOnProfileSwitch().get()) {
+      this.addon.addonUtil().resetValues(false);
+      this.addon.pushNotification(
+          Component.translatable("moneymaker.notification.dataReset.profile.title", NamedTextColor.AQUA),
+          Component.translatable("moneymaker.notification.dataReset.profile.text", NamedTextColor.YELLOW)
+      );
+    }
+
   }
 
   @Subscribe

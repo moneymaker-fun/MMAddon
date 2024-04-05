@@ -9,7 +9,7 @@ import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import de.timuuuu.moneymaker.boosters.Booster;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
 import net.labymod.api.util.concurrent.task.Task;
@@ -54,19 +54,19 @@ public class NetworkPayloadListener {
                   this.addon.addonUtil().sessionKills(0);
                   Booster.sessionBoost.set(0);
                   Booster.sessionBoosters.set(0);
-                  this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                      Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
+                  this.addon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
+                      Component.translatable("moneymaker.notification.farming.left.done", NamedTextColor.YELLOW));
                 }
                 if(farmingReset == FarmingReset.ASK) {
-                  MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                      Component.translatable("moneymaker.notification.farming.left.reset-question", TextColor.color(170, 170, 170)),
-                      Component.translatable("moneymaker.notification.farming.left.reset-button"), () -> {
+                  MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
+                      Component.translatable("moneymaker.notification.dataReset.farming.question", NamedTextColor.GRAY),
+                      Component.translatable("moneymaker.notification.dataReset.farming.button"), () -> {
                         this.addon.addonUtil().sessionBlocks(0);
                         this.addon.addonUtil().sessionKills(0);
                         Booster.sessionBoost.set(0);
                         Booster.sessionBoosters.set(0);
-                        this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                            Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
+                        this.addon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
+                            Component.translatable("moneymaker.notification.dataReset.farming.done", NamedTextColor.YELLOW));
                   });
                 }
               }

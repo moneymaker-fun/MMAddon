@@ -119,12 +119,16 @@
           "text": "Der Timer %s wurde gelöscht."
         }
       },
-      "farming": {
-        "left": {
+      "dataReset": {
+        "farming": {
           "title": "Farming-Höhle verlassen",
-          "reset-question": "Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?",
-          "reset-button": "Zurücksetzen",
-          "reset": "Dein Block-, Kill- und Boosterzähler wurde zurückgesetzt."
+          "question": "Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?",
+          "button": "Zurücksetzen",
+          "done": "Dein Block-, Kill- und Boosterzähler wurde zurückgesetzt."
+        },
+        "profile": {
+          "title": "Profilwechsel festgestellt",
+          "text": "Die gesammelten Daten wurden aufgrund des Profilwechsels zurückgesetzt"
         }
       },
       "break-goal": {
@@ -264,6 +268,10 @@
           "ask": "Fragen (Notification)",
           "hide": "Verstecken"
         }
+      },
+      "resetOnProfileSwitch": {
+        "name": "Daten bei Profilwechsel zurücksetzen",
+        "description": "Setzt die erfassen Daten bei Profilwechsel zurück"
       },
       "showWidgetsAlways": {
         "name": "Zeige Widgets immer an",
