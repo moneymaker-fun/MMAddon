@@ -7,6 +7,7 @@ import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
+import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
@@ -131,6 +132,12 @@ public class MoneyAddonListener {
     this.addon.addonUtil().pickaxeRanking(0);
     this.addon.addonUtil().swordRanking(0);
 
+  }
+
+  @Subscribe
+  public void onProfileChange(ProfileSwitchEvent event) {
+    String oldProfile = event.oldProfile();
+    String newProfile = event.newProfile();
   }
 
   @Subscribe

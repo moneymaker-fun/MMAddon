@@ -1,11 +1,16 @@
 package de.timuuuu.moneymaker.listener;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
+import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
@@ -22,6 +27,7 @@ public class InventoryListener {
   private int previousTotalBoost = -1;
   private long lastDisplayTime = 0; // Initialize last display time to 0
 
+  private String currentProfile = "";
 
   private MoneyMakerAddon addon;
 
@@ -31,6 +37,31 @@ public class InventoryListener {
 
   @Subscribe
   public void onInventoryClick(InventoryClickEvent event) {
+
+    if(event.getInventoryName().equals("Profil-Übersicht") || event.getInventoryName().equals("Profile overview")) {
+
+      String newProfile = null;
+      if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+        newProfile = event.getItemName();
+      } else {
+        // {"italic":false,"color":"aqua","text":"Profil-Slot 1"}
+        try {
+          JsonObject object = JsonParser.parseString(event.getItemName()).getAsJsonObject();
+          if(object.has("text")) {
+            newProfile = object.get("text").getAsString();
+          }
+        } catch (JsonSyntaxException ignored) {}
+      }
+
+      if(newProfile != null) {
+        if(!this.currentProfile.equals(newProfile)) {
+          Laby.fireEvent(new ProfileSwitchEvent(this.currentProfile, newProfile));
+          this.currentProfile = newProfile;
+        }
+      }
+
+    }
+
   }
 
   public static void clearAlreadyRendered() {
