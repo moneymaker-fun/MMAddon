@@ -1,4 +1,4 @@
-.start-title {
+.title {
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
@@ -88,25 +88,29 @@ Timer {
 
 .break-goal-title {
   text-color: yellow;
-  left: 30;
-  top: 30;
+  left: 15;
+  top: 15;
+  font-size: 0.8;
 }
 
 .break-goal-switch {
-  left: 30;
-  top: 40;
+  left: 15;
+  top: 25;
   height: 14;
   width: 25;
 }
 
 .break-goal-input-title {
-  left: 30;
-  top: 60;
+  left: 60;
+  top: 15;
+  text-color: yellow;
+  font-size: 0.8;
 }
 
 .break-goal-input {
-  left: 30;
-  top: 70;
+  left: 60;
+  top: 25;
   width: 60;
+  height: 14;
   submit-button: true;
 }
