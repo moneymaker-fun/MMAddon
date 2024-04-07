@@ -80,9 +80,6 @@ public class BoosterActivity extends SimpleActivity {
     )).addId("average-boosters");
     sideContainer.addChild(averageBoostersWidget);
 
-    // Component.text(Booster.sessionBoosters.get() + " Booster / " + this.addon.addonUtil().sessionBlocks() + " ")
-    //            .append(Component.translatable("moneymaker.hudWidget.mm_block_session.blocks"))
-
     ComponentWidget boostersPerBlocksWidget = ComponentWidget.component(
         Component.text(Booster.sessionBoosters.get() + " Boosters", NamedTextColor.GOLD)
             .append(Component.text(" / ", NamedTextColor.GRAY))
