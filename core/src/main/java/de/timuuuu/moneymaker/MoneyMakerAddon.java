@@ -153,7 +153,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.addonSettings.selectUpdateMode(this.configuration().updateMode().get());
     this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
     this.apiUtil.loadCoordinates();
-    //this.apiUtil.loadLeaderboard(false);
+    this.apiUtil.loadLeaderboard(false);
   }
 
   @Override
