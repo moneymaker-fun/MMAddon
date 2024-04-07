@@ -2,7 +2,7 @@ package de.timuuuu.moneymaker;
 
 import com.google.gson.Gson;
 import de.timuuuu.moneymaker.activities.ChatActivity;
-import de.timuuuu.moneymaker.activities.MainActivity;
+import de.timuuuu.moneymaker.activities.navigation.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
 import de.timuuuu.moneymaker.badges.MoneyIconTag;

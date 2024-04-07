@@ -1,6 +1,9 @@
-package de.timuuuu.moneymaker.activities;
+package de.timuuuu.moneymaker.activities.navigation;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.BoosterActivity;
+import de.timuuuu.moneymaker.activities.InfoActivity;
+import de.timuuuu.moneymaker.activities.SecretActivity;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
