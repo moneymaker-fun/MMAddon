@@ -34,17 +34,6 @@ public class InfoActivity extends SimpleActivity {
     DivWidget container = new DivWidget();
     container.addId("info-container");
 
-    ComponentWidget commandsTitle = ComponentWidget.i18n("moneymaker.ui.info.commandsTitle").addId("commands-title");
-    container.addChild(commandsTitle);
-
-    Component commands = Component.translatable("moneymaker.ui.info.commands.timer.command", NamedTextColor.AQUA)
-        .append(Component.translatable("moneymaker.ui.info.commands.timer.description", NamedTextColor.GOLD)).append(Component.text("\n"))
-        .append(Component.translatable("moneymaker.ui.info.commands.reset.command", NamedTextColor.AQUA))
-        .append(Component.translatable("moneymaker.ui.info.commands.reset.description", NamedTextColor.GOLD));
-
-    ComponentWidget commandsWidget = ComponentWidget.component(commands).addId("commands");
-    container.addChild(commandsWidget);
-
     this.document.addChild(container);
 
     this.document.addChild(Util.feedbackButton());

@@ -401,12 +401,9 @@
           "description": "Soll die Funktion für das Abbau Ziel aktiviert sein?",
           "input-title": "Abbau Ziel eingeben",
           "input-description": "Gebe dein Abbau Ziel ein, welches du erreichen willst."
-        }
-      },
-      "info": {
-        "title": "MoneyMaker Informationen",
-        "commandsTitle": "Befehle des Addons",
+        },
         "commands": {
+          "title": "Befehle des Addons",
           "timer": {
             "command": "/mm-timer <Minuten> <Timer Name>",
             "description": " Erstelle einen Timer"
@@ -416,6 +413,9 @@
             "description": " Setzt die gesammelten Daten zurück"
           }
         }
+      },
+      "info": {
+        "title": "MoneyMaker Informationen"
       },
       "booster": {
         "title": "Liste der gefarmten Booster",

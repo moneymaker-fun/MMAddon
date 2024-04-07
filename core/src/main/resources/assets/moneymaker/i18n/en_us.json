@@ -401,12 +401,9 @@
           "description": "Should the break goal function be activated?",
           "input-title": "Enter Break Goal",
           "input-description": "Enter the break goal you want to achieve."
-        }
-      },
-      "info": {
-        "title": "MoneyMaker Information",
-        "commandsTitle": "Commands of the Addon",
+        },
         "commands": {
+          "title": "Commands of the Addon",
           "timer": {
             "command": "/mm-timer <Minutes> <Timer Name>",
             "description": " Creates a timer"
@@ -416,6 +413,9 @@
             "description": " Reset the collected data"
           }
         }
+      },
+      "info": {
+        "title": "MoneyMaker Information"
       },
       "booster": {
         "title": "List of farmed boosters",
