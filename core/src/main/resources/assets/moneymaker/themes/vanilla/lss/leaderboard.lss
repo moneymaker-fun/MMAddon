@@ -1,27 +1,15 @@
-.info-title {
+.title {
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
   top: 10;
 }
 
-.info-container {
+.container {
   top: 40;
   bottom: 20;
   left: 20;
   right: 20;
   box-shadow: classic left top right bottom;
   renderer: "DirtBackground";
-}
-
-.commands-title {
-  text-color: green;
-  font-size: 1.5;
-  top: 10;
-  left: 10;
-}
-
-.commands {
-  top: 30;
-  left: 20;
 }

@@ -2,8 +2,6 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.Util;
-import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
@@ -15,12 +13,12 @@ import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.render.matrix.Stack;
 
 @AutoActivity
-@Links({@Link("info.lss"), @Link("buttons.lss")})
-public class InfoActivity extends SimpleActivity {
+@Links({@Link("leaderboard.lss"), @Link("buttons.lss")})
+public class LeaderboardActivity extends SimpleActivity {
 
   private MoneyMakerAddon addon;
 
-  public InfoActivity(MoneyMakerAddon addon) {
+  public LeaderboardActivity(MoneyMakerAddon addon) {
     this.addon = addon;
   }
 
@@ -28,11 +26,11 @@ public class InfoActivity extends SimpleActivity {
   public void initialize(Parent parent) {
     super.initialize(parent);
 
-    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.info.title").addId("info-title");
+    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.leaderboard.title").addId("title");
     this.document.addChild(titleWidget);
 
     DivWidget container = new DivWidget();
-    container.addId("info-container");
+    container.addId("container");
 
     this.document.addChild(container);
 

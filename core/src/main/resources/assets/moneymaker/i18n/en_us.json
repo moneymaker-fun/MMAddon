@@ -11,7 +11,7 @@
     "navigation": {
       "title": "MoneyMaker",
       "main-menu": "Main Menu",
-      "info": "Information",
+      "leaderboard": "Leaderboard",
       "booster": "Booster",
       "chat": "Chat",
       "secret": "Secret"
@@ -414,8 +414,8 @@
           }
         }
       },
-      "info": {
-        "title": "MoneyMaker Information"
+      "leaderboard": {
+        "title": "MoneyMaker Leaderboard"
       },
       "booster": {
         "title": "List of farmed boosters",

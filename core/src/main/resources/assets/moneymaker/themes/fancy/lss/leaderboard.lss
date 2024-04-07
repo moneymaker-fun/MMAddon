@@ -1,13 +1,11 @@
-@import super();
-
-.info-title {
+.title {
   alignment-x: center;
   text-color: green;
   font-size: 1.5;
   top: 0;
 }
 
-.info-container {
+.container {
   top: 20;
   bottom: 20;
   left: 20;
@@ -18,16 +16,4 @@
   border-color: var(--background-color-border);
   background-color: var(--background-color);
   box-shadow: none;
-}
-
-.commands-title {
-  text-color: green;
-  font-size: 1.5;
-  top: 10;
-  left: 10;
-}
-
-.commands {
-  top: 30;
-  left: 20;
 }

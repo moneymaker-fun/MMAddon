@@ -11,7 +11,7 @@
     "navigation": {
       "title": "MoneyMaker",
       "main-menu": "Hauptmenü",
-      "info": "Informationen",
+      "leaderboard": "Leaderboard",
       "booster": "Booster",
       "chat": "Chat",
       "secret": "Secret"
@@ -414,8 +414,8 @@
           }
         }
       },
-      "info": {
-        "title": "MoneyMaker Informationen"
+      "leaderboard": {
+        "title": "MoneyMaker Leaderboard"
       },
       "booster": {
         "title": "Liste der gefarmten Booster",
