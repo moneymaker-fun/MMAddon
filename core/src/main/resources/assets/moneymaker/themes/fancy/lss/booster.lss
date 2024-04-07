@@ -17,6 +17,12 @@
   font-size: 0.8;
 }
 
+.boosters-per-block {
+  left: 5;
+  top: 65;
+  font-size: 0.8;
+}
+
 .container {
   top: 20;
   bottom: 20;
