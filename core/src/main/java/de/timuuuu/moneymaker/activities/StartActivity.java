@@ -87,10 +87,6 @@ public class StartActivity extends SimpleActivity {
 
     this.document.addChild(timerContainer);
 
-    this.document.addChild(Util.feedbackButton());
-    container.addChild(Util.discordButton());
-    container.addChild(Util.leaderboardButton());
-
     this.document.addChild(container);
 
     //Toggle secret
@@ -103,6 +99,10 @@ public class StartActivity extends SimpleActivity {
       }
     });
     this.document.addChild(secretButton);
+
+    this.document.addChild(Util.feedbackButton());
+    this.document.addChild(Util.discordButton());
+    this.document.addChild(Util.leaderboardButton());
 
   }
 

@@ -116,7 +116,10 @@ public class BoosterActivity extends SimpleActivity {
 
     this.document.addChild(container);
     this.document.addChild(sideContainer);
+
     this.document.addChild(Util.feedbackButton());
+    this.document.addChild(Util.discordButton());
+    this.document.addChild(Util.leaderboardButton());
   }
 
   private Component sortIcon() {

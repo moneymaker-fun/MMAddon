@@ -45,11 +45,11 @@ public class InfoActivity extends SimpleActivity {
     ComponentWidget commandsWidget = ComponentWidget.component(commands).addId("commands");
     container.addChild(commandsWidget);
 
-    container.addChild(Util.feedbackButton());
-    container.addChild(Util.discordButton());
-    container.addChild(Util.leaderboardButton());
-
     this.document.addChild(container);
+
+    this.document.addChild(Util.feedbackButton());
+    this.document.addChild(Util.discordButton());
+    this.document.addChild(Util.leaderboardButton());
   }
 
   @Override

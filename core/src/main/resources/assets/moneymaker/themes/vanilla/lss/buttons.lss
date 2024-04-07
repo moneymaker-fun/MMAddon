@@ -8,8 +8,8 @@
 }
 
 .discord-button {
-  bottom: 10;
-  left: 10;
+  bottom: 2;
+  right: 20;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
@@ -22,8 +22,8 @@
 }
 
 .leaderboard-button {
-  bottom: 26;
-  left: 10;
+  bottom: 2;
+  right: 85;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
