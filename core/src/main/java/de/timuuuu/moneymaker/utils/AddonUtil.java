@@ -16,7 +16,7 @@ public class AddonUtil {
 
 
   private String currentEvent = "NONE";
-  private String motd = null;
+  private String motd = "";
 
   public String currentEvent() {
     return currentEvent;

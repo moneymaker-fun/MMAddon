@@ -107,7 +107,7 @@ public class NetworkPayloadListener {
                   }
                 }
 
-                if(this.addon.addonUtil().motd() != null && !this.motdSent) {
+                if(!this.addon.addonUtil().motd().isEmpty() && !this.motdSent) {
                   this.motdSent = true;
                   this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.motd", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
                   this.addon.displayMessage(this.addon.addonUtil().motd().replace("&", "§"));
