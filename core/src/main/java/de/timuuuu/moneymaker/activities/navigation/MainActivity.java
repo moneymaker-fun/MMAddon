@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.activities.navigation;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
-import de.timuuuu.moneymaker.activities.LeaderboardActivity;
 import de.timuuuu.moneymaker.activities.SecretActivity;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
@@ -18,7 +17,7 @@ public class MainActivity extends TabbedActivity {
   public MainActivity(MoneyMakerAddon addon) {
     this.addon = addon;
     this.register("moneymaker_start", new DefaultComponentTab(Component.translatable("moneymaker.navigation.main-menu"), addon.startActivity()));
-    this.register("moneymaker_leaderboard", new DefaultComponentTab(Component.translatable("moneymaker.navigation.leaderboard"), new LeaderboardActivity(addon)));
+    this.register("moneymaker_leaderboard", new DefaultComponentTab(Component.translatable("moneymaker.navigation.leaderboard"), addon.leaderboardActivity()));
     this.register("moneymaker_booster", new DefaultComponentTab(Component.translatable("moneymaker.navigation.booster"), new BoosterActivity(addon)));
     this.register("moneymaker_chat", new DefaultComponentTab(Component.translatable("moneymaker.navigation.chat"), addon.chatActivity()));
   }

@@ -3,10 +3,12 @@ package de.timuuuu.moneymaker.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.widgets.LeaderboardEntryWidget;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import de.timuuuu.moneymaker.event.EventChatListener;
 import de.timuuuu.moneymaker.event.EventChatMessages;
@@ -207,6 +209,46 @@ public class ApiUtil {
           if(!messages.isEmpty()) {
             Collections.reverse(messages);
             messages.forEach(message -> this.addon.chatActivity().addChatMessage(message));
+          }
+        });
+  }
+
+  public void loadLeaderboard(boolean update) {
+    this.addon.leaderboardActivity().entries().clear();
+    Request.ofGson(JsonArray.class)
+        .url(BASE_URL + "/leaderboard/")
+        .async()
+        .connectTimeout(5000)
+        .readTimeout(5000)
+        .addHeader("User-Agent", "MoneyMaker LabyMod 4 Addon")
+        .execute(response -> {
+          if(response.getStatusCode() != 200 || response.hasException()) {
+            this.addon.pushNotification(Component.text("Leaderboard", NamedTextColor.DARK_RED), Component.text("Failed to load Leaderboard from Server", NamedTextColor.RED));
+            this.addon.logger().error("Leaderboard Error: ", response.exception());
+            return;
+          }
+          JsonArray array = response.get();
+          array.forEach(jsonElement -> {
+            if(jsonElement.isJsonObject()) {
+              JsonObject object = jsonElement.getAsJsonObject();
+              if(object.has("UUID") && object.has("UserName") && object.has("Ranking")
+                  && object.has("Blocks") && object.has("Pickaxe_Ranking") && object.has("Sword_Ranking")) {
+                this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
+                  this.addon.leaderboardActivity().entries().add(new LeaderboardEntryWidget(
+                      this.addon,
+                      UUID.fromString(object.get("UUID").getAsString()),
+                      object.get("UserName").getAsString(),
+                      object.get("Ranking").getAsInt(),
+                      object.get("Blocks").getAsInt(),
+                      object.get("Pickaxe_Ranking").getAsInt(),
+                      object.get("Sword_Ranking").getAsInt()
+                  ));
+                });
+              }
+            }
+          });
+          if(update) {
+            this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.leaderboardActivity().reload());
           }
         });
   }

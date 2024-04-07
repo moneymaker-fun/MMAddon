@@ -152,7 +152,8 @@
         "blocks": {
           "enabled": "Deine Blöcke werden nun angezeigt.",
           "disabled": "Deine Blöcke werden nun versteckt."
-        }
+        },
+        "coolDown": "Bitte warte bis du das Leaderboard erneut aktualisieren kannst."
       }
     },
     "feedback": {
@@ -415,7 +416,21 @@
         }
       },
       "leaderboard": {
-        "title": "MoneyMaker Leaderboard"
+        "title": "MoneyMaker Leaderboard",
+        "update": "Aktualisieren",
+        "noData": "Ein Fehler ist aufgetreten!\nEs wurden keine Daten vom Server empfangen",
+        "header": {
+          "username": "Spielername",
+          "ranking": "Ranking",
+          "blocks": "Blöcke",
+          "sword": "Schwert Ranking",
+          "pickaxe": "Spitzhacken Ranking"
+        },
+        "sorting": {
+          "button": "Sortierung",
+          "asc": "Aufsteigend",
+          "desc": "Absteigend"
+        }
       },
       "booster": {
         "title": "Liste der gefarmten Booster",

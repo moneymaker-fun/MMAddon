@@ -152,7 +152,8 @@
         "blocks": {
           "enabled": "Your blocks will now be shown.",
           "disabled": "Your blocks will now be hidden."
-        }
+        },
+        "coolDown": "Please wait before refreshing the Leaderboard."
       }
     },
     "feedback": {
@@ -415,7 +416,21 @@
         }
       },
       "leaderboard": {
-        "title": "MoneyMaker Leaderboard"
+        "title": "MoneyMaker Leaderboard",
+        "update": "Update",
+        "noData": "An error occurred!\nNo data has been received from the server",
+        "header": {
+          "username": "Player name",
+          "ranking": "Ranking",
+          "blocks": "Blocks",
+          "sword": "Sword Ranking",
+          "pickaxe": "Pickaxe Ranking"
+        },
+        "sorting": {
+          "button": "Sorting",
+          "asc": "Ascending",
+          "desc": "Descending"
+        }
       },
       "booster": {
         "title": "List of farmed boosters",

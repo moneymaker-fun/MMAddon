@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker;
 
 import com.google.gson.Gson;
 import de.timuuuu.moneymaker.activities.ChatActivity;
+import de.timuuuu.moneymaker.activities.LeaderboardActivity;
 import de.timuuuu.moneymaker.activities.navigation.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
@@ -67,6 +68,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private ChatClient chatClient;
 
   private MainActivity mainActivity;
+  private LeaderboardActivity leaderboardActivity;
   private ChatActivity chatActivity;
   private StartActivity startActivity;
 
@@ -97,6 +99,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.addonUtil = new AddonUtil(this);
 
     this.startActivity = new StartActivity(this);
+    this.leaderboardActivity = new LeaderboardActivity(this);
     this.chatActivity = new ChatActivity(this);
     this.mainActivity = new MainActivity(this);
 
@@ -150,6 +153,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.addonSettings.selectUpdateMode(this.configuration().updateMode().get());
     this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
     this.apiUtil.loadCoordinates();
+    //this.apiUtil.loadLeaderboard(false);
   }
 
   @Override
@@ -183,6 +187,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public MainActivity mainActivity() {
     return mainActivity;
+  }
+
+  public LeaderboardActivity leaderboardActivity() {
+    return leaderboardActivity;
   }
 
   public ChatActivity chatActivity() {

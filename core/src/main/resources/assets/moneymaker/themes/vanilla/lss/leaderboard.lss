@@ -12,4 +12,162 @@
   right: 20;
   box-shadow: classic left top right bottom;
   renderer: "DirtBackground";
+
+  .error-text {
+    alignment-y: center;
+    alignment-x: center;
+  }
+
+  .update-button {
+    top: 5;
+    right: 10;
+    padding-left: 3;
+    padding-right: 3;
+    width: fit-content;
+    height: 12;
+  }
+
+  .sort-type-button {
+    top: 5;
+    left: 10;
+    padding-left: 3;
+    padding-right: 3;
+    width: fit-content;
+    height: 12;
+  }
+
+  .sort-direction-button {
+    top: 17;
+    left: 10;
+    padding-left: 3;
+    padding-right: 3;
+    width: fit-content;
+    height: 12;
+  }
+
+  .header {
+    top: 30;
+    left: 10;
+    right: 10;
+    space-between-entries: 1;
+    height: fit-content;
+    border: 2 2 2 1 dark_gray;
+
+    .active {
+      text-color: yellow;
+    }
+
+    .username {
+      width: 20%;
+      height: 13;
+      alignment-x: center;
+    }
+
+    .ranking {
+      width: 20%;
+      height: 13;
+      alignment-x: center;
+      border: 2 0 2 0 dark_gray;
+    }
+
+    .blocks {
+      width: 20%;
+      height: 100%;
+      alignment-x: center;
+      border: 0 0 2 0 dark_gray;
+    }
+
+    .pickaxe-ranking {
+      width: 20%;
+      height: 100%;
+      alignment-x: center;
+      border: 0 0 2 0 dark_gray;
+    }
+
+    .sword-ranking {
+      width: 20%;
+      height: 100%;
+      alignment-x: center;
+    }
+
+  }
+
+  .leaderboard-scroll {
+    top: 50;
+    left: 10;
+    right: 0;
+    bottom: 5;
+
+    Scrollbar {
+      left: 0;
+      top: 0;
+      width: 5;
+      height: 100%;
+      margin-right: 5;
+    }
+
+    .entries {
+      top: 0;
+      space-between-entries: 1;
+      width: 90%;
+      height: fit-content;
+
+      LeaderboardEntry {
+        width: 90%;
+        height: 13;
+
+        border: 2 1 2 1 dark_gray;
+
+        .user {
+          height: 14;
+          width: 20%;
+
+          .head {
+            padding: 0 2 0 2;
+            width: 10;
+            height: 10;
+          }
+
+          .userName {
+            margin-top: -1;
+            font-weight: 175;
+            font-size: 1.0;
+          }
+
+        }
+
+        .ranking {
+          width: 20%;
+          height: 13;
+          alignment-x: center;
+          border: 2 0 2 0 dark_gray;
+        }
+
+        .blocks {
+          width: 20%;
+          height: 13;
+          alignment-x: center;
+          border: 0 0 2 0 dark_gray;
+        }
+
+        .pickaxe-ranking {
+          width: 20%;
+          height: 13;
+          alignment-x: center;
+          border: 0 0 2 0 dark_gray;
+        }
+
+        .sword-ranking {
+          width: 20%;
+          height: 13;
+          alignment-x: center;
+          border: 0 0 2 0 dark_gray;
+        }
+
+      }
+
+    }
+
+  }
+
 }
