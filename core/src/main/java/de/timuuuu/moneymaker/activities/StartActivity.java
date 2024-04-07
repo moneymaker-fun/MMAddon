@@ -38,7 +38,7 @@ public class StartActivity extends SimpleActivity {
   public void initialize(Parent parent) {
     super.initialize(parent);
 
-    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title").addId("start-title");
+    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title").addId("title");
     this.document.addChild(titleWidget);
 
     DivWidget container = new DivWidget();
