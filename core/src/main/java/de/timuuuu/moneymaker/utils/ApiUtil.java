@@ -45,6 +45,10 @@ public class ApiUtil {
 
             JsonObject object = response.get();
 
+            if(object.has("motd") && object.get("motd").isJsonPrimitive()) {
+              this.addon.addonUtil().motd(object.get("motd").getAsString());
+            }
+
             if(object.has("settings") && object.get("settings").isJsonObject()) {
               JsonObject settingsObject = object.get("settings").getAsJsonObject();
 

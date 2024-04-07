@@ -13,7 +13,10 @@ public class AddonUtil {
     this.addon = addon;
   }
 
+
+
   private String currentEvent = "NONE";
+  private String motd = null;
 
   public String currentEvent() {
     return currentEvent;
@@ -21,6 +24,14 @@ public class AddonUtil {
 
   public void currentEvent(String currentEvent) {
     this.currentEvent = currentEvent;
+  }
+
+  public String motd() {
+    return motd;
+  }
+
+  public void motd(String motd) {
+    this.motd = motd;
   }
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();

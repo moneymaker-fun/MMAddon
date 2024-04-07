@@ -48,7 +48,8 @@
           "total": "You have a total of %s Boosters in your Booster-Inventory, this corresponds to a total boost of %s.",
           "info": "Please not that only boosters are recorded\nthat are currently visible in the inventory."
         }
-      }
+      },
+      "motd": "Message of the Day"
     },
     "discordPresence": {
       "mine": {

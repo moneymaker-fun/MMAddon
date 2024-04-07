@@ -22,6 +22,7 @@ public class NetworkPayloadListener {
   private final MoneyMakerAddon addon;
 
   private boolean langInfoOpened = false;
+  private boolean motdSent = false;
 
   public NetworkPayloadListener(MoneyMakerAddon addon) {
     this.addon = addon;
@@ -98,11 +99,20 @@ public class NetworkPayloadListener {
                 this.addon.chatClient().sendMessage("playerStatus", data);
               }
 
-              if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.configuration().languageInfoClosed().get()) {
-                if(!langInfoOpened) {
-                  langInfoOpened = true;
-                  Task.builder(() -> Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen())))).delay(2, TimeUnit.SECONDS).build().execute();
+              if(this.addon.addonUtil().connectedToMoneyMaker()) {
+                if(!this.addon.configuration().languageInfoClosed().get()) {
+                  if(!langInfoOpened) {
+                    langInfoOpened = true;
+                    Task.builder(() -> Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen())))).delay(2, TimeUnit.SECONDS).build().execute();
+                  }
                 }
+
+                if(this.addon.addonUtil().motd() != null && !this.motdSent) {
+                  this.motdSent = true;
+                  this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.motd", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
+                  this.addon.displayMessage(this.addon.addonUtil().motd().replace("&", "§"));
+                }
+
               }
 
             }
