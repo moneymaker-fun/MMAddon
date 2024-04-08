@@ -165,7 +165,6 @@
           width: 20%;
           height: 13;
           alignment-x: center;
-          border: 0 0 2 0 dark_gray;
         }
 
       }
