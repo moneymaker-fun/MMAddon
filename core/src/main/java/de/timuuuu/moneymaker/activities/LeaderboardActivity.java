@@ -35,7 +35,7 @@ public class LeaderboardActivity extends SimpleActivity {
 
   private List<LeaderboardEntryWidget> entries = new ArrayList<>();
 
-  private final int updateTime = 10*60*1000;
+  private final int updateTime = /*10*60**/1000;
   private long updateCoolDown = 0;
 
   public LeaderboardActivity(MoneyMakerAddon addon) {
@@ -73,11 +73,13 @@ public class LeaderboardActivity extends SimpleActivity {
     if(!this.entries.isEmpty()) {
 
       if(this.sorting == SortType.USERNAME) {
-        this.entries.sort(Comparator.comparing(LeaderboardEntryWidget::playerName));
-        if(this.sortDirection == SortDirection.DESC) {
-          Collections.reverse(this.entries);
+        Comparator<LeaderboardEntryWidget> comparator = Comparator.comparing(entry -> entry.playerName().toLowerCase());
+        if (this.sortDirection == SortDirection.DESC) {
+          comparator = comparator.reversed();
         }
+        this.entries.sort(comparator);
       }
+
       if(this.sorting == SortType.RANKING) {
         this.entries.sort(Comparator.comparing(LeaderboardEntryWidget::ranking));
         if(this.sortDirection == SortDirection.DESC) {
