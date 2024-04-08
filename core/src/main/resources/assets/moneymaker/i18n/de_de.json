@@ -152,7 +152,8 @@
         "title": "MoneyMaker - Leaderboard",
         "blocks": {
           "enabled": "Deine Blöcke werden nun angezeigt.",
-          "disabled": "Deine Blöcke werden nun versteckt."
+          "disabled": "Deine Blöcke werden nun versteckt.",
+          "info": "Bitte beachte, dass diese Einstellung erst beim beenden des Spiels oder beim verlassen von GommeHD.net gespeichert wird."
         },
         "coolDown": "Bitte warte bis du das Leaderboard erneut aktualisieren kannst."
       }
@@ -419,6 +420,10 @@
       "leaderboard": {
         "title": "MoneyMaker Leaderboard",
         "update": "Aktualisieren",
+        "toggleBlocks": {
+          "enabled": "Eigene Blöcke anzeigen",
+          "disabled": "Eigene Blöcke verstecken"
+        },
         "noData": "Ein Fehler ist aufgetreten!\nEs wurden keine Daten vom Server empfangen",
         "header": {
           "username": "Spielername",

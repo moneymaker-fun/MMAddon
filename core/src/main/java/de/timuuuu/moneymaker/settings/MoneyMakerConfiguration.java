@@ -54,12 +54,16 @@ public class MoneyMakerConfiguration extends AddonConfig {
       addon.pushNotification(
           Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
           Component.translatable("moneymaker.notification.leaderboard.blocks.disabled", NamedTextColor.RED)
+              .append(Component.text("\n"))
+              .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
       );
     } else {
       addon.addonUtil().leaderboardShowBlocks(true);
       addon.pushNotification(
           Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
           Component.translatable("moneymaker.notification.leaderboard.blocks.enabled", NamedTextColor.GREEN)
+              .append(Component.text("\n"))
+              .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
       );
     }
   }

@@ -52,6 +52,33 @@ public class LeaderboardActivity extends SimpleActivity {
     DivWidget container = new DivWidget();
     container.addId("container");
 
+    ButtonWidget toggleBlocksButton = ButtonWidget.component(
+        Component.translatable("moneymaker.ui.leaderboard.toggleBlocks." + (this.addon.addonUtil().leaderboardShowBlocks() ? "enabled": "disabled"), NamedTextColor.YELLOW)
+    ).addId("toggle-blocks-button");
+    toggleBlocksButton.setPressable(() -> {
+      if(this.addon.addonUtil().leaderboardShowBlocks()) {
+        this.addon.addonUtil().leaderboardShowBlocks(false);
+        this.addon.pushNotification(
+            Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
+            Component.translatable("moneymaker.notification.leaderboard.blocks.disabled", NamedTextColor.RED)
+                .append(Component.text("\n"))
+                .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
+        );
+      } else {
+        this.addon.addonUtil().leaderboardShowBlocks(true);
+        this.addon.pushNotification(
+            Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
+            Component.translatable("moneymaker.notification.leaderboard.blocks.enabled", NamedTextColor.GREEN)
+                .append(Component.text("\n"))
+                .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
+        );
+      }
+      toggleBlocksButton.updateComponent(
+          Component.translatable("moneymaker.ui.leaderboard.toggleBlocks." + (this.addon.addonUtil().leaderboardShowBlocks() ? "enabled": "disabled"), NamedTextColor.YELLOW)
+      );
+    });
+    container.addChild(toggleBlocksButton);
+
     ButtonWidget updateButton = ButtonWidget.component(
         Component.translatable("moneymaker.ui.leaderboard.update", NamedTextColor.GREEN)
     ).addId("update-button");

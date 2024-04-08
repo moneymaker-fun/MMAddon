@@ -152,7 +152,8 @@
         "title": "MoneyMaker - Leaderboard",
         "blocks": {
           "enabled": "Your blocks will now be shown.",
-          "disabled": "Your blocks will now be hidden."
+          "disabled": "Your blocks will now be hidden.",
+          "info": "Please note that this setting will only be saved when you close the game or leave GommeHD.net."
         },
         "coolDown": "Please wait before refreshing the Leaderboard."
       }
@@ -419,6 +420,10 @@
       "leaderboard": {
         "title": "MoneyMaker Leaderboard",
         "update": "Update",
+        "toggleBlocks": {
+          "enabled": "Shown own blocks",
+          "disabled": "Hide own blocks"
+        },
         "noData": "An error occurred!\nNo data has been received from the server",
         "header": {
           "username": "Player name",
