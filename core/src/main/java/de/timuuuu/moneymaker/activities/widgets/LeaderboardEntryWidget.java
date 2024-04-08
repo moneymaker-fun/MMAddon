@@ -46,7 +46,7 @@ public class LeaderboardEntryWidget extends HorizontalListWidget {
     this.addEntry(userWidget);
 
     this.addEntry(ComponentWidget.component(Component.text(Util.format(this.ranking))).addId("ranking"));
-    this.addEntry(ComponentWidget.component(Component.text(Util.format(this.blocks))).addId("blocks"));
+    this.addEntry(ComponentWidget.component(Component.text(this.blocks != -2 ? Util.format(this.blocks) : "-")).addId("blocks"));
     this.addEntry(ComponentWidget.component(Component.text(Util.format(this.pickaxeRanking))).addId("pickaxe-ranking"));
     this.addEntry(ComponentWidget.component(Component.text(Util.format(this.swordRanking))).addId("sword-ranking"));
 
