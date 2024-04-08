@@ -18,8 +18,17 @@
     alignment-x: center;
   }
 
-  .update-button {
+  .toggle-blocks-button {
     top: 5;
+    right: 10;
+    padding-left: 3;
+    padding-right: 3;
+    width: fit-content;
+    height: 12;
+  }
+
+  .update-button {
+    top: 17;
     right: 10;
     padding-left: 3;
     padding-right: 3;
