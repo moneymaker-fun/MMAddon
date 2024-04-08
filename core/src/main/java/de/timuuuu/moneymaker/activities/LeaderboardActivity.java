@@ -35,7 +35,7 @@ public class LeaderboardActivity extends SimpleActivity {
 
   private List<LeaderboardEntryWidget> entries = new ArrayList<>();
 
-  private final int updateTime = /*10*60**/1000;
+  private final int updateTime = 10*60*1000;
   private long updateCoolDown = 0;
 
   public LeaderboardActivity(MoneyMakerAddon addon) {
