@@ -359,7 +359,7 @@ public class ChatActivity extends SimpleActivity {
       if(chatMessages.size() <= MESSAGE_LIMIT) {
         chatMessages.add(new ChatMessageWidget(this.addon, chatMessage.fromServerCache() ? chatMessage.timeStamp() : CURRENT_TIME, chatMessage).addId("chat-message"));
       } else {
-        chatMessages.remove(0);
+        chatMessages.removeFirst();
         chatMessages.add(new ChatMessageWidget(this.addon, chatMessage.fromServerCache() ? chatMessage.timeStamp() : CURRENT_TIME, chatMessage).addId("chat-message"));
       }
 
@@ -406,7 +406,7 @@ public class ChatActivity extends SimpleActivity {
       if(chatMessages.size() <= MESSAGE_LIMIT) {
         chatMessages.add(new ChatMessageWidget(this.addon, CURRENT_TIME, chatMessage));
       } else {
-        chatMessages.remove(0);
+        chatMessages.removeFirst();
         chatMessages.add(new ChatMessageWidget(this.addon, CURRENT_TIME, chatMessage));
       }
 

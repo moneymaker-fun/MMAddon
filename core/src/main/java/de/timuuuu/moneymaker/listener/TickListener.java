@@ -10,6 +10,7 @@ import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
 import java.util.List;
+import java.util.Objects;
 
 public class TickListener {
 
@@ -30,7 +31,7 @@ public class TickListener {
     if(generalTickCount >= this.addon.addonSettings().CHECK_TICK()) {
       generalTickCount = 0;
 
-      float playerY = this.addon.labyAPI().minecraft().getClientPlayer().position().getY();
+      float playerY = Objects.requireNonNull(this.addon.labyAPI().minecraft().getClientPlayer()).position().getY();
       MiningCave currentCave = this.addon.addonUtil().miningCave();
 
       // Gold Ebene

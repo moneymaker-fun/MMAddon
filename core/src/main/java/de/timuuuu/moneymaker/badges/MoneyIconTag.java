@@ -22,11 +22,6 @@ public class MoneyIconTag extends IconTag {
   }
 
   @Override
-  public int getColor() {
-    return super.getColor();
-  }
-
-  @Override
   public Icon getIcon() {
     MoneyRank rank = this.visibleRank(entity);
     return rank != null ? rank.getIcon() : super.getIcon();
