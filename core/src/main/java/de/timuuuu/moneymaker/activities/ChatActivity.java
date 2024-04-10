@@ -138,7 +138,12 @@ public class ChatActivity extends SimpleActivity {
 
     if(this.addon.chatClient().online()) {
       List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
-      players.sort(Comparator.comparing(o -> o.rank().getId()));
+      players.sort(Comparator.comparing(moneyPlayer -> {
+        if(moneyPlayer.rank() != null) {
+          return moneyPlayer.rank().getId();
+        }
+        return MoneyRank.USER.getId();
+      }));
 
       if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
         onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online auf MoneyMaker", NamedTextColor.GRAY))));
