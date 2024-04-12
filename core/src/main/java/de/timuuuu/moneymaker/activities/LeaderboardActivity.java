@@ -175,7 +175,11 @@ public class LeaderboardActivity extends SimpleActivity {
       container.addChild(header);
 
       VerticalListWidget<LeaderboardEntryWidget> listWidget = new VerticalListWidget<>().addId("entries");
-      this.entries.forEach(listWidget::addChild);
+      this.entries.forEach(entry -> {
+        if(entry.ranking() != 0) {
+          listWidget.addChild(entry);
+        }
+      });
       container.addChild(new ScrollWidget(listWidget, new ListSession<>()).addId("leaderboard-scroll"));
 
     } else {
