@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.settings;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.color.ColorPickerWidget.ColorPickerSetting;
 import net.labymod.api.configuration.loader.Config;
+import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
@@ -26,6 +27,11 @@ public class MoneyBadgeConfiguration extends Config {
   @SwitchSetting
   private ConfigProperty<Boolean> tabListIcon = new ConfigProperty<>(true);
 
+  @IntroducedIn(namespace = "moneymaker", value = "1.5.1")
+  @SpriteSlot(x = 1)
+  @SwitchSetting
+  private ConfigProperty<Boolean> chatIcon = new ConfigProperty<>(true);
+
   @SettingSection(value = "customization", center = true)
 
   @SpriteSlot(y = 7, x = 3)
@@ -42,6 +48,10 @@ public class MoneyBadgeConfiguration extends Config {
 
   public ConfigProperty<Boolean> tabListIcon() {
     return tabListIcon;
+  }
+
+  public ConfigProperty<Boolean> chatIcon() {
+    return chatIcon;
   }
 
   public ConfigProperty<Color> textColor() {

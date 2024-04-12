@@ -386,6 +386,9 @@
         "tabListIcon": {
           "name": "Show Icon in TabList"
         },
+        "chatIcon": {
+          "name": "Show Icon in Chat"
+        },
         "textColor": {
           "name": "Color of the Text-Tag"
         }
