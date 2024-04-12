@@ -31,7 +31,7 @@ public class LeaderboardActivity extends SimpleActivity {
   private MoneyMakerAddon addon;
 
   private SortType sorting = SortType.RANKING;
-  private SortDirection sortDirection = SortDirection.DESC;
+  private SortDirection sortDirection = SortDirection.ASC;
 
   private List<LeaderboardEntryWidget> entries = new ArrayList<>();
 
