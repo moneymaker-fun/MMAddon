@@ -11,7 +11,7 @@
     "navigation": {
       "title": "MoneyMaker",
       "main-menu": "Hauptmenü",
-      "leaderboard": "Leaderboard",
+      "leaderboard": "Bestenliste",
       "booster": "Booster",
       "chat": "Chat",
       "secret": "Secret"
@@ -421,7 +421,7 @@
         }
       },
       "leaderboard": {
-        "title": "MoneyMaker Leaderboard",
+        "title": "MoneyMaker Bestenliste",
         "update": "Aktualisieren",
         "toggleBlocks": {
           "enabled": "Eigene Blöcke anzeigen",
@@ -430,10 +430,10 @@
         "noData": "Ein Fehler ist aufgetreten!\nEs wurden keine Daten vom Server empfangen",
         "header": {
           "username": "Spielername",
-          "ranking": "Ranking",
+          "ranking": "Rang",
           "blocks": "Blöcke",
-          "sword": "Schwert Ranking",
-          "pickaxe": "Spitzhacken Ranking"
+          "sword": "Schwert Rang",
+          "pickaxe": "Spitzhacken Rang"
         },
         "sorting": {
           "button": "Sortierung",
