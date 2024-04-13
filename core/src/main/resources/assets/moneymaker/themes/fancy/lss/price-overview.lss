@@ -50,11 +50,6 @@
     .gold-list {
       width: 100%;
       height: 100%;
-
-      Component {
-        font-size: 0.8;
-      }
-
     }
 
     Scrollbar {
@@ -102,10 +97,6 @@
       width: 100%;
       height: 100%;
 
-      Component {
-        font-size: 0.8;
-      }
-
     }
 
     Scrollbar {
@@ -117,6 +108,23 @@
 
   }
 
+}
+
+@media screen and (max-width: 1080) {
+  .gold-container Component,
+  .iron-container Component,
+  .coal-container Component,
+  .lapis-container Component {
+    font-size: 0.8;
+  }
+}
+@media screen and (min-width: 1080) {
+  .gold-container Component,
+  .iron-container Component,
+  .coal-container Component,
+  .lapis-container Component {
+    font-size: 1.1;
+  }
 }
 
 .iron-container {
@@ -152,11 +160,6 @@
     .iron-list {
       width: 100%;
       height: 100%;
-
-      Component {
-        font-size: 0.8;
-      }
-
     }
 
     Scrollbar {
@@ -203,11 +206,6 @@
     .lapis-list {
       width: 100%;
       height: 100%;
-
-      Component {
-        font-size: 0.8;
-      }
-
     }
 
     Scrollbar {
