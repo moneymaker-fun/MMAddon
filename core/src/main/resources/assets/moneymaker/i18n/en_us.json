@@ -395,11 +395,14 @@
         }
       }
     },
+
     "ui": {
+
       "button": {
         "discord": "Discord",
         "leaderboard": "Leaderboard"
       },
+
       "start": {
         "title": "MoneyMaker Main Menu",
         "current-timers": "Currently active timers",
@@ -421,6 +424,16 @@
           }
         }
       },
+
+      "priceOverview": {
+        "title": "MoneyMaker Price Overview",
+        "gold": "Gold-Mine",
+        "coal": "Coal-Mine",
+        "iron": "Iron-Mine",
+        "lapis": "Lapis-Mine",
+        "unlockCosts": "Price for Unlock: "
+      },
+
       "leaderboard": {
         "title": "MoneyMaker Leaderboard",
         "update": "Update",
@@ -442,6 +455,7 @@
           "desc": "Descending"
         }
       },
+
       "booster": {
         "title": "List of farmed boosters",
         "boost-total": "Total: %s",
@@ -453,6 +467,7 @@
         "export": "Export as CSV",
         "clear": "Clear Booster List"
       },
+
       "chat": {
         "title": "MoneyMaker Addon Chat",
         "server-offline": "The chat server is currently not available.",
@@ -477,6 +492,7 @@
           "mute": "Mute"
         }
       },
+
       "secret": {
         "title": "Super Secret Settings",
         "chat": {
@@ -484,6 +500,7 @@
           "all-players": "Show all players in Onlinelist"
         }
       }
+
     },
     "hudWidget": {
       "mm_booster_count": {
