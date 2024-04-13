@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.PriceOverviewActivity.MineData;
 import de.timuuuu.moneymaker.activities.widgets.LeaderboardEntryWidget;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import java.util.ArrayList;
@@ -91,12 +92,105 @@ public class ApiUtil {
                     this.addon.labyAPI().hudWidgetRegistry().register(new ChristmasEventWidget(this.addon));
                   });
                 }
-
               }
-
             }
 
           }
+
+          if(object.has("prices") && object.get("prices").isJsonObject()) {
+            JsonObject pricesObject = object.get("prices").getAsJsonObject();
+
+            if(pricesObject.has("Goldmine") && pricesObject.get("Goldmine").isJsonObject()) {
+              JsonObject goldmineObject = pricesObject.get("Goldmine").getAsJsonObject();
+              if(goldmineObject.has("cost") && goldmineObject.has("workers")) {
+
+                String cost = goldmineObject.get("cost").getAsString();
+                List<String> workers = new ArrayList<>();
+                if(goldmineObject.get("workers").isJsonArray()) {
+                  JsonArray array = goldmineObject.get("workers").getAsJsonArray();
+                  array.forEach(jsonElement -> {
+                    if(jsonElement.isJsonObject()) {
+                      JsonObject workerObject = jsonElement.getAsJsonObject();
+                      this.addon.logger().info(workerObject.toString());
+                      if(workerObject.has("name") && workerObject.has("costs")) {
+                        workers.add(workerObject.get("name").getAsString() + ";" + workerObject.get("costs").getAsString());
+                      }
+                    }
+                  });
+                }
+                this.addon.priceOverviewActivity().priceData().put("Goldmine", new MineData(cost, workers));
+
+              }
+            }
+
+            if(pricesObject.has("Kohlemine") && pricesObject.get("Kohlemine").isJsonObject()) {
+              JsonObject coalMineObject = pricesObject.get("Kohlemine").getAsJsonObject();
+              if(coalMineObject.has("cost") && coalMineObject.has("workers")) {
+
+                String cost = coalMineObject.get("cost").getAsString();
+                List<String> workers = new ArrayList<>();
+                if(coalMineObject.get("workers").isJsonArray()) {
+                  JsonArray array = coalMineObject.get("workers").getAsJsonArray();
+                  array.forEach(jsonElement -> {
+                    if(jsonElement.isJsonObject()) {
+                      JsonObject workerObject = jsonElement.getAsJsonObject();
+                      if(workerObject.has("name") && workerObject.has("costs")) {
+                        workers.add(workerObject.get("name").getAsString() + ";" + workerObject.get("costs").getAsString());
+                      }
+                    }
+                  });
+                }
+                this.addon.priceOverviewActivity().priceData().put("Kohlemine", new MineData(cost, workers));
+
+              }
+            }
+
+            if(pricesObject.has("Eisenmine") && pricesObject.get("Eisenmine").isJsonObject()) {
+              JsonObject ironMineObject = pricesObject.get("Eisenmine").getAsJsonObject();
+              if(ironMineObject.has("cost") && ironMineObject.has("workers")) {
+
+                String cost = ironMineObject.get("cost").getAsString();
+                List<String> workers = new ArrayList<>();
+                if(ironMineObject.get("workers").isJsonArray()) {
+                  JsonArray array = ironMineObject.get("workers").getAsJsonArray();
+                  array.forEach(jsonElement -> {
+                    if(jsonElement.isJsonObject()) {
+                      JsonObject workerObject = jsonElement.getAsJsonObject();
+                      if(workerObject.has("name") && workerObject.has("costs")) {
+                        workers.add(workerObject.get("name").getAsString() + ";" + workerObject.get("costs").getAsString());
+                      }
+                    }
+                  });
+                }
+                this.addon.priceOverviewActivity().priceData().put("Eisenmine", new MineData(cost, workers));
+
+              }
+            }
+
+            if(pricesObject.has("Lapismine") && pricesObject.get("Lapismine").isJsonObject()) {
+              JsonObject lapisMineObject = pricesObject.get("Lapismine").getAsJsonObject();
+              if(lapisMineObject.has("cost") && lapisMineObject.has("workers")) {
+
+                String cost = lapisMineObject.get("cost").getAsString();
+                List<String> workers = new ArrayList<>();
+                if(lapisMineObject.get("workers").isJsonArray()) {
+                  JsonArray array = lapisMineObject.get("workers").getAsJsonArray();
+                  array.forEach(jsonElement -> {
+                    if(jsonElement.isJsonObject()) {
+                      JsonObject workerObject = jsonElement.getAsJsonObject();
+                      if(workerObject.has("name") && workerObject.has("costs")) {
+                        workers.add(workerObject.get("name").getAsString() + ";" + workerObject.get("costs").getAsString());
+                      }
+                    }
+                  });
+                }
+                this.addon.priceOverviewActivity().priceData().put("Lapismine", new MineData(cost, workers));
+
+              }
+            }
+
+          }
+
         });
   }
 

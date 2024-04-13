@@ -11,6 +11,7 @@
     "navigation": {
       "title": "MoneyMaker",
       "main-menu": "Hauptmenü",
+      "prices": "Preisübersicht",
       "leaderboard": "Bestenliste",
       "booster": "Booster",
       "chat": "Chat",
@@ -394,11 +395,14 @@
         }
       }
     },
+
     "ui": {
+
       "button": {
         "discord": "Discord",
         "leaderboard": "Leaderboard"
       },
+
       "start": {
         "title": "MoneyMaker Hauptmenü",
         "current-timers": "Aktuell laufende Timer",
@@ -420,6 +424,16 @@
           }
         }
       },
+
+      "priceOverview": {
+        "title": "MoneyMaker Preisübersicht",
+        "gold": "Gold-Mine",
+        "coal": "Kohle-Mine",
+        "iron": "Eisen-Mine",
+        "lapis": "Lapis-Mine",
+        "unlockCosts": "Preis der Freischaltung: "
+      },
+
       "leaderboard": {
         "title": "MoneyMaker Bestenliste",
         "update": "Aktualisieren",
@@ -441,6 +455,7 @@
           "desc": "Absteigend"
         }
       },
+
       "booster": {
         "title": "Liste der gefarmten Booster",
         "boost-total": "Gesamt: %s",
@@ -452,6 +467,7 @@
         "export": "Als CSV exportieren",
         "clear": "Booster Liste leeren"
       },
+
       "chat": {
         "title": "MoneyMaker Addon Chat",
         "server-offline": "Der Chat-Server ist aktuell nicht erreichbar.",
@@ -476,6 +492,7 @@
           "mute": "Muten"
         }
       },
+
       "secret": {
         "title": "Super Secret Einstellungen",
         "chat": {
@@ -483,7 +500,9 @@
           "all-players": "Alle Spieler in Onlineliste anzeigen"
         }
       }
+
     },
+
     "hudWidget": {
       "mm_booster_count": {
         "name": "Booster-Count"

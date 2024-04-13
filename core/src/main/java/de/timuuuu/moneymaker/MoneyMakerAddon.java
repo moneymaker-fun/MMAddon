@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker;
 import com.google.gson.Gson;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.LeaderboardActivity;
+import de.timuuuu.moneymaker.activities.PriceOverviewActivity;
 import de.timuuuu.moneymaker.activities.navigation.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
@@ -69,6 +70,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private ChatClient chatClient;
 
   private MainActivity mainActivity;
+  private PriceOverviewActivity priceOverviewActivity;
   private LeaderboardActivity leaderboardActivity;
   private ChatActivity chatActivity;
   private StartActivity startActivity;
@@ -100,6 +102,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.addonUtil = new AddonUtil(this);
 
     this.startActivity = new StartActivity(this);
+    this.priceOverviewActivity = new PriceOverviewActivity(this);
     this.leaderboardActivity = new LeaderboardActivity(this);
     this.chatActivity = new ChatActivity(this);
     this.mainActivity = new MainActivity(this);
@@ -189,6 +192,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public MainActivity mainActivity() {
     return mainActivity;
+  }
+
+  public PriceOverviewActivity priceOverviewActivity() {
+    return priceOverviewActivity;
   }
 
   public LeaderboardActivity leaderboardActivity() {
