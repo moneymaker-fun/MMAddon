@@ -81,6 +81,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private AddonSettings addonSettings;
   private AddonUtil addonUtil;
 
+  private EntityRenderListener entityRenderListener;
+
   private static MoneyMakerAddon instance;
 
   private Gson gson;
@@ -121,7 +123,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new MoneyAddonListener(this));
     this.registerListener(new ChatServerListener(this));
     this.registerListener(new ScoreBoardListener(this));
-    this.registerListener(new EntityRenderListener(this));
+    this.registerListener(this.entityRenderListener = new EntityRenderListener(this));
     this.registerListener(new TickListener(this));
     this.registerListener(new InventoryListener(this));
 
@@ -212,6 +214,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public StartActivity startActivity() {
     return startActivity;
+  }
+
+  public EntityRenderListener entityRenderListener() {
+    return entityRenderListener;
   }
 
   public void pushNotification(Component title, Component text) {

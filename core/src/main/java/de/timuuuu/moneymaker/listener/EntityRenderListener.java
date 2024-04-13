@@ -64,12 +64,12 @@ public class EntityRenderListener {
           time = time + ":00";
           if(this.addon.addonUtil().debrisTime() == 0 & !timerRunning) {
             this.addon.addonUtil().debrisTime(Util.timeToInt(time, true));
-            startTask();
+            startDebrisTask();
           }
         } else {
           if(this.addon.addonUtil().debrisTime() == 0 & !timerRunning) {
             this.addon.addonUtil().debrisTime(Util.timeToInt(time, false));
-            startTask();
+            startDebrisTask();
           }
         }
 
@@ -82,16 +82,23 @@ public class EntityRenderListener {
   private boolean timerRunning = false;
   private Task debrisTask;
 
-  private void startTask() {
-    timerRunning = true;
-    debrisTask = Task.builder(() -> {
+  private void startDebrisTask() {
+    this.timerRunning = true;
+    this.debrisTask = Task.builder(() -> {
       this.addon.addonUtil().debrisTime(this.addon.addonUtil().debrisTime() -1);
       if(this.addon.addonUtil().debrisTime() <= 0) {
         debrisTask.cancel();
         timerRunning = false;
       }
     }).repeat(1, TimeUnit.SECONDS).build();
-    debrisTask.execute();
+    this.debrisTask.execute();
+  }
+
+  public void stopDebrisTask() {
+    if(this.debrisTask == null) return;
+    this.debrisTask.cancel();
+    this.timerRunning = false;
+    this.addon.addonUtil().debrisTime(0);
   }
 
 }
