@@ -118,6 +118,7 @@
     font-size: 0.8;
   }
 }
+
 @media screen and (min-width: 1080) {
   .gold-container Component,
   .iron-container Component,
