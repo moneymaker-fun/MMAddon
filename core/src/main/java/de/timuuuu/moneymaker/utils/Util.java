@@ -54,7 +54,7 @@ public class Util {
   public static ButtonWidget leaderboardButton() {
     ButtonWidget leaderboardButton = ButtonWidget.i18n("moneymaker.ui.button.leaderboard").addId("leaderboard-button");
     leaderboardButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?page=leaderboard");
+      OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/leaderboard/");
     });
     return leaderboardButton;
   }
