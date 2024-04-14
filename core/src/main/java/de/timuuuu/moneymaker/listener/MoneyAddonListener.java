@@ -139,7 +139,6 @@ public class MoneyAddonListener {
 
     if(this.addon.configuration().resetOnProfileSwitch().get()) {
       this.addon.addonUtil().resetValues(false);
-      this.addon.entityRenderListener().stopDebrisTask();
       this.addon.pushNotification(
           Component.translatable("moneymaker.notification.dataReset.profile.title", NamedTextColor.AQUA),
           Component.translatable("moneymaker.notification.dataReset.profile.text", NamedTextColor.YELLOW)

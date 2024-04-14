@@ -66,6 +66,7 @@ public class AddonUtil {
     swordMobs = 0;
     mobKills = 0;
     sessionKills = 0;
+    this.addon.entityRenderListener().stopDebrisTask();
   }
 
   private boolean leaderboardShowBlocks = true;
