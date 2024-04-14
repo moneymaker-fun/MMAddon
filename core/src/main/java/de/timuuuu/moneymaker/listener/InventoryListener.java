@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.listener;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -46,9 +47,12 @@ public class InventoryListener {
       } else {
         // {"italic":false,"color":"aqua","text":"Profil-Slot 1"}
         try {
-          JsonObject object = JsonParser.parseString(event.getItemName()).getAsJsonObject();
-          if(object.has("text")) {
-            newProfile = object.get("text").getAsString();
+          JsonElement element = JsonParser.parseString(event.getItemName());
+          if(element != null && element.isJsonObject()) {
+            JsonObject object = element.getAsJsonObject();
+            if(object.has("text")) {
+              newProfile = object.get("text").getAsString();
+            }
           }
         } catch (JsonSyntaxException ignored) {}
       }
