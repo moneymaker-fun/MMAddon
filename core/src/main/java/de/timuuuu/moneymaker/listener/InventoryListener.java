@@ -41,31 +41,34 @@ public class InventoryListener {
 
     if(event.getInventoryName().equals("Profil-Übersicht") || event.getInventoryName().equals("Profile overview")) {
 
-      String newProfile = null;
-      if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
-        newProfile = event.getItemName();
-      } else {
-        // {"italic":false,"color":"aqua","text":"Profil-Slot 1"}
-        try {
-          JsonElement element = JsonParser.parseString(event.getItemName());
-          if(element != null && element.isJsonObject()) {
-            JsonObject object = element.getAsJsonObject();
-            if(object.has("text")) {
-              newProfile = object.get("text").getAsString();
+      if(event.getItemName().contains("Profil-Slot") || event.getItemName().contains("Profile slot") ||
+          event.getItemName().contains("Event-Profil") || event.getItemName().contains("Event profile")) {
+
+        String newProfile = null;
+        if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+          newProfile = event.getItemName();
+        } else {
+          // {"italic":false,"color":"aqua","text":"Profil-Slot 1"}
+          try {
+            JsonElement element = JsonParser.parseString(event.getItemName());
+            if(element != null && element.isJsonObject()) {
+              JsonObject object = element.getAsJsonObject();
+              if(object.has("text")) {
+                newProfile = object.get("text").getAsString();
+              }
             }
-          }
-        } catch (JsonSyntaxException ignored) {}
-      }
-
-      if(newProfile != null) {
-        if(!this.currentProfile.equals(newProfile)) {
-          Laby.fireEvent(new ProfileSwitchEvent(this.currentProfile, newProfile));
-          this.currentProfile = newProfile;
+          } catch (JsonSyntaxException ignored) {}
         }
+
+        if(newProfile != null) {
+          if(!this.currentProfile.equals(newProfile)) {
+            Laby.fireEvent(new ProfileSwitchEvent(this.currentProfile, newProfile));
+            this.currentProfile = newProfile;
+          }
+        }
+
       }
-
     }
-
   }
 
   public static void clearAlreadyRendered() {
