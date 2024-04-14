@@ -93,8 +93,8 @@ public class InventoryListener {
 
           if(rawBooster.length == 2) {
             try {
-              int boosting = Integer.parseInt(rawBooster[0]);
-              int amount = Integer.parseInt(rawBooster[1].replace(")", ""));
+              int boosting = Util.parseInteger(rawBooster[0], this.getClass());
+              int amount = Util.parseInteger(rawBooster[1].replace(")", ""), this.getClass());
               int finalBoost = boosting * amount;
               boost.getAndAdd(finalBoost);
             } catch (NumberFormatException ignored) {}
@@ -135,7 +135,7 @@ public class InventoryListener {
     String[] rawInvName = inventoryName.split("\\(");
     if(rawInvName.length == 2) {
       try {
-        totalBoosters = Integer.parseInt(rawInvName[1].split("/")[0]);
+        totalBoosters = Util.parseInteger(rawInvName[1].split("/")[0], this.getClass());
       } catch (NumberFormatException ignored) {}
     }
 

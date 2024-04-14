@@ -28,7 +28,7 @@ public class TimerCommand extends Command {
         if(this.addon.addonUtil().connectedToMoneyMaker()) {
           if(arguments.length >= 2) {
             try {
-              int minutes = Integer.parseInt(arguments[0]);
+              int minutes = Util.parseInteger(arguments[0], this.getClass());
               StringBuilder builder = new StringBuilder();
               for(int i = 1; i != arguments.length; i++) {
                 builder.append(arguments[i]).append(" ");

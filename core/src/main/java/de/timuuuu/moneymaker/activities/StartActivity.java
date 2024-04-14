@@ -117,7 +117,7 @@ public class StartActivity extends SimpleActivity {
 
   private void submitInput(String input) {
     try {
-      int count = Integer.parseInt(input);
+      int count = Util.parseInteger(input, this.getClass());
       this.addon.addonSettings().breakGoal(count);
       if(this.addon.addonUtil().currentBrokenBlocks() > 0) {
         this.addon.addonUtil().breakGoalBlocks(this.addon.addonUtil().currentBrokenBlocks() + count);

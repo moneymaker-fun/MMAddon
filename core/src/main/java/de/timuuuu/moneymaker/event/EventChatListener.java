@@ -6,6 +6,7 @@ import de.timuuuu.moneymaker.event.hudwidget.EasterEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.FruitsHudWidget;
 import de.timuuuu.moneymaker.event.hudwidget.HalloweenEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.ValentineEventWidget;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.event.Priority;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.chat.ChatReceiveEvent;
@@ -31,7 +32,7 @@ public class EventChatListener {
             .replace(EventChatMessages.NOW_EN.message(), "")
             .replace(EventChatMessages.EASTER_EN.message(), "");
         try {
-          EasterEventWidget.eggs = Integer.parseInt(count);
+          EasterEventWidget.eggs = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -41,7 +42,7 @@ public class EventChatListener {
             .replace(EventChatMessages.NOW_EN.message(), "")
             .replace(EventChatMessages.VALENTINE_EN.message(), "");
         try {
-          ValentineEventWidget.flowers = Integer.parseInt(count);
+          ValentineEventWidget.flowers = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -51,7 +52,7 @@ public class EventChatListener {
             .replace(EventChatMessages.NOW_EN.message(), "")
             .replace(EventChatMessages.SUMMER_EN.message(), "");
         try {
-          FruitsHudWidget.fruits = Integer.parseInt(count);
+          FruitsHudWidget.fruits = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -61,7 +62,7 @@ public class EventChatListener {
             .replace(EventChatMessages.NOW_EN.message(), "")
             .replace(EventChatMessages.HALLOWEEN_EN.message(), "");
         try {
-          HalloweenEventWidget.candies = Integer.parseInt(count);
+          HalloweenEventWidget.candies = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -71,7 +72,7 @@ public class EventChatListener {
             .replace(EventChatMessages.NOW_EN.message(), "")
             .replace(EventChatMessages.CHRISTMAS_EN.message(), "");
         try {
-          ChristmasEventWidget.gifts = Integer.parseInt(count);
+          ChristmasEventWidget.gifts = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 

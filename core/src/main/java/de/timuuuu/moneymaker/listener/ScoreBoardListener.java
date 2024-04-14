@@ -4,6 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.utils.ChatMessages;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -27,7 +28,7 @@ public class ScoreBoardListener {
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && this.addon.addonUtil().inFarming()) {
       String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
       try {
-        int blocks = Integer.parseInt(raw);
+        int blocks = Util.parseInteger(raw, this.getClass());
         this.addon.addonUtil().currentBrokenBlocks(blocks);
         if(this.addon.addonUtil().brokenBlocks() == 0) {
           this.addon.addonUtil().brokenBlocks(blocks);
@@ -57,28 +58,27 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() && this.addon.addonUtil().inFarming()) {
       try {
-        this.addon.addonUtil().pickaxeLevel(Integer.parseInt(ChatUtil.stripColor(event.score().getName())));
+        this.addon.addonUtil().pickaxeLevel(Util.parseInteger(ChatUtil.stripColor(event.score().getName()), this.getClass()));
       } catch (NumberFormatException ignored) {}
     }
 
     if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && this.addon.addonUtil().inFarming()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
-        this.addon.addonUtil().pickaxeRanking(Integer.parseInt(scoreName
+        this.addon.addonUtil().pickaxeRanking(Util.parseInteger(scoreName
             .replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
             .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
-            .replace(".", "").replace(",", "")
-          ));
+            .replace(".", "").replace(",", ""), this.getClass()));
       }
     }
 
     if(event.score().getValue() == MoneyScore.RANK.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
-        this.addon.addonUtil().ranking(Integer.parseInt(scoreName.
+        this.addon.addonUtil().ranking(Util.parseInteger(scoreName.
             replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
             .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
-            .replace(".", "").replace(",", "")
+            .replace(".", "").replace(",", ""), this.getClass()
         ));
       }
     }
@@ -89,12 +89,12 @@ public class ScoreBoardListener {
       try {
         String[] balSplit = this.addon.addonUtil().balance().replace(".", "").split(" ");
         if(balSplit.length == 1) return;
-        int balance = Integer.parseInt(balSplit[0]);
+        int balance = Util.parseInteger(balSplit[0], this.getClass());
         String balEinheit = balSplit[1];
 
         if(!this.addon.addonUtil().nextWorkerCost().equals("X") && !this.addon.addonUtil().workerNotifySent()) {
           String[] workerSplit = this.addon.addonUtil().nextWorkerCost().replace(".", "").split(" ");
-          int workerCost = Integer.parseInt(workerSplit[0]);
+          int workerCost = Util.parseInteger(workerSplit[0], this.getClass());
           String workerEinheit = workerSplit[1];
           if(CurrencyUtil.get(balEinheit) >= CurrencyUtil.get(workerEinheit) && balance >= workerCost) {
             if(this.addon.configuration().gameplayConfiguration.notifyOnMoneyReached().get()) {
@@ -108,7 +108,7 @@ public class ScoreBoardListener {
 
         if(!this.addon.addonUtil().debrisCost().equals("X") && this.addon.addonUtil().nextWorkerCost().equals("X") && !this.addon.addonUtil().debrisNotifySent()) {
           String[] debrisSplit = this.addon.addonUtil().debrisCost().replace(".", "").split(" ");
-          int debrisCost = Integer.parseInt(debrisSplit[0]);
+          int debrisCost = Util.parseInteger(debrisSplit[0], this.getClass());
           String debrisEinheit = debrisSplit[1];
           if(CurrencyUtil.get(balEinheit) >= CurrencyUtil.get(debrisEinheit) && balance >= debrisCost) {
             if(this.addon.configuration().gameplayConfiguration.notifyOnMoneyReached().get()) {

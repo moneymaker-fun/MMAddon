@@ -86,19 +86,19 @@ public class TickListener {
 
         if(rankingLine.startsWith("Ranking: ")) {
           if(!(rankingLine.contains("Lädt...") || rankingLine.contains("Loading..."))) {
-            this.addon.addonUtil().swordRanking(Integer.parseInt(rankingLine.split(" ")[2]
-                .replace(".", "").replace(",", "")));
+            this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
+                .replace(".", "").replace(",", ""), this.getClass()));
           }
         }
 
         if(mobsLine.startsWith("Getötete Mobs: ")) {
-          this.addon.addonUtil().swordMobs(Integer.parseInt(mobsLine.replace("Getötete Mobs: ", "")
-              .replace(".", "").replace(",", "")));
+          this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Getötete Mobs: ", "")
+              .replace(".", "").replace(",", ""), this.getClass()));
         }
 
         if(mobsLine.startsWith("Killed mobs: ")) {
-          this.addon.addonUtil().swordMobs(Integer.parseInt(mobsLine.replace("Killed mobs: ", "")
-              .replace(".", "").replace(",", "")));
+          this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
+              .replace(".", "").replace(",", ""), this.getClass()));
         }
 
         return;
@@ -110,12 +110,12 @@ public class TickListener {
         if(line.get(1) == null) return;
         String text = line.get(1);
         if(text.contains("Platz ")) {
-          this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Platz ", "")
-              .replace(".", "").replace(",", "").strip()));
+          this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
+              .replace(".", "").replace(",", "").strip(), this.getClass()));
         }
         if(text.contains("Rank ")) {
-          this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Rank ", "")
-              .replace(".", "").replace(",", "").strip()));
+          this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
+              .replace(".", "").replace(",", "").strip(), this.getClass()));
         }
       }
 
@@ -123,7 +123,7 @@ public class TickListener {
         List<String> line = Util.getTextFromJsonObject(mobsLine);
         if(line.size() != 2) return;
         if(line.get(1) == null) return;
-        this.addon.addonUtil().swordMobs(Integer.parseInt(line.get(1).replace(".", "").replace(",", "")));
+        this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
       }
 
       if(this.addon.addonUtil().swordMobs() != 0) {

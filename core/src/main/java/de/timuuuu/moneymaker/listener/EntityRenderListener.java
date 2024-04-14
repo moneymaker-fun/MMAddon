@@ -48,7 +48,7 @@ public class EntityRenderListener {
       }
 
       if((entityName.contains("Minen-Arbeitsplätze") || entityName.contains("mining workplaces")) & entityName.contains("/")) {
-        int count = Integer.parseInt(entityName.split("/")[0]);
+        int count = Util.parseInteger(entityName.split("/")[0], this.getClass());
         if(this.addon.addonUtil().workerCount() != count) {
           this.addon.addonUtil().workerCount(count);
         }

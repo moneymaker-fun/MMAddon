@@ -104,6 +104,15 @@ public class Util {
     return new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN)).format(toFormate);
   }
 
+  public static int parseInteger(String input, Class clazz) throws NumberFormatException {
+    try {
+      return Integer.parseInt(input);
+    } catch (NumberFormatException numberFormatException) {
+      MoneyMakerAddon.instance().logger().warn("Unable to parse Input to Integer (Input: '" + input + "', Used in '" + clazz.getName() + "')");
+      throw numberFormatException;
+    }
+  }
+
   public static boolean isDev(String uuid) {
     return uuid.equals("308893af-77af-4706-ac8a-1c4830038108") || uuid.equals("966b5d5e-2577-4ab7-987a-89bfa59da74a");
   }
@@ -128,12 +137,12 @@ public class Util {
     int seconds = 0;
     try {
       if(!hours) {
-        seconds = Integer.parseInt(split[1]);
-        seconds += Integer.parseInt(split[0])*60;
+        seconds = parseInteger(split[1], Util.class);
+        seconds += parseInteger(split[0], Util.class)*60;
       } else {
-        seconds = Integer.parseInt(split[2]);
-        seconds += Integer.parseInt(split[1])*60;
-        seconds += Integer.parseInt(split[0])*60*60;
+        seconds = parseInteger(split[2], Util.class);
+        seconds += parseInteger(split[1], Util.class)*60;
+        seconds += parseInteger(split[0], Util.class)*60*60;
       }
     } catch (NumberFormatException ignored) {}
     return seconds;
