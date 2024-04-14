@@ -45,17 +45,13 @@ public class Util {
 
   public static ButtonWidget discordButton() {
     ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.button.discord", SpriteCommon.DISCORD).addId("discord-button");
-    discordButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd");
-    });
+    discordButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd"));
     return discordButton;
   }
 
   public static ButtonWidget leaderboardButton() {
     ButtonWidget leaderboardButton = ButtonWidget.i18n("moneymaker.ui.button.leaderboard").addId("leaderboard-button");
-    leaderboardButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/leaderboard/");
-    });
+    leaderboardButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/leaderboard/"));
     return leaderboardButton;
   }
 
