@@ -63,7 +63,7 @@
         "currently": "In the farming cave",
         "blocks": "Blocks: ",
         "sessionBlocks": "Blocks (Current Session): ",
-        "boosters": "Farmed Boosters: ",
+        "boosters": "Found Boosters: ",
         "ranking": "Ranking: ",
         "pickaxe": {
           "rank": "Pickaxe Rank: ",
@@ -95,7 +95,7 @@
       "booster-export": {
         "title": "Booster-Export",
         "no-boosters": "There are no boosters to export.",
-        "saved": "The overview of your farmed boosters has been saved.",
+        "saved": "The overview of your found boosters has been saved.",
         "open-folder": "Open folder"
       },
       "chat": {
@@ -261,8 +261,8 @@
         "text": "Change"
       },
       "exportBoosterOnShutdown": {
-        "name": "Export farmed boosters on shutdown",
-        "description": "Exports your farmed boosters when you exit the game.\nThe file will be saved in {game-directory}/MoneyMaker"
+        "name": "Export found boosters on shutdown",
+        "description": "Exports your found boosters when you exit the game.\nThe file will be saved in {game-directory}/MoneyMaker"
       },
       "farmingAutoReset": {
         "name": "Reset counters when leaving farming cave",
@@ -339,7 +339,7 @@
         },
         "showStats": {
           "name": "Show Statistics",
-          "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Farmed Boosters, Pickaxe Rank & Level, Ranking"
+          "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Found Boosters, Pickaxe Rank & Level, Ranking"
         }
       },
       "chatConfiguration": {
@@ -457,7 +457,7 @@
       },
 
       "booster": {
-        "title": "List of farmed boosters",
+        "title": "List of found boosters",
         "boost-total": "Total: %s",
         "average-boosters": "Average Boosters: ",
         "sorting":{
@@ -563,14 +563,14 @@
         "noTimers": "No Timers aktiv"
       },
       "mm_booster_display": {
-        "name": "Latest farmed boosters",
+        "name": "Latest found boosters",
         "maxDisplayedBoosters": {
           "name": "Displayed Boosters"
         },
         "textColor": {
           "name": "Text color"
         },
-        "latestBoosters": "Latest farmed boosters:",
+        "latestBoosters": "Latest found boosters:",
         "notConnected": "Not on MoneyMaker",
         "noBoosters": "No Boosters found"
       },

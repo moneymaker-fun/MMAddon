@@ -63,7 +63,7 @@
         "currently": "In der Farming Höhle",
         "blocks": "Blöcke: ",
         "sessionBlocks": "Blöcke (Aktuelle Session): ",
-        "boosters": "Gefarmte Booster: ",
+        "boosters": "Gefundene Booster: ",
         "ranking": "Ranking: ",
         "pickaxe": {
           "rank": "Spitzhacken Rang: ",
@@ -95,7 +95,7 @@
       "booster-export": {
         "title": "Booster-Export",
         "no-boosters": "Es sind keine Booster zum exportieren vorhanden.",
-        "saved": "Die Übersicht deiner gefarmten Booster wurde gespeichert.",
+        "saved": "Die Übersicht deiner gefundenen Booster wurde gespeichert.",
         "open-folder": "Ordner öffnen"
       },
       "chat": {
@@ -261,8 +261,8 @@
         "text": "Ändern"
       },
       "exportBoosterOnShutdown": {
-        "name": "Exportiere die gefarmten Booster beim beenden",
-        "description": "Exportiert deine gefarmten Booster, wenn du das Spiel beendest.\nDie Datei wird im Ordner {spiel-verzeichnis}/MoneyMaker gespeichert."
+        "name": "Exportiere die gefundenen Booster beim beenden",
+        "description": "Exportiert deine gefundenen Booster, wenn du das Spiel beendest.\nDie Datei wird im Ordner {spiel-verzeichnis}/MoneyMaker gespeichert."
       },
       "farmingAutoReset": {
         "name": "Zähler beim verlassen der Farminghöhle zurücksetzen",
@@ -339,7 +339,7 @@
         },
         "showStats": {
           "name": "Zeige Statistiken",
-          "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, Gefarmte Booster, Spitzhacken Rang & Level, Ranking"
+          "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, gefundene Booster, Spitzhacken Rang & Level, Ranking"
         }
       },
       "chatConfiguration": {
@@ -457,7 +457,7 @@
       },
 
       "booster": {
-        "title": "Liste der gefarmten Booster",
+        "title": "Liste der gefundenen Booster",
         "boost-total": "Gesamt: %s",
         "average-boosters": "Durchschnittliche Booster: ",
         "sorting": {
@@ -564,14 +564,14 @@
         "noTimers": "Keine Timer aktiv"
       },
       "mm_booster_display": {
-        "name": "Zuletzt gefarmte Booster",
+        "name": "Zuletzt gefundene Booster",
         "maxDisplayedBoosters": {
           "name": "Angezeigte Booster"
         },
         "textColor": {
           "name": "Textfarbe"
         },
-        "latestBoosters": "Zuletzt gefarmte Booster:",
+        "latestBoosters": "Zuletzt gefundene Booster:",
         "notConnected": "Nicht auf MoneyMaker",
         "noBoosters": "Keine Booster gefunden"
       },
