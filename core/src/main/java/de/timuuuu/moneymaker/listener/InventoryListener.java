@@ -130,15 +130,6 @@ public class InventoryListener {
       ]
      */
 
-    // Inventory Name: DE > Booster-Übersicht (§e328§7/§61.000§r) | EN > Booster overview (§e328§7/§61,000§r)
-    String inventoryName = ChatUtil.stripColor(event.getInventoryName()); // DE > Booster-Übersicht (328/1.000) | EN > Booster overview (328/1,000)
-    String[] rawInvName = inventoryName.split("\\(");
-    if(rawInvName.length == 2) {
-      try {
-        totalBoosters = Util.parseInteger(rawInvName[1].split("/")[0], this.getClass());
-      } catch (NumberFormatException ignored) {}
-    }
-
     if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
       if(event.getLoreList().size() >= 9) {
         String displayName = event.getDisplayName();
@@ -182,6 +173,15 @@ public class InventoryListener {
   public void onInventoryClose(InventoryCloseEvent event) {
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
     if(!this.addon.configuration().showTotalBoostMessage().get()) return;
+
+    // Inventory Name: DE > Booster-Übersicht (§e328§7/§61.000§r) | EN > Booster overview (§e328§7/§61,000§r)
+    String inventoryName = ChatUtil.stripColor(event.getInventoryName()); // DE > Booster-Übersicht (328/1.000) | EN > Booster overview (328/1,000)
+    String[] rawInvName = inventoryName.split("\\(");
+    if(rawInvName.length == 2) {
+      try {
+        totalBoosters = Util.parseInteger(rawInvName[1].split("/")[0].replace(".", "").replace(",", ""), this.getClass());
+      } catch (NumberFormatException ignored) {}
+    }
 
     int boost = getBoost();
     long currentTime = System.currentTimeMillis();
