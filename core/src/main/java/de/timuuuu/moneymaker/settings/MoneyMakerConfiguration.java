@@ -99,6 +99,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> showTotalBoostMessage = new ConfigProperty<>(true);
 
+  @IntroducedIn(value = "1.6.0", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showMOTD = new ConfigProperty<>(true);
+
   // Settings Getters
 
   @Override
@@ -128,6 +132,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> showTotalBoostMessage() {
     return showTotalBoostMessage;
+  }
+
+  public ConfigProperty<Boolean> showMOTD() {
+    return showMOTD;
   }
 
   // Internal Settings

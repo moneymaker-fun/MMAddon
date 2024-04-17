@@ -244,6 +244,7 @@
     },
     "settings": {
       "name": "MoneyMaker",
+
       "header": {
         "general": {
           "name": "Allgemeine Einstellungen"
@@ -252,6 +253,7 @@
           "name": "Andere Einstellungen"
         }
       },
+
       "enabled": {
         "name": "Aktiviert"
       },
@@ -295,6 +297,11 @@
         "name": "Gesamt Booster Nachricht anzeigen",
         "description": "Zeigt eine Nachricht im Chat mit dem gesamt Boost deiner Booster im Booster-Inventar an, wenn du das Booster-Inventar schließt"
       },
+      "showMOTD": {
+        "name": "Zeige Nachricht des Tages",
+        "description": "Zeigt die Nachricht des Tages im Chat wenn du MoneyMaker betrittst"
+      },
+
       "gameplayConfiguration": {
         "name": "Gameplay Einstellungen",
         "shortBoosterMessage": {
@@ -331,6 +338,7 @@
           "name": "Volle Booster Inventar Nachricht verstecken"
         }
       },
+
       "discordConfiguration": {
         "name": "Eigene Discord Rich Presence",
         "showLocation": {
@@ -342,6 +350,7 @@
           "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, gefundene Booster, Spitzhacken Rang & Level, Ranking"
         }
       },
+
       "chatConfiguration": {
         "name": "Chat-Einstellungen",
         "header": {
@@ -368,6 +377,7 @@
           "name": "Online/Offline Nachrichten anzeigen"
         }
       },
+
       "badgeConfiguration": {
         "name": "Tag Einstellungen",
         "header": {
@@ -394,6 +404,7 @@
           "name": "Farbe des Text-Tag"
         }
       }
+
     },
 
     "ui": {

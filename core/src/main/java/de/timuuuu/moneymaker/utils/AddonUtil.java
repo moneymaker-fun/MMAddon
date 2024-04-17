@@ -17,6 +17,7 @@ public class AddonUtil {
 
   private String currentEvent = "NONE";
   private String motd = "";
+  private boolean motdPriority = false;
 
   public String currentEvent() {
     return currentEvent;
@@ -32,6 +33,14 @@ public class AddonUtil {
 
   public void motd(String motd) {
     this.motd = motd;
+  }
+
+  public boolean motdPriority() {
+    return motdPriority;
+  }
+
+  public void motdPriority(boolean motdPriority) {
+    this.motdPriority = motdPriority;
   }
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();

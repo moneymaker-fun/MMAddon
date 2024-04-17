@@ -244,6 +244,7 @@
     },
     "settings": {
       "name": "MoneyMaker",
+
       "header": {
         "general": {
           "name": "General Settings"
@@ -252,6 +253,7 @@
           "name": "Other Settings"
         }
       },
+
       "enabled": {
         "name": "Enabled"
       },
@@ -295,6 +297,11 @@
         "name": "Show total boost message",
         "description": "Displays a message in chat with the total boost of your boosters in the booster inventory when you close the booster inventory"
       },
+      "showMOTD": {
+        "name": "Show Message of the day",
+        "description": "Displays the message of the day when joining MoneyMaker"
+      },
+
       "gameplayConfiguration": {
         "name": "Gameplay Settings",
         "shortBoosterMessage": {
@@ -331,6 +338,7 @@
           "name": "Hide Full Booster Inventory Message"
         }
       },
+
       "discordConfiguration": {
         "name": "Custom Discord Rich Presence",
         "showLocation": {
@@ -342,6 +350,7 @@
           "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Found Boosters, Pickaxe Rank & Level, Ranking"
         }
       },
+
       "chatConfiguration": {
         "name": "Chat Settings",
         "header": {
@@ -368,6 +377,7 @@
           "name": "Show Online/Offline Messages"
         }
       },
+
       "badgeConfiguration": {
         "name": "Tag Settings",
         "header": {
@@ -394,6 +404,7 @@
           "name": "Color of the Text-Tag"
         }
       }
+
     },
 
     "ui": {

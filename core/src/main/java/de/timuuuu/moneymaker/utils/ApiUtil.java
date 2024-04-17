@@ -48,8 +48,12 @@ public class ApiUtil {
 
           JsonObject object = response.get();
 
-          if (object.has("motd") && object.get("motd").isJsonPrimitive()) {
-            this.addon.addonUtil().motd(object.get("motd").getAsString());
+          if (object.has("motd") && object.get("motd").isJsonObject()) {
+            JsonObject motd = object.get("motd").getAsJsonObject();
+            if(motd.has("text") && motd.has("priority")) {
+              this.addon.addonUtil().motd(motd.get("text").getAsString());
+              this.addon.addonUtil().motdPriority(motd.get("priority").getAsBoolean());
+            }
           }
 
           if (object.has("settings") && object.get("settings").isJsonObject()) {

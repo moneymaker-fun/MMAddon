@@ -108,9 +108,15 @@ public class NetworkPayloadListener {
                 }
 
                 if(!this.addon.addonUtil().motd().isEmpty() && !this.motdSent) {
-                  this.motdSent = true;
-                  this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.motd", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
-                  this.addon.displayMessage(this.addon.addonUtil().motd().replace("&", "§"));
+                  boolean show = this.addon.configuration().showMOTD().get();
+                  if(this.addon.addonUtil().motdPriority()) {
+                    show = true;
+                  }
+                  if(show) {
+                    this.motdSent = true;
+                    this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.motd", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
+                    this.addon.displayMessage(this.addon.addonUtil().motd().replace("&", "§"));
+                  }
                 }
 
               }
