@@ -27,7 +27,7 @@ public class MoneyBadgeConfiguration extends Config {
   @SwitchSetting
   private ConfigProperty<Boolean> tabListIcon = new ConfigProperty<>(true);
 
-  @IntroducedIn(namespace = "moneymaker", value = "1.5.1")
+  @IntroducedIn(namespace = "moneymaker", value = "1.6.0")
   @SpriteSlot(x = 1)
   @SwitchSetting
   private ConfigProperty<Boolean> chatIcon = new ConfigProperty<>(true);
