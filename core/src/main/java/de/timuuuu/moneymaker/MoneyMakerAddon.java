@@ -85,6 +85,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private EntityRenderListener entityRenderListener;
 
   private Gson gson;
+  private static MoneyMakerAddon instance;
 
   @Override
   protected void preConfigurationLoad() {
@@ -95,6 +96,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   protected void enable() {
     this.registerSettingCategory();
 
+    instance = this;
     this.discordAPI = new DiscordAPI(this);
     this.apiUtil = new ApiUtil(this);
 
@@ -193,6 +195,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public Gson gson() {
     return gson;
+  }
+
+  public static MoneyMakerAddon instance() {
+    return instance;
   }
 
   public DiscordAPI discordAPI() {
