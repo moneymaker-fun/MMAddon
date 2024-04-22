@@ -84,8 +84,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   private EntityRenderListener entityRenderListener;
 
-  private static MoneyMakerAddon instance;
-
   private Gson gson;
 
   @Override
@@ -97,7 +95,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   protected void enable() {
     this.registerSettingCategory();
 
-    instance = this;
     this.discordAPI = new DiscordAPI(this);
     this.apiUtil = new ApiUtil(this);
 
@@ -192,10 +189,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   @Override
   protected Class<MoneyMakerConfiguration> configurationClass() {
     return MoneyMakerConfiguration.class;
-  }
-
-  public static MoneyMakerAddon instance() {
-    return instance;
   }
 
   public Gson gson() {
