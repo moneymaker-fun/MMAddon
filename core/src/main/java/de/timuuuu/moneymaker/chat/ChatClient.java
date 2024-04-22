@@ -239,6 +239,9 @@ public class ChatClient {
   }
 
   public String currentCave(MiningCave cave) {
+    if(!addon.configuration().chatConfiguration.showCaveLevel().get()) {
+      return "Farming";
+    }
     return "Farming - " + cave.internalName();
   }
 

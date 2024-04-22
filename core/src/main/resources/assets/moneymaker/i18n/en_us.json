@@ -357,6 +357,9 @@
           "general": {
             "name": "General Chat Settings"
           },
+          "privacy": {
+            "name": "Privacy Settings"
+          },
           "notifications": {
             "name": "Chat Notification Settings"
           }
@@ -364,6 +367,10 @@
         "loadChatHistory": {
           "name": "Load Chat History",
           "description": "Load the Chat history when connecting to GommeHD.net. The History contains the last 50 sent messages and will be displayed in the MoneyMaker Chat Tab"
+        },
+        "showCaveLevel": {
+          "name": "Shows your current Cave Level",
+          "description": "Shows your current Cave level (gold, coal, iron) in the Addon Chat online list"
         },
         "notification": {
           "name": "Notifications",

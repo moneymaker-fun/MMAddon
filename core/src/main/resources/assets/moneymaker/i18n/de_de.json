@@ -357,6 +357,9 @@
           "general": {
             "name": "General Chat Settings"
           },
+          "privacy": {
+            "name": "Privatsphäre Einstellungen"
+          },
           "notifications": {
             "name": "Chat Notification Settings"
           }
@@ -364,6 +367,10 @@
         "loadChatHistory": {
           "name": "Chat Verlauf laden",
           "description": "Lädt den Chat Verlauf, wenn du dich auf GommeHD.net verbindest. Der Verlauf enthält die letzten 50 gesendeten Nachrichten und werden im MoneyMaker Chat Tab angezeigt"
+        },
+        "showCaveLevel": {
+          "name": "Zeige aktuelle Ebene in der Farminghöhle",
+          "description": "Zeigte deine aktuelle Ebene in der Farminghöhle (Gold, Kohle, Eisen) in der Online liste des Addon Chats an"
         },
         "notification": {
           "name": "Benachrichtigung",

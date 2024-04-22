@@ -68,7 +68,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
 
     if(!this.placeholder || this.otherServers) {
       String server = this.player.server();
-      if(server.startsWith("Farming")) {
+      if(server.startsWith("Farming") && server.contains(" - ")) {
         if(server.split(" - ").length == 2) {
           String cave = server.split(" - ")[1];
           server = "Farming - " + I18n.translate(this.addon.addonUtil().caveByName(cave).translation());
