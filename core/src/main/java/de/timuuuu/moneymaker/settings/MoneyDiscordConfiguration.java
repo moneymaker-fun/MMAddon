@@ -1,7 +1,5 @@
 package de.timuuuu.moneymaker.settings;
 
-import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.utils.DiscordAPI;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.ParentSwitch;
@@ -11,35 +9,6 @@ import net.labymod.api.configuration.loader.property.ConfigProperty;
 
 @SpriteTexture("sprite/settings")
 public class MoneyDiscordConfiguration extends Config {
-
-  public MoneyDiscordConfiguration() {
-
-    this.enabled.addChangeListener((type, oldValue, newValue) -> {
-      if(MoneyMakerAddon.instance() == null) return;
-      if(MoneyMakerAddon.instance().discordAPI() == null) return;
-      DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
-      if(newValue) {
-        discordAPI.update();
-      } else {
-        discordAPI.removeCustom();
-      }
-    });
-
-    this.showLocation.addChangeListener(aBoolean -> {
-      if(MoneyMakerAddon.instance() == null) return;
-      if(MoneyMakerAddon.instance().discordAPI() == null) return;
-      DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
-      discordAPI.update();
-    });
-
-    this.showStats.addChangeListener(aBoolean -> {
-      if(MoneyMakerAddon.instance() == null) return;
-      if(MoneyMakerAddon.instance().discordAPI() == null) return;
-      DiscordAPI discordAPI = MoneyMakerAddon.instance().discordAPI();
-      discordAPI.update();
-    });
-
-  }
 
   @ParentSwitch
   @SwitchSetting

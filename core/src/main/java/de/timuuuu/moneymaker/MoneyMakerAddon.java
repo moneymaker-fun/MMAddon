@@ -175,6 +175,18 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       this.chatClient.sendMessage("playerStatus", data);
     });
 
+    this.configuration().discordConfiguration.enabled().addChangeListener((type, oldValue, newValue) -> {
+      if(newValue) {
+        this.discordAPI.update();
+      } else {
+        this.discordAPI.removeCustom();
+      }
+    });
+
+    this.configuration().discordConfiguration.showLocation().addChangeListener(aBoolean -> this.discordAPI.update());
+
+    this.configuration().discordConfiguration.showStats().addChangeListener(aBoolean -> this.discordAPI.update());
+
   }
 
   @Override
