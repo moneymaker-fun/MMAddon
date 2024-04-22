@@ -348,6 +348,10 @@
         "showStats": {
           "name": "Zeige Statistiken",
           "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, gefundene Booster, Spitzhacken Rang & Level, Ranking"
+        },
+        "showCaveLevel": {
+          "name": "Zeige aktuelle Ebene in der Farminghöhle",
+          "description": "Zeigte deine aktuelle Ebene in der Farminghöhle (Gold, Kohle, Eisen) in der Discord Rich Presence"
         }
       },
 

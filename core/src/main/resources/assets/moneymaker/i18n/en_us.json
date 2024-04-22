@@ -348,6 +348,10 @@
         "showStats": {
           "name": "Show Statistics",
           "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Found Boosters, Pickaxe Rank & Level, Ranking"
+        },
+        "showCaveLevel": {
+          "name": "Shows your current Cave Level",
+          "description": "Shows your current Cave level (gold, coal, iron) in the Discord Rich Presence"
         }
       },
 

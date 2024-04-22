@@ -183,9 +183,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       }
     });
 
-    this.configuration().discordConfiguration.showLocation().addChangeListener(aBoolean -> this.discordAPI.update());
-
-    this.configuration().discordConfiguration.showStats().addChangeListener(aBoolean -> this.discordAPI.update());
+    //this.configuration().discordConfiguration.showLocation().addChangeListener(aBoolean -> this.discordAPI.update());
+    //this.configuration().discordConfiguration.showStats().addChangeListener(aBoolean -> this.discordAPI.update());
+    //this.configuration().discordConfiguration.showCaveLevel().addChangeListener(aBoolean -> this.discordAPI.update());
 
   }
 
