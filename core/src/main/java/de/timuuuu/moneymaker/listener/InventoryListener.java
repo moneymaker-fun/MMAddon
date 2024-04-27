@@ -81,7 +81,7 @@ public class InventoryListener {
     if(!alreadyRendered.isEmpty()) {
       alreadyRendered.forEach(slotItem -> {
         String strippedName = null;
-        if(slotItem.getGameVersion().equals("1.8") || slotItem.getGameVersion().equals("1.12")) {
+        if(slotItem.getGameVersion().equals("1.8") || slotItem.getGameVersion().equals("1.12") || slotItem.getGameVersion().equals("1.20.5")) {
           strippedName = ChatUtil.stripColor(slotItem.getName()); // +150 % Booster (1)
         } else {
           List<String> rawName = Util.getTextFromJsonObject(slotItem.getName()); // "+2.000 % Booster ","(4)"
@@ -133,7 +133,7 @@ public class InventoryListener {
       ]
      */
 
-    if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+    if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12") || event.getGameVersion().equals("1.20.5")) {
       if(event.getLoreList().size() >= 9) {
         String displayName = event.getDisplayName();
         String durationLore = event.getLoreList().get(2);

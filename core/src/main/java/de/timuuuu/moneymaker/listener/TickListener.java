@@ -69,6 +69,7 @@ public class TickListener {
     if(swordTickCount >= this.addon.addonSettings().CHECK_TICK()) {
       swordTickCount = 0;
 
+      if(event.getLoreList().size() < 4) return;
       if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
       String rankingLine = event.getLoreList().get(2);
       String mobsLine = event.getLoreList().get(3);
@@ -79,7 +80,7 @@ public class TickListener {
       §7Getötete Mobs: §e103 [Getötete Mobs: 103]
       */
 
-      if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+      if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12") || event.getGameVersion().equals("1.20.5")) {
 
         rankingLine = ChatUtil.stripColor(rankingLine);
         mobsLine = ChatUtil.stripColor(mobsLine);
@@ -101,29 +102,30 @@ public class TickListener {
               .replace(".", "").replace(",", ""), this.getClass()));
         }
 
-        return;
-      }
+      } else {
 
-      if(rankingLine.contains("Ranking: ")) {
-        List<String> line = Util.getTextFromJsonObject(rankingLine);
-        if(line.size() != 3) return;
-        if(line.get(1) == null) return;
-        String text = line.get(1);
-        if(text.contains("Platz ")) {
-          this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
-              .replace(".", "").replace(",", "").strip(), this.getClass()));
+        if(rankingLine.contains("Ranking: ")) {
+          List<String> line = Util.getTextFromJsonObject(rankingLine);
+          if(line.size() != 3) return;
+          if(line.get(1) == null) return;
+          String text = line.get(1);
+          if(text.contains("Platz ")) {
+            this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
+                .replace(".", "").replace(",", "").strip(), this.getClass()));
+          }
+          if(text.contains("Rank ")) {
+            this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
+                .replace(".", "").replace(",", "").strip(), this.getClass()));
+          }
         }
-        if(text.contains("Rank ")) {
-          this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
-              .replace(".", "").replace(",", "").strip(), this.getClass()));
-        }
-      }
 
-      if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
-        List<String> line = Util.getTextFromJsonObject(mobsLine);
-        if(line.size() != 2) return;
-        if(line.get(1) == null) return;
-        this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
+        if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
+          List<String> line = Util.getTextFromJsonObject(mobsLine);
+          if(line.size() != 2) return;
+          if(line.get(1) == null) return;
+          this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
+        }
+
       }
 
       if(this.addon.addonUtil().swordMobs() != 0) {
