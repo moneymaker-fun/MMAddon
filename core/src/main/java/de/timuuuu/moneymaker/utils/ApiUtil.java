@@ -115,7 +115,6 @@ public class ApiUtil {
                   array.forEach(jsonElement -> {
                     if(jsonElement.isJsonObject()) {
                       JsonObject workerObject = jsonElement.getAsJsonObject();
-                      this.addon.logger().info(workerObject.toString());
                       if(workerObject.has("name") && workerObject.has("costs")) {
                         workers.add(workerObject.get("name").getAsString() + ";" + workerObject.get("costs").getAsString());
                       }
