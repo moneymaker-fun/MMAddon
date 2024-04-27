@@ -24,9 +24,11 @@ public class InventoryListener {
 
   private static List<SlotItem> alreadyRendered = new ArrayList<>();
   private static int totalBoosters = 0;
-  private int previousBoostx = -1;
-  private int previousTotalBoost = -1;
+  private int previousBoost = -1;
+  private int previousTotalBoosters = -1;
   private long lastDisplayTime = 0; // Initialize last display time to 0
+
+  private long DISPLAY_COOLDOWN = 30000;
 
   private String currentProfile = "";
 
@@ -172,6 +174,7 @@ public class InventoryListener {
      */
 
   }
+
   @Subscribe
   public void onInventoryClose(InventoryCloseEvent event) {
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
@@ -188,7 +191,7 @@ public class InventoryListener {
 
     int boost = getBoost();
     long currentTime = System.currentTimeMillis();
-    if(boost > 0 && totalBoosters > 0 && (boost != previousBoostx || totalBoosters != previousTotalBoost || currentTime - lastDisplayTime >= 30000)) {
+    if(boost > 0 && totalBoosters > 0 && (boost != previousBoost || totalBoosters != previousTotalBoosters || currentTime - lastDisplayTime >= DISPLAY_COOLDOWN)) {
       this.addon.displayMessage(
           this.addon.prefix.copy()
               .append(Component.translatable(
@@ -199,8 +202,8 @@ public class InventoryListener {
               .hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.text.booster.inventory.info", NamedTextColor.GRAY)))
       );
 
-      previousBoostx = boost;
-      previousTotalBoost = totalBoosters;
+      previousBoost = boost;
+      previousTotalBoosters = totalBoosters;
       lastDisplayTime = currentTime;
     }
 
