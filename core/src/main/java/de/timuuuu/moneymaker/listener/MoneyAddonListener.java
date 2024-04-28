@@ -205,7 +205,7 @@ public class MoneyAddonListener {
       String serverBefore = AddonUtil.playerStatus.get(uuid).server();
 
       // Online
-      if(serverBefore.equalsIgnoreCase("Other") && player.server().contains("MoneyMaker")) {
+      if(serverBefore.equalsIgnoreCase("Other") && (player.server().equalsIgnoreCase("Mine") || player.server().startsWith("Farming"))) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().chatConfiguration.onlineOfflineMessages().get()) {
           Task.builder(() -> this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
@@ -217,7 +217,7 @@ public class MoneyAddonListener {
       }
 
       // Offline
-      if(serverBefore.contains("MoneyMaker") && (player.server().equalsIgnoreCase("Other") || player.server().equals("OFFLINE"))) {
+      if((serverBefore.equalsIgnoreCase("Mine") || serverBefore.startsWith("Farming")) && (player.server().equalsIgnoreCase("Other") || player.server().equals("OFFLINE"))) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().chatConfiguration.onlineOfflineMessages().get()) {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
