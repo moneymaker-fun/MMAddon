@@ -1,6 +1,5 @@
 package de.timuuuu.moneymaker.chat;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.events.ChatServerMessageReceiveEvent;
