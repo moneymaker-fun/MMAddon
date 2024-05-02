@@ -59,7 +59,7 @@ public class ChatClient {
           if(!socket.isClosed() || socket != null) {
             String serverMessage;
             while ((serverMessage = serverIn.readLine()) != null) {
-                JsonObject object = new Gson().fromJson(serverMessage, JsonObject.class);
+                JsonObject object = addon.gson().fromJson(serverMessage, JsonObject.class);
                 Laby.fireEvent(new ChatServerMessageReceiveEvent(object));
             }
             socket.close();
