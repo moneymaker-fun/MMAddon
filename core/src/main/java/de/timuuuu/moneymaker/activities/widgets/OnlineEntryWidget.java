@@ -55,10 +55,14 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
       entry.addEntry(ComponentWidget.component(nameComponent).addId("userName"));
 
       if(Util.isDev(this.labyAPI.getUniqueId().toString())) {
-        Component component = Component.text("(", NamedTextColor.DARK_GRAY)
+        Component addonVersionComponent = Component.text("(", NamedTextColor.DARK_GRAY)
                 .append(Component.text(this.player.addonVersion(), NamedTextColor.YELLOW))
                 .append(Component.text(")", NamedTextColor.DARK_GRAY));
-        entry.addEntry(ComponentWidget.component(component).addId("addonVersion"));
+        Component minecraftVersionComponent = Component.text(" (", NamedTextColor.DARK_GRAY)
+                .append(Component.text("MC " + this.player.minecraftVersion(), NamedTextColor.GREEN))
+                .append(Component.text(")", NamedTextColor.DARK_GRAY));
+        Component versionComponent = addonVersionComponent.append(minecraftVersionComponent);
+        entry.addEntry(ComponentWidget.component(versionComponent).addId("versions"));
       }
     } else {
       entry.addEntry(ComponentWidget.component(this.placeholderTitle).addId("userName"));
