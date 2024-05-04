@@ -100,12 +100,7 @@ public class ChatActivity extends SimpleActivity {
             reconnectButton.setEnabled(true);
             this.addon.chatClient().connect(true);
             if(this.addon.chatClient().online()) {
-              JsonObject data = new JsonObject();
-              data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-              data.addProperty("userName", this.addon.labyAPI().getName());
-              data.addProperty("server", this.addon.chatClient().currentServer());
-              data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              this.addon.chatClient().sendMessage("playerStatus", data);
+              this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
 
               JsonObject object = new JsonObject();
               object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());

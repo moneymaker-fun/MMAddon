@@ -1,7 +1,6 @@
 package de.timuuuu.moneymaker;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.activities.ChatActivity;
 import de.timuuuu.moneymaker.activities.LeaderboardActivity;
 import de.timuuuu.moneymaker.activities.PriceOverviewActivity;
@@ -165,14 +164,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
 
-    this.configuration().chatConfiguration.showCaveLevel().addChangeListener((type, oldValue, newValue) -> {
-      JsonObject data = new JsonObject();
-      data.addProperty("uuid", this.labyAPI().getUniqueId().toString());
-      data.addProperty("userName", this.labyAPI().getName());
-      data.addProperty("server", this.chatClient.currentServer());
-      data.addProperty("addonVersion", this.addonInfo().getVersion());
-      this.chatClient.sendMessage("playerStatus", data);
-    });
+    this.configuration().chatConfiguration.showCaveLevel().addChangeListener((type, oldValue, newValue) ->
+        this.chatClient().util().sendPlayerStatus(this.labyAPI().getUniqueId().toString(), this.labyAPI().getName(), false)
+    );
 
     this.configuration().discordConfiguration.enabled().addChangeListener((type, oldValue, newValue) -> {
       if(newValue) {

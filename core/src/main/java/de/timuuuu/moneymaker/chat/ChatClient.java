@@ -31,9 +31,11 @@ public class ChatClient {
   private PrintWriter serverOut;
 
   private static MoneyMakerAddon addon;
+  private ChatClientUtil util;
 
   public ChatClient(MoneyMakerAddon addon) {
     ChatClient.addon = addon;
+    this.util = new ChatClientUtil(addon, this);
   }
 
   public void connect(boolean reconnect) {
@@ -87,7 +89,7 @@ public class ChatClient {
   public void connectStartUp() {
     this.connect(false);
     this.checkStatus();
-    this.sendStatistics(false, addon.labyAPI().getUniqueId().toString(), addon.labyAPI().getName());
+    this.util.sendStatistics(false, addon.labyAPI().getUniqueId().toString(), addon.labyAPI().getName());
     Task.builder(() -> {
       if(!isConnected()) {
         this.connect(false);
@@ -153,7 +155,6 @@ public class ChatClient {
   }
 
   public boolean sendMessage(String channel, JsonObject object) {
-    if(!addon.configuration().enabled().get()) return false;
     if(serverOut == null || socket.isClosed()) return false;
     JsonObject data = new JsonObject();
     data.add(channel, object);
@@ -172,26 +173,6 @@ public class ChatClient {
     return this.sendMessage("chatAction", object);
   }
 
-  public void sendStatistics(boolean quit, String uuid, String userName) {
-    if(serverOut == null || socket.isClosed()) return;
-    JsonObject object = new JsonObject();
-    if(!quit) {
-      object.addProperty("data", "add");
-      object.addProperty("userName", userName);
-      object.addProperty("uuid", uuid);
-      object.addProperty("addonVersion", addon.addonInfo().getVersion());
-      object.addProperty("gameVersion", addon.labyAPI().minecraft().getVersion());
-      object.addProperty("development", addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment());
-    } else {
-      object.addProperty("data", "remove");
-      object.addProperty("userName", userName);
-      object.addProperty("uuid", uuid);
-    }
-    JsonObject data = new JsonObject();
-    data.add("addonStatistics", object);
-    serverOut.println(data);
-  }
-
   public void closeConnection() {
     if(this.serverOut != null) {
       this.serverOut.close();
@@ -207,8 +188,12 @@ public class ChatClient {
 
   }
 
-  public Socket socket() {
-    return socket;
+  public ChatClientUtil util() {
+    return util;
+  }
+
+  public boolean connected() {
+    return serverOut == null || socket.isClosed();
   }
 
   public boolean muted() {
