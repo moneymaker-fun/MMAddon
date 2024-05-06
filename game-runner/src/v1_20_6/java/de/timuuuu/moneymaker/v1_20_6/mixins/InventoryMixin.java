@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.v1_20_6.mixins;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
@@ -25,6 +26,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryRender(GuiGraphics $$0, Slot slot, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(slot.getItem().get(DataComponents.CUSTOM_NAME) == null) return;
     String name = slot.getItem().get(DataComponents.CUSTOM_NAME).getString();
     List<String> loreList = new ArrayList<>();
@@ -41,6 +43,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryClick(Slot clickedSlot, int $$1, int $$2, ClickType $$3, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(clickedSlot == null) return;
     if(clickedSlot.getItem().get(DataComponents.CUSTOM_NAME) == null) return;
     String name = clickedSlot.getItem().get(DataComponents.CUSTOM_NAME).getString();
@@ -58,6 +61,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryClose(CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     Laby.fireEvent(new InventoryCloseEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString()));
   }
 

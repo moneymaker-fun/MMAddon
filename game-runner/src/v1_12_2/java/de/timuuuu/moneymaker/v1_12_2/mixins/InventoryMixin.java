@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.v1_12_2.mixins;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
@@ -30,6 +31,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryRender(Slot slot, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(slot.getStack() != null) {
       if(slot.getStack().getTagCompound() != null) {
         NBTTagCompound compoundTag = slot.getStack().getTagCompound().getCompoundTag("display");
@@ -49,6 +51,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryClick(Slot clickedSlot, int $$1, int $$2, ClickType $$3, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(clickedSlot == null) return;
     if(clickedSlot.getStack() == null) return;
     if(clickedSlot.getStack().getTagCompound() == null) return;
@@ -67,6 +70,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryClose(CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     String inventoryName = "Unknown Inventory";
     if(inventorySlots instanceof IInventory) {
       inventoryName = ((IInventory) inventorySlots).getName();
