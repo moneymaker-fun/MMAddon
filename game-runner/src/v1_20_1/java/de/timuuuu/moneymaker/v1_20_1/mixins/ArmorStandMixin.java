@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.v1_20_1.mixins;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.ArmorStandRenderEvent;
 import net.labymod.api.Laby;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,6 +21,7 @@ public class ArmorStandMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireArmorStandRender(Entity param0, double param1, double param2, double param3, float param4, float param5, PoseStack param6, MultiBufferSource param7, int param8, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(param0.getType() == EntityType.ARMOR_STAND) {
       if(param0.hasCustomName() && param0.getCustomName() != null) {
         String customName = param0.getCustomName().getString();

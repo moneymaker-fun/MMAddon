@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.v1_20_2.mixins;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
@@ -26,6 +27,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryRender(GuiGraphics $$0, Slot slot, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     CompoundTag compoundTag = slot.getItem().getOrCreateTagElement("display");
     String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
     List<String> loreList = new ArrayList<>();
@@ -33,8 +35,7 @@ public class InventoryMixin {
     for(int i = 0; i != listTag.size(); i++) {
       loreList.add(listTag.getString(i));
     }
-    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-    Laby.fireEvent(new InventoryRenderSlotEvent(screen.getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.20"));
+    Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.20"));
   }
 
   @Inject(
@@ -42,6 +43,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryClick(Slot clickedSlot, int $$1, int $$2, ClickType $$3, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(clickedSlot == null) return;
     CompoundTag compoundTag = clickedSlot.getItem().getOrCreateTagElement("display");
     String itemName = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
@@ -50,8 +52,7 @@ public class InventoryMixin {
     for(int i = 0; i != listTag.size(); i++) {
       loreList.add(listTag.getString(i));
     }
-    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-    Laby.fireEvent(new InventoryClickEvent(screen.getTitle().getString(), clickedSlot.getContainerSlot(), itemName, loreList, "1.20"));
+    Laby.fireEvent(new InventoryClickEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), clickedSlot.getContainerSlot(), itemName, loreList, "1.20"));
   }
 
   @Inject(
@@ -59,8 +60,8 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryClose(CallbackInfo ci) {
-    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-    Laby.fireEvent(new InventoryCloseEvent(screen.getTitle().getString()));
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
+    Laby.fireEvent(new InventoryCloseEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString()));
   }
 
 }

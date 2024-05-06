@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.v1_20_5.mixins;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class SwordTickMixin {
       at = @At("HEAD")
   )
   private void moneymaker$tick(CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     Player player = Minecraft.getInstance().player;
     if(player == null) return;
     ItemStack itemStack = player.getInventory().getItem(0);
