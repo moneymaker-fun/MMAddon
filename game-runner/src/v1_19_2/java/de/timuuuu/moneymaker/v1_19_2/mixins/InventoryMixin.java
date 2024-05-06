@@ -35,8 +35,7 @@ public class InventoryMixin {
     for(int i = 0; i != listTag.size(); i++) {
       loreList.add(listTag.getString(i));
     }
-    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-    Laby.fireEvent(new InventoryRenderSlotEvent(screen.getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.19"));
+    Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.19"));
   }
 
   @Inject(
@@ -53,8 +52,7 @@ public class InventoryMixin {
     for(int i = 0; i != listTag.size(); i++) {
       loreList.add(listTag.getString(i));
     }
-    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-    Laby.fireEvent(new InventoryClickEvent(screen.getTitle().getString(), clickedSlot.getContainerSlot(), itemName, loreList, "1.19"));
+    Laby.fireEvent(new InventoryClickEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), clickedSlot.getContainerSlot(), itemName, loreList, "1.19"));
   }
 
   @Inject(
@@ -63,8 +61,7 @@ public class InventoryMixin {
   )
   private void moneymaker$fireInventoryClose(CallbackInfo ci) {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
-    AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
-    Laby.fireEvent(new InventoryCloseEvent(screen.getTitle().getString()));
+    Laby.fireEvent(new InventoryCloseEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString()));
   }
 
 }
