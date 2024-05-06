@@ -3,7 +3,6 @@ package de.timuuuu.moneymaker.v1_8_9.mixins;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.ArmorStandRenderEvent;
 import net.labymod.api.Laby;
-import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
