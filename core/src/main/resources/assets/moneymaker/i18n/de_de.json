@@ -341,6 +341,9 @@
 
       "discordConfiguration": {
         "name": "Eigene Discord Rich Presence",
+        "enabled": {
+          "name": "Aktiviert"
+        },
         "showLocation": {
           "name": "Zeige aktuelle Position",
           "description": "Zeigt deine aktuelle Position (Mine oder Farminghöhle)"

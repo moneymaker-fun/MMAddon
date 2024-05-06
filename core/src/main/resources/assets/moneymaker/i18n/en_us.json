@@ -341,6 +341,9 @@
 
       "discordConfiguration": {
         "name": "Custom Discord Rich Presence",
+        "enabled": {
+          "name": "Enabled"
+        },
         "showLocation": {
           "name": "Show current Location",
           "description": "Shows your current Location (Mine or Farming cave)"

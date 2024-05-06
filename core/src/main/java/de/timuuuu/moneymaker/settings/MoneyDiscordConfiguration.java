@@ -3,7 +3,6 @@ package de.timuuuu.moneymaker.settings;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
-import net.labymod.api.configuration.loader.annotation.ParentSwitch;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
@@ -12,7 +11,7 @@ import net.labymod.api.configuration.settings.annotation.SettingRequires;
 @SpriteTexture("sprite/settings")
 public class MoneyDiscordConfiguration extends Config {
 
-  @ParentSwitch
+  @SpriteSlot()
   @SwitchSetting
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
