@@ -26,9 +26,10 @@ public class ScoreBoardListener {
     if(!this.addon.addonUtil().connectedToMoneyMaker()) return;
 
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && this.addon.addonUtil().inFarming()) {
-      String raw = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
+      String scoreName = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
+      if(scoreName.contains("Loading") || scoreName.contains("Lädt")) return;
       try {
-        int blocks = Util.parseInteger(raw, this.getClass());
+        int blocks = Util.parseInteger(scoreName, this.getClass());
         this.addon.addonUtil().currentBrokenBlocks(blocks);
         if(this.addon.addonUtil().brokenBlocks() == 0) {
           this.addon.addonUtil().brokenBlocks(blocks);
@@ -64,6 +65,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && this.addon.addonUtil().inFarming()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
+      if(scoreName.contains("Loading") || scoreName.contains("Lädt")) return;
       if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
         this.addon.addonUtil().pickaxeRanking(Util.parseInteger(scoreName
             .replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
@@ -74,6 +76,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.RANK.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
+      if(scoreName.contains("Loading") || scoreName.contains("Lädt")) return;
       if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
         this.addon.addonUtil().ranking(Util.parseInteger(scoreName.
             replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
@@ -84,7 +87,9 @@ public class ScoreBoardListener {
     }
 
     if(event.score().getValue() == MoneyScore.BALANCE.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
-      this.addon.addonUtil().balance(ChatUtil.stripColor(event.score().getName()));
+      String scoreName = ChatUtil.stripColor(event.score().getName());
+      if(scoreName.contains("Loading") || scoreName.contains("Lädt")) return;
+      this.addon.addonUtil().balance(scoreName);
 
       try {
         String[] balSplit = this.addon.addonUtil().balance().replace(".", "").split(" ");
