@@ -9,7 +9,7 @@ import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import de.timuuuu.moneymaker.boosters.Booster;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
 import net.labymod.api.util.concurrent.task.Task;
@@ -22,6 +22,7 @@ public class NetworkPayloadListener {
   private final MoneyMakerAddon addon;
 
   private boolean langInfoOpened = false;
+  private boolean motdSent = false;
 
   public NetworkPayloadListener(MoneyMakerAddon addon) {
     this.addon = addon;
@@ -54,19 +55,19 @@ public class NetworkPayloadListener {
                   this.addon.addonUtil().sessionKills(0);
                   Booster.sessionBoost.set(0);
                   Booster.sessionBoosters.set(0);
-                  this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                      Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
+                  this.addon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
+                      Component.translatable("moneymaker.notification.farming.left.done", NamedTextColor.YELLOW));
                 }
                 if(farmingReset == FarmingReset.ASK) {
-                  MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                      Component.translatable("moneymaker.notification.farming.left.reset-question", TextColor.color(170, 170, 170)),
-                      Component.translatable("moneymaker.notification.farming.left.reset-button"), () -> {
+                  MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
+                      Component.translatable("moneymaker.notification.dataReset.farming.question", NamedTextColor.GRAY),
+                      Component.translatable("moneymaker.notification.dataReset.farming.button"), () -> {
                         this.addon.addonUtil().sessionBlocks(0);
                         this.addon.addonUtil().sessionKills(0);
                         Booster.sessionBoost.set(0);
                         Booster.sessionBoosters.set(0);
-                        this.addon.pushNotification(Component.translatable("moneymaker.notification.farming.left.title", TextColor.color(85, 255, 255)),
-                            Component.translatable("moneymaker.notification.farming.left.reset", TextColor.color(255, 255, 85)));
+                        this.addon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
+                            Component.translatable("moneymaker.notification.dataReset.farming.done", NamedTextColor.YELLOW));
                   });
                 }
               }
@@ -90,19 +91,29 @@ public class NetworkPayloadListener {
               this.addon.addonUtil().inFarming(gameMode.contains("Farming"));
 
               if(!this.addon.addonUtil().inFarming()) {
-                JsonObject data = new JsonObject();
-                data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-                data.addProperty("userName", this.addon.labyAPI().getName());
-                data.addProperty("server", this.addon.chatClient().currentServer());
-                data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-                this.addon.chatClient().sendMessage("playerStatus", data);
+                this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
               }
 
-              if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.configuration().languageInfoClosed().get()) {
-                if(!langInfoOpened) {
-                  langInfoOpened = true;
-                  Task.builder(() -> Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen())))).delay(2, TimeUnit.SECONDS).build().execute();
+              if(this.addon.addonUtil().connectedToMoneyMaker()) {
+                if(!this.addon.configuration().languageInfoClosed().get()) {
+                  if(!langInfoOpened) {
+                    langInfoOpened = true;
+                    Task.builder(() -> Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen())))).delay(2, TimeUnit.SECONDS).build().execute();
+                  }
                 }
+
+                if(!this.addon.addonUtil().motd().isEmpty() && !this.motdSent) {
+                  boolean show = this.addon.configuration().showMOTD().get();
+                  if(this.addon.addonUtil().motdPriority()) {
+                    show = true;
+                  }
+                  if(show) {
+                    this.motdSent = true;
+                    this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.motd", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
+                    this.addon.displayMessage(this.addon.addonUtil().motd().replace("&", "§"));
+                  }
+                }
+
               }
 
             }

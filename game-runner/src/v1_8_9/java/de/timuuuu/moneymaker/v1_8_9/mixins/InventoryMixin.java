@@ -1,5 +1,7 @@
 package de.timuuuu.moneymaker.v1_8_9.mixins;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class InventoryMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryRender(Slot slot, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(slot.getStack() != null) {
       if(slot.getStack().getTagCompound() != null) {
         NBTTagCompound compoundTag = slot.getStack().getTagCompound().getCompoundTag("display");
@@ -43,10 +46,30 @@ public class InventoryMixin {
   }
 
   @Inject(
+      method = {"handleMouseClick"},
+      at = {@At("HEAD")}
+  )
+  private void moneymaker$fireInventoryClick(Slot clickedSlot, int lvt_2_1_, int lvt_3_1_, int lvt_4_1_, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
+    if(clickedSlot == null) return;
+    if(clickedSlot.getStack() == null) return;
+    if(clickedSlot.getStack().getTagCompound() == null) return;
+    NBTTagCompound compoundTag = clickedSlot.getStack().getTagCompound().getCompoundTag("display");
+    String itemName = clickedSlot.getStack().getDisplayName();
+    List<String> loreList = new ArrayList<>();
+    NBTTagList listTag = compoundTag.getTagList("Lore", 8);
+    for(int i = 0; i != listTag.tagCount(); i++) {
+      loreList.add(listTag.getStringTagAt(i));
+    }
+    Laby.fireEvent(new InventoryClickEvent(clickedSlot.inventory.getName(), clickedSlot.slotNumber, itemName, loreList, "1.20"));
+  }
+
+  @Inject(
       method = {"onGuiClosed"},
       at = {@At("HEAD")}
   )
   private void moneymaker$fireInventoryClose(CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     String inventoryName = "Unknown Inventory";
     if(inventorySlots instanceof IInventory) {
       inventoryName = ((IInventory) inventorySlots).getName();

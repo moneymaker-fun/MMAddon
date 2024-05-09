@@ -8,7 +8,6 @@ import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
@@ -87,16 +86,16 @@ public class ChatReceiveListener {
             int time;
 
             if((plain.contains("Stunde") && plain.contains("Minuten")) || (plain.contains("hour") && plain.contains("minutes"))) {
-              int hours = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
-              int minutes = Integer.parseInt(plain.split(" \\(")[1].split(" ")[2]);
+              int hours = Util.parseInteger(plain.split(" \\(")[1].split(" ")[0], this.getClass());
+              int minutes = Util.parseInteger(plain.split(" \\(")[1].split(" ")[2], this.getClass());
               time = minutes + (hours*60);
             } else {
-              time = Integer.parseInt(timeString);
+              time = Util.parseInteger(timeString, this.getClass());
               if(plain.contains("Stunde") || plain.contains("hour")) {
                 time *= 60;
               }
             }
-            int boost = Integer.parseInt(boostString);
+            int boost = Util.parseInteger(boostString, this.getClass());
             /*int time = Integer.parseInt(timeString);
             if (plain.contains("Stunde") || plain.contains("hour")) {
               time *= 60;
@@ -134,14 +133,14 @@ public class ChatReceiveListener {
         int boost = 0;
         int time = 0;
         try {
-          boost = Integer.parseInt(plain.split(" ")[1].replace("%", "").replace("+", ""));
+          boost = Util.parseInteger(plain.split(" ")[1].replace("%", "").replace("+", ""), this.getClass());
 
           if((plain.contains("Stunde") && plain.contains("Minuten")) || (plain.contains("hour") && plain.contains("minutes"))) {
-            int hours = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
-            int minutes = Integer.parseInt(plain.split(" \\(")[1].split(" ")[2]);
+            int hours = Util.parseInteger(plain.split(" \\(")[1].split(" ")[0], this.getClass());
+            int minutes = Util.parseInteger(plain.split(" \\(")[1].split(" ")[2], this.getClass());
             time = minutes + (hours*60);
           } else {
-            time = Integer.parseInt(plain.split(" \\(")[1].split(" ")[0]);
+            time = Util.parseInteger(plain.split(" \\(")[1].split(" ")[0], this.getClass());
             if(plain.contains("Stunde") || plain.contains("hour")) {
               time *= 60;
             }
@@ -220,7 +219,7 @@ public class ChatReceiveListener {
             .replace(ChatMessages.BOOSTER_ACTIVATED_DE_2.message(), "");
 
         try {
-          int boost = Integer.parseInt(message);
+          int boost = Util.parseInteger(message, this.getClass());
           Booster.activatedBoost.addAndGet(boost);
         } catch (NumberFormatException ignored) {}
 
@@ -238,7 +237,7 @@ public class ChatReceiveListener {
             .replace(ChatMessages.BOOSTER_ACTIVATED_DE_2.message(), "");
 
         try {
-          int boost = Integer.parseInt(message);
+          int boost = Util.parseInteger(message, this.getClass());
           Booster.activatedBoost.addAndGet(boost);
         } catch (NumberFormatException ignored) {}
 

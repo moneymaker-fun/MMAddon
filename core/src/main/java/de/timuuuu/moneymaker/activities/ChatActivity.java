@@ -100,12 +100,7 @@ public class ChatActivity extends SimpleActivity {
             reconnectButton.setEnabled(true);
             this.addon.chatClient().connect(true);
             if(this.addon.chatClient().online()) {
-              JsonObject data = new JsonObject();
-              data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-              data.addProperty("userName", this.addon.labyAPI().getName());
-              data.addProperty("server", this.addon.chatClient().currentServer());
-              data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-              this.addon.chatClient().sendMessage("playerStatus", data);
+              this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
 
               JsonObject object = new JsonObject();
               object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
@@ -138,7 +133,12 @@ public class ChatActivity extends SimpleActivity {
 
     if(this.addon.chatClient().online()) {
       List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
-      players.sort(Comparator.comparing(o -> o.rank().getId()));
+      players.sort(Comparator.comparing(moneyPlayer -> {
+        if(moneyPlayer.rank() != null) {
+          return moneyPlayer.rank().getId();
+        }
+        return MoneyRank.USER.getId();
+      }));
 
       if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
         onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online auf MoneyMaker", NamedTextColor.GRAY))));
@@ -359,7 +359,7 @@ public class ChatActivity extends SimpleActivity {
       if(chatMessages.size() <= MESSAGE_LIMIT) {
         chatMessages.add(new ChatMessageWidget(this.addon, chatMessage.fromServerCache() ? chatMessage.timeStamp() : CURRENT_TIME, chatMessage).addId("chat-message"));
       } else {
-        chatMessages.remove(0);
+        chatMessages.removeFirst();
         chatMessages.add(new ChatMessageWidget(this.addon, chatMessage.fromServerCache() ? chatMessage.timeStamp() : CURRENT_TIME, chatMessage).addId("chat-message"));
       }
 
@@ -406,7 +406,7 @@ public class ChatActivity extends SimpleActivity {
       if(chatMessages.size() <= MESSAGE_LIMIT) {
         chatMessages.add(new ChatMessageWidget(this.addon, CURRENT_TIME, chatMessage));
       } else {
-        chatMessages.remove(0);
+        chatMessages.removeFirst();
         chatMessages.add(new ChatMessageWidget(this.addon, CURRENT_TIME, chatMessage));
       }
 

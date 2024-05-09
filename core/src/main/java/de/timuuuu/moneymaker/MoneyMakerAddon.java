@@ -2,9 +2,12 @@ package de.timuuuu.moneymaker;
 
 import com.google.gson.Gson;
 import de.timuuuu.moneymaker.activities.ChatActivity;
-import de.timuuuu.moneymaker.activities.MainActivity;
+import de.timuuuu.moneymaker.activities.LeaderboardActivity;
+import de.timuuuu.moneymaker.activities.PriceOverviewActivity;
+import de.timuuuu.moneymaker.activities.navigation.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
+import de.timuuuu.moneymaker.badges.MoneyChatPrefix;
 import de.timuuuu.moneymaker.badges.MoneyIconTag;
 import de.timuuuu.moneymaker.badges.MoneyTabBadge;
 import de.timuuuu.moneymaker.badges.MoneyTextTag;
@@ -67,6 +70,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private ChatClient chatClient;
 
   private MainActivity mainActivity;
+  private PriceOverviewActivity priceOverviewActivity;
+  private LeaderboardActivity leaderboardActivity;
   private ChatActivity chatActivity;
   private StartActivity startActivity;
 
@@ -76,13 +81,14 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private AddonSettings addonSettings;
   private AddonUtil addonUtil;
 
-  private static MoneyMakerAddon instance;
+  private EntityRenderListener entityRenderListener;
 
   private Gson gson;
+  private static MoneyMakerAddon instance;
 
   @Override
   protected void preConfigurationLoad() {
-    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("1.5.0"), "2024-04-01"));
+    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("1.6.0"), "2024-05-09"));
   }
 
   @Override
@@ -97,6 +103,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.addonUtil = new AddonUtil(this);
 
     this.startActivity = new StartActivity(this);
+    this.priceOverviewActivity = new PriceOverviewActivity(this);
+    this.leaderboardActivity = new LeaderboardActivity(this);
     this.chatActivity = new ChatActivity(this);
     this.mainActivity = new MainActivity(this);
 
@@ -114,7 +122,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new MoneyAddonListener(this));
     this.registerListener(new ChatServerListener(this));
     this.registerListener(new ScoreBoardListener(this));
-    this.registerListener(new EntityRenderListener(this));
+    this.registerListener(this.entityRenderListener = new EntityRenderListener(this));
     this.registerListener(new TickListener(this));
     this.registerListener(new InventoryListener(this));
 
@@ -141,6 +149,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag(this));
     labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag(this));
     Laby.references().badgeRegistry().register("moneymaker_tab_icon", net.labymod.api.client.entity.player.badge.PositionType.LEFT_TO_NAME, new MoneyTabBadge(this));
+    labyAPI().chatProvider().prefixRegistry().register("moneymaker_icon", new MoneyChatPrefix(this));
 
     this.logger().info("Enabled the Addon");
 
@@ -148,8 +157,29 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.addonSettings.setFallbackCoordinates(false);
     this.addonSettings.selectUpdateMode(this.configuration().updateMode().get());
-    this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
     this.apiUtil.loadCoordinates();
+    this.apiUtil.loadLeaderboard(false);
+
+    // Configuration Listeners
+
+    this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
+
+    this.configuration().chatConfiguration.showCaveLevel().addChangeListener((type, oldValue, newValue) ->
+        this.chatClient().util().sendPlayerStatus(this.labyAPI().getUniqueId().toString(), this.labyAPI().getName(), false)
+    );
+
+    this.configuration().discordConfiguration.enabled().addChangeListener((type, oldValue, newValue) -> {
+      if(newValue) {
+        this.discordAPI.update();
+      } else {
+        this.discordAPI.removeCustom();
+      }
+    });
+
+    //this.configuration().discordConfiguration.showLocation().addChangeListener(aBoolean -> this.discordAPI.update());
+    //this.configuration().discordConfiguration.showStats().addChangeListener(aBoolean -> this.discordAPI.update());
+    //this.configuration().discordConfiguration.showCaveLevel().addChangeListener(aBoolean -> this.discordAPI.update());
+
   }
 
   @Override
@@ -157,12 +187,12 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     return MoneyMakerConfiguration.class;
   }
 
-  public static MoneyMakerAddon instance() {
-    return instance;
-  }
-
   public Gson gson() {
     return gson;
+  }
+
+  public static MoneyMakerAddon instance() {
+    return instance;
   }
 
   public DiscordAPI discordAPI() {
@@ -185,6 +215,14 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     return mainActivity;
   }
 
+  public PriceOverviewActivity priceOverviewActivity() {
+    return priceOverviewActivity;
+  }
+
+  public LeaderboardActivity leaderboardActivity() {
+    return leaderboardActivity;
+  }
+
   public ChatActivity chatActivity() {
     return chatActivity;
   }
@@ -195,6 +233,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public StartActivity startActivity() {
     return startActivity;
+  }
+
+  public EntityRenderListener entityRenderListener() {
+    return entityRenderListener;
   }
 
   public void pushNotification(Component title, Component text) {

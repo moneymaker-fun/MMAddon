@@ -7,9 +7,9 @@
   padding-right: 3;
 }
 
-.discord-btn {
-  bottom: 10;
-  left: 10;
+.discord-button {
+  bottom: 2;
+  right: 20;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
@@ -19,4 +19,14 @@
   Icon {
     height: 75%;
   }
+}
+
+.leaderboard-button {
+  bottom: 2;
+  right: 85;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+  height: 15;
+  border-color: #FFFF55;
 }

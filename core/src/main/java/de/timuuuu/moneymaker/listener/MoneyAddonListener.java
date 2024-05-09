@@ -7,6 +7,7 @@ import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
+import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
@@ -58,25 +59,12 @@ public class MoneyAddonListener {
     if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
         event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
-      JsonObject leaderBoard = new JsonObject();
-      leaderBoard.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      leaderBoard.addProperty("userName", this.addon.labyAPI().getName());
-      leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
-      leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
-      leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
-      leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
-      leaderBoard.addProperty("show_blocks", this.addon.addonUtil().leaderboardShowBlocks());
-      this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
+      this.addon.chatClient().util().sendLeaderboard(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
     }
 
     this.addon.addonUtil().resetValues(true);
 
-    JsonObject data = new JsonObject();
-    data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-    data.addProperty("userName", this.addon.labyAPI().getName());
-    data.addProperty("server", this.addon.chatClient().currentServer());
-    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    this.addon.chatClient().sendMessage("playerStatus", data);
+    this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
 
     this.addon.discordAPI().removeCustom();
     this.addon.discordAPI().removeSaved();
@@ -94,37 +82,18 @@ public class MoneyAddonListener {
       }
     }
 
-    this.addon.chatClient().sendStatistics(true, event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
-    this.addon.chatClient().sendStatistics(false, event.newSession().getUniqueId().toString(), event.newSession().getUsername());
+    this.addon.chatClient().util().sendStatistics(true, event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
+    this.addon.chatClient().util().sendStatistics(false, event.newSession().getUniqueId().toString(), event.newSession().getUsername());
     AddonUtil.playerStatus.remove(event.previousSession().getUniqueId());
 
-    JsonObject data = new JsonObject();
-    data.addProperty("uuid", event.previousSession().getUniqueId().toString());
-    data.addProperty("userName", event.previousSession().getUsername());
-    data.addProperty("server", "OFFLINE");
-    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    this.addon.chatClient().sendMessage("playerStatus", data);
-
-    JsonObject data1 = new JsonObject();
-    data1.addProperty("uuid", event.newSession().getUniqueId().toString());
-    data1.addProperty("userName", event.newSession().getUsername());
-    data1.addProperty("server", this.addon.chatClient().currentServer());
-    data1.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    this.addon.chatClient().sendMessage("playerStatus", data1);
+    this.addon.chatClient().util().sendPlayerStatus(event.previousSession().getUniqueId().toString(), event.previousSession().getUsername(), true);
+    this.addon.chatClient().util().sendPlayerStatus(event.newSession().getUniqueId().toString(), event.newSession().getUsername(), false);
 
     JsonObject muteCheckObject = new JsonObject();
     muteCheckObject.addProperty("uuid", event.newSession().getUniqueId().toString());
     this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
 
-    JsonObject leaderBoard = new JsonObject();
-    leaderBoard.addProperty("uuid", event.previousSession().getUniqueId().toString());
-    leaderBoard.addProperty("userName", event.previousSession().getUsername());
-    leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
-    leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
-    leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
-    leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
-    leaderBoard.addProperty("show_blocks", this.addon.addonUtil().leaderboardShowBlocks());
-    this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
+    this.addon.chatClient().util().sendLeaderboard(event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
 
     this.addon.addonUtil().ranking(0);
     this.addon.addonUtil().breakGoalBlocks(0);
@@ -134,25 +103,23 @@ public class MoneyAddonListener {
   }
 
   @Subscribe
+  public void onProfileChange(ProfileSwitchEvent event) {
+
+    if(this.addon.configuration().resetOnProfileSwitch().get()) {
+      this.addon.addonUtil().resetValues(false);
+      this.addon.pushNotification(
+          Component.translatable("moneymaker.notification.dataReset.profile.title", NamedTextColor.AQUA),
+          Component.translatable("moneymaker.notification.dataReset.profile.text", NamedTextColor.YELLOW)
+      );
+    }
+
+  }
+
+  @Subscribe
   public void onShutdown(GameShutdownEvent event) {
-    this.addon.chatClient().sendStatistics(true, this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
-    JsonObject data = new JsonObject();
-    data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-    data.addProperty("userName", this.addon.labyAPI().getName());
-    data.addProperty("server", "OFFLINE");
-    data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-    this.addon.chatClient().sendMessage("playerStatus", data);
-
-    JsonObject leaderBoard = new JsonObject();
-    leaderBoard.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-    leaderBoard.addProperty("userName", this.addon.labyAPI().getName());
-    leaderBoard.addProperty("ranking", this.addon.addonUtil().ranking());
-    leaderBoard.addProperty("blocks", this.addon.addonUtil().brokenBlocks());
-    leaderBoard.addProperty("pickaxe_ranking", this.addon.addonUtil().pickaxeRanking());
-    leaderBoard.addProperty("sword_ranking", this.addon.addonUtil().swordRanking());
-    leaderBoard.addProperty("show_blocks", this.addon.addonUtil().leaderboardShowBlocks());
-    this.addon.chatClient().sendMessage("leaderboard", leaderBoard);
-
+    this.addon.chatClient().util().sendStatistics(true, this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
+    this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), true);
+    this.addon.chatClient().util().sendLeaderboard(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
     this.addon.chatClient().closeConnection();
     if(this.addon.configuration().exportBoosterOnShutdown().get()) {
       BoosterActivity.writeLinkedListToCSV(true);
@@ -169,12 +136,7 @@ public class MoneyAddonListener {
     this.addon.addonUtil().miningCave(event.newCave());
     if(((this.lastLevelUpdate + 10*1000 - System.currentTimeMillis())) <= 0) {
       this.lastLevelUpdate = System.currentTimeMillis();
-      JsonObject data = new JsonObject();
-      data.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-      data.addProperty("userName", this.addon.labyAPI().getName());
-      data.addProperty("server", this.addon.chatClient().currentCave(event.newCave()));
-      data.addProperty("addonVersion", this.addon.addonInfo().getVersion());
-      this.addon.chatClient().sendMessage("playerStatus", data);
+      this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
     }
   }
 
@@ -191,7 +153,7 @@ public class MoneyAddonListener {
       String serverBefore = AddonUtil.playerStatus.get(uuid).server();
 
       // Online
-      if(serverBefore.equalsIgnoreCase("Other") && player.server().contains("MoneyMaker")) {
+      if(serverBefore.equalsIgnoreCase("Other") && (player.server().equalsIgnoreCase("Mine") || player.server().startsWith("Farming"))) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().chatConfiguration.onlineOfflineMessages().get()) {
           Task.builder(() -> this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
@@ -203,7 +165,7 @@ public class MoneyAddonListener {
       }
 
       // Offline
-      if(serverBefore.contains("MoneyMaker") && (player.server().equalsIgnoreCase("Other") || player.server().equals("OFFLINE"))) {
+      if((serverBefore.equalsIgnoreCase("Mine") || serverBefore.startsWith("Farming")) && (player.server().equalsIgnoreCase("Other") || player.server().equals("OFFLINE"))) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().chatConfiguration.onlineOfflineMessages().get()) {
           this.addon.pushNotification(
               Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),

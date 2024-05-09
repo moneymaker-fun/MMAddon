@@ -30,18 +30,13 @@ public class MoneyTextTag extends NameTag {
   }
 
   @Override
-  public float getHeight() {
-    return super.getHeight();
-  }
-
-  @Override
   public float getScale() {
     return 0.6F;
   }
 
   @Override
   public boolean isVisible() {
-    return super.isVisible();
+    return visible(entity);
   }
 
   private boolean visible(Entity entity) {

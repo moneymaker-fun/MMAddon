@@ -14,14 +14,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
 import net.labymod.api.LabyAPI;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.screen.theme.Theme;
-import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.attributes.bounds.Bounds;
-import net.labymod.api.client.gui.screen.widget.widgets.activity.Document;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.client.render.font.text.TextRenderer;
@@ -32,7 +31,7 @@ public class Util {
 
   public static HashMap<String, MoneyTimer> timers = new HashMap<>();
 
-  public static void addFeedbackButton(Document document) {
+  public static ButtonWidget feedbackButton() {
     ButtonWidget feedbackButton = ButtonWidget.component(
         Component.text("Feedback", NamedTextColor.GOLD).append(Component.text(" / ", NamedTextColor.GRAY)).append(Component.text("Bugreport", NamedTextColor.RED)),
         SpriteCommon.BUG
@@ -41,15 +40,19 @@ public class Util {
       //OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
       Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new FeedbackActivity(MoneyMakerAddon.instance(), Laby.labyAPI().minecraft().minecraftWindow().currentScreen())));
     });
-    document.addChild(feedbackButton);
+    return feedbackButton;
   }
 
-  public static Widget addDiscordButton() {
-    ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.start.discord", SpriteCommon.DISCORD).addId("discord-btn");
-    discordButton.setPressable(() -> {
-      OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd");
-    });
+  public static ButtonWidget discordButton() {
+    ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.button.discord", SpriteCommon.DISCORD).addId("discord-button");
+    discordButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd"));
     return discordButton;
+  }
+
+  public static ButtonWidget leaderboardButton() {
+    ButtonWidget leaderboardButton = ButtonWidget.i18n("moneymaker.ui.button.leaderboard").addId("leaderboard-button");
+    leaderboardButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/leaderboard/"));
+    return leaderboardButton;
   }
 
   public static void drawAuthor(LabyAPI labyAPI, Bounds bounds, Stack stack) {
@@ -97,6 +100,15 @@ public class Util {
     return new DecimalFormat("#,###", new DecimalFormatSymbols(Locale.GERMAN)).format(toFormate);
   }
 
+  public static int parseInteger(String input, Class clazz) throws NumberFormatException {
+    try {
+      return Integer.parseInt(input);
+    } catch (NumberFormatException numberFormatException) {
+      MoneyMakerAddon.instance().logger().warn("Unable to parse Input to Integer (Input: '" + input + "', Used in '" + clazz.getName() + "')");
+      throw numberFormatException;
+    }
+  }
+
   public static boolean isDev(String uuid) {
     return uuid.equals("308893af-77af-4706-ac8a-1c4830038108") || uuid.equals("966b5d5e-2577-4ab7-987a-89bfa59da74a");
   }
@@ -121,12 +133,12 @@ public class Util {
     int seconds = 0;
     try {
       if(!hours) {
-        seconds = Integer.parseInt(split[1]);
-        seconds += Integer.parseInt(split[0])*60;
+        seconds = parseInteger(split[1], Util.class);
+        seconds += parseInteger(split[0], Util.class)*60;
       } else {
-        seconds = Integer.parseInt(split[2]);
-        seconds += Integer.parseInt(split[1])*60;
-        seconds += Integer.parseInt(split[0])*60*60;
+        seconds = parseInteger(split[2], Util.class);
+        seconds += parseInteger(split[1], Util.class)*60;
+        seconds += parseInteger(split[0], Util.class)*60*60;
       }
     } catch (NumberFormatException ignored) {}
     return seconds;
@@ -179,4 +191,19 @@ public class Util {
     return list;
   }
 
+  public static String convertToReadableFormat(long milliseconds) {
+    long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+    long minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+    long seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60;
+
+    if (hours > 0) {
+      return hours + "h " + minutes + "m";
+    } else {
+      if (minutes > 0) {
+        return minutes + "m " + seconds + "s";
+      } else {
+        return seconds + "s";
+      }
+    }
+  }
 }

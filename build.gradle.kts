@@ -7,8 +7,6 @@ plugins {
 group = "org.example"
 version = "1.0.0"
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
@@ -21,7 +19,7 @@ labyMod {
         author = "Timuuuu, MisterCore"
         description = "Adds some features to the MoneyMaker IdleGame on GommeHD.net"
         minecraftVersion = "*"
-        version = System.getenv().getOrDefault("VERSION", "1.5.0")
+        version = System.getenv().getOrDefault("VERSION", "1.6.0")
     }
 
     minecraft {
@@ -36,7 +34,9 @@ labyMod {
                 "1.19.4",
                 "1.20.1",
                 "1.20.2",
-                "1.20.4"
+                "1.20.4",
+                "1.20.5",
+                "1.20.6"
         ) { version, provider ->
             configureRun(provider, version)
         }
@@ -80,7 +80,7 @@ fun configureRun(provider: net.labymod.gradle.core.minecraft.provider.VersionPro
         args("--addon-dev-environment", "true")
     }
 
-    provider.javaVersion = JavaVersion.VERSION_17
+    provider.javaVersion = JavaVersion.VERSION_21
 
     provider.mixin {
         val mixinMinVersion = when (gameVersion) {

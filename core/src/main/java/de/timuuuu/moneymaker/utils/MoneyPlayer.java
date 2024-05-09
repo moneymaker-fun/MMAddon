@@ -9,13 +9,15 @@ public class MoneyPlayer {
   private String userName;
   private String server;
   private String addonVersion;
+  private String minecraftVersion;
   private MoneyRank rank;
 
-  public MoneyPlayer(UUID uuid, String userName, String server, String addonVersion, MoneyRank rank) {
+  public MoneyPlayer(UUID uuid, String userName, String server, String addonVersion, String minecraftVersion, MoneyRank rank) {
     this.uuid = uuid;
     this.userName = userName;
     this.server = server;
     this.addonVersion = addonVersion;
+    this.minecraftVersion = minecraftVersion;
     this.rank = rank;
   }
 
@@ -33,6 +35,10 @@ public class MoneyPlayer {
 
   public String addonVersion() {
     return addonVersion;
+  }
+
+  public String minecraftVersion() {
+    return minecraftVersion;
   }
 
   public MoneyRank rank() {

@@ -54,12 +54,16 @@ public class MoneyMakerConfiguration extends AddonConfig {
       addon.pushNotification(
           Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
           Component.translatable("moneymaker.notification.leaderboard.blocks.disabled", NamedTextColor.RED)
+              .append(Component.text("\n"))
+              .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
       );
     } else {
       addon.addonUtil().leaderboardShowBlocks(true);
       addon.pushNotification(
           Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
           Component.translatable("moneymaker.notification.leaderboard.blocks.enabled", NamedTextColor.GREEN)
+              .append(Component.text("\n"))
+              .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
       );
     }
   }
@@ -74,6 +78,11 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @DropdownSetting
   @DropdownEntryTranslationPrefix("moneymaker.settings.farmingAutoReset.type")
   private final ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset = new ConfigProperty<>(FarmingReset.ASK);
+
+  @IntroducedIn(value = "1.5.1", namespace = "moneymaker")
+  @SpriteSlot(y = 3, x = 2)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> resetOnProfileSwitch = new ConfigProperty<>(false);
 
   @IntroducedIn(value = "1.3.0", namespace = "moneymaker")
   @SpriteSlot(y = 3, x = 1)
@@ -90,6 +99,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> showTotalBoostMessage = new ConfigProperty<>(true);
 
+  @IntroducedIn(value = "1.6.0", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showMOTD = new ConfigProperty<>(true);
+
   // Settings Getters
 
   @Override
@@ -105,6 +118,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return farmingAutoReset;
   }
 
+  public ConfigProperty<Boolean> resetOnProfileSwitch() {
+    return resetOnProfileSwitch;
+  }
+
   public ConfigProperty<Boolean> showWidgetsAlways() {
     return showWidgetsAlways;
   }
@@ -117,13 +134,17 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return showTotalBoostMessage;
   }
 
+  public ConfigProperty<Boolean> showMOTD() {
+    return showMOTD;
+  }
+
   // Internal Settings
 
   @Exclude
   private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
 
   @Exclude
-  private final ConfigProperty<Boolean> chatShowAllPlayers = new ConfigProperty<>(true);
+  private final ConfigProperty<Boolean> chatShowAllPlayers = new ConfigProperty<>(false);
 
   @Exclude
   private final ConfigProperty<Boolean> languageInfoClosed = new ConfigProperty<>(false);

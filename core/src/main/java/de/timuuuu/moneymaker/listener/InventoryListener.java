@@ -1,10 +1,17 @@
 package de.timuuuu.moneymaker.listener;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
+import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
@@ -17,15 +24,53 @@ public class InventoryListener {
 
   private static List<SlotItem> alreadyRendered = new ArrayList<>();
   private static int totalBoosters = 0;
-  private int previousBoostx = -1;
-  private int previousTotalBoost = -1;
+  private int previousBoost = -1;
+  private int previousTotalBoosters = -1;
   private long lastDisplayTime = 0; // Initialize last display time to 0
 
+  private long DISPLAY_COOLDOWN = 30000;
+
+  private String currentProfile = "";
 
   private MoneyMakerAddon addon;
 
   public InventoryListener(MoneyMakerAddon addon) {
     this.addon = addon;
+  }
+
+  @Subscribe
+  public void onInventoryClick(InventoryClickEvent event) {
+
+    if(event.getInventoryName().equals("Profil-Übersicht") || event.getInventoryName().equals("Profile overview")) {
+
+      if(event.getItemName().contains("Profil-Slot") || event.getItemName().contains("Profile slot") ||
+          event.getItemName().contains("Event-Profil") || event.getItemName().contains("Event profile")) {
+
+        String newProfile = null;
+        if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+          newProfile = event.getItemName();
+        } else {
+          // {"italic":false,"color":"aqua","text":"Profil-Slot 1"}
+          try {
+            JsonElement element = JsonParser.parseString(event.getItemName());
+            if(element != null && element.isJsonObject()) {
+              JsonObject object = element.getAsJsonObject();
+              if(object.has("text")) {
+                newProfile = object.get("text").getAsString();
+              }
+            }
+          } catch (JsonSyntaxException ignored) {}
+        }
+
+        if(newProfile != null) {
+          if(!this.currentProfile.equals(newProfile)) {
+            Laby.fireEvent(new ProfileSwitchEvent(this.currentProfile, newProfile));
+            this.currentProfile = newProfile;
+          }
+        }
+
+      }
+    }
   }
 
   public static void clearAlreadyRendered() {
@@ -38,7 +83,7 @@ public class InventoryListener {
     if(!alreadyRendered.isEmpty()) {
       alreadyRendered.forEach(slotItem -> {
         String strippedName = null;
-        if(slotItem.getGameVersion().equals("1.8") || slotItem.getGameVersion().equals("1.12")) {
+        if(slotItem.getGameVersion().equals("1.8") || slotItem.getGameVersion().equals("1.12") || slotItem.getGameVersion().equals("1.20.5")) {
           strippedName = ChatUtil.stripColor(slotItem.getName()); // +150 % Booster (1)
         } else {
           List<String> rawName = Util.getTextFromJsonObject(slotItem.getName()); // "+2.000 % Booster ","(4)"
@@ -53,8 +98,8 @@ public class InventoryListener {
 
           if(rawBooster.length == 2) {
             try {
-              int boosting = Integer.parseInt(rawBooster[0]);
-              int amount = Integer.parseInt(rawBooster[1].replace(")", ""));
+              int boosting = Util.parseInteger(rawBooster[0], this.getClass());
+              int amount = Util.parseInteger(rawBooster[1].replace(")", ""), this.getClass());
               int finalBoost = boosting * amount;
               boost.getAndAdd(finalBoost);
             } catch (NumberFormatException ignored) {}
@@ -90,16 +135,7 @@ public class InventoryListener {
       ]
      */
 
-    // Inventory Name: DE > Booster-Übersicht (§e328§7/§61.000§r) | EN > Booster overview (§e328§7/§61,000§r)
-    String inventoryName = ChatUtil.stripColor(event.getInventoryName()); // DE > Booster-Übersicht (328/1.000) | EN > Booster overview (328/1,000)
-    String[] rawInvName = inventoryName.split("\\(");
-    if(rawInvName.length == 2) {
-      try {
-        totalBoosters = Integer.parseInt(rawInvName[1].split("/")[0]);
-      } catch (NumberFormatException ignored) {}
-    }
-
-    if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+    if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12") || event.getGameVersion().equals("1.20.5")) {
       if(event.getLoreList().size() >= 9) {
         String displayName = event.getDisplayName();
         String durationLore = event.getLoreList().get(2);
@@ -138,14 +174,24 @@ public class InventoryListener {
      */
 
   }
+
   @Subscribe
   public void onInventoryClose(InventoryCloseEvent event) {
     if(!(event.getInventoryName().startsWith("Booster-Übersicht") || event.getInventoryName().startsWith("Booster overview"))) return;
     if(!this.addon.configuration().showTotalBoostMessage().get()) return;
 
+    // Inventory Name: DE > Booster-Übersicht (§e328§7/§61.000§r) | EN > Booster overview (§e328§7/§61,000§r)
+    String inventoryName = ChatUtil.stripColor(event.getInventoryName()); // DE > Booster-Übersicht (328/1.000) | EN > Booster overview (328/1,000)
+    String[] rawInvName = inventoryName.split("\\(");
+    if(rawInvName.length == 2) {
+      try {
+        totalBoosters = Util.parseInteger(rawInvName[1].split("/")[0].replace(".", "").replace(",", ""), this.getClass());
+      } catch (NumberFormatException ignored) {}
+    }
+
     int boost = getBoost();
     long currentTime = System.currentTimeMillis();
-    if(boost > 0 && totalBoosters > 0 && (boost != previousBoostx || totalBoosters != previousTotalBoost || currentTime - lastDisplayTime >= 30000)) {
+    if(boost > 0 && totalBoosters > 0 && (boost != previousBoost || totalBoosters != previousTotalBoosters || currentTime - lastDisplayTime >= DISPLAY_COOLDOWN)) {
       this.addon.displayMessage(
           this.addon.prefix.copy()
               .append(Component.translatable(
@@ -156,8 +202,8 @@ public class InventoryListener {
               .hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.text.booster.inventory.info", NamedTextColor.GRAY)))
       );
 
-      previousBoostx = boost;
-      previousTotalBoost = totalBoosters;
+      previousBoost = boost;
+      previousTotalBoosters = totalBoosters;
       lastDisplayTime = currentTime;
     }
 

@@ -19,6 +19,12 @@ public class MoneyChatConfiguration extends Config {
   @SwitchSetting
   private final ConfigProperty<Boolean> loadChatHistory = new ConfigProperty<>(true);
 
+  @SettingSection(value = "privacy", center = true)
+
+  @IntroducedIn(namespace = "moneymaker", value = "1.6.0")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showCaveLevel = new ConfigProperty<>(true);
+
   @SettingSection(value = "notifications", center = true)
 
   @SpriteSlot(y = 4)
@@ -38,6 +44,12 @@ public class MoneyChatConfiguration extends Config {
 
   public ConfigProperty<Boolean> loadChatHistory() {
     return loadChatHistory;
+  }
+
+  // Privacy Getters
+
+  public ConfigProperty<Boolean> showCaveLevel() {
+    return showCaveLevel;
   }
 
   // Notification Getters

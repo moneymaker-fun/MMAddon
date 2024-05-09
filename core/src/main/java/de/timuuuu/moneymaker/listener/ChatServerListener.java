@@ -98,7 +98,13 @@ public class ChatServerListener {
       UUID uuid = UUID.fromString(data.get("uuid").getAsString());
       Laby.fireEvent(new MoneyPlayerStatusEvent(
           uuid,
-          new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), MoneyPlayer.rankByName(data.get("rank").getAsString()))
+          new MoneyPlayer(uuid,
+              data.get("userName").getAsString(),
+              data.get("server").getAsString(),
+              data.get("addonVersion").getAsString(),
+              data.has("minecraftVersion") ? data.get("minecraftVersion").getAsString() : "unknown",
+              MoneyPlayer.rankByName(data.get("rank").getAsString())
+          )
       ));
     }
 
@@ -115,6 +121,7 @@ public class ChatServerListener {
                 playerData.get("userName").getAsString(),
                 playerData.get("server").getAsString(),
                 playerData.get("addonVersion").getAsString(),
+                playerData.has("minecraftVersion") ? playerData.get("minecraftVersion").getAsString() : "unknown",
                 MoneyPlayer.rankByName(playerData.get("rank").getAsString())
             ));
           }

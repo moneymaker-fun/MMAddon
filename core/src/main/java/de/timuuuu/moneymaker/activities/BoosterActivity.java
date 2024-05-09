@@ -50,8 +50,6 @@ public class BoosterActivity extends SimpleActivity {
     titleWidget.addId("title");
     this.document.addChild(titleWidget);
 
-    Util.addFeedbackButton(this.document);
-
     AtomicInteger boost = new AtomicInteger(0);
     Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost()));
 
@@ -79,10 +77,16 @@ public class BoosterActivity extends SimpleActivity {
 
     ComponentWidget averageBoostersWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.booster.average-boosters", TextColor.color(255, 255, 85)).append(
         Component.text(Booster.sessionBoosters.get() > 0 && this.addon.addonUtil().sessionBlocks() > 0 ? "\n" + (float) Booster.sessionBoosters.get() / this.addon.addonUtil().sessionBlocks() + " (" + ((float) Booster.sessionBoosters.get() / this.addon.addonUtil().sessionBlocks()) * 100 +  " %)" : "\nN/A", TextColor.color(255, 170, 0))
-    ));
-    averageBoostersWidget.setHoverComponent(Component.text(Booster.sessionBoosters.get() + " Booster / " + this.addon.addonUtil().sessionBlocks() + " Blöcke"));
-    averageBoostersWidget.addId("average-boosters");
+    )).addId("average-boosters");
     sideContainer.addChild(averageBoostersWidget);
+
+    ComponentWidget boostersPerBlocksWidget = ComponentWidget.component(
+        Component.text(Booster.sessionBoosters.get() + " Boosters", NamedTextColor.GOLD)
+            .append(Component.text(" / ", NamedTextColor.GRAY))
+            .append(Component.text(this.addon.addonUtil().sessionBlocks() + " ", NamedTextColor.YELLOW))
+            .append(Component.translatable("moneymaker.hudWidget.mm_block_session.blocks", NamedTextColor.YELLOW))
+    ).addId("boosters-per-block");
+    sideContainer.addChild(boostersPerBlocksWidget);
 
     ButtonWidget exportBtnWidget = ButtonWidget.i18n("moneymaker.ui.booster.export").addId("export-button");
     exportBtnWidget.setPressable(() -> writeLinkedListToCSV(false));
@@ -112,6 +116,10 @@ public class BoosterActivity extends SimpleActivity {
 
     this.document.addChild(container);
     this.document.addChild(sideContainer);
+
+    this.document.addChild(Util.feedbackButton());
+    this.document.addChild(Util.discordButton());
+    this.document.addChild(Util.leaderboardButton());
   }
 
   private Component sortIcon() {
@@ -119,7 +127,7 @@ public class BoosterActivity extends SimpleActivity {
       return Component.text("⬆", NamedTextColor.AQUA);
     }
     if(this.sorting == Sorting.TIME) {
-      return Component.translatable("moneymaker.ui.booster.sorting.time", NamedTextColor.AQUA);
+      return Component.text("⌚", NamedTextColor.AQUA);
     }
     return Component.text("⬇", NamedTextColor.AQUA);
   }

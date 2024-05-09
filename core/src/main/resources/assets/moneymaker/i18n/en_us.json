@@ -11,7 +11,8 @@
     "navigation": {
       "title": "MoneyMaker",
       "main-menu": "Main Menu",
-      "info": "Information",
+      "prices": "Prices Overview",
+      "leaderboard": "Leaderboard",
       "booster": "Booster",
       "chat": "Chat",
       "secret": "Secret"
@@ -48,7 +49,8 @@
           "total": "You have a total of %s Boosters in your Booster-Inventory, this corresponds to a total boost of %s.",
           "info": "Please not that only boosters are recorded\nthat are currently visible in the inventory."
         }
-      }
+      },
+      "motd": "Message of the Day"
     },
     "discordPresence": {
       "mine": {
@@ -61,7 +63,7 @@
         "currently": "In the farming cave",
         "blocks": "Blocks: ",
         "sessionBlocks": "Blocks (Current Session): ",
-        "boosters": "Farmed Boosters: ",
+        "boosters": "Found Boosters: ",
         "ranking": "Ranking: ",
         "pickaxe": {
           "rank": "Pickaxe Rank: ",
@@ -93,7 +95,7 @@
       "booster-export": {
         "title": "Booster-Export",
         "no-boosters": "There are no boosters to export.",
-        "saved": "The overview of your farmed boosters has been saved.",
+        "saved": "The overview of your found boosters has been saved.",
         "open-folder": "Open folder"
       },
       "chat": {
@@ -119,17 +121,21 @@
           "text": "The timer %s has been deleted."
         }
       },
-      "farming": {
-        "left": {
+      "dataReset": {
+        "farming": {
           "title": "Leave farming cave",
-          "reset-question": "Do you want to reset the block, kill and booster counters?",
-          "reset-button": "Reset",
-          "reset": "Your block, kill and booster counters have been reset."
+          "question": "Do you want to reset the block, kill and booster counters?",
+          "button": "Reset",
+          "done": "Your block, kill and booster counters have been reset."
+        },
+        "profile": {
+          "title": "Profile switch detected",
+          "text": "The collected data has been reset due to the profile switch"
         }
       },
       "break-goal": {
         "title": "Break Goal",
-        "text": "You have reached your break goal!",
+        "text": "You have reached your break goal in %s!",
         "set": "You have set your break goal to %s blocks.",
         "no-number": "Please enter a number as input."
       },
@@ -147,8 +153,10 @@
         "title": "MoneyMaker - Leaderboard",
         "blocks": {
           "enabled": "Your blocks will now be shown.",
-          "disabled": "Your blocks will now be hidden."
-        }
+          "disabled": "Your blocks will now be hidden.",
+          "info": "Please note that this setting will only be saved when you close the game or leave GommeHD.net."
+        },
+        "coolDown": "Please wait before refreshing the Leaderboard."
       }
     },
     "feedback": {
@@ -236,6 +244,7 @@
     },
     "settings": {
       "name": "MoneyMaker",
+
       "header": {
         "general": {
           "name": "General Settings"
@@ -244,6 +253,7 @@
           "name": "Other Settings"
         }
       },
+
       "enabled": {
         "name": "Enabled"
       },
@@ -253,8 +263,8 @@
         "text": "Change"
       },
       "exportBoosterOnShutdown": {
-        "name": "Export farmed boosters on shutdown",
-        "description": "Exports your farmed boosters when you exit the game.\nThe file will be saved in {game-directory}/MoneyMaker"
+        "name": "Export found boosters on shutdown",
+        "description": "Exports your found boosters when you exit the game.\nThe file will be saved in {game-directory}/MoneyMaker"
       },
       "farmingAutoReset": {
         "name": "Reset counters when leaving farming cave",
@@ -264,6 +274,10 @@
           "ask": "Ask to Reset (Notification)",
           "hide": "Hide completely"
         }
+      },
+      "resetOnProfileSwitch": {
+        "name": "Reset data on profile switch",
+        "description": "Resets the collected data automatically when switching the profile"
       },
       "showWidgetsAlways" : {
         "name": "Show Widgets always",
@@ -283,6 +297,11 @@
         "name": "Show total boost message",
         "description": "Displays a message in chat with the total boost of your boosters in the booster inventory when you close the booster inventory"
       },
+      "showMOTD": {
+        "name": "Show Message of the day",
+        "description": "Displays the message of the day when joining MoneyMaker"
+      },
+
       "gameplayConfiguration": {
         "name": "Gameplay Settings",
         "shortBoosterMessage": {
@@ -319,22 +338,34 @@
           "name": "Hide Full Booster Inventory Message"
         }
       },
+
       "discordConfiguration": {
         "name": "Custom Discord Rich Presence",
+        "enabled": {
+          "name": "Enabled"
+        },
         "showLocation": {
           "name": "Show current Location",
           "description": "Shows your current Location (Mine or Farming cave)"
         },
         "showStats": {
           "name": "Show Statistics",
-          "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Farmed Boosters, Pickaxe Rank & Level, Ranking"
+          "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Found Boosters, Pickaxe Rank & Level, Ranking"
+        },
+        "showCaveLevel": {
+          "name": "Shows your current Cave Level",
+          "description": "Shows your current Cave level (gold, coal, iron) in the Discord Rich Presence"
         }
       },
+
       "chatConfiguration": {
         "name": "Chat Settings",
         "header": {
           "general": {
             "name": "General Chat Settings"
+          },
+          "privacy": {
+            "name": "Privacy Settings"
           },
           "notifications": {
             "name": "Chat Notification Settings"
@@ -343,6 +374,10 @@
         "loadChatHistory": {
           "name": "Load Chat History",
           "description": "Load the Chat history when connecting to GommeHD.net. The History contains the last 50 sent messages and will be displayed in the MoneyMaker Chat Tab"
+        },
+        "showCaveLevel": {
+          "name": "Shows your current Cave Level",
+          "description": "Shows your current Cave level (gold, coal, iron) in the Addon Chat online list"
         },
         "notification": {
           "name": "Notifications",
@@ -356,6 +391,7 @@
           "name": "Show Online/Offline Messages"
         }
       },
+
       "badgeConfiguration": {
         "name": "Tag Settings",
         "header": {
@@ -375,12 +411,23 @@
         "tabListIcon": {
           "name": "Show Icon in TabList"
         },
+        "chatIcon": {
+          "name": "Show Icon in Chat"
+        },
         "textColor": {
           "name": "Color of the Text-Tag"
         }
       }
+
     },
+
     "ui": {
+
+      "button": {
+        "discord": "Discord",
+        "leaderboard": "Leaderboard"
+      },
+
       "start": {
         "title": "MoneyMaker Main Menu",
         "current-timers": "Currently active timers",
@@ -390,12 +437,8 @@
           "input-title": "Enter Break Goal",
           "input-description": "Enter the break goal you want to achieve."
         },
-        "discord": "Discord"
-      },
-      "info": {
-        "title": "MoneyMaker Information",
-        "commandsTitle": "Commands of the Addon",
         "commands": {
+          "title": "Commands of the Addon",
           "timer": {
             "command": "/mm-timer <Minutes> <Timer Name>",
             "description": " Creates a timer"
@@ -406,8 +449,40 @@
           }
         }
       },
+
+      "priceOverview": {
+        "title": "MoneyMaker Price Overview",
+        "gold": "Gold-Mine",
+        "coal": "Coal-Mine",
+        "iron": "Iron-Mine",
+        "lapis": "Lapis-Mine",
+        "unlockCosts": "Price for Unlock: "
+      },
+
+      "leaderboard": {
+        "title": "MoneyMaker Leaderboard",
+        "update": "Update",
+        "toggleBlocks": {
+          "enabled": "Shown own blocks",
+          "disabled": "Hide own blocks"
+        },
+        "noData": "An error occurred!\nNo data has been received from the server",
+        "header": {
+          "username": "Player name",
+          "ranking": "Ranking",
+          "blocks": "Blocks",
+          "sword": "Sword Ranking",
+          "pickaxe": "Pickaxe Ranking"
+        },
+        "sorting": {
+          "button": "Sorting",
+          "asc": "Ascending",
+          "desc": "Descending"
+        }
+      },
+
       "booster": {
-        "title": "List of farmed boosters",
+        "title": "List of found boosters",
         "boost-total": "Total: %s",
         "average-boosters": "Average Boosters: ",
         "sorting":{
@@ -417,6 +492,7 @@
         "export": "Export as CSV",
         "clear": "Clear Booster List"
       },
+
       "chat": {
         "title": "MoneyMaker Addon Chat",
         "server-offline": "The chat server is currently not available.",
@@ -441,6 +517,7 @@
           "mute": "Mute"
         }
       },
+
       "secret": {
         "title": "Super Secret Settings",
         "chat": {
@@ -448,6 +525,7 @@
           "all-players": "Show all players in Onlinelist"
         }
       }
+
     },
     "hudWidget": {
       "mm_booster_count": {
@@ -510,14 +588,14 @@
         "noTimers": "No Timers aktiv"
       },
       "mm_booster_display": {
-        "name": "Latest farmed boosters",
+        "name": "Latest found boosters",
         "maxDisplayedBoosters": {
           "name": "Displayed Boosters"
         },
         "textColor": {
           "name": "Text color"
         },
-        "latestBoosters": "Latest farmed boosters:",
+        "latestBoosters": "Latest found boosters:",
         "notConnected": "Not on MoneyMaker",
         "noBoosters": "No Boosters found"
       },
