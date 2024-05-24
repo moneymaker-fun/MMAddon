@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.chat;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.badges.MoneyRank;
+import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 
 import java.util.UUID;
@@ -13,7 +14,7 @@ public class MoneyChatMessage {
   private String userName;
   private String message;
   private MoneyRank rank;
-  private boolean systemMessage;
+  private ChatClientUtil.MessageType messageType;
   private boolean deleted = false;
   private boolean fromServerCache;
   private String timeStamp;
@@ -24,7 +25,7 @@ public class MoneyChatMessage {
     this.userName = userName;
     this.message = message;
     this.rank = rank;
-    this.systemMessage = uuid.toString().equals("00000000-0000-0000-0000-000000000000");
+    this.messageType = ChatClientUtil.getMessageType(uuid.toString());
     this.fromServerCache = fromServerCache;
     this.timeStamp = timeStamp;
   }
@@ -76,8 +77,8 @@ public class MoneyChatMessage {
     return rank;
   }
 
-  public boolean systemMessage() {
-    return systemMessage;
+  public MessageType messageType() {
+    return messageType;
   }
 
   public boolean fromServerCache() {

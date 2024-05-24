@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatReportActivity;
 import de.timuuuu.moneymaker.activities.popup.MuteActivity;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
+import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import de.timuuuu.moneymaker.utils.Util;
@@ -13,7 +14,6 @@ import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
@@ -24,7 +24,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWi
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
-import net.labymod.api.client.resources.ResourceLocation;
 
 public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleContentWidget | Default > HorizontalListWidget
 
@@ -33,20 +32,20 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
   private String time;
   private MoneyChatMessage chatMessage = null;
   private Component customMessage;
-  private boolean systemMessage;
+  private MessageType messageType;
 
   public ChatMessageWidget(MoneyMakerAddon addon, String time, MoneyChatMessage chatMessage) {
     this.addon = addon;
     this.time = time;
     this.chatMessage = chatMessage;
-    this.systemMessage = chatMessage.systemMessage();
+    this.messageType = chatMessage.messageType();
   }
 
   public ChatMessageWidget(MoneyMakerAddon addon, String time, Component customMessage) {
     this.addon = addon;
     this.time = time;
     this.customMessage = customMessage;
-    this.systemMessage = true;
+    this.messageType = MessageType.SERVER;
   }
 
   @Override
@@ -58,17 +57,14 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     VerticalListWidget<Widget> flex = new VerticalListWidget<>().addId("flex");
 
     HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
-    if (!this.systemMessage) {
-      String prefix = chatMessage.rank().getChatPrefix();
+    if (this.messageType == MessageType.PLAYER) {
       header.addEntry(new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar"));
-      Component senderComponent = Component.text(prefix + chatMessage.userName());
+      Component senderComponent = Component.text(chatMessage.rank().getChatPrefix() + chatMessage.userName());
       senderComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.chatMessage().userName()));
       header.addEntry(ComponentWidget.component(senderComponent).addId("sender"));
     } else {
-      header.addEntry(new IconWidget(Icon.sprite16(
-          ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2)).addId("avatar"));
-      Component component = Component.text("SYSTEM", NamedTextColor.DARK_RED).decorate(TextDecoration.BOLD);
-      header.addEntry(ComponentWidget.component(component).addId("sender"));
+      header.addEntry(new IconWidget(this.messageType.icon()).addId("avatar"));
+      header.addEntry(ComponentWidget.component(this.messageType.userName()).addId("sender"));
     }
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
     if(this.chatMessage != null && this.chatMessage.fromServerCache()) {
@@ -82,7 +78,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       }
     }
 
-    if(!this.systemMessage) {
+    if(this.messageType == MessageType.PLAYER) {
       if(this.chatMessage != null && !this.chatMessage.deleted()) {
 
         // User is Staff member - add Mute button
@@ -167,7 +163,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     return chatMessage;
   }
 
-  public boolean systemMessage() {
-    return systemMessage;
+  public MessageType messageType() {
+    return messageType;
   }
 }

@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.listener;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
+import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
@@ -215,7 +216,7 @@ public class MoneyAddonListener {
     if(!this.addon.addonUtil().connectedToMoneyMaker()) return;
     if(chatMessage.fromServerCache()) return;
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
-      if(!chatMessage.systemMessage()) {
+      if(chatMessage.messageType() != MessageType.SERVER) {
 
         if(this.addon.configuration().chatConfiguration.notification().get()) {
           this.addon.pushNotification(
