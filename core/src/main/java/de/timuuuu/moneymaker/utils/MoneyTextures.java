@@ -29,6 +29,7 @@ public class MoneyTextures {
     public static final Icon EXCLAMATION_MARK;
     public static final Icon BUG;
     public static final Icon DISCORD;
+    public static final Icon SERVER;
 
     public static final Icon HUD_COIN;
     public static final Icon HUD_GOLD_ORE;
@@ -49,6 +50,7 @@ public class MoneyTextures {
       EXCLAMATION_MARK = sprite64(TEXTURE, 0, 0);
       BUG = sprite64(TEXTURE, 1, 0);
       DISCORD = sprite64(TEXTURE, 2, 0);
+      SERVER = Icon.sprite16(ResourceLocation.create("moneymaker", "themes/vanilla/textures/settings/hud/hud.png"), 1, 2);
 
       HUD_COIN = sprite64(TEXTURE, 0, 3);
       HUD_GOLD_ORE = sprite64(TEXTURE, 1, 3);
