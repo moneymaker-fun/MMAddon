@@ -7,6 +7,7 @@ import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
 import de.timuuuu.moneymaker.badges.MoneyRank;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
+import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
@@ -383,7 +384,7 @@ public class ChatActivity extends SimpleActivity {
     for(ChatMessageWidget messageWidget : chatMessages) {
       if(messageWidget.chatMessage() != null) {
         if(messageWidget.chatMessage().messageId().equals(id)) {
-          if(messageWidget.systemMessage()) {
+          if(messageWidget.messageType() != MessageType.PLAYER) {
             remove.add(messageWidget);
           } else {
             messageWidget.chatMessage().message("§7§o" + I18n.translate("moneymaker.ui.chat.messageDeleted"));

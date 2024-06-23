@@ -10,6 +10,7 @@ import de.timuuuu.moneymaker.boosters.Booster;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
 import net.labymod.api.util.concurrent.task.Task;
@@ -110,7 +111,7 @@ public class NetworkPayloadListener {
                   if(show) {
                     this.motdSent = true;
                     this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.motd", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
-                    this.addon.displayMessage(this.addon.addonUtil().motd().replace("&", "§"));
+                    this.addon.displayMessage(PlainTextComponentSerializer.plainUrl().deserialize(this.addon.addonUtil().motd()));
                   }
                 }
 
