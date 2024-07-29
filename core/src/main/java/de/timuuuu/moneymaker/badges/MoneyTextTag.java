@@ -45,6 +45,7 @@ public class MoneyTextTag extends NameTag {
     if(!this.addon.configuration().enabled().get()) return false;
     if(!this.addon.configuration().badgeConfiguration.textTag().get()) return false;
     if(!AddonUtil.playerStatus.containsKey(player.profile().getUniqueId())) return false;
+    if(AddonUtil.playerStatus.get(player.profile().getUniqueId()) == null) return false;
     return AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() != MoneyRank.USER;
   }
 

@@ -23,16 +23,14 @@ public class MoneyChatPrefix implements ChatPrefix {
   @Override
   public void render(Stack stack, float x, float y, AdvancedChatMessage advancedChatMessage, RenderableComponent[] renderableComponents, int index, int subIndex, int lineHeight, float textOffset, double scale, int alpha) {
       if(index == 0 && subIndex == 0) {
-        GameProfile gameProfile= this.getProfileFromMessage(advancedChatMessage);
-
-        if(gameProfile != null) {
-          double headSize = 8.0 * scale;
-          int margin = 1;
-          if(AddonUtil.playerStatus.containsKey(gameProfile.getUniqueId())) {
-            MoneyPlayer moneyPlayer = AddonUtil.playerStatus.get(gameProfile.getUniqueId());
-            moneyPlayer.rank().getIcon().render(stack, x + (float) margin, y + textOffset, (float) headSize);
-          }
-        }
+        GameProfile gameProfile = this.getProfileFromMessage(advancedChatMessage);
+        if(gameProfile == null) return;
+        if(!AddonUtil.playerStatus.containsKey(gameProfile.getUniqueId())) return;
+        if(AddonUtil.playerStatus.get(gameProfile.getUniqueId()) == null) return;
+        MoneyPlayer moneyPlayer = AddonUtil.playerStatus.get(gameProfile.getUniqueId());
+        double headSize = 8.0 * scale;
+        int margin = 1;
+        moneyPlayer.rank().getIcon().render(stack, x + (float) margin, y + textOffset, (float) headSize);
 
       }
   }

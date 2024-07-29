@@ -14,8 +14,8 @@ import net.labymod.api.client.component.serializer.plain.PlainTextComponentSeria
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
 import net.labymod.api.util.concurrent.task.Task;
-import net.labymod.serverapi.protocol.payload.exception.PayloadReaderException;
-import net.labymod.serverapi.protocol.payload.io.PayloadReader;
+import net.labymod.serverapi.api.payload.exception.PayloadReaderException;
+import net.labymod.serverapi.api.payload.io.PayloadReader;
 import java.util.concurrent.TimeUnit;
 
 public class NetworkPayloadListener {

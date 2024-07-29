@@ -32,7 +32,8 @@ public class MoneyIconTag extends IconTag {
     if(player.profile().getUniqueId() == null) return null;
     if(!this.addon.configuration().enabled().get()) return null;
     if(!this.addon.configuration().badgeConfiguration.iconTag().get()) return null;
-    return AddonUtil.playerStatus.containsKey(player.profile().getUniqueId()) ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
+    if(!AddonUtil.playerStatus.containsKey(player.profile().getUniqueId())) return null;
+    return AddonUtil.playerStatus.get(player.profile().getUniqueId()) != null ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
   }
 
 }
