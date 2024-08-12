@@ -1,17 +1,16 @@
 package de.timuuuu.moneymaker.listener;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
+import java.util.List;
+import java.util.Objects;
 
 public class TickListener {
 
@@ -32,7 +31,7 @@ public class TickListener {
     if(generalTickCount >= this.addon.addonSettings().CHECK_TICK()) {
       generalTickCount = 0;
 
-      float playerY = this.addon.labyAPI().minecraft().getClientPlayer().position().getY();
+      float playerY = Objects.requireNonNull(this.addon.labyAPI().minecraft().getClientPlayer()).position().getY();
       MiningCave currentCave = this.addon.addonUtil().miningCave();
 
       // Gold Ebene
@@ -70,6 +69,7 @@ public class TickListener {
     if(swordTickCount >= this.addon.addonSettings().CHECK_TICK()) {
       swordTickCount = 0;
 
+      if(event.getLoreList().size() < 4) return;
       if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
       String rankingLine = event.getLoreList().get(2);
       String mobsLine = event.getLoreList().get(3);
@@ -80,76 +80,52 @@ public class TickListener {
       §7Getötete Mobs: §e103 [Getötete Mobs: 103]
       */
 
-      if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+      if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12") || event.getGameVersion().equals("1.20.5")) {
 
         rankingLine = ChatUtil.stripColor(rankingLine);
         mobsLine = ChatUtil.stripColor(mobsLine);
 
         if(rankingLine.startsWith("Ranking: ")) {
           if(!(rankingLine.contains("Lädt...") || rankingLine.contains("Loading..."))) {
-            this.addon.addonUtil().swordRanking(Integer.parseInt(rankingLine.split(" ")[2]
-                .replace(".", "").replace(",", "")));
+            this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
+                .replace(".", "").replace(",", ""), this.getClass()));
           }
         }
 
         if(mobsLine.startsWith("Getötete Mobs: ")) {
-          this.addon.addonUtil().swordMobs(Integer.parseInt(mobsLine.replace("Getötete Mobs: ", "")
-              .replace(".", "").replace(",", "")));
+          this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Getötete Mobs: ", "")
+              .replace(".", "").replace(",", ""), this.getClass()));
         }
 
         if(mobsLine.startsWith("Killed mobs: ")) {
-          this.addon.addonUtil().swordMobs(Integer.parseInt(mobsLine.replace("Killed mobs: ", "")
-              .replace(".", "").replace(",", "")));
+          this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
+              .replace(".", "").replace(",", ""), this.getClass()));
         }
 
-        return;
-      }
+      } else {
 
-      if(rankingLine.contains("Ranking: ")) {
-        try {
-          JsonObject loreObject = JsonParser.parseString(rankingLine).getAsJsonObject();
-          if(!loreObject.has("extra")) return;
-          if(!loreObject.get("extra").isJsonArray()) return;
-          JsonArray array = loreObject.get("extra").getAsJsonArray();
-          for(int i = 0; i != array.size(); i++) {
-            if(array.get(i).isJsonObject()) {
-              JsonObject object = array.get(i).getAsJsonObject();
-              if(object.has("text")) {
-                String text = object.get("text").getAsString();
-                if(text.contains("Platz ")) {
-                  this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Platz ", "")
-                      .replace(".", "").replace(",", "").strip()));
-                }
-                if(text.contains("Rank ")) {
-                  this.addon.addonUtil().swordRanking(Integer.parseInt(text.replace("Rank ", "")
-                      .replace(".", "").replace(",", "").strip()));
-                }
-              }
-            }
+        if(rankingLine.contains("Ranking: ")) {
+          List<String> line = Util.getTextFromJsonObject(rankingLine);
+          if(line.size() != 3) return;
+          if(line.get(1) == null) return;
+          String text = line.get(1);
+          if(text.contains("Platz ")) {
+            this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
+                .replace(".", "").replace(",", "").strip(), this.getClass()));
           }
-
-        } catch (JsonSyntaxException ignored) {}
-      }
-
-      if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
-        try {
-          JsonObject loreObject = JsonParser.parseString(mobsLine).getAsJsonObject();
-          if(!loreObject.has("extra")) return;
-          if(!loreObject.get("extra").isJsonArray()) return;
-          JsonArray array = loreObject.get("extra").getAsJsonArray();
-          for(int i = 0; i != array.size(); i++) {
-            if(array.get(i).isJsonObject()) {
-              JsonObject object = array.get(i).getAsJsonObject();
-              if(object.has("text")) {
-                String text = object.get("text").getAsString();
-                if(!(text.equals("Getötete Mobs: ") || text.equals("Killed mobs: "))) {
-                  this.addon.addonUtil().swordMobs(Integer.parseInt(text.replace(".", "").replace(",", "")));
-                }
-              }
-            }
+          if(text.contains("Rank ")) {
+            this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
+                .replace(".", "").replace(",", "").strip(), this.getClass()));
           }
+        }
 
-        } catch (JsonSyntaxException ignored) {}
+        if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
+          List<String> line = Util.getTextFromJsonObject(mobsLine);
+          if(line.size() != 2) return;
+          if(line.get(1) == null) return;
+          this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
+        }
+
       }
 
       if(this.addon.addonUtil().swordMobs() != 0) {
@@ -171,15 +147,8 @@ public class TickListener {
 
     /*
     Lore-List:
-    {"italic":false,"text":""}
-    {"italic":false,"extra":[{"color":"aqua","text":"Statistiken:"}],"text":""}
-    {"italic":false,"extra":[{"extra":[{"color":"gray","text":"Ranking: "},{"color":"gold","text":"Platz 9.523 "},{"color":"gray","text":"(Getötete Mobs)"}],"text":""}],"text":""}
-    {"italic":false,"extra":[{"extra":[{"color":"gray","text":"Getötete Mobs: "},{"color":"yellow","text":"101"}],"text":""}],"text":""}
-
     Visualisation: https://jsonlint.com/
-     */
 
-    /*
     {"italic":false,"text":""},
     {"italic":false,"color":"aqua","text":"Statistiken:"},
     {"italic":false,"extra":[{"color":"gray","text":"Ranking: "},{"color":"gold","text":"Platz 215 "},{"color":"gray","text":"(Getötete Mobs)"}],"text":""},

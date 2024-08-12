@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.badges.MoneyRank;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -12,7 +13,39 @@ public class AddonUtil {
     this.addon = addon;
   }
 
+
+
+  private String currentEvent = "NONE";
+  private String motd = "";
+  private boolean motdPriority = false;
+
+  public String currentEvent() {
+    return currentEvent;
+  }
+
+  public void currentEvent(String currentEvent) {
+    this.currentEvent = currentEvent;
+  }
+
+  public String motd() {
+    return motd;
+  }
+
+  public void motd(String motd) {
+    this.motd = motd;
+  }
+
+  public boolean motdPriority() {
+    return motdPriority;
+  }
+
+  public void motdPriority(boolean motdPriority) {
+    this.motdPriority = motdPriority;
+  }
+
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
+
+  private MoneyRank rank = MoneyRank.USER;
 
   private boolean inMine = false;
   private boolean inFarming = false;
@@ -24,7 +57,7 @@ public class AddonUtil {
       inFarming = false;
     }
     balance = "X";
-    rank = 0;
+    ranking = 0;
     pickaxeLevel = 0;
     pickaxeRanking = 0;
     brokenBlocks = 0;
@@ -42,10 +75,13 @@ public class AddonUtil {
     swordMobs = 0;
     mobKills = 0;
     sessionKills = 0;
+    this.addon.entityRenderListener().stopDebrisTask();
   }
 
+  private boolean leaderboardShowBlocks = true;
+
   private String balance = "X";
-  private int rank = 0;
+  private int ranking = 0;
 
   private int pickaxeLevel = 0;
   private int pickaxeRanking = 0;
@@ -68,11 +104,20 @@ public class AddonUtil {
   private int sessionKills = 0;
 
   private int debrisTime = 0;
+  private long startTimestamp = 0;
 
   // Util
 
   private boolean workerNotifySent = false;
   private boolean debrisNotifySent = false;
+
+  public MoneyRank rank() {
+    return rank;
+  }
+
+  public void rank(MoneyRank rank) {
+    this.rank = rank;
+  }
 
   public MiningCave miningCave() {
     return miningCave;
@@ -102,6 +147,14 @@ public class AddonUtil {
     this.inFarming = inFarming;
   }
 
+  public boolean leaderboardShowBlocks() {
+    return leaderboardShowBlocks;
+  }
+
+  public void leaderboardShowBlocks(boolean leaderboardShowBlocks) {
+    this.leaderboardShowBlocks = leaderboardShowBlocks;
+  }
+
   public String balance() {
     return balance;
   }
@@ -110,12 +163,12 @@ public class AddonUtil {
     this.balance = balance;
   }
 
-  public int rank() {
-    return rank;
+  public int ranking() {
+    return ranking;
   }
 
-  public void rank(int rank) {
-    this.rank = rank;
+  public void ranking(int ranking) {
+    this.ranking = ranking;
   }
 
   public int pickaxeLevel() {
@@ -164,6 +217,14 @@ public class AddonUtil {
 
   public void breakGoalBlocks(int breakGoalBlocks) {
     this.breakGoalBlocks = breakGoalBlocks;
+  }
+
+  public long startTimestamp() {
+    return startTimestamp;
+  }
+
+  public void startTimestamp(long startTimestamp) {
+    this.startTimestamp = startTimestamp;
   }
 
   public int workerCount() {

@@ -1,8 +1,12 @@
 package de.timuuuu.moneymaker.settings;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import de.timuuuu.moneymaker.settings.AddonSettings.UpdateMode;
 import net.labymod.api.addon.AddonConfig;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownEntryTranslationPrefix;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
@@ -12,8 +16,8 @@ import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
 import net.labymod.api.configuration.loader.property.ConfigProperty;
-import net.labymod.api.configuration.settings.annotation.SettingRequires;
 import net.labymod.api.configuration.settings.annotation.SettingSection;
+import net.labymod.api.util.MethodOrder;
 
 @ConfigName("settings")
 @SpriteTexture("sprite/settings")
@@ -26,17 +30,43 @@ public class MoneyMakerConfiguration extends AddonConfig {
   private final ConfigProperty<Boolean> enabled = new ConfigProperty<>(true);
 
   @SpriteSlot(y = 1)
-  public MoneyDiscordConfiguration moneyDiscordConfiguration = new MoneyDiscordConfiguration();
+  public MoneyDiscordConfiguration discordConfiguration = new MoneyDiscordConfiguration();
 
   @SpriteSlot(x = 1)
-  public MoneyChatConfiguration moneyChatConfiguration = new MoneyChatConfiguration();
+  public MoneyChatConfiguration chatConfiguration = new MoneyChatConfiguration();
 
   @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
   @SpriteSlot(y = 7)
-  public MoneyBadgeConfiguration moneyBadgeConfiguration = new MoneyBadgeConfiguration();
+  public MoneyBadgeConfiguration badgeConfiguration = new MoneyBadgeConfiguration();
+
+  @IntroducedIn(value = "1.4.2", namespace = "moneymaker")
+  public MoneyGameplayConfiguration gameplayConfiguration = new MoneyGameplayConfiguration();
 
 
   @SettingSection(value = "other", center = true)
+
+  @MethodOrder(before = "exportBoosterOnShutdown")
+  @ButtonSetting
+  public void showBlocksInLeaderboard() {
+    MoneyMakerAddon addon = MoneyMakerAddon.instance();
+    if(addon.addonUtil().leaderboardShowBlocks()) {
+      addon.addonUtil().leaderboardShowBlocks(false);
+      addon.pushNotification(
+          Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
+          Component.translatable("moneymaker.notification.leaderboard.blocks.disabled", NamedTextColor.RED)
+              .append(Component.text("\n"))
+              .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
+      );
+    } else {
+      addon.addonUtil().leaderboardShowBlocks(true);
+      addon.pushNotification(
+          Component.translatable("moneymaker.notification.leaderboard.title", NamedTextColor.GOLD),
+          Component.translatable("moneymaker.notification.leaderboard.blocks.enabled", NamedTextColor.GREEN)
+              .append(Component.text("\n"))
+              .append(Component.translatable("moneymaker.notification.leaderboard.blocks.info", NamedTextColor.GRAY))
+      );
+    }
+  }
 
   @IntroducedIn(value = "1.1.0", namespace = "moneymaker")
   @SpriteSlot(y = 3, x = 3)
@@ -48,6 +78,11 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @DropdownSetting
   @DropdownEntryTranslationPrefix("moneymaker.settings.farmingAutoReset.type")
   private final ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset = new ConfigProperty<>(FarmingReset.ASK);
+
+  @IntroducedIn(value = "1.5.1", namespace = "moneymaker")
+  @SpriteSlot(y = 3, x = 2)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> resetOnProfileSwitch = new ConfigProperty<>(false);
 
   @IntroducedIn(value = "1.3.0", namespace = "moneymaker")
   @SpriteSlot(y = 3, x = 1)
@@ -64,47 +99,9 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @SwitchSetting
   private final ConfigProperty<Boolean> showTotalBoostMessage = new ConfigProperty<>(true);
 
-  @SettingSection(value = "gameplay", center = true)
-
-  @SpriteSlot(y = 2, x = 1)
+  @IntroducedIn(value = "1.6.0", namespace = "moneymaker")
   @SwitchSetting
-  private final ConfigProperty<Boolean> shortBoosterMessage = new ConfigProperty<>(false);
-
-  @IntroducedIn(value = "0.0.5", namespace = "moneymaker")
-  @SpriteSlot(y = 2, x = 3)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> hideEmptyMessages = new ConfigProperty<>(false);
-
-  @SpriteSlot(y = 2, x = 5)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> hideWorkerUpgradeMessage = new ConfigProperty<>(false);
-
-  @SpriteSlot(y = 2, x = 7)
-  @IntroducedIn(value = "0.0.6", namespace = "moneymaker")
-  @SwitchSetting
-  private final ConfigProperty<Boolean> hideBuySellWorkerMessage = new ConfigProperty<>(false);
-
-  @SpriteSlot(y = 2, x = 4)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> hideTeleportMessage = new ConfigProperty<>(false);
-
-  @SpriteSlot(y = 4)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> notifyOnMoneyReached = new ConfigProperty<>(false);
-
-  @SpriteSlot(y = 2, x = 6)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> hideEffectMessage = new ConfigProperty<>(false);
-
-  @SettingRequires(value = "hideEffectMessage", invert = true)
-  @SpriteSlot(y = 2)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> showTimersOnEffect = new ConfigProperty<>(false);
-
-  @SpriteSlot(y = 2, x = 2)
-  @SwitchSetting
-  private final ConfigProperty<Boolean> hideFullBoosterInventory = new ConfigProperty<>(false);
-
+  private final ConfigProperty<Boolean> showMOTD = new ConfigProperty<>(true);
 
   // Settings Getters
 
@@ -113,14 +110,16 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return this.enabled;
   }
 
-  // Other Getters
-
   public ConfigProperty<Boolean> exportBoosterOnShutdown() {
     return exportBoosterOnShutdown;
   }
 
   public ConfigProperty<AddonSettings.FarmingReset> farmingAutoReset() {
     return farmingAutoReset;
+  }
+
+  public ConfigProperty<Boolean> resetOnProfileSwitch() {
+    return resetOnProfileSwitch;
   }
 
   public ConfigProperty<Boolean> showWidgetsAlways() {
@@ -135,50 +134,17 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return showTotalBoostMessage;
   }
 
-  // Gameplay Getters
-
-  public ConfigProperty<Boolean> shortBoosterMessage() {
-    return shortBoosterMessage;
+  public ConfigProperty<Boolean> showMOTD() {
+    return showMOTD;
   }
-
-  public ConfigProperty<Boolean> hideEmptyMessages() {
-    return hideEmptyMessages;
-  }
-
-  public ConfigProperty<Boolean> hideWorkerUpgradeMessage() {
-    return hideWorkerUpgradeMessage;
-  }
-
-  public ConfigProperty<Boolean> hideBuySellWorkerMessage() {
-    return hideBuySellWorkerMessage;
-  }
-
-  public ConfigProperty<Boolean> hideTeleportMessage() {
-    return hideTeleportMessage;
-  }
-
-  public ConfigProperty<Boolean> notifyOnMoneyReached() {
-    return notifyOnMoneyReached;
-  }
-
-  public ConfigProperty<Boolean> showTimersOnEffect() {
-    return showTimersOnEffect;
-  }
-
-  public ConfigProperty<Boolean> hideEffectMessage() {
-    return hideEffectMessage;
-  }
-
-  public ConfigProperty<Boolean> hideFullBoosterInventory() {
-    return hideFullBoosterInventory;
-  }
-
-
 
   // Internal Settings
 
   @Exclude
   private final ConfigProperty<Boolean> chatReconnectButton = new ConfigProperty<>(false);
+
+  @Exclude
+  private final ConfigProperty<Boolean> chatShowAllPlayers = new ConfigProperty<>(false);
 
   @Exclude
   private final ConfigProperty<Boolean> languageInfoClosed = new ConfigProperty<>(false);
@@ -188,6 +154,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   public ConfigProperty<Boolean> chatReconnectButton() {
     return chatReconnectButton;
+  }
+
+  public ConfigProperty<Boolean> chatShowAllPlayers() {
+    return chatShowAllPlayers;
   }
 
   public ConfigProperty<Boolean> languageInfoClosed() {

@@ -30,8 +30,9 @@ public class MoneyTabBadge extends BadgeRenderer {
   private MoneyRank visibleRank(NetworkPlayerInfo player) {
     if(player.profile().getUniqueId() == null) return null;
     if(!this.addon.configuration().enabled().get()) return null;
-    if(!this.addon.configuration().moneyBadgeConfiguration.tabListIcon().get()) return null;
-    return AddonUtil.playerStatus.containsKey(player.profile().getUniqueId()) ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
+    if(!this.addon.configuration().badgeConfiguration.tabListIcon().get()) return null;
+    if(!AddonUtil.playerStatus.containsKey(player.profile().getUniqueId())) return null;
+    return AddonUtil.playerStatus.get(player.profile().getUniqueId()) != null ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
   }
 
 }

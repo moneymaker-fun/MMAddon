@@ -31,9 +31,8 @@
 }
 
 .chat-online-text {
-  font-size: 0.8;
   top: 10;
-  right: 12%;
+  right: 14%;
 }
 
 .chat-container {
@@ -63,14 +62,18 @@
 }
 
 .online-scroll {
-  top: 5;
+  top: 10;
   left: 5;
-  width: 90%;
-  height: 95%;
+  right: 0;
+  bottom: 5;
 
   .online-list {
-    height: 100%;
+    height: fit-content;
     width: 100%;
+  }
+
+  .placeholder {
+    margin: 5 0 -5 0;
   }
 
   OnlineEntry {

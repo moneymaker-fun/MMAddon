@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.badges.MoneyRank;
 import de.timuuuu.moneymaker.boosters.Booster;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,13 +21,12 @@ public class DiscordAPI {
   private Task updaterTask;
 
   private final String minerUrl = "https://cdn.terramc.net/moneymaker/miner.png";
-  private final String loreUrl = "https://cdn.terramc.net/moneymaker/lore.png";
 
   public DiscordAPI(MoneyMakerAddon addon) {
     this.addon = addon;
   }
 
-  private String imageUrl = loreUrl;
+  private String imageUrl = MoneyRank.USER.getIconUrl();
   private String line1 = "";
   private String line2 = "";
 
@@ -50,7 +50,7 @@ public class DiscordAPI {
   public void update() {
     if(this.busy) return;
     if(!this.addon.configuration().enabled().get()) return;
-    if(!this.addon.configuration().moneyDiscordConfiguration.enabled().get()) return;
+    if(!this.addon.configuration().discordConfiguration.enabled().get()) return;
     if(!(this.addon.addonUtil().inMine() || this.addon.addonUtil().inFarming())) return;
 
     this.busy = true;
@@ -64,12 +64,12 @@ public class DiscordAPI {
       builder.start(current.getStartTime());
     }
 
-    if(this.addon.configuration().moneyDiscordConfiguration.showLocation().get()) {
+    if(this.addon.configuration().discordConfiguration.showLocation().get()) {
       builder.details(this.line1);
     } else {
       builder.details("MoneyMaker Addon v" + this.addon.addonInfo().getVersion() + (this.addon.labyAPI().labyModLoader().isAddonDevelopmentEnvironment() ? " DEV" : ""));
     }
-    if(this.addon.configuration().moneyDiscordConfiguration.showStats().get()) {
+    if(this.addon.configuration().discordConfiguration.showStats().get()) {
       builder.state(this.line2);
     } else {
       builder.state("by MisterCore & Seelenverwandter");
@@ -92,8 +92,8 @@ public class DiscordAPI {
 
       if (this.addon.addonUtil().inMine()) {
         mineCount.getAndAdd(1);
-        if (!imageUrl.equals(loreUrl)) {
-          imageUrl = loreUrl;
+        if (!imageUrl.equals(this.addon.addonUtil().rank().getIconUrl())) {
+          imageUrl = this.addon.addonUtil().rank().getIconUrl();
         }
         this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently");
         if (mineCount.get() == 1) {
@@ -104,7 +104,7 @@ public class DiscordAPI {
         }
         if (mineCount.get() >= 3) {
           mineCount.set(0);
-          this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + this.addon.addonUtil().rank();
+          this.line2 = I18n.translate("moneymaker.discordPresence.mine.ranking") + this.addon.addonUtil().ranking();
         }
       }
 
@@ -113,7 +113,8 @@ public class DiscordAPI {
         if (!imageUrl.equals(minerUrl)) {
           imageUrl = minerUrl;
         }
-        this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently") + " - " + I18n.translate(this.addon.addonUtil().miningCave().translation());
+        this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently") +
+            (this.addon.configuration().discordConfiguration.showCaveLevel().get() ? " - " + I18n.translate(this.addon.addonUtil().miningCave().translation()) : "");
         if (farmingCount.get() == 1) {
           this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + Util.format(this.addon.addonUtil().currentBrokenBlocks());
         }
@@ -131,7 +132,7 @@ public class DiscordAPI {
         }
         if (farmingCount.get() >= 6) {
           farmingCount.set(0);
-          this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + Util.format(this.addon.addonUtil().rank());
+          this.line2 = I18n.translate("moneymaker.discordPresence.farming.ranking") + Util.format(this.addon.addonUtil().ranking());
         }
       }
 

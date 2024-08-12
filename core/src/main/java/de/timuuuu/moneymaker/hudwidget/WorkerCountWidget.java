@@ -1,13 +1,12 @@
 package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
 
 public class WorkerCountWidget extends TextHudWidget<TextHudWidgetConfig> {
 
@@ -18,7 +17,7 @@ public class WorkerCountWidget extends TextHudWidget<TextHudWidgetConfig> {
     super("mm_worker_count");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/miner.png")));
+    this.setIcon(Common.MINER);
   }
 
   @Override

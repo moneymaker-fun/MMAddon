@@ -11,7 +11,8 @@
     "navigation": {
       "title": "MoneyMaker",
       "main-menu": "Hauptmenü",
-      "info": "Informationen",
+      "prices": "Preisübersicht",
+      "leaderboard": "Bestenliste",
       "booster": "Booster",
       "chat": "Chat",
       "secret": "Secret"
@@ -48,7 +49,8 @@
           "total": "Du hast insgesamt %s Booster in deinem Booster-Inventar, dies entspricht einem Boost von %s.",
           "info": "Bitte beachte, dass nur Booster erfasst werden,\ndie aktuell im Inventar sichtbar sind."
         }
-      }
+      },
+      "motd": "Nachricht des Tages"
     },
     "discordPresence": {
       "mine": {
@@ -61,7 +63,7 @@
         "currently": "In der Farming Höhle",
         "blocks": "Blöcke: ",
         "sessionBlocks": "Blöcke (Aktuelle Session): ",
-        "boosters": "Gefarmte Booster: ",
+        "boosters": "Gefundene Booster: ",
         "ranking": "Ranking: ",
         "pickaxe": {
           "rank": "Spitzhacken Rang: ",
@@ -93,7 +95,7 @@
       "booster-export": {
         "title": "Booster-Export",
         "no-boosters": "Es sind keine Booster zum exportieren vorhanden.",
-        "saved": "Die Übersicht deiner gefarmten Booster wurde gespeichert.",
+        "saved": "Die Übersicht deiner gefundenen Booster wurde gespeichert.",
         "open-folder": "Ordner öffnen"
       },
       "chat": {
@@ -119,17 +121,21 @@
           "text": "Der Timer %s wurde gelöscht."
         }
       },
-      "farming": {
-        "left": {
+      "dataReset": {
+        "farming": {
           "title": "Farming-Höhle verlassen",
-          "reset-question": "Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?",
-          "reset-button": "Zurücksetzen",
-          "reset": "Dein Block-, Kill- und Boosterzähler wurde zurückgesetzt."
+          "question": "Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?",
+          "button": "Zurücksetzen",
+          "done": "Dein Block-, Kill- und Boosterzähler wurde zurückgesetzt."
+        },
+        "profile": {
+          "title": "Profilwechsel festgestellt",
+          "text": "Die gesammelten Daten wurden aufgrund des Profilwechsels zurückgesetzt"
         }
       },
       "break-goal": {
         "title": "Abbau Ziel",
-        "text": "Du hast dein Abbau Ziel erreicht!",
+        "text": "Du hast dein Abbau Ziel in %s erreicht!",
         "set": "Du hast dein Abbau Ziel auf %s Blöcke gesetzt.",
         "no-number": "Bitte gebe eine Zahl als Input ein."
       },
@@ -142,6 +148,15 @@
           "title": "Geld für Geröll erreicht!",
           "text": "Du hast das Geld zum entfernen des Geröll erreicht."
         }
+      },
+      "leaderboard": {
+        "title": "MoneyMaker - Leaderboard",
+        "blocks": {
+          "enabled": "Deine Blöcke werden nun angezeigt.",
+          "disabled": "Deine Blöcke werden nun versteckt.",
+          "info": "Bitte beachte, dass diese Einstellung erst beim beenden des Spiels oder beim verlassen von GommeHD.net gespeichert wird."
+        },
+        "coolDown": "Bitte warte bis du das Leaderboard erneut aktualisieren kannst."
       }
     },
     "feedback": {
@@ -229,15 +244,27 @@
     },
     "settings": {
       "name": "MoneyMaker",
+
+      "header": {
+        "general": {
+          "name": "Allgemeine Einstellungen"
+        },
+        "other": {
+          "name": "Andere Einstellungen"
+        }
+      },
+
       "enabled": {
         "name": "Aktiviert"
       },
-      "shortBoosterMessage": {
-        "name": "Booster Nachrichten kürzen"
+      "showBlocksInLeaderboard": {
+        "name": "Eigene Blöcke im Leaderboard anzeigen",
+        "description": "Lass deine Blöcke im Leaderboard auf der Webseite anzeigen (Standardmäßig aktiviert)",
+        "text": "Ändern"
       },
       "exportBoosterOnShutdown": {
-        "name": "Exportiere die gefarmten Booster beim beenden",
-        "description": "Exportiert deine gefarmten Booster, wenn du das Spiel beendest.\nDie Datei wird im Ordner {spiel-verzeichnis}/MoneyMaker gespeichert."
+        "name": "Exportiere die gefundenen Booster beim beenden",
+        "description": "Exportiert deine gefundenen Booster, wenn du das Spiel beendest.\nDie Datei wird im Ordner {spiel-verzeichnis}/MoneyMaker gespeichert."
       },
       "farmingAutoReset": {
         "name": "Zähler beim verlassen der Farminghöhle zurücksetzen",
@@ -247,6 +274,10 @@
           "ask": "Fragen (Notification)",
           "hide": "Verstecken"
         }
+      },
+      "resetOnProfileSwitch": {
+        "name": "Daten bei Profilwechsel zurücksetzen",
+        "description": "Setzt die erfassen Daten bei Profilwechsel zurück"
       },
       "showWidgetsAlways": {
         "name": "Zeige Widgets immer an",
@@ -266,59 +297,75 @@
         "name": "Gesamt Booster Nachricht anzeigen",
         "description": "Zeigt eine Nachricht im Chat mit dem gesamt Boost deiner Booster im Booster-Inventar an, wenn du das Booster-Inventar schließt"
       },
-      "hideEmptyMessages": {
-        "name": "Leere Nachrichten verstecken",
-        "description": "Versteckt leere Nachrichten und Trennnachrichten"
+      "showMOTD": {
+        "name": "Zeige Nachricht des Tages",
+        "description": "Zeigt die Nachricht des Tages im Chat wenn du MoneyMaker betrittst"
       },
-      "hideWorkerUpgradeMessage": {
-        "name": "Upgrade Nachrichten von Arbeitern verstecken"
-      },
-      "hideBuySellWorkerMessage": {
-        "name": "Kauf/Verkauf Nachrichten von Arbeitern verstecken"
-      },
-      "hideTeleportMessage": {
-        "name": "Teleport Nachrichten verstecken"
-      },
-      "notifyOnMoneyReached": {
-        "name": "Benachrichtigung wenn Geld für Arbeiter/Geröll erreicht"
-      },
-      "hideEffectMessage": {
-        "name": "Effekt Nachrichten verstecken"
-      },
-      "showTimersOnEffect": {
-        "name": "Klickbare Timer im Chat anzeigen",
-        "description": "Zeigt eine klickbare Nachricht im Chat an um einen Timer zu aktivieren, wenn der Effekt eines Arbeiters aktiviert wird."
-      },
-      "hideFullBoosterInventory": {
-        "name": "Volle Booster Inventar Nachricht verstecken"
-      },
-      "header": {
-        "general": {
-          "name": "Allgemeine Einstellungen"
+
+      "gameplayConfiguration": {
+        "name": "Gameplay Einstellungen",
+        "shortBoosterMessage": {
+          "name": "Booster Nachrichten kürzen"
         },
-        "other": {
-          "name": "Andere Einstellungen"
+        "showBoosterIcon": {
+          "name": "Booster Icon anzeigen",
+          "description": "Zeigt das Icon des gefundenen Boosters in der gekürzten Booster Nachricht an"
         },
-        "gameplay": {
-          "name": "Gameplay Einstellungen"
+        "hideEmptyMessages": {
+          "name": "Leere Nachrichten verstecken",
+          "description": "Versteckt leere Nachrichten und Trennnachrichten"
+        },
+        "hideWorkerUpgradeMessage": {
+          "name": "Upgrade Nachrichten von Arbeitern verstecken"
+        },
+        "hideBuySellWorkerMessage": {
+          "name": "Kauf/Verkauf Nachrichten von Arbeitern verstecken"
+        },
+        "hideTeleportMessage": {
+          "name": "Teleport Nachrichten verstecken"
+        },
+        "notifyOnMoneyReached": {
+          "name": "Benachrichtigung wenn Geld für Arbeiter/Geröll erreicht"
+        },
+        "hideEffectMessage": {
+          "name": "Effekt Nachrichten verstecken"
+        },
+        "showTimersOnEffect": {
+          "name": "Klickbare Timer im Chat anzeigen",
+          "description": "Zeigt eine klickbare Nachricht im Chat an um einen Timer zu aktivieren, wenn der Effekt eines Arbeiters aktiviert wird."
+        },
+        "hideFullBoosterInventory": {
+          "name": "Volle Booster Inventar Nachricht verstecken"
         }
       },
-      "moneyDiscordConfiguration": {
+
+      "discordConfiguration": {
         "name": "Eigene Discord Rich Presence",
+        "enabled": {
+          "name": "Aktiviert"
+        },
         "showLocation": {
           "name": "Zeige aktuelle Position",
           "description": "Zeigt deine aktuelle Position (Mine oder Farminghöhle)"
         },
         "showStats": {
           "name": "Zeige Statistiken",
-          "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, Gefarmte Booster, Spitzhacken Rang & Level, Ranking"
+          "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, gefundene Booster, Spitzhacken Rang & Level, Ranking"
+        },
+        "showCaveLevel": {
+          "name": "Zeige aktuelle Ebene in der Farminghöhle",
+          "description": "Zeigte deine aktuelle Ebene in der Farminghöhle (Gold, Kohle, Eisen) in der Discord Rich Presence"
         }
       },
-      "moneyChatConfiguration": {
+
+      "chatConfiguration": {
         "name": "Chat-Einstellungen",
         "header": {
           "general": {
             "name": "General Chat Settings"
+          },
+          "privacy": {
+            "name": "Privatsphäre Einstellungen"
           },
           "notifications": {
             "name": "Chat Notification Settings"
@@ -327,6 +374,10 @@
         "loadChatHistory": {
           "name": "Chat Verlauf laden",
           "description": "Lädt den Chat Verlauf, wenn du dich auf GommeHD.net verbindest. Der Verlauf enthält die letzten 50 gesendeten Nachrichten und werden im MoneyMaker Chat Tab angezeigt"
+        },
+        "showCaveLevel": {
+          "name": "Zeige aktuelle Ebene in der Farminghöhle",
+          "description": "Zeigte deine aktuelle Ebene in der Farminghöhle (Gold, Kohle, Eisen) in der Online liste des Addon Chats an"
         },
         "notification": {
           "name": "Benachrichtigung",
@@ -340,7 +391,8 @@
           "name": "Online/Offline Nachrichten anzeigen"
         }
       },
-      "moneyBadgeConfiguration": {
+
+      "badgeConfiguration": {
         "name": "Tag Einstellungen",
         "header": {
           "general": {
@@ -359,12 +411,23 @@
         "tabListIcon": {
           "name": "Icon in TabList anzeigen"
         },
+        "chatIcon": {
+          "name": "Icon im Chat anzeigen"
+        },
         "textColor": {
           "name": "Farbe des Text-Tag"
         }
       }
+
     },
+
     "ui": {
+
+      "button": {
+        "discord": "Discord",
+        "leaderboard": "Leaderboard"
+      },
+
       "start": {
         "title": "MoneyMaker Hauptmenü",
         "current-timers": "Aktuell laufende Timer",
@@ -374,15 +437,52 @@
           "input-title": "Abbau Ziel eingeben",
           "input-description": "Gebe dein Abbau Ziel ein, welches du erreichen willst."
         },
-        "discord": "Discord"
+        "commands": {
+          "title": "Befehle des Addons",
+          "timer": {
+            "command": "/mm-timer <Minuten> <Timer Name>",
+            "description": " Erstelle einen Timer"
+          },
+          "reset": {
+            "command": "/mm-reset <booster, arbeiter, geröll, all>",
+            "description": " Setzt die gesammelten Daten zurück"
+          }
+        }
       },
-      "info": {
-        "title": "MoneyMaker Informationen",
-        "commandsTitle": "Befehle des Addons",
-        "commands": "§b/mm-timer <Minuten> <Timer Name> §6Erstelle einen Timer\n§b/mm-reset <booster, arbeiter, geröll, all> §6Setzt die gesammelten Daten zurück"
+
+      "priceOverview": {
+        "title": "MoneyMaker Preisübersicht",
+        "gold": "Gold-Mine",
+        "coal": "Kohle-Mine",
+        "iron": "Eisen-Mine",
+        "lapis": "Lapis-Mine",
+        "unlockCosts": "Preis für Freischaltung: "
       },
+
+      "leaderboard": {
+        "title": "MoneyMaker Bestenliste",
+        "update": "Aktualisieren",
+        "toggleBlocks": {
+          "enabled": "Eigene Blöcke anzeigen",
+          "disabled": "Eigene Blöcke verstecken"
+        },
+        "noData": "Ein Fehler ist aufgetreten!\nEs wurden keine Daten vom Server empfangen",
+        "header": {
+          "username": "Spielername",
+          "ranking": "Rang",
+          "blocks": "Blöcke",
+          "sword": "Schwert Rang",
+          "pickaxe": "Spitzhacken Rang"
+        },
+        "sorting": {
+          "button": "Sortierung",
+          "asc": "Aufsteigend",
+          "desc": "Absteigend"
+        }
+      },
+
       "booster": {
-        "title": "Liste der gefarmten Booster",
+        "title": "Liste der gefundenen Booster",
         "boost-total": "Gesamt: %s",
         "average-boosters": "Durchschnittliche Booster: ",
         "sorting": {
@@ -392,13 +492,14 @@
         "export": "Als CSV exportieren",
         "clear": "Booster Liste leeren"
       },
+
       "chat": {
         "title": "MoneyMaker Addon Chat",
         "server-offline": "Der Chat-Server ist aktuell nicht erreichbar.",
-        "online": "§bAktuell Online",
+        "online": "Aktuell Online - %s",
         "server": {
-          "online": "§aChat-Server ist online",
-          "offline": "§cChat-Server ist offline",
+          "online": "Chat-Server ist online",
+          "offline": "Chat-Server ist offline",
           "reconnect-button": "Neu verbinden",
           "error": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten"
         },
@@ -416,12 +517,17 @@
           "mute": "Muten"
         }
       },
+
       "secret": {
         "title": "Super Secret Einstellungen",
-        "toggleJoinMessageTitle": "Join Nachrichten",
-        "chat-reconnect": "Chat Reconnect Knopf"
+        "chat": {
+          "reconnect": "Chat Reconnect Knopf",
+          "all-players": "Alle Spieler in Onlineliste anzeigen"
+        }
       }
+
     },
+
     "hudWidget": {
       "mm_booster_count": {
         "name": "Booster-Count"
@@ -483,19 +589,40 @@
         "noTimers": "Keine Timer aktiv"
       },
       "mm_booster_display": {
-        "name": "Zuletzt gefarmte Booster",
+        "name": "Zuletzt gefundene Booster",
         "maxDisplayedBoosters": {
           "name": "Angezeigte Booster"
         },
         "textColor": {
           "name": "Textfarbe"
         },
-        "latestBoosters": "Zuletzt gefarmte Booster:",
+        "latestBoosters": "Zuletzt gefundene Booster:",
         "notConnected": "Nicht auf MoneyMaker",
         "noBoosters": "Keine Booster gefunden"
       },
       "mm_activated_boosters": {
         "name": "Aktivierte Booster"
+      },
+
+      "mm_event_easter": {
+        "name": "Event - Ostern",
+        "display": "Ostereier"
+      },
+      "mm_event_valentine": {
+        "name": "Event - Valentinstag",
+        "display": "Blumen"
+      },
+      "mm_event_fruits": {
+        "name": "Event - Früchte",
+        "display": "Früchte"
+      },
+      "mm_event_halloween": {
+        "name": "Event - Halloween",
+        "display": "Süßigkeiten"
+      },
+      "mm_event_christmas": {
+        "name": "Event - Weihnachten",
+        "display": "Geschenke"
       }
     }
   }

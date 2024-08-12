@@ -1,8 +1,8 @@
 package de.timuuuu.moneymaker.v1_8_9.mixins;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.ArmorStandRenderEvent;
 import net.labymod.api.Laby;
-import net.minecraft.client.renderer.entity.ArmorStandRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -19,6 +19,7 @@ public class ArmorStandMixin {
       at = {@At("HEAD")}
   )
   private void moneymaker$fireArmorStandRender(Entity p_doRender_1_, double p_doRender_2_, double p_doRender_4_, double p_doRender_6_, float p_doRender_8_, float p_doRender_9_, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(p_doRender_1_ instanceof EntityArmorStand) {
       if(p_doRender_1_.hasCustomName() && p_doRender_1_.getCustomNameTag() != null) {
         String customName = p_doRender_1_.getCustomNameTag();

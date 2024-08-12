@@ -1,9 +1,13 @@
 package de.timuuuu.moneymaker;
 
+import com.google.gson.Gson;
 import de.timuuuu.moneymaker.activities.ChatActivity;
-import de.timuuuu.moneymaker.activities.MainActivity;
+import de.timuuuu.moneymaker.activities.LeaderboardActivity;
+import de.timuuuu.moneymaker.activities.PriceOverviewActivity;
+import de.timuuuu.moneymaker.activities.navigation.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
+import de.timuuuu.moneymaker.badges.MoneyChatPrefix;
 import de.timuuuu.moneymaker.badges.MoneyIconTag;
 import de.timuuuu.moneymaker.badges.MoneyTabBadge;
 import de.timuuuu.moneymaker.badges.MoneyTextTag;
@@ -32,16 +36,17 @@ import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
-import de.timuuuu.moneymaker.utils.AddonUtil;
-import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
+import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.ApiUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
+import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.icon.Icon;
@@ -50,6 +55,7 @@ import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
 import net.labymod.api.notification.Notification.Type;
 import net.labymod.api.revision.SimpleRevision;
+import net.labymod.api.util.GsonUtil;
 import net.labymod.api.util.version.SemanticVersion;
 
 @AddonMain
@@ -57,11 +63,15 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public static final HudWidgetCategory CATEGORY = new HudWidgetCategory("moneymaker");
 
-  public String prefix = "§8‖ §6MoneyMaker §8» §7";
+  public Component prefix = Component.text("‖ ", NamedTextColor.DARK_GRAY)
+      .append(Component.text("MoneyMaker ", NamedTextColor.GOLD))
+      .append(Component.text("» ", NamedTextColor.DARK_GRAY));
 
   private ChatClient chatClient;
 
   private MainActivity mainActivity;
+  private PriceOverviewActivity priceOverviewActivity;
+  private LeaderboardActivity leaderboardActivity;
   private ChatActivity chatActivity;
   private StartActivity startActivity;
 
@@ -71,11 +81,14 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private AddonSettings addonSettings;
   private AddonUtil addonUtil;
 
+  private EntityRenderListener entityRenderListener;
+
+  private Gson gson;
   private static MoneyMakerAddon instance;
 
   @Override
   protected void preConfigurationLoad() {
-    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("1.4.1"), "2024-03-03"));
+    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion("1.6.2"), "2024-07-29"));
   }
 
   @Override
@@ -90,10 +103,16 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.addonUtil = new AddonUtil(this);
 
     this.startActivity = new StartActivity(this);
+    this.priceOverviewActivity = new PriceOverviewActivity(this);
+    this.leaderboardActivity = new LeaderboardActivity(this);
     this.chatActivity = new ChatActivity(this);
     this.mainActivity = new MainActivity(this);
 
     this.chatClient = new ChatClient(this);
+
+    this.gson = GsonUtil.DEFAULT_GSON;
+
+    this.apiUtil.loadSettings();
 
     this.registerCommand(new TimerCommand(this));
     this.registerCommand(new ResetCommand(this));
@@ -103,7 +122,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new MoneyAddonListener(this));
     this.registerListener(new ChatServerListener(this));
     this.registerListener(new ScoreBoardListener(this));
-    this.registerListener(new EntityRenderListener(this));
+    this.registerListener(this.entityRenderListener = new EntityRenderListener(this));
     this.registerListener(new TickListener(this));
     this.registerListener(new InventoryListener(this));
 
@@ -130,6 +149,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag(this));
     labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag(this));
     Laby.references().badgeRegistry().register("moneymaker_tab_icon", net.labymod.api.client.entity.player.badge.PositionType.LEFT_TO_NAME, new MoneyTabBadge(this));
+    labyAPI().chatProvider().prefixRegistry().register("moneymaker_icon", new MoneyChatPrefix(this));
 
     this.logger().info("Enabled the Addon");
 
@@ -137,28 +157,38 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.addonSettings.setFallbackCoordinates(false);
     this.addonSettings.selectUpdateMode(this.configuration().updateMode().get());
-    this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
     this.apiUtil.loadCoordinates();
+    this.apiUtil.loadLeaderboard(false);
 
-    /*Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      this.chatClient.sendStatistics(true, this.labyAPI().getUniqueId().toString(), this.labyAPI().getName());
-      JsonObject data = new JsonObject();
-      data.addProperty("uuid", this.labyAPI().getUniqueId().toString());
-      data.addProperty("userName", this.labyAPI().getName());
-      data.addProperty("server", "OFFLINE");
-      data.addProperty("addonVersion", this.addonInfo().getVersion());
-      this.chatClient.sendMessage("playerStatus", data);
+    // Configuration Listeners
 
-      this.chatClient.closeConnection();
-      if(configuration().exportBoosterOnShutdown().get()) {
-        BoosterActivity.writeLinkedListToCSV(true);
+    this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
+
+    this.configuration().chatConfiguration.showCaveLevel().addChangeListener((type, oldValue, newValue) ->
+        this.chatClient().util().sendPlayerStatus(this.labyAPI().getUniqueId().toString(), this.labyAPI().getName(), false)
+    );
+
+    this.configuration().discordConfiguration.enabled().addChangeListener((type, oldValue, newValue) -> {
+      if(newValue) {
+        this.discordAPI.update();
+      } else {
+        this.discordAPI.removeCustom();
       }
-    }));*/
+    });
+
+    //this.configuration().discordConfiguration.showLocation().addChangeListener(aBoolean -> this.discordAPI.update());
+    //this.configuration().discordConfiguration.showStats().addChangeListener(aBoolean -> this.discordAPI.update());
+    //this.configuration().discordConfiguration.showCaveLevel().addChangeListener(aBoolean -> this.discordAPI.update());
+
   }
 
   @Override
   protected Class<MoneyMakerConfiguration> configurationClass() {
     return MoneyMakerConfiguration.class;
+  }
+
+  public Gson gson() {
+    return gson;
   }
 
   public static MoneyMakerAddon instance() {
@@ -185,6 +215,14 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     return mainActivity;
   }
 
+  public PriceOverviewActivity priceOverviewActivity() {
+    return priceOverviewActivity;
+  }
+
+  public LeaderboardActivity leaderboardActivity() {
+    return leaderboardActivity;
+  }
+
   public ChatActivity chatActivity() {
     return chatActivity;
   }
@@ -195,6 +233,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public StartActivity startActivity() {
     return startActivity;
+  }
+
+  public EntityRenderListener entityRenderListener() {
+    return entityRenderListener;
   }
 
   public void pushNotification(Component title, Component text) {

@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.activities.widgets.TimerWidget;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
@@ -37,11 +38,8 @@ public class StartActivity extends SimpleActivity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
-    this.renderBackground = false;
 
-    Util.addFeedbackButton(this.document);
-
-    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title").addId("start-title");
+    ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.start.title").addId("title");
     this.document.addChild(titleWidget);
 
     DivWidget container = new DivWidget();
@@ -76,23 +74,29 @@ public class StartActivity extends SimpleActivity {
       container.addChild(breakGoalInput);
     }
 
+    DivWidget commandsContainer = new DivWidget().addId("commands-container");
+
+    commandsContainer.addChild(ComponentWidget.i18n("moneymaker.ui.start.commands.title").addId("commands-title"));
+
+    Component commands = Component.translatable("moneymaker.ui.start.commands.timer.command", NamedTextColor.AQUA)
+        .append(Component.translatable("moneymaker.ui.start.commands.timer.description", NamedTextColor.GOLD))
+        .append(Component.text("\n"))
+        .append(Component.translatable("moneymaker.ui.start.commands.reset.command", NamedTextColor.AQUA))
+        .append(Component.translatable("moneymaker.ui.start.commands.reset.description", NamedTextColor.GOLD));
+    commandsContainer.addChild(ComponentWidget.component(commands).addId("command-list"));
+
     DivWidget timerContainer = new DivWidget().addId("timer-container");
 
-    ComponentWidget timerTitle = ComponentWidget.i18n("moneymaker.ui.start.current-timers").addId("timer-title");
-
-    timerContainer.addChild(timerTitle);
+    timerContainer.addChild(ComponentWidget.i18n("moneymaker.ui.start.current-timers").addId("timer-title"));
 
     VerticalListWidget<TimerWidget> timerList = new VerticalListWidget<>().addId("timer-list");
     Util.timers.values().forEach(timer -> timerList.addChild(new TimerWidget(this.addon, timer)));
 
-    ScrollWidget scrollWidget = new ScrollWidget(timerList, new ListSession<>());
-    timerContainer.addChild(scrollWidget);
-
-    this.document.addChild(timerContainer);
-
-    container.addChild(Util.addDiscordButton());
+    timerContainer.addChild(new ScrollWidget(timerList, new ListSession<>()).addId("timer-scroll"));
 
     this.document.addChild(container);
+    this.document.addChild(commandsContainer);
+    this.document.addChild(timerContainer);
 
     //Toggle secret
     ButtonWidget secretButton = ButtonWidget.text("").addId("secret-button");
@@ -105,15 +109,20 @@ public class StartActivity extends SimpleActivity {
     });
     this.document.addChild(secretButton);
 
+    this.document.addChild(Util.feedbackButton());
+    this.document.addChild(Util.discordButton());
+    this.document.addChild(Util.leaderboardButton());
+
   }
 
   private void submitInput(String input) {
     try {
-      int count = Integer.parseInt(input);
+      int count = Util.parseInteger(input, this.getClass());
       this.addon.addonSettings().breakGoal(count);
       if(this.addon.addonUtil().currentBrokenBlocks() > 0) {
         this.addon.addonUtil().breakGoalBlocks(this.addon.addonUtil().currentBrokenBlocks() + count);
       }
+      this.addon.addonUtil().startTimestamp(System.currentTimeMillis());
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.set", TextColor.color(170, 170, 170),
               Component.text(Util.format(count), TextColor.color(255, 255, 85))));

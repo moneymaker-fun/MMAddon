@@ -12,6 +12,8 @@ import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
 import net.labymod.api.Laby;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.event.Subscribe;
 
 public class ChatServerListener {
@@ -58,7 +60,7 @@ public class ChatServerListener {
         if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
           this.addon.chatClient().muted(true);
           this.addon.chatClient().muteReason(data.get("reason").getAsString());
-          this.addon.chatActivity().addCustomChatMessage("§cDu wurdest aus dem Chat ausgeschlossen.");
+          this.addon.chatActivity().addCustomChatMessage(Component.text("Du wurdest aus dem Chat ausgeschlossen.", NamedTextColor.RED));
           this.addon.chatActivity().reloadScreen();
         }
       }
@@ -71,7 +73,7 @@ public class ChatServerListener {
         if(this.addon.labyAPI().getUniqueId().toString().equals(uuid)) {
           this.addon.chatClient().muted(false);
           this.addon.chatClient().muteReason("");
-          this.addon.chatActivity().addCustomChatMessage("§aDein Mute wurde aufgehoben.");
+          this.addon.chatActivity().addCustomChatMessage(Component.text("Dein Mute wurde aufgehoben.", NamedTextColor.GREEN));
           this.addon.chatActivity().reloadScreen();
         }
       }
@@ -96,7 +98,13 @@ public class ChatServerListener {
       UUID uuid = UUID.fromString(data.get("uuid").getAsString());
       Laby.fireEvent(new MoneyPlayerStatusEvent(
           uuid,
-          new MoneyPlayer(uuid, data.get("userName").getAsString(), data.get("server").getAsString(), data.get("addonVersion").getAsString(), MoneyPlayer.rankByName(data.get("rank").getAsString()))
+          new MoneyPlayer(uuid,
+              data.get("userName").getAsString(),
+              data.get("server").getAsString(),
+              data.get("addonVersion").getAsString(),
+              data.has("minecraftVersion") ? data.get("minecraftVersion").getAsString() : "unknown",
+              MoneyPlayer.rankByName(data.get("rank").getAsString())
+          )
       ));
     }
 
@@ -113,6 +121,7 @@ public class ChatServerListener {
                 playerData.get("userName").getAsString(),
                 playerData.get("server").getAsString(),
                 playerData.get("addonVersion").getAsString(),
+                playerData.has("minecraftVersion") ? playerData.get("minecraftVersion").getAsString() : "unknown",
                 MoneyPlayer.rankByName(playerData.get("rank").getAsString())
             ));
           }

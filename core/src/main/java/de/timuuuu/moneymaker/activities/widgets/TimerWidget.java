@@ -4,6 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.MoneyTimer;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
@@ -35,7 +36,13 @@ public class TimerWidget extends HorizontalListWidget {
       this.addon.startActivity().reloadScreen();
     });
     this.addEntry(cancelButton);
-    this.addEntry(ComponentWidget.text("§8[§e" + this.timer.minutes() + "m§8- §6" + timer.remainingTime() + "§8] §e" + this.timer.name()).addId("timer-name"));
+    Component component = Component.text("[", NamedTextColor.DARK_GRAY)
+        .append(Component.text(this.timer.minutes() + "m", NamedTextColor.YELLOW))
+        .append(Component.text(" - ", NamedTextColor.DARK_GRAY))
+        .append(Component.text(this.timer.remainingTime(), NamedTextColor.GOLD))
+        .append(Component.text("]", NamedTextColor.DARK_GRAY))
+        .append(Component.text(this.timer.name(), NamedTextColor.YELLOW));
+    this.addEntry(ComponentWidget.component(component).addId("timer-name"));
   }
 
 }

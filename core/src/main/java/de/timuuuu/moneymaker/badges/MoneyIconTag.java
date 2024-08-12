@@ -22,11 +22,6 @@ public class MoneyIconTag extends IconTag {
   }
 
   @Override
-  public int getColor() {
-    return super.getColor();
-  }
-
-  @Override
   public Icon getIcon() {
     MoneyRank rank = this.visibleRank(entity);
     return rank != null ? rank.getIcon() : super.getIcon();
@@ -36,8 +31,9 @@ public class MoneyIconTag extends IconTag {
     if(!(entity instanceof Player player)) return null;
     if(player.profile().getUniqueId() == null) return null;
     if(!this.addon.configuration().enabled().get()) return null;
-    if(!this.addon.configuration().moneyBadgeConfiguration.iconTag().get()) return null;
-    return AddonUtil.playerStatus.containsKey(player.profile().getUniqueId()) ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
+    if(!this.addon.configuration().badgeConfiguration.iconTag().get()) return null;
+    if(!AddonUtil.playerStatus.containsKey(player.profile().getUniqueId())) return null;
+    return AddonUtil.playerStatus.get(player.profile().getUniqueId()) != null ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
   }
 
 }

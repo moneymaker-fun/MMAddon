@@ -26,19 +26,16 @@ public class SecretActivity extends SimpleActivity {
   @Override
   public void initialize(Parent parent) {
     super.initialize(parent);
-    this.renderBackground = false;
 
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.secret.title").addId("secret-title");
     this.document.addChild(titleWidget);
-
-    Util.addFeedbackButton(this.document);
 
     DivWidget container = new DivWidget();
     container.addId("secret-container");
     this.document.addChild(container);
 
     // Show Chat Reconnect Button
-    ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat-reconnect").addId("chat-reconnect-title");
+    ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat.reconnect").addId("chat-reconnect-title");
     this.document.addChild(chatReconnectTitle);
 
     SwitchWidget chatReconnectSwitch = SwitchWidget.create(value -> {
@@ -46,6 +43,20 @@ public class SecretActivity extends SimpleActivity {
     }).addId("chat-reconnect-switch");
     chatReconnectSwitch.setValue(this.addon.configuration().chatReconnectButton().get());
     this.document.addChild(chatReconnectSwitch);
+
+    if(Util.isDev(this.addon.labyAPI().getUniqueId().toString())) {
+      ComponentWidget chatShowAllPlayersTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat.all-players").addId("chat-all-players-title");
+      this.document.addChild(chatShowAllPlayersTitle);
+      SwitchWidget chatShowAllPlayersSwitch = SwitchWidget.create(value -> {
+        this.addon.configuration().chatShowAllPlayers().set(value);
+      }).addId("chat-all-players-switch");
+      chatShowAllPlayersSwitch.setValue(this.addon.configuration().chatShowAllPlayers().get());
+      this.document.addChild(chatShowAllPlayersSwitch);
+    }
+
+    this.document.addChild(Util.feedbackButton());
+    this.document.addChild(Util.leaderboardButton());
+    this.document.addChild(Util.discordButton());
 
   }
 

@@ -7,6 +7,7 @@ import de.timuuuu.moneymaker.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.SimpleHudWidget;
@@ -106,7 +107,12 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
       }
 
       timerX += rowHeight +4;
-      RenderableComponent timerName = RenderableComponent.of(Component.text("§e"+timer.name()+" §8[§e"+timer.minutes()+"m§8] » §e"+timer.remainingTime()));
+      Component component = Component.text(timer.name(), NamedTextColor.YELLOW)
+          .append(Component.text(" [", NamedTextColor.DARK_GRAY))
+          .append(Component.text(timer.minutes() + "m", NamedTextColor.YELLOW))
+          .append(Component.text("] » ", NamedTextColor.DARK_GRAY))
+          .append(Component.text(timer.remainingTime(), NamedTextColor.YELLOW));
+      RenderableComponent timerName = RenderableComponent.of(component);
       if(stack != null) {
         componentRenderer.builder()
             .text(timerName)

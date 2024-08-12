@@ -2,13 +2,12 @@ package de.timuuuu.moneymaker.hudwidget;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
+import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidget;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextHudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine;
 import net.labymod.api.client.gui.hud.hudwidget.text.TextLine.State;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.resources.ResourceLocation;
 
 public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
 
@@ -19,7 +18,7 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
     super("mm_worker_price");
     this.addon = addon;
     this.bindCategory(MoneyMakerAddon.CATEGORY);
-    this.setIcon(Icon.texture(ResourceLocation.create("moneymaker", "textures/hud/miner.png")));
+    this.setIcon(Common.MINER);
   }
 
   @Override
@@ -44,6 +43,9 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             double cost = Double.parseDouble(this.addon.addonUtil().nextWorkerCost().replaceAll("[^\\d.]", ""));
             int difference = Double.compare(balance, cost);
 
+            // -> Colors are not working when using as a Component
+            // -> however Text Decorations are working fine
+
             String color = "§c";
             if(CurrencyUtil.get(balanceUnit) > CurrencyUtil.get(workerUnit)) {
               color = "§a§l";
@@ -64,6 +66,8 @@ public class WorkerPriceWidget extends TextHudWidget<TextHudWidgetConfig> {
             } else {
               itemName = "§c" + AddonSettings.balance + " / " + AddonSettings.nextWorkerCost;
             }*/
+          } else {
+            itemName = "§c" + this.addon.addonUtil().balance() + " / " + this.addon.addonUtil().nextWorkerCost();
           }
 
       }
