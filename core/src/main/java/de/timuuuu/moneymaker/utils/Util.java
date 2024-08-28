@@ -37,7 +37,7 @@ public class Util {
         SpriteCommon.BUG
     ).addId("feedback-button");
     feedbackButton.setPressable(() -> {
-      //OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
+      //OperatingSystem.getPlatform().openUrl("https://moneymakeraddon.de/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
       Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new FeedbackActivity(MoneyMakerAddon.instance(), Laby.labyAPI().minecraft().minecraftWindow().currentScreen())));
     });
     return feedbackButton;
@@ -51,7 +51,7 @@ public class Util {
 
   public static ButtonWidget leaderboardButton() {
     ButtonWidget leaderboardButton = ButtonWidget.i18n("moneymaker.ui.button.leaderboard").addId("leaderboard-button");
-    leaderboardButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://moneymaker.fun/leaderboard/"));
+    leaderboardButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://moneymakeraddon.de/leaderboard/"));
     return leaderboardButton;
   }
 
