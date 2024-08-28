@@ -23,7 +23,7 @@ public class ChatClient {
   private boolean muted = false;
   private String muteReason = "";
 
-  private final String SERVER_IP = "chat.moneymaker.fun"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
+  private final String SERVER_IP = "chat.moneymakeraddon.de"; // Default: chat.moneymaker.fun | Backup: moneychat.mistercore.de
   private final int SERVER_PORT = 12345;
 
   private boolean online = false;
@@ -71,7 +71,7 @@ public class ChatClient {
             addon.chatActivity().reloadScreen();
           }
           online = false;
-          //e.printStackTrace();
+          e.printStackTrace();
         }
       }).start();
     } catch (IOException e) {
@@ -81,7 +81,7 @@ public class ChatClient {
               Component.translatable("moneymaker.notification.chat.no-connection", TextColor.color(255, 85, 85)));
           addon.chatActivity().reloadScreen();
         }
-        //e.printStackTrace();
+        e.printStackTrace();
       // Handle connection error
     }
   }
