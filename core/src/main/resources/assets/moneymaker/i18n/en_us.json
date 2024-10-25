@@ -389,6 +389,9 @@
         },
         "onlineOfflineMessages": {
           "name": "Show Online/Offline Messages"
+        },
+        "onlineOfflineNotifications": {
+          "name": "Display of the Online/Offline Messages"
         }
       },
 

@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.settings;
 
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
+import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
 import net.labymod.api.configuration.loader.Config;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
@@ -40,19 +41,19 @@ public class MoneyChatConfiguration extends Config {
   @SwitchSetting
   private final ConfigProperty<Boolean> onlineOfflineMessages = new ConfigProperty<>(true);
 
-  // General Getters
+  @IntroducedIn(namespace = "moneymaker", value = "1.6.0")
+  @SettingRequires("onlineOfflineMessages")
+  @DropdownSetting
+  private final ConfigProperty<NotificationType> onlineOfflineNotifications = new ConfigProperty<>(NotificationType.LABYMOD);
+
 
   public ConfigProperty<Boolean> loadChatHistory() {
     return loadChatHistory;
   }
 
-  // Privacy Getters
-
   public ConfigProperty<Boolean> showCaveLevel() {
     return showCaveLevel;
   }
-
-  // Notification Getters
 
   public ConfigProperty<Boolean> notification() {
     return notification;
@@ -65,4 +66,13 @@ public class MoneyChatConfiguration extends Config {
   public ConfigProperty<Boolean> onlineOfflineMessages() {
     return onlineOfflineMessages;
   }
+
+  public ConfigProperty<NotificationType> onlineOfflineNotifications() {
+    return onlineOfflineNotifications;
+  }
+
+  public enum NotificationType {
+    LABYMOD, CHAT
+  }
+
 }

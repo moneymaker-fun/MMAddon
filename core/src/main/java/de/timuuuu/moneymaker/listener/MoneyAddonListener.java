@@ -9,6 +9,7 @@ import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
+import de.timuuuu.moneymaker.settings.MoneyChatConfiguration.NotificationType;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
@@ -156,24 +157,38 @@ public class MoneyAddonListener {
       // Online
       if(serverBefore.equalsIgnoreCase("Other") && (player.server().equalsIgnoreCase("Mine") || player.server().startsWith("Farming"))) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().chatConfiguration.onlineOfflineMessages().get()) {
-          Task.builder(() -> this.addon.pushNotification(
-              Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
-              Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
-                  Component.text(player.rank().getChatPrefix() + player.userName())),
-              Icon.head(uuid)
-          )).delay(2, TimeUnit.SECONDS).build().execute();
+          if(this.addon.configuration().chatConfiguration.onlineOfflineNotifications().get() == NotificationType.LABYMOD) {
+            Task.builder(() -> this.addon.pushNotification(
+                Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+                Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
+                    Component.text(player.rank().getChatPrefix() + player.userName())),
+                Icon.head(uuid)
+            )).delay(2, TimeUnit.SECONDS).build().execute();
+          } else {
+            this.addon.displayMessage(this.addon.prefix.copy().append(
+                Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
+                    Component.text(player.rank().getChatPrefix() + player.userName()))
+            ));
+          }
         }
       }
 
       // Offline
       if((serverBefore.equalsIgnoreCase("Mine") || serverBefore.startsWith("Farming")) && (player.server().equalsIgnoreCase("Other") || player.server().equals("OFFLINE"))) {
         if(this.addon.addonUtil().connectedToMoneyMaker() && !this.addon.labyAPI().getUniqueId().toString().equals(uuid.toString()) && this.addon.configuration().chatConfiguration.onlineOfflineMessages().get()) {
-          this.addon.pushNotification(
-              Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
-              Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
-                  Component.text(player.rank().getChatPrefix() + player.userName())),
-              Icon.head(uuid)
-          );
+          if(this.addon.configuration().chatConfiguration.onlineOfflineNotifications().get() == NotificationType.LABYMOD) {
+            this.addon.pushNotification(
+                Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+                Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
+                    Component.text(player.rank().getChatPrefix() + player.userName())),
+                Icon.head(uuid)
+            );
+          } else {
+            this.addon.displayMessage(this.addon.prefix.copy().append(
+                Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
+                    Component.text(player.rank().getChatPrefix() + player.userName()))
+            ));
+          }
         }
       }
 

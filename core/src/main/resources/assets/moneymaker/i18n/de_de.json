@@ -389,6 +389,9 @@
         },
         "onlineOfflineMessages": {
           "name": "Online/Offline Nachrichten anzeigen"
+        },
+        "onlineOfflineNotifications": {
+          "name": "Anzeige der Online/Offline Nachrichten"
         }
       },
 
