@@ -17,10 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class ArmorStandMixin {
 
   @Inject(
-      method = {"render"},
+      method = {"render*"},
       at = {@At("HEAD")}
   )
-  private void moneymaker$fireArmorStandRender(Entity param0, double param1, double param2, double param3, float param4, float param5, PoseStack param6, MultiBufferSource param7, int param8, CallbackInfo ci) {
+  private void moneymaker$fireArmorStandRender(Entity param0, double param1, double param2, double param3, float param4, PoseStack param5, MultiBufferSource param6, int param7, CallbackInfo ci) {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(param0.getType() == EntityType.ARMOR_STAND) {
       if(param0.hasCustomName() && param0.getCustomName() != null) {
