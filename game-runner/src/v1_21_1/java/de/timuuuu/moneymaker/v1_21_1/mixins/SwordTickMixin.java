@@ -36,7 +36,7 @@ public class SwordTickMixin {
     for(int i = 0; i != itemLore.lines().size(); i++) {
       loreList.add(itemLore.lines().get(i).getString());
     }
-    Laby.fireEvent(new SwordTickEvent(name, loreList, "1.20.5"));
+    Laby.fireEvent(new SwordTickEvent(name, loreList, "1.21.1"));
   }
 
 }
