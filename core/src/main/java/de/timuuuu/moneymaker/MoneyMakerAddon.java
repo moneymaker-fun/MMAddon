@@ -50,6 +50,7 @@ import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.entity.player.tag.PositionType;
 import net.labymod.api.client.gui.hud.binding.category.HudWidgetCategory;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.labyconnect.LabyConnectSession;
 import net.labymod.api.models.addon.annotation.AddonMain;
 import net.labymod.api.notification.Notification;
 import net.labymod.api.notification.Notification.NotificationButton;
@@ -277,6 +278,13 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
         .addButton(NotificationButton.of(buttonText, buttonAction))
         .type(Type.SYSTEM);
     Laby.labyAPI().notificationController().push(builder.build());
+  }
+
+  public void sendServerUpdate(String gameMode) {
+    if(!configuration().showCustomGameSwitchNotifications().get()) return;
+    LabyConnectSession session = labyAPI().labyConnect().getSession();
+    if(session == null) return;
+    session.sendCurrentServer(labyAPI().serverController().getCurrentServerData(), gameMode, false);
   }
 
 }

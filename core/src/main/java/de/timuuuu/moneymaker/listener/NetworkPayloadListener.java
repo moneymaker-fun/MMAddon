@@ -95,6 +95,13 @@ public class NetworkPayloadListener {
                 this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
               }
 
+              if(this.addon.addonUtil().inMine()) {
+                this.addon.sendServerUpdate("MoneyMaker » Mine");
+              }
+              if(this.addon.addonUtil().inFarming()) {
+                this.addon.sendServerUpdate("MoneyMaker » Farming");
+              }
+
               if(this.addon.addonUtil().connectedToMoneyMaker()) {
                 if(!this.addon.configuration().languageInfoClosed().get()) {
                   if(!langInfoOpened) {

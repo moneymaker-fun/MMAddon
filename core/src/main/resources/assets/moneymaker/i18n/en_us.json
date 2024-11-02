@@ -262,6 +262,10 @@
         "description": "Show your blocks in the leaderboard on the website (enabled by default)",
         "text": "Change"
       },
+      "showCustomGameSwitchNotifications": {
+        "name": "Show Custom Game Mode Switch Notification",
+        "description": "Shows Custom Game Mode Switch Notifications to your friends.\nFor example switching Cave Levels in the Farming Cave"
+      },
       "exportBoosterOnShutdown": {
         "name": "Export found boosters on shutdown",
         "description": "Exports your found boosters when you exit the game.\nThe file will be saved in {game-directory}/MoneyMaker"

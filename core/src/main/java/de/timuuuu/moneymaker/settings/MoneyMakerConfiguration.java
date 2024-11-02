@@ -45,7 +45,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @SettingSection(value = "other", center = true)
 
-  @MethodOrder(before = "exportBoosterOnShutdown")
+  @MethodOrder(before = "showCustomGameSwitchNotifications")
   @ButtonSetting
   public void showBlocksInLeaderboard() {
     MoneyMakerAddon addon = MoneyMakerAddon.instance();
@@ -67,6 +67,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
       );
     }
   }
+
+  @IntroducedIn(value = "1.6.5", namespace = "moneymaker")
+  @SwitchSetting
+  private final ConfigProperty<Boolean> showCustomGameSwitchNotifications = new ConfigProperty<>(true);
 
   @IntroducedIn(value = "1.1.0", namespace = "moneymaker")
   @SpriteSlot(y = 3, x = 3)
@@ -108,6 +112,10 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @Override
   public ConfigProperty<Boolean> enabled() {
     return this.enabled;
+  }
+
+  public ConfigProperty<Boolean> showCustomGameSwitchNotifications() {
+    return showCustomGameSwitchNotifications;
   }
 
   public ConfigProperty<Boolean> exportBoosterOnShutdown() {

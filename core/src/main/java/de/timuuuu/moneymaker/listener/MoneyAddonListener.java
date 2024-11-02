@@ -26,6 +26,7 @@ import net.labymod.api.event.client.lifecycle.GameShutdownEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.event.client.network.server.ServerLoginEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
+import net.labymod.api.util.I18n;
 import net.labymod.api.util.concurrent.task.Task;
 
 public class MoneyAddonListener {
@@ -139,6 +140,7 @@ public class MoneyAddonListener {
     if(((this.lastLevelUpdate + 10*1000 - System.currentTimeMillis())) <= 0) {
       this.lastLevelUpdate = System.currentTimeMillis();
       this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
+      this.addon.sendServerUpdate("MoneyMaker » " + I18n.translate(event.newCave().translation()));
     }
   }
 

@@ -262,6 +262,10 @@
         "description": "Lass deine Blöcke im Leaderboard auf der Webseite anzeigen (Standardmäßig aktiviert)",
         "text": "Ändern"
       },
+      "showCustomGameSwitchNotifications": {
+        "name": "Zeige Eigene Spielmodus Wechsel Benachrichtigung",
+        "description": "Zeigt deinen Freunden eine benutzerdefinierte Benachrichtigungen beim Wechseln des Spielmodus an.\nZum Beispiel das Wechseln der Höhlenebenen in der Farming Höhle"
+      },
       "exportBoosterOnShutdown": {
         "name": "Exportiere die gefundenen Booster beim beenden",
         "description": "Exportiert deine gefundenen Booster, wenn du das Spiel beendest.\nDie Datei wird im Ordner {spiel-verzeichnis}/MoneyMaker gespeichert."
