@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
+import de.timuuuu.moneymaker.event.SwordTickEvent.TextVersions;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
 import de.timuuuu.moneymaker.utils.Util;
@@ -80,7 +81,7 @@ public class TickListener {
       §7Getötete Mobs: §e103 [Getötete Mobs: 103]
       */
 
-      if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12") || event.getGameVersion().equals("1.20.5")) {
+      if(event.getTextVersion() == TextVersions.RAW) {
 
         rankingLine = ChatUtil.stripColor(rankingLine);
         mobsLine = ChatUtil.stripColor(mobsLine);

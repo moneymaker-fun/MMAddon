@@ -7,12 +7,12 @@ public class SwordTickEvent implements Event {
 
   private String displayName;
   private List<String> loreList;
-  private String gameVersion;
+  private int textVersion;
 
-  public SwordTickEvent(String displayName, List<String> loreList, String gameVersion) {
+  public SwordTickEvent(String displayName, List<String> loreList, int textVersion) {
     this.displayName = displayName;
     this.loreList = loreList;
-    this.gameVersion = gameVersion;
+    this.textVersion = textVersion;
   }
 
   public String getDisplayName() {
@@ -23,7 +23,13 @@ public class SwordTickEvent implements Event {
     return loreList;
   }
 
-  public String getGameVersion() {
-    return gameVersion;
+  public int getTextVersion() {
+    return textVersion;
   }
+
+  public static class TextVersions {
+    public static final int RAW = 1;
+    public static final int JSON = 2;
+  }
+
 }
