@@ -109,8 +109,9 @@ public class Util {
     }
   }
 
-  public static boolean isDev(String uuid) {
-    return uuid.equals("308893af-77af-4706-ac8a-1c4830038108") || uuid.equals("966b5d5e-2577-4ab7-987a-89bfa59da74a");
+  public static boolean isAdmin(String uuid) {
+    //                      MisterCore                                            Seelenverwandter
+    return uuid.equals("966b5d5e-2577-4ab7-987a-89bfa59da74a") || uuid.equals("308893af-77af-4706-ac8a-1c4830038108");
   }
 
   public static boolean isStaff(UUID uuid) {

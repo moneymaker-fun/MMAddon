@@ -44,7 +44,7 @@ public class SecretActivity extends SimpleActivity {
     chatReconnectSwitch.setValue(this.addon.configuration().chatReconnectButton().get());
     this.document.addChild(chatReconnectSwitch);
 
-    if(Util.isDev(this.addon.labyAPI().getUniqueId().toString())) {
+    if(Util.isAdmin(this.addon.labyAPI().getUniqueId().toString())) {
       ComponentWidget chatShowAllPlayersTitle = ComponentWidget.i18n("moneymaker.ui.secret.chat.all-players").addId("chat-all-players-title");
       this.document.addChild(chatShowAllPlayersTitle);
       SwitchWidget chatShowAllPlayersSwitch = SwitchWidget.create(value -> {

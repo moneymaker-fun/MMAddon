@@ -141,7 +141,7 @@ public class ChatActivity extends SimpleActivity {
         return MoneyRank.USER.getId();
       }));
 
-      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
+      if(Util.isAdmin(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
         onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online auf MoneyMaker", NamedTextColor.GRAY))));
       }
       players.forEach(moneyPlayer -> {
@@ -151,7 +151,7 @@ public class ChatActivity extends SimpleActivity {
         }
       });
 
-      if(Util.isDev(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
+      if(Util.isAdmin(this.addon.labyAPI().getUniqueId().toString()) && this.addon.configuration().chatShowAllPlayers().get()) {
         onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online andere Server", NamedTextColor.GRAY))));
         players.forEach(moneyPlayer -> {
           if(moneyPlayer.server().equalsIgnoreCase("Other")) {
@@ -188,7 +188,7 @@ public class ChatActivity extends SimpleActivity {
     DivWidget inputContainer = new DivWidget().addId("input-container");
 
     if(this.addon.chatClient().online()) {
-      if(this.addon.chatClient().muted() & !(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) {
+      if(this.addon.chatClient().muted() & !(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isAdmin(this.labyAPI.getUniqueId().toString()))) {
         ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.muted.title").addId("chat-muted-title");
         ComponentWidget reasonWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.reason").append(Component.text(this.addon.chatClient().muteReason()))).addId("chat-muted-reason");
         inputContainer.addChild(componentWidget);
@@ -234,7 +234,7 @@ public class ChatActivity extends SimpleActivity {
     String message = this.chatInput.getText();
     message = message.trim();
     if (!message.isEmpty()) {
-      if(message.startsWith("/") & (Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) {
+      if(message.startsWith("/") & (Util.isStaff(this.labyAPI.getUniqueId()) || Util.isAdmin(this.labyAPI.getUniqueId().toString()))) {
         this.handleCommands(message);
         this.chatInput.setText("");
         return;
@@ -242,7 +242,7 @@ public class ChatActivity extends SimpleActivity {
       if(this.sendToServer(message)) {
         this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
         this.chatInput.setText("");
-        if(!Util.isDev(this.labyAPI.getUniqueId().toString())) {
+        if(!Util.isAdmin(this.labyAPI.getUniqueId().toString())) {
           this.chatInput.setEditable(false);
           this.chatInput.addId("blocked");
           Task.builder(() -> {
@@ -259,7 +259,7 @@ public class ChatActivity extends SimpleActivity {
   }
 
   private void handleCommands(String input) {
-    if(!(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isDev(this.labyAPI.getUniqueId().toString()))) return;
+    if(!(Util.isStaff(this.labyAPI.getUniqueId()) || Util.isAdmin(this.labyAPI.getUniqueId().toString()))) return;
 
     boolean successful = false;
 
@@ -286,7 +286,7 @@ public class ChatActivity extends SimpleActivity {
         }
         UUID uuid = requestUuid.get();
 
-        if(Util.isDev(uuid.toString()) || Util.isStaff(uuid)) {
+        if(Util.isAdmin(uuid.toString()) || Util.isStaff(uuid)) {
           this.addCustomChatMessage(Component.text("Du kannst keine Teammitglieder muten.", NamedTextColor.RED));
           return;
         }
