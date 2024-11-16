@@ -7,6 +7,7 @@ import net.labymod.api.client.gui.icon.Icon;
 
 public enum MoneyRank {
 
+  //TODO: Add Icon for Translator | Change color of developer?
   ADMIN(1, "admin", true, "§8[§4Admin§8] §4", "§4", Component.text(" Admin", NamedTextColor.DARK_RED), Common.ICON_DARK_RED, "https://cdn.terramc.net/moneymaker/lore_red.png"),
   DEVELOPER(2, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", NamedTextColor.DARK_RED), Common.ICON_DARK_RED, "https://cdn.terramc.net/moneymaker/lore_red.png"),
   STAFF(3, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", NamedTextColor.RED), Common.ICON_RED, "https://cdn.terramc.net/moneymaker/lore_light_red.png"),
