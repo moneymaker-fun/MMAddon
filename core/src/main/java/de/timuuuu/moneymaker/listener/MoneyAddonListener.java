@@ -1,6 +1,5 @@
 package de.timuuuu.moneymaker.listener;
 
-import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
@@ -44,13 +43,8 @@ public class MoneyAddonListener {
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
 
       String uuid = this.addon.labyAPI().getUniqueId().toString();
-      JsonObject retrievePlayerDataObject = new JsonObject();
-      retrievePlayerDataObject.addProperty("uuid", uuid);
-      this.addon.chatClient().sendMessage("retrievePlayerData", retrievePlayerDataObject);
-
-      JsonObject muteCheckObject = new JsonObject();
-      muteCheckObject.addProperty("uuid", uuid);
-      this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
+      this.addon.chatClient().util().sendRetrievePlayerData(uuid);
+      this.addon.chatClient().util().sendCheckMute(uuid);
 
       this.addon.apiUtil().loadChatHistory();
 
@@ -92,9 +86,8 @@ public class MoneyAddonListener {
     this.addon.chatClient().util().sendPlayerStatus(event.previousSession().getUniqueId().toString(), event.previousSession().getUsername(), true);
     this.addon.chatClient().util().sendPlayerStatus(event.newSession().getUniqueId().toString(), event.newSession().getUsername(), false);
 
-    JsonObject muteCheckObject = new JsonObject();
-    muteCheckObject.addProperty("uuid", event.newSession().getUniqueId().toString());
-    this.addon.chatClient().sendMessage("checkMute", muteCheckObject);
+    this.addon.chatClient().util().sendCheckMute(event.newSession().getUniqueId().toString());
+    this.addon.chatClient().util().sendRetrievePlayerData(event.newSession().getUniqueId().toString());
 
     this.addon.chatClient().util().sendLeaderboard(event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
 

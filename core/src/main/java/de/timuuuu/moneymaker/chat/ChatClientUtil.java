@@ -19,6 +19,18 @@ public class ChatClientUtil {
     this.chatClient = chatClient;
   }
 
+  public void sendRetrievePlayerData(String uuid) {
+    JsonObject retrievePlayerDataObject = new JsonObject();
+    retrievePlayerDataObject.addProperty("uuid", uuid);
+    this.addon.chatClient().sendMessage("retrievePlayerData", retrievePlayerDataObject);
+  }
+
+  public void sendCheckMute(String uuid) {
+    JsonObject muteCheckObject = new JsonObject();
+    muteCheckObject.addProperty("uuid", uuid);
+    this.chatClient.sendMessage("checkMute", muteCheckObject);
+  }
+
   public void sendLeaderboard(String uuid, String userName) {
     JsonObject object = new JsonObject();
     object.addProperty("uuid", uuid);

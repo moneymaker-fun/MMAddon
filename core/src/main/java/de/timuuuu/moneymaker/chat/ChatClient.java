@@ -95,6 +95,7 @@ public class ChatClient {
         this.connect(false);
       }
       this.sendHeartbeat();
+      this.util.sendRetrievePlayerData(addon.labyAPI().getUniqueId().toString());
     }).delay(5, TimeUnit.SECONDS).build().execute();
   }
 

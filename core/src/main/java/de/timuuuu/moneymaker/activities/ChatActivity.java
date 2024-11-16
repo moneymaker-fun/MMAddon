@@ -103,9 +103,7 @@ public class ChatActivity extends SimpleActivity {
             if(this.addon.chatClient().online()) {
               this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
 
-              JsonObject object = new JsonObject();
-              object.addProperty("uuid", this.addon.labyAPI().getUniqueId().toString());
-              this.addon.chatClient().sendMessage("retrievePlayerData", object);
+              this.addon.chatClient().util().sendRetrievePlayerData(this.addon.labyAPI().getUniqueId().toString());
             }
 
           }).delay(5, TimeUnit.SECONDS).build().execute();
