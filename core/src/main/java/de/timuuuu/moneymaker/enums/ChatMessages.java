@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.utils;
+package de.timuuuu.moneymaker.enums;
 
 public enum ChatMessages {
 

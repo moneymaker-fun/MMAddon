@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.chat;
 
 import com.google.gson.JsonObject;
-import de.timuuuu.moneymaker.badges.MoneyRank;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 

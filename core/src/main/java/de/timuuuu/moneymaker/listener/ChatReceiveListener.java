@@ -3,7 +3,7 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
-import de.timuuuu.moneymaker.utils.ChatMessages;
+import de.timuuuu.moneymaker.enums.ChatMessages;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;

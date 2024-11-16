@@ -5,7 +5,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
-import de.timuuuu.moneymaker.badges.MoneyRank;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;

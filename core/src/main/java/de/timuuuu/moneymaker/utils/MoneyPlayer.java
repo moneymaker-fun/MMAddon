@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
-import de.timuuuu.moneymaker.badges.MoneyRank;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import java.util.UUID;
 
 public class MoneyPlayer {

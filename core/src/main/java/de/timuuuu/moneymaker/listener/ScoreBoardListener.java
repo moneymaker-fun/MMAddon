@@ -2,7 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
-import de.timuuuu.moneymaker.utils.ChatMessages;
+import de.timuuuu.moneymaker.enums.ChatMessages;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Constants.Resources;

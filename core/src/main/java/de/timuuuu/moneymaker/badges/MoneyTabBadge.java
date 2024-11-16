@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.badges;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import net.labymod.api.client.entity.player.badge.renderer.BadgeRenderer;
 import net.labymod.api.client.network.NetworkPlayerInfo;

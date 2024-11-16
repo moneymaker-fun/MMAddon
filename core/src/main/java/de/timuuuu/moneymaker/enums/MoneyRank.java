@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.badges;
+package de.timuuuu.moneymaker.enums;
 
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
 import net.labymod.api.client.component.Component;

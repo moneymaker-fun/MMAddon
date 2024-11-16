@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.badges.MoneyRank;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import java.util.HashMap;
 import java.util.UUID;
 

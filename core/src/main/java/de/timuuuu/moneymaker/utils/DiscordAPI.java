@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.badges.MoneyRank;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.boosters.Booster;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
