@@ -12,6 +12,8 @@ public class MoneyTextures {
     public static final Icon ICON_RED;
     public static final Icon ICON_DARK_RED;
     public static final Icon ICON_ORANGE;
+    public static final Icon ICON_GREEN;
+    public static final Icon ICON_GRAY;
 
     static {
       MINER = Icon.texture(ResourceLocation.create("moneymaker", "textures/miner.png"));
@@ -19,6 +21,8 @@ public class MoneyTextures {
       ICON_RED = Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_light_red.png"));
       ICON_DARK_RED = Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_red.png"));
       ICON_ORANGE = Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_orange.png"));
+      ICON_GREEN = Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_green.png"));
+      ICON_GRAY = Icon.texture(ResourceLocation.create("moneymaker", "textures/icon_gray.png"));
     }
 
   }

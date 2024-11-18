@@ -7,13 +7,13 @@ import net.labymod.api.client.gui.icon.Icon;
 
 public enum MoneyRank {
 
-  //TODO: Add Icon for Translator | Change color of developer?
-  ADMIN(1, "admin", true, "§8[§4Admin§8] §4", "§4", Component.text(" Admin", NamedTextColor.DARK_RED), Common.ICON_DARK_RED, "https://cdn.terramc.net/moneymaker/lore_red.png"),
-  DEVELOPER(2, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", NamedTextColor.DARK_RED), Common.ICON_DARK_RED, "https://cdn.terramc.net/moneymaker/lore_red.png"),
-  STAFF(3, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", NamedTextColor.RED), Common.ICON_RED, "https://cdn.terramc.net/moneymaker/lore_light_red.png"),
-  TRANSLATOR(4, "translator", false, "§8[§2Translator§8] §2", "§2", Component.text(" Translator", NamedTextColor.DARK_GREEN), Common.ICON_RED, "https://cdn.terramc.net/moneymaker/lore_light_red.png"),
-  DONATOR(5, "donator", false, "§8[§6$§8] §6", "§6", Component.text(" Donator", NamedTextColor.GOLD), Common.ICON_ORANGE, "https://cdn.terramc.net/moneymaker/lore_orange.png"),
-  USER(6, "user", false, "§e", "§e", null, Common.ICON, "https://cdn.terramc.net/moneymaker/lore.png");
+  //TODO: Change color of developer?
+  ADMIN(1, "admin", true, "§8[§4Admin§8] §4", "§4", Component.text(" Admin", NamedTextColor.DARK_RED), Common.ICON_DARK_RED, "https://moneymakeraddon.de/addon-assets/lore_red.png"),
+  DEVELOPER(2, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", NamedTextColor.RED), Common.ICON_RED, "https://moneymakeraddon.de/addon-assets/lore_light_red.png"),
+  STAFF(3, "staff", true, "§8[§cStaff§8] §c", "§c", Component.text(" Staff", NamedTextColor.GOLD), Common.ICON_ORANGE, "https://moneymakeraddon.de/addon-assets/lore_orange.png"),
+  TRANSLATOR(4, "translator", false, "§8[§2Translator§8] §2", "§2", Component.text(" Translator", NamedTextColor.DARK_GREEN), Common.ICON_GREEN, "https://moneymakeraddon.de/addon-assets/lore_green.png"),
+  DONATOR(5, "donator", false, "§8[§e$§8] §e", "§e", Component.text(" Donator", NamedTextColor.YELLOW), Common.ICON, "https://moneymakeraddon.de/addon-assets/lore.png"),
+  USER(6, "user", false, "§7", "§7", null, Common.ICON_GRAY, "https://moneymakeraddon.de/addon-assets/lore_gray.png");
 
   private final int id;
   private final String name;
