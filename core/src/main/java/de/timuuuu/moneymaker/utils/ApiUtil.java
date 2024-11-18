@@ -26,7 +26,7 @@ import net.labymod.api.util.io.web.request.Request;
 
 public class ApiUtil {
 
-  private String BASE_URL = "https://api.moneymakeraddon.de";
+  public static final String BASE_URL = "https://api.moneymakeraddon.de";
 
   private MoneyMakerAddon addon;
 

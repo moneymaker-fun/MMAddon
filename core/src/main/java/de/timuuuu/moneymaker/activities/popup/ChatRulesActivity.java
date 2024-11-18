@@ -4,6 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import java.util.function.Consumer;
+import de.timuuuu.moneymaker.utils.ApiUtil;
 import net.labymod.api.Textures.SpriteCommon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.screen.Parent;
@@ -131,7 +132,7 @@ public class ChatRulesActivity extends SimpleActivity {
       return;
     }
     Request.ofGson(JsonObject.class)
-        .url("https://api.moneymaker.fun/chat/rules/")
+        .url(ApiUtil.BASE_URL + "/chat/rules/")
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
