@@ -45,14 +45,7 @@ public class MoneyPlayer {
     return rank;
   }
 
-  public static MoneyRank rankByName(String name) {
-    MoneyRank rank = MoneyRank.USER;
-    for(MoneyRank ranks : MoneyRank.values()) {
-      if(ranks.getName().equalsIgnoreCase(name)) {
-        rank = ranks;
-      }
-    }
-    return rank;
+  public void rank(MoneyRank rank) {
+    this.rank = rank;
   }
-
 }

@@ -65,4 +65,15 @@ public enum MoneyRank {
   public String getIconUrl() {
     return iconUrl;
   }
+
+  public static MoneyRank byName(String name) {
+    MoneyRank rank = MoneyRank.USER;
+    for(MoneyRank ranks : MoneyRank.values()) {
+      if(ranks.getName().equalsIgnoreCase(name)) {
+        rank = ranks;
+      }
+    }
+    return rank;
+  }
+
 }
