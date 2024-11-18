@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatClient;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.events.ChatServerMessageReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
@@ -27,6 +28,24 @@ public class ChatServerListener {
   @Subscribe
   public void onChatServerMessageReceive(ChatServerMessageReceiveEvent event) {
     JsonObject message = event.message();
+
+    if(message.has("playerRankChanged") && message.get("playerRankChanged").isJsonObject()) {
+      JsonObject rankChange = message.get("playerRankChanged").getAsJsonObject();
+      if(rankChange.has("uuid") && rankChange.has("rank")) {
+        UUID uuid = UUID.fromString(rankChange.get("uuid").getAsString());
+        MoneyRank rank = MoneyRank.byName(rankChange.get("rank").getAsString());
+        if(AddonUtil.playerStatus.containsKey(uuid)) {
+          AddonUtil.playerStatus.get(uuid).rank(rank);
+        }
+        if(this.addon.labyAPI().getUniqueId().equals(uuid)) {
+          this.addon.pushNotification(
+              Component.translatable("moneymaker.notification.chat.rank-changed.title", NamedTextColor.GREEN),
+              Component.translatable("moneymaker.notification.chat.rank-changed.text", NamedTextColor.YELLOW, Component.text(rank.getOnlineColor() + rank.getName())),
+              rank.getIcon()
+          );
+        }
+      }
+    }
 
     if(message.has("chatMessage") && message.get("chatMessage").isJsonObject()) {
       MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(message.get("chatMessage").getAsJsonObject());
@@ -103,7 +122,7 @@ public class ChatServerListener {
               data.get("server").getAsString(),
               data.get("addonVersion").getAsString(),
               data.has("minecraftVersion") ? data.get("minecraftVersion").getAsString() : "unknown",
-              MoneyPlayer.rankByName(data.get("rank").getAsString())
+              MoneyRank.byName(data.get("rank").getAsString())
           )
       ));
     }
@@ -122,7 +141,7 @@ public class ChatServerListener {
                 playerData.get("server").getAsString(),
                 playerData.get("addonVersion").getAsString(),
                 playerData.has("minecraftVersion") ? playerData.get("minecraftVersion").getAsString() : "unknown",
-                MoneyPlayer.rankByName(playerData.get("rank").getAsString())
+                MoneyRank.byName(playerData.get("rank").getAsString())
             ));
           }
         }

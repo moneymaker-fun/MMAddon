@@ -109,6 +109,10 @@
         "user": {
           "online": "%s is now playing MoneyMaker.",
           "offline": "%s has left MoneyMaker."
+        },
+        "rank-changed": {
+          "title": "Your rank has been changed",
+          "text": "Your rank has been changed to %s."
         }
       },
       "timer": {
