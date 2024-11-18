@@ -3,7 +3,6 @@ package de.timuuuu.moneymaker.chat;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
-import de.timuuuu.moneymaker.utils.MoneyPlayer;
 
 import java.util.UUID;
 
@@ -37,7 +36,7 @@ public class MoneyChatMessage {
           UUID.fromString(object.get("uuid").getAsString()),
           object.get("userName").getAsString(),
           object.get("message").getAsString(),
-          object.has("rank") ? MoneyPlayer.rankByName(object.get("rank").getAsString()) : MoneyRank.USER,
+          object.has("rank") ? MoneyRank.byName(object.get("rank").getAsString()) : MoneyRank.USER,
               object.has("fromCache") && object.get("fromCache").getAsBoolean(),
           object.has("timeStamp") ? object.get("timeStamp").getAsString() : null
           );
