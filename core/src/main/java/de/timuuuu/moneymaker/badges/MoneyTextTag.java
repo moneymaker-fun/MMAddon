@@ -37,7 +37,7 @@ public class MoneyTextTag extends NameTag {
 
   @Override
   public boolean isVisible() {
-    return visible(entity);
+    return !this.entity.isCrouching() && visible(entity);
   }
 
   private boolean visible(Entity entity) {
