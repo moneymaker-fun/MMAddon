@@ -19,7 +19,7 @@ public class MoneyIconTag extends IconTag {
 
   @Override
   public boolean isVisible() {
-    return this.entity.isCrouching() && this.visibleRank(entity) != null;
+    return !this.entity.isCrouching() && this.visibleRank(entity) != null;
   }
 
   @Override
