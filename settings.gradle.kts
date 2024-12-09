@@ -1,7 +1,7 @@
 rootProject.name = "moneymaker"
 
 pluginManagement {
-    val labyGradlePluginVersion = "0.5.4"
+    val labyGradlePluginVersion = "0.5.7"
     buildscript {
         repositories {
             maven("https://dist.labymod.net/api/v1/maven/release/")
