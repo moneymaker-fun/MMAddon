@@ -2,11 +2,13 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.HashMap;
+import java.util.List;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
-import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
+import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
@@ -16,9 +18,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
-import net.labymod.api.client.render.matrix.Stack;
-import java.util.HashMap;
-import java.util.List;
 
 @AutoActivity
 @Links({@Link("price-overview.lss"), @Link("buttons.lss")})
@@ -135,9 +134,9 @@ public class PriceOverviewActivity extends SimpleActivity {
   }
 
   @Override
-  public void render(Stack stack, MutableMouse mouse, float tickDelta) {
-    super.render(stack, mouse, tickDelta);
-    Util.drawAuthor(this.labyAPI, this.bounds(), stack);
+  public void render(ScreenContext context) {
+    super.render(context);
+    Util.drawAuthor(this.labyAPI, this.bounds(), context.stack());
   }
 
   public HashMap<String, MineData> priceData() {

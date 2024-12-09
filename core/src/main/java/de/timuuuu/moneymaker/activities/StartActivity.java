@@ -3,12 +3,13 @@ package de.timuuuu.moneymaker.activities;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.TimerWidget;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.Constants.Resources;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
-import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
+import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
@@ -21,8 +22,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
-import net.labymod.api.client.render.matrix.Stack;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @AutoActivity
 @Links({@Link("start.lss"), @Link("buttons.lss")})
@@ -133,9 +132,9 @@ public class StartActivity extends SimpleActivity {
   }
 
   @Override
-  public void render(Stack stack, MutableMouse mouse, float tickDelta) {
-    super.render(stack, mouse, tickDelta);
-    Util.drawAuthor(this.labyAPI, this.bounds(), stack);
+  public void render(ScreenContext context) {
+    super.render(context);
+    Util.drawAuthor(this.labyAPI, this.bounds(), context.stack());
   }
 
   public void reloadScreen() {

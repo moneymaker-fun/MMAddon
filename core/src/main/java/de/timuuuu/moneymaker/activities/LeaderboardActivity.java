@@ -3,10 +3,14 @@ package de.timuuuu.moneymaker.activities;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.widgets.LeaderboardEntryWidget;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.gui.mouse.MutableMouse;
 import net.labymod.api.client.gui.screen.Parent;
+import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
@@ -18,11 +22,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
-import net.labymod.api.client.render.matrix.Stack;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 @AutoActivity
 @Links({@Link("leaderboard.lss"), @Link("buttons.lss")})
@@ -196,9 +195,9 @@ public class LeaderboardActivity extends SimpleActivity {
   }
 
   @Override
-  public void render(Stack stack, MutableMouse mouse, float tickDelta) {
-    super.render(stack, mouse, tickDelta);
-    Util.drawAuthor(this.labyAPI, this.bounds(), stack);
+  public void render(ScreenContext context) {
+    super.render(context);
+    Util.drawAuthor(this.labyAPI, this.bounds(), context.stack());
   }
 
   public List<LeaderboardEntryWidget> entries() {
