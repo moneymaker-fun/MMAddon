@@ -71,6 +71,12 @@
         }
       }
     },
+    "mineType": {
+      "gold": "Gold Mine",
+      "coal": "Coal Mine",
+      "iron": "Iron Mine",
+      "lapis": "Lapis Mine"
+    },
     "farming-level": {
       "gold": "Gold Level",
       "coal": "Coal Level",
@@ -360,9 +366,9 @@
           "name": "Show Statistics",
           "description": "Shows your statistics\n\nMine: Balance, Worker count, Ranking\n\nFarming cave: Broken Blocks, Found Boosters, Pickaxe Rank & Level, Ranking"
         },
-        "showCaveLevel": {
-          "name": "Shows your current Cave Level",
-          "description": "Shows your current Cave level (gold, coal, iron) in the Discord Rich Presence"
+        "showDetailedLocation": {
+          "name": "Shows your current Location with Details",
+          "description": "Shows in the Farming Cave your current Cave level (Gold, Coal, Iron) and in the Mine your current Mine (Gold, Coal, Iron and Lapis Mine) in the Discord Rich Presence"
         }
       },
 
@@ -383,9 +389,9 @@
           "name": "Load Chat History",
           "description": "Load the Chat history when connecting to GommeHD.net. The History contains the last 50 sent messages and will be displayed in the MoneyMaker Chat Tab"
         },
-        "showCaveLevel": {
-          "name": "Shows your current Cave Level",
-          "description": "Shows your current Cave level (gold, coal, iron) in the Addon Chat online list"
+        "showDetailedLocation": {
+          "name": "Shows your current Location with Details",
+          "description": "Shows in the Farming Cave your current Cave level (Gold, Coal, Iron) and in the Mine your current Mine (Gold, Coal, Iron and Lapis Mine) in the Addon Chat online list"
         },
         "notification": {
           "name": "Notifications",

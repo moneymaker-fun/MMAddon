@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
+import de.timuuuu.moneymaker.utils.AddonUtil.MineType;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -218,13 +219,21 @@ public class ChatClient {
   }
 
   public String currentServer() {
-    if(addon.addonUtil().inMine()) return "Mine";
-    if(addon.addonUtil().inFarming()) return currentCave(addon.addonUtil().miningCave());
+    if(addon.addonUtil().inMine()) return currentMine(addon.addonUtil().currentMine());
+    if(addon.addonUtil().inFarming()) return currentCave(addon.addonUtil().farmingCave());
     return "Other";
   }
 
+  public String currentMine(MineType mine) {
+    if(mine == null) return "Mine";
+    if(!addon.configuration().chatConfiguration.showDetailedLocation().get()) {
+      return "Mine";
+    }
+    return "Mine - " + mine.internalName();
+  }
+
   public String currentCave(FarmingCave cave) {
-    if(!addon.configuration().chatConfiguration.showCaveLevel().get()) {
+    if(!addon.configuration().chatConfiguration.showDetailedLocation().get()) {
       return "Farming";
     }
     return "Farming - " + cave.internalName();

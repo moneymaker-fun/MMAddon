@@ -22,9 +22,9 @@ public class MoneyChatConfiguration extends Config {
 
   @SettingSection(value = "privacy", center = true)
 
-  @IntroducedIn(namespace = "moneymaker", value = "1.6.0")
+  @IntroducedIn(namespace = "moneymaker", value = "1.7.0")
   @SwitchSetting
-  private final ConfigProperty<Boolean> showCaveLevel = new ConfigProperty<>(true);
+  private final ConfigProperty<Boolean> showDetailedLocation = new ConfigProperty<>(true);
 
   @SettingSection(value = "notifications", center = true)
 
@@ -51,8 +51,8 @@ public class MoneyChatConfiguration extends Config {
     return loadChatHistory;
   }
 
-  public ConfigProperty<Boolean> showCaveLevel() {
-    return showCaveLevel;
+  public ConfigProperty<Boolean> showDetailedLocation() {
+    return showDetailedLocation;
   }
 
   public ConfigProperty<Boolean> notification() {

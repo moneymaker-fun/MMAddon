@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.enums.MoneyRank;
+import net.labymod.api.util.I18n;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -49,7 +50,8 @@ public class AddonUtil {
 
   private boolean inMine = false;
   private boolean inFarming = false;
-  private FarmingCave miningCave = FarmingCave.UNKNOWN;
+  private FarmingCave farmingCave = FarmingCave.UNKNOWN;
+  private MineType currentMine = null;
 
   public void resetValues(boolean changePlaying) {
     if(changePlaying) {
@@ -76,6 +78,7 @@ public class AddonUtil {
     mobKills = 0;
     sessionKills = 0;
     this.addon.entityRenderListener().stopDebrisTask();
+    currentMine = null;
   }
 
   private boolean leaderboardShowBlocks = true;
@@ -119,12 +122,20 @@ public class AddonUtil {
     this.rank = rank;
   }
 
-  public FarmingCave miningCave() {
-    return miningCave;
+  public FarmingCave farmingCave() {
+    return farmingCave;
   }
 
-  public void miningCave(FarmingCave miningCave) {
-    this.miningCave = miningCave;
+  public void farmingCave(FarmingCave farmingCave) {
+    this.farmingCave = farmingCave;
+  }
+
+  public MineType currentMine() {
+    return currentMine;
+  }
+
+  public void currentMine(MineType currentMine) {
+    this.currentMine = currentMine;
   }
 
   public boolean connectedToMoneyMaker() {
@@ -313,6 +324,40 @@ public class AddonUtil {
 
   public void debrisNotifySent(boolean debrisNotifySent) {
     this.debrisNotifySent = debrisNotifySent;
+  }
+
+  public MineType mineByTranslation(String mineName) {
+    MineType mine = null;
+    for(MineType mines : MineType.values()) {
+      if(I18n.translate(mines.translation()).equals(mineName)) {
+        mine = mines;
+      }
+    }
+    return mine;
+  }
+
+  public enum MineType {
+    GOLD("Gold Mine", "moneymaker.mineType.gold"),
+    COAL("Coal Mine", "moneymaker.mineType.coal"),
+    IRON("Iron Mine", "moneymaker.mineType.iron"),
+    LAPIS("Lapis Mine", "moneymaker.mineType.lapis");
+
+    private final String internalName;
+    private final String translation;
+
+    MineType(String internalName, String translation) {
+      this.internalName = internalName;
+      this.translation = translation;
+    }
+
+    public String internalName() {
+      return internalName;
+    }
+
+    public String translation() {
+      return translation;
+    }
+
   }
 
   public FarmingCave caveByName(String internalName) {

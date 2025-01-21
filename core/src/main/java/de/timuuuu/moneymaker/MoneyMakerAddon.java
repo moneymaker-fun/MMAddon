@@ -165,7 +165,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
 
-    this.configuration().chatConfiguration.showCaveLevel().addChangeListener((type, oldValue, newValue) ->
+    this.configuration().chatConfiguration.showDetailedLocation().addChangeListener((type, oldValue, newValue) ->
         this.chatClient().util().sendPlayerStatus(this.labyAPI().getUniqueId().toString(), this.labyAPI().getName(), false)
     );
 

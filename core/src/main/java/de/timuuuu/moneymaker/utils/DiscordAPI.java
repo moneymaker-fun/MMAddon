@@ -95,7 +95,8 @@ public class DiscordAPI {
         if (!imageUrl.equals(this.addon.addonUtil().rank().getIconUrl())) {
           imageUrl = this.addon.addonUtil().rank().getIconUrl();
         }
-        this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently");
+        this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently") +
+            (this.addon.addonUtil().currentMine() != null && this.addon.configuration().discordConfiguration.showDetailedLocation().get() ? " - " + I18n.translate(this.addon.addonUtil().currentMine().translation()) : "");
         if (mineCount.get() == 1) {
           this.line2 = I18n.translate("moneymaker.discordPresence.mine.balance") + (this.addon.addonUtil().balance().equals("X") ? "?" : this.addon.addonUtil().balance());
         }
@@ -114,7 +115,7 @@ public class DiscordAPI {
           imageUrl = minerUrl;
         }
         this.line1 = I18n.translate("moneymaker.discordPresence.farming.currently") +
-            (this.addon.configuration().discordConfiguration.showCaveLevel().get() ? " - " + I18n.translate(this.addon.addonUtil().miningCave().translation()) : "");
+            (this.addon.configuration().discordConfiguration.showDetailedLocation().get() ? " - " + I18n.translate(this.addon.addonUtil().farmingCave().translation()) : "");
         if (farmingCount.get() == 1) {
           this.line2 = I18n.translate("moneymaker.discordPresence.farming.blocks") + Util.format(this.addon.addonUtil().currentBrokenBlocks());
         }

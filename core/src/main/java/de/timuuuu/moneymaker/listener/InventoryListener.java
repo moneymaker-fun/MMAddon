@@ -25,17 +25,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventoryListener {
 
-  // TODO: Display current mine in Discord RPC, MoneyMaker Chat & Gamemode Switch Notification
-  // -> Detect Mine switch via Inventory Click
-  // -> Default value is null, when value is null don't display anything
-
   private static List<SlotItem> alreadyRendered = new ArrayList<>();
   private static int totalBoosters = 0;
   private int previousBoost = -1;
   private int previousTotalBoosters = -1;
   private long lastDisplayTime = 0; // Initialize last display time to 0
 
-  private final long DISPLAY_COOLDOWN = 30000;
+  private final long DISPLAY_COOLDOWN = 30*1000;
 
   private String currentProfile = "";
 
@@ -49,8 +45,6 @@ public class InventoryListener {
   public void onInventoryClick(InventoryClickEvent event) {
 
     if(event.getInventoryName().equals("Server wechseln") || event.getInventoryName().equals("Switch server")) {
-
-      this.addon.logger().info(event.getItemName());
 
       String mineName = null;
       if(event.textVersion() == TextVersion.RAW) {
@@ -73,8 +67,6 @@ public class InventoryListener {
             this.addon.addonUtil().currentMine(mineType);
           }
         }
-      } else {
-        this.addon.displayMessage("Mine Name is null");
       }
 
     }

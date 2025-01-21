@@ -71,6 +71,12 @@
         }
       }
     },
+    "mineType": {
+      "gold": "Goldmine",
+      "coal": "Kohlemine",
+      "iron": "Eisenmine",
+      "lapis": "Lapismine"
+    },
     "farming-level": {
       "gold": "Gold Ebene",
       "coal": "Kohle Ebene",
@@ -360,9 +366,9 @@
           "name": "Zeige Statistiken",
           "description": "Zeigt deine Statistiken\n\nMine: Kontostand, Arbeiteranzahl, Ranking\n\nFarminghöhle: Abgebaute Blöcke, gefundene Booster, Spitzhacken Rang & Level, Ranking"
         },
-        "showCaveLevel": {
-          "name": "Zeige aktuelle Ebene in der Farminghöhle",
-          "description": "Zeigte deine aktuelle Ebene in der Farminghöhle (Gold, Kohle, Eisen) in der Discord Rich Presence"
+        "showDetailedLocation": {
+          "name": "Zeige aktuelle Position mit Details",
+          "description": "Zeigte in der Farminghöhle deine aktuelle Ebene (Gold, Kohle, Eisen) und in der Mine deine aktuelle Mine (Gold-, Kohle-, Eisen- und Lapismine) in der Discord Rich Presence an"
         }
       },
 
@@ -383,9 +389,9 @@
           "name": "Chat Verlauf laden",
           "description": "Lädt den Chat Verlauf, wenn du dich auf GommeHD.net verbindest. Der Verlauf enthält die letzten 50 gesendeten Nachrichten und werden im MoneyMaker Chat Tab angezeigt"
         },
-        "showCaveLevel": {
-          "name": "Zeige aktuelle Ebene in der Farminghöhle",
-          "description": "Zeigte deine aktuelle Ebene in der Farminghöhle (Gold, Kohle, Eisen) in der Online liste des Addon Chats an"
+        "showDetailedLocation": {
+          "name": "Zeige aktuelle Position mit Details",
+          "description": "Zeigte in der Farminghöhle deine aktuelle Ebene (Gold, Kohle, Eisen) und in der Mine deine aktuelle Mine (Gold-, Kohle-, Eisen- und Lapismine) in der Online liste des Addon Chats an"
         },
         "notification": {
           "name": "Benachrichtigung",

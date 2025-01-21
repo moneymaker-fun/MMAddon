@@ -23,10 +23,10 @@ public class MoneyDiscordConfiguration extends Config {
   @SwitchSetting
   private final ConfigProperty<Boolean> showStats = new ConfigProperty<>(true);
 
-  @IntroducedIn(namespace = "moneymaker", value = "1.6.0")
+  @IntroducedIn(namespace = "moneymaker", value = "1.7.0")
   @SettingRequires(value = "showLocation")
   @SwitchSetting
-  private ConfigProperty<Boolean> showCaveLevel = new ConfigProperty<>(true);
+  private ConfigProperty<Boolean> showDetailedLocation = new ConfigProperty<>(true);
 
   public ConfigProperty<Boolean> enabled() {
     return enabled;
@@ -40,7 +40,7 @@ public class MoneyDiscordConfiguration extends Config {
     return showStats;
   }
 
-  public ConfigProperty<Boolean> showCaveLevel() {
-    return showCaveLevel;
+  public ConfigProperty<Boolean> showDetailedLocation() {
+    return showDetailedLocation;
   }
 }

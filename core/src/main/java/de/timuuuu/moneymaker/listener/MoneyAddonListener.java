@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
+import de.timuuuu.moneymaker.events.MineSwitchEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
@@ -122,6 +123,19 @@ public class MoneyAddonListener {
     }
   }
 
+  private long lastMineUpdate = System.currentTimeMillis();
+
+  @Subscribe
+  public void onMineSwitch(MineSwitchEvent event) {
+    if(((this.lastMineUpdate + 10*1000 - System.currentTimeMillis())) <= 0) {
+      this.lastMineUpdate = System.currentTimeMillis();
+      this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
+      if(event.getNewMine() != null) {
+        this.addon.sendServerUpdate("MoneyMaker » " + I18n.translate(event.getNewMine().translation()));
+      }
+    }
+  }
+
   private long lastLevelUpdate = System.currentTimeMillis();
   private FarmingCave lastCave = FarmingCave.UNKNOWN;
 
@@ -129,7 +143,7 @@ public class MoneyAddonListener {
   public void onCaveLevelChange(CaveLevelChangeEvent event) {
     if(this.lastCave == event.newCave()) return;
     this.lastCave = event.newCave();
-    this.addon.addonUtil().miningCave(event.newCave());
+    this.addon.addonUtil().farmingCave(event.newCave());
     if(((this.lastLevelUpdate + 10*1000 - System.currentTimeMillis())) <= 0) {
       this.lastLevelUpdate = System.currentTimeMillis();
       this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
