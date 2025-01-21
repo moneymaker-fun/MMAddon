@@ -1,15 +1,17 @@
 package de.timuuuu.moneymaker.event;
 
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import net.labymod.api.event.Event;
+import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class SwordTickEvent implements Event {
 
   private String displayName;
   private List<String> loreList;
-  private int textVersion;
+  private TextVersion textVersion;
 
-  public SwordTickEvent(String displayName, List<String> loreList, int textVersion) {
+  public SwordTickEvent(String displayName, List<String> loreList, @NotNull TextVersion textVersion) {
     this.displayName = displayName;
     this.loreList = loreList;
     this.textVersion = textVersion;
@@ -23,13 +25,8 @@ public class SwordTickEvent implements Event {
     return loreList;
   }
 
-  public int getTextVersion() {
+  public TextVersion textVersion() {
     return textVersion;
-  }
-
-  public static class TextVersions {
-    public static final int RAW = 1;
-    public static final int JSON = 2;
   }
 
 }

@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.v1_12_2.mixins;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
@@ -41,7 +42,7 @@ public class InventoryMixin {
         for(int i = 0; i != listTag.tagCount(); i++) {
           loreList.add(listTag.getStringTagAt(i));
         }
-        Laby.fireEvent(new InventoryRenderSlotEvent(slot.inventory.getName(), slot.slotNumber, name, loreList, "1.12"));
+        Laby.fireEvent(new InventoryRenderSlotEvent(slot.inventory.getName(), slot.slotNumber, name, loreList, TextVersion.RAW));
       }
     }
   }
@@ -62,7 +63,7 @@ public class InventoryMixin {
     for(int i = 0; i != listTag.tagCount(); i++) {
       loreList.add(listTag.getStringTagAt(i));
     }
-    Laby.fireEvent(new InventoryClickEvent(clickedSlot.inventory.getName(), clickedSlot.slotNumber, itemName, loreList, "1.12"));
+    Laby.fireEvent(new InventoryClickEvent(clickedSlot.inventory.getName(), clickedSlot.slotNumber, itemName, loreList, TextVersion.RAW));
   }
 
   @Inject(

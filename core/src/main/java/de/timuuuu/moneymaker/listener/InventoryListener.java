@@ -6,10 +6,13 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
+import de.timuuuu.moneymaker.events.MineSwitchEvent;
 import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
+import de.timuuuu.moneymaker.utils.AddonUtil.MineType;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
@@ -22,13 +25,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventoryListener {
 
+  // TODO: Display current mine in Discord RPC, MoneyMaker Chat & Gamemode Switch Notification
+  // -> Detect Mine switch via Inventory Click
+  // -> Default value is null, when value is null don't display anything
+
   private static List<SlotItem> alreadyRendered = new ArrayList<>();
   private static int totalBoosters = 0;
   private int previousBoost = -1;
   private int previousTotalBoosters = -1;
   private long lastDisplayTime = 0; // Initialize last display time to 0
 
-  private long DISPLAY_COOLDOWN = 30000;
+  private final long DISPLAY_COOLDOWN = 30000;
 
   private String currentProfile = "";
 
@@ -41,13 +48,44 @@ public class InventoryListener {
   @Subscribe
   public void onInventoryClick(InventoryClickEvent event) {
 
+    if(event.getInventoryName().equals("Server wechseln") || event.getInventoryName().equals("Switch server")) {
+
+      this.addon.logger().info(event.getItemName());
+
+      String mineName = null;
+      if(event.textVersion() == TextVersion.RAW) {
+        mineName = event.getItemName();
+      } else {
+        JsonElement element = JsonParser.parseString(event.getItemName());
+        if(element != null && element.isJsonObject()) {
+          JsonObject object = element.getAsJsonObject();
+          if(object.has("text")) {
+            mineName = object.get("text").getAsString();
+          }
+        }
+      }
+
+      if(mineName != null) {
+        MineType mineType = this.addon.addonUtil().mineByTranslation(mineName);
+        if(mineType != null) {
+          if(this.addon.addonUtil().currentMine() != mineType) {
+            Laby.fireEvent(new MineSwitchEvent(this.addon.addonUtil().currentMine(), mineType));
+            this.addon.addonUtil().currentMine(mineType);
+          }
+        }
+      } else {
+        this.addon.displayMessage("Mine Name is null");
+      }
+
+    }
+
     if(event.getInventoryName().equals("Profil-Übersicht") || event.getInventoryName().equals("Profile overview")) {
 
       if(event.getItemName().contains("Profil-Slot") || event.getItemName().contains("Profile slot") ||
           event.getItemName().contains("Event-Profil") || event.getItemName().contains("Event profile")) {
 
         String newProfile = null;
-        if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12")) {
+        if(event.textVersion() == TextVersion.RAW) {
           newProfile = event.getItemName();
         } else {
           // {"italic":false,"color":"aqua","text":"Profil-Slot 1"}
@@ -83,7 +121,7 @@ public class InventoryListener {
     if(!alreadyRendered.isEmpty()) {
       alreadyRendered.forEach(slotItem -> {
         String strippedName = null;
-        if(slotItem.getGameVersion().equals("1.8") || slotItem.getGameVersion().equals("1.12") || slotItem.getGameVersion().equals("1.20.5")) {
+        if(slotItem.textVersion() == TextVersion.RAW) {
           strippedName = ChatUtil.stripColor(slotItem.getName()); // +150 % Booster (1)
         } else {
           List<String> rawName = Util.getTextFromJsonObject(slotItem.getName()); // "+2.000 % Booster ","(4)"
@@ -135,11 +173,11 @@ public class InventoryListener {
       ]
      */
 
-    if(event.getGameVersion().equals("1.8") || event.getGameVersion().equals("1.12") || event.getGameVersion().equals("1.20.5")) {
+    if(event.textVersion() == TextVersion.RAW) {
       if(event.getLoreList().size() >= 9) {
         String displayName = event.getDisplayName();
         String durationLore = event.getLoreList().get(2);
-        SlotItem slotItem = new SlotItem(displayName, durationLore, event.getGameVersion());
+        SlotItem slotItem = new SlotItem(displayName, durationLore, event.textVersion());
         if(!alreadyRendered.contains(slotItem)) {
           alreadyRendered.add(slotItem);
         }
@@ -150,7 +188,7 @@ public class InventoryListener {
     if(event.getLoreList().size() >= 9) {
       String displayName = event.getDisplayName();
       String durationLore = event.getLoreList().get(2);
-      SlotItem slotItem = new SlotItem(displayName, durationLore, event.getGameVersion());
+      SlotItem slotItem = new SlotItem(displayName, durationLore, event.textVersion());
       if(!alreadyRendered.contains(slotItem)) {
         alreadyRendered.add(slotItem);
       }
@@ -215,12 +253,12 @@ public class InventoryListener {
 
     private String name;
     private String lore;
-    private String gameVersion;
+    private TextVersion textVersion;
 
-    public SlotItem(String name, String lore, String gameVersion) {
+    public SlotItem(String name, String lore, TextVersion textVersion) {
       this.name = name;
       this.lore = lore;
-      this.gameVersion = gameVersion;
+      this.textVersion = textVersion;
     }
 
     public String getName() {
@@ -231,14 +269,14 @@ public class InventoryListener {
       return lore;
     }
 
-    public String getGameVersion() {
-      return gameVersion;
+    public TextVersion textVersion() {
+      return textVersion;
     }
 
     @Override
     public boolean equals(Object object) {
       if(object instanceof SlotItem other) {
-          return other.getName().equals(this.name) && other.getLore().equals(this.lore) && other.getGameVersion().equals(this.gameVersion);
+          return other.getName().equals(this.name) && other.getLore().equals(this.lore) && other.textVersion().equals(this.textVersion);
       }
       return false;
     }

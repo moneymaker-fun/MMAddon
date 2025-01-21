@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.v1_21_4.mixins;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
@@ -35,7 +36,7 @@ public class InventoryMixin {
     for(int i = 0; i != itemLore.lines().size(); i++) {
       loreList.add(itemLore.lines().get(i).getString());
     }
-    Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name, loreList, "1.20.5"));
+    Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name, loreList, TextVersion.RAW));
   }
 
   @Inject(
@@ -53,7 +54,7 @@ public class InventoryMixin {
     for(int i = 0; i != itemLore.lines().size(); i++) {
       loreList.add(itemLore.lines().get(i).getString());
     }
-    Laby.fireEvent(new InventoryClickEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), clickedSlot.getContainerSlot(), name, loreList, "1.20"));
+    Laby.fireEvent(new InventoryClickEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), clickedSlot.getContainerSlot(), name, loreList, TextVersion.RAW));
   }
 
   @Inject(

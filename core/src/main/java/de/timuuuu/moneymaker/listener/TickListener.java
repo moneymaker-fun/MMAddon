@@ -2,16 +2,16 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
-import de.timuuuu.moneymaker.event.SwordTickEvent.TextVersions;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.List;
+import java.util.Objects;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
-import java.util.List;
-import java.util.Objects;
 
 public class TickListener {
 
@@ -33,7 +33,7 @@ public class TickListener {
       generalTickCount = 0;
 
       float playerY = Objects.requireNonNull(this.addon.labyAPI().minecraft().getClientPlayer()).position().getY();
-      FarmingCave currentCave = this.addon.addonUtil().miningCave();
+      FarmingCave currentCave = this.addon.addonUtil().farmingCave();
 
       // Gold Ebene
       if(playerY > FarmingCave.GOLD.minY()) {
@@ -81,7 +81,7 @@ public class TickListener {
       §7Getötete Mobs: §e103 [Getötete Mobs: 103]
       */
 
-      if(event.getTextVersion() == TextVersions.RAW) {
+      if(event.textVersion() == TextVersion.RAW) {
 
         rankingLine = ChatUtil.stripColor(rankingLine);
         mobsLine = ChatUtil.stripColor(mobsLine);

@@ -1,10 +1,10 @@
 package de.timuuuu.moneymaker.v1_19_2.mixins;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import java.util.ArrayList;
 import java.util.List;
-import de.timuuuu.moneymaker.event.SwordTickEvent.TextVersions;
 import net.labymod.api.Laby;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +36,7 @@ public class SwordTickMixin {
         for(int i = 0; i != listTag.size(); i++) {
           loreList.add(listTag.getString(i));
         }
-        Laby.fireEvent(new SwordTickEvent(name, loreList, TextVersions.JSON));
+        Laby.fireEvent(new SwordTickEvent(name, loreList, TextVersion.JSON));
       }
     }
   }

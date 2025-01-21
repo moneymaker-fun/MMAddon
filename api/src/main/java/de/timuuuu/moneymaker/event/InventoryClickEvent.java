@@ -1,6 +1,8 @@
 package de.timuuuu.moneymaker.event;
 
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import net.labymod.api.event.Event;
+import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class InventoryClickEvent implements Event {
@@ -9,15 +11,14 @@ public class InventoryClickEvent implements Event {
   private int slot;
   private String itemName;
   private List<String> itemLore;
-  private String gameVersion;
+  private TextVersion textVersion;
 
-  public InventoryClickEvent(String inventoryName, int slot, String itemName, List<String> itemLore,
-      String gameVersion) {
+  public InventoryClickEvent(String inventoryName, int slot, String itemName, List<String> itemLore, @NotNull TextVersion textVersion) {
     this.inventoryName = inventoryName;
     this.slot = slot;
     this.itemName = itemName;
     this.itemLore = itemLore;
-    this.gameVersion = gameVersion;
+    this.textVersion = textVersion;
   }
 
   public String getInventoryName() {
@@ -36,7 +37,8 @@ public class InventoryClickEvent implements Event {
     return itemLore;
   }
 
-  public String getGameVersion() {
-    return gameVersion;
+  public TextVersion textVersion() {
+    return textVersion;
   }
+
 }

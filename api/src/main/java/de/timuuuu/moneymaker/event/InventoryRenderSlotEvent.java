@@ -1,6 +1,8 @@
 package de.timuuuu.moneymaker.event;
 
+import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import net.labymod.api.event.Event;
+import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class InventoryRenderSlotEvent implements Event {
@@ -9,15 +11,14 @@ public class InventoryRenderSlotEvent implements Event {
   private int slot;
   private String displayName;
   private List<String> loreList;
-  private String gameVersion;
+  private TextVersion textVersion;
 
-  public InventoryRenderSlotEvent(String inventoryName, int slot, String displayName, List<String> loreList,
-      String gameVersion) {
+  public InventoryRenderSlotEvent(String inventoryName, int slot, String displayName, List<String> loreList, @NotNull TextVersion textVersion) {
     this.inventoryName = inventoryName;
     this.slot = slot;
     this.displayName = displayName;
     this.loreList = loreList;
-    this.gameVersion = gameVersion;
+    this.textVersion = textVersion;
   }
 
   public String getInventoryName() {
@@ -36,8 +37,8 @@ public class InventoryRenderSlotEvent implements Event {
     return loreList;
   }
 
-  public String getGameVersion() {
-    return gameVersion;
+  public TextVersion textVersion() {
+    return textVersion;
   }
 
 }
