@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -223,7 +223,7 @@ public class ChatClient {
     return "Other";
   }
 
-  public String currentCave(MiningCave cave) {
+  public String currentCave(FarmingCave cave) {
     if(!addon.configuration().chatConfiguration.showCaveLevel().get()) {
       return "Farming";
     }

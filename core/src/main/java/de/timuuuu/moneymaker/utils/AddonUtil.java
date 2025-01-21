@@ -49,7 +49,7 @@ public class AddonUtil {
 
   private boolean inMine = false;
   private boolean inFarming = false;
-  private MiningCave miningCave = MiningCave.UNKNOWN;
+  private FarmingCave miningCave = FarmingCave.UNKNOWN;
 
   public void resetValues(boolean changePlaying) {
     if(changePlaying) {
@@ -119,11 +119,11 @@ public class AddonUtil {
     this.rank = rank;
   }
 
-  public MiningCave miningCave() {
+  public FarmingCave miningCave() {
     return miningCave;
   }
 
-  public void miningCave(MiningCave miningCave) {
+  public void miningCave(FarmingCave miningCave) {
     this.miningCave = miningCave;
   }
 
@@ -315,9 +315,9 @@ public class AddonUtil {
     this.debrisNotifySent = debrisNotifySent;
   }
 
-  public MiningCave caveByName(String internalName) {
-    MiningCave cave = MiningCave.UNKNOWN;
-    for(MiningCave miningCaves : MiningCave.values()) {
+  public FarmingCave caveByName(String internalName) {
+    FarmingCave cave = FarmingCave.UNKNOWN;
+    for(FarmingCave miningCaves : FarmingCave.values()) {
       if(miningCaves.internalName().equals(internalName)) {
         cave = miningCaves;
       }
@@ -325,7 +325,7 @@ public class AddonUtil {
     return cave;
   }
 
-  public enum MiningCave {
+  public enum FarmingCave {
     GOLD("Gold", "moneymaker.farming-level.gold", 198f, 255f),
     COAL("Coal", "moneymaker.farming-level.coal", 160f, 198f),
     IRON("Iron", "moneymaker.farming-level.iron", 0f, 160f),
@@ -336,7 +336,7 @@ public class AddonUtil {
     private float minY;
     private float maxY;
 
-    MiningCave(String internalName, String translation, float minY, float maxY) {
+    FarmingCave(String internalName, String translation, float minY, float maxY) {
       this.internalName = internalName;
       this.translation = translation;
       this.minY = minY;

@@ -10,7 +10,7 @@ import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.events.ProfileSwitchEvent;
 import de.timuuuu.moneymaker.settings.MoneyChatConfiguration.NotificationType;
 import de.timuuuu.moneymaker.utils.AddonUtil;
-import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -123,7 +123,7 @@ public class MoneyAddonListener {
   }
 
   private long lastLevelUpdate = System.currentTimeMillis();
-  private MiningCave lastCave = MiningCave.UNKNOWN;
+  private FarmingCave lastCave = FarmingCave.UNKNOWN;
 
   @Subscribe
   public void onCaveLevelChange(CaveLevelChangeEvent event) {

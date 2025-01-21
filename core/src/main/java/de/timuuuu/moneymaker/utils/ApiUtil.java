@@ -19,7 +19,7 @@ import de.timuuuu.moneymaker.event.hudwidget.FruitsHudWidget;
 import de.timuuuu.moneymaker.event.hudwidget.HalloweenEventWidget;
 import de.timuuuu.moneymaker.event.hudwidget.ValentineEventWidget;
 import de.timuuuu.moneymaker.settings.AddonSettings;
-import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.util.io.web.request.Request;
@@ -256,8 +256,8 @@ public class ApiUtil {
               if(jsonElement.isJsonObject()) {
                 JsonObject levelObject = jsonElement.getAsJsonObject();
                 if (levelObject.has("name") && levelObject.has("min") && levelObject.has("max")) {
-                  MiningCave cave = this.addon.addonUtil().caveByName(levelObject.get("name").getAsString());
-                  if(cave != MiningCave.UNKNOWN) {
+                  FarmingCave cave = this.addon.addonUtil().caveByName(levelObject.get("name").getAsString());
+                  if(cave != FarmingCave.UNKNOWN) {
                     cave.minY(levelObject.get("min").getAsFloat());
                     cave.maxY(levelObject.get("max").getAsFloat());
                   }

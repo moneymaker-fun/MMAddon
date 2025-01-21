@@ -5,7 +5,7 @@ import de.timuuuu.moneymaker.chat.ChatUtil;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import de.timuuuu.moneymaker.event.SwordTickEvent.TextVersions;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
-import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
@@ -33,30 +33,30 @@ public class TickListener {
       generalTickCount = 0;
 
       float playerY = Objects.requireNonNull(this.addon.labyAPI().minecraft().getClientPlayer()).position().getY();
-      MiningCave currentCave = this.addon.addonUtil().miningCave();
+      FarmingCave currentCave = this.addon.addonUtil().miningCave();
 
       // Gold Ebene
-      if(playerY > MiningCave.GOLD.minY()) {
-        if(currentCave != MiningCave.GOLD) {
-          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.GOLD));
+      if(playerY > FarmingCave.GOLD.minY()) {
+        if(currentCave != FarmingCave.GOLD) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, FarmingCave.GOLD));
         }
 
       // Kohle Ebene
-      } else if (playerY <= MiningCave.COAL.maxY() && playerY > MiningCave.COAL.minY()) {
-        if(currentCave != MiningCave.COAL) {
-          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.COAL));
+      } else if (playerY <= FarmingCave.COAL.maxY() && playerY > FarmingCave.COAL.minY()) {
+        if(currentCave != FarmingCave.COAL) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, FarmingCave.COAL));
         }
 
       // Eisen Ebene
-      } else if(playerY <= MiningCave.IRON.maxY()) {
-        if(currentCave != MiningCave.IRON) {
-          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.IRON));
+      } else if(playerY <= FarmingCave.IRON.maxY()) {
+        if(currentCave != FarmingCave.IRON) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, FarmingCave.IRON));
         }
 
       // Unknown
       } else {
-        if(currentCave != MiningCave.UNKNOWN) {
-          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, MiningCave.UNKNOWN));
+        if(currentCave != FarmingCave.UNKNOWN) {
+          Laby.fireEvent(new CaveLevelChangeEvent(currentCave, FarmingCave.UNKNOWN));
         }
       }
 

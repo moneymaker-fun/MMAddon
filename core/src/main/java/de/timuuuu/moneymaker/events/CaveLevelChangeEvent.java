@@ -1,23 +1,23 @@
 package de.timuuuu.moneymaker.events;
 
-import de.timuuuu.moneymaker.utils.AddonUtil.MiningCave;
+import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import net.labymod.api.event.Event;
 
 public class CaveLevelChangeEvent implements Event {
 
-  private MiningCave previousCave;
-  private MiningCave newCave;
+  private FarmingCave previousCave;
+  private FarmingCave newCave;
 
-  public CaveLevelChangeEvent(MiningCave previousCave, MiningCave newCave) {
+  public CaveLevelChangeEvent(FarmingCave previousCave, FarmingCave newCave) {
     this.previousCave = previousCave;
     this.newCave = newCave;
   }
 
-  public MiningCave previousCave() {
+  public FarmingCave previousCave() {
     return previousCave;
   }
 
-  public MiningCave newCave() {
+  public FarmingCave newCave() {
     return newCave;
   }
 }
