@@ -56,9 +56,8 @@ public class ChatClient {
 
       new Thread(() -> {
         try {
-          BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-
-          if(!socket.isClosed() || socket != null) {
+          if(socket != null && !socket.isClosed()) {
+            BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
             String serverMessage;
             while ((serverMessage = serverIn.readLine()) != null) {
                 JsonObject object = addon.gson().fromJson(serverMessage, JsonObject.class);
