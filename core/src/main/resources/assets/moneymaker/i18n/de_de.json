@@ -86,7 +86,7 @@
     "language-info": {
       "title": "MoneyMaker Addon",
       "line1": "ℹ Das MoneyMaker Addon unterstützt aktuell nur Deutsch und Englisch ℹ",
-      "line2": "Eventuell musst du in der Lobby oder über '/language' die Sprache auf 'Deutsch' or 'Englisch' ändern."
+      "line2": "Eventuell musst du in der Lobby oder über '/language' die Sprache auf 'Deutsch' oder 'Englisch' ändern."
     },
     "chat-rules": {
       "button": "Regeln",
