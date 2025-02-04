@@ -54,7 +54,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
       nameComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.player.userName()));
       entry.addEntry(ComponentWidget.component(nameComponent).addId("userName"));
 
-      if(Util.isAdmin(this.labyAPI.getUniqueId().toString())) {
+      if(Util.isAdmin(this.labyAPI.getUniqueId())) {
         Component addonVersionComponent = Component.text("(", NamedTextColor.DARK_GRAY)
                 .append(Component.text(this.player.addonVersion(), NamedTextColor.YELLOW))
                 .append(Component.text(")", NamedTextColor.DARK_GRAY));

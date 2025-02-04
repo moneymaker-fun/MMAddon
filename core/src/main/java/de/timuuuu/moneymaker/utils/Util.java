@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.FeedbackActivity;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -109,9 +110,9 @@ public class Util {
     }
   }
 
-  public static boolean isAdmin(String uuid) {
-    //                      MisterCore                                            Seelenverwandter
-    return uuid.equals("966b5d5e-2577-4ab7-987a-89bfa59da74a") || uuid.equals("308893af-77af-4706-ac8a-1c4830038108");
+  public static boolean isAdmin(UUID uuid) {
+    if(!AddonUtil.playerStatus.containsKey(uuid)) return false;
+    return AddonUtil.playerStatus.get(uuid).rank() == MoneyRank.ADMIN;
   }
 
   public static boolean isStaff(UUID uuid) {

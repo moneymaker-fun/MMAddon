@@ -72,7 +72,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       cacheInfoWidget.setHoverComponent(Component.translatable("moneymaker.ui.chat.info.cache"));
       header.addEntry(cacheInfoWidget);
     }
-    if(Util.isStaff(uuid) || Util.isAdmin(uuid.toString())) {
+    if(Util.isStaff(uuid)) {
       if(this.chatMessage != null && !this.chatMessage.messageId().equals("UNKNOWN")) {
         header.addEntry(ComponentWidget.text("(ID: " + this.chatMessage.messageId() + ")").addId("message-id"));
       }
@@ -82,10 +82,10 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       if(this.chatMessage != null && !this.chatMessage.deleted()) {
 
         // User is Staff member - add Mute button
-        if(Util.isStaff(uuid) || Util.isAdmin(uuid.toString())) {
+        if(Util.isStaff(uuid)) {
           if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
 
-            if(!(Util.isAdmin(this.chatMessage.uuid().toString()) || Util.isStaff(this.chatMessage.uuid()))) {
+            if(!Util.isStaff(this.chatMessage.uuid())) {
               ButtonWidget muteButton = ButtonWidget.i18n("moneymaker.ui.chat.button.mute").addId("mute-button");
               muteButton.setPressable(() -> {
                 Laby.labyAPI().minecraft().executeNextTick(() -> {
@@ -118,7 +118,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
           // User is normal - add Report button
         } else {
 
-          if(!Util.isAdmin(this.chatMessage.uuid().toString())) {
+          if(!Util.isAdmin(this.chatMessage.uuid())) {
             if(!this.chatMessage.uuid().equals(Laby.labyAPI().getUniqueId())) {
               ButtonWidget reportButton = ButtonWidget.i18n("moneymaker.ui.chat.button.report").addId("report-button");
               reportButton.setPressable(() -> {

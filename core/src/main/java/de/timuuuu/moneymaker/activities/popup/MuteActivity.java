@@ -111,7 +111,7 @@ public class MuteActivity extends SimpleActivity {
 
   private boolean sendForm() {
 
-    if(!(Util.isStaff(this.executorUUID) || Util.isAdmin(this.executorUUID.toString()))) {
+    if(!Util.isStaff(this.executorUUID)) {
       this.addon.pushNotification(
           Component.translatable("moneymaker.mute.form.invalid.title", NamedTextColor.DARK_RED),
           Component.translatable("moneymaker.mute.form.invalid.noStaff", NamedTextColor.RED)
