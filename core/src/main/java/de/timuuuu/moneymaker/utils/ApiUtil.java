@@ -219,10 +219,10 @@ public class ApiUtil {
               if(jsonElement.isJsonObject()) {
                 JsonObject workerObject = jsonElement.getAsJsonObject();
                 if(workerObject.has("x")) {
-                  AddonSettings.workerCoordinates.get("x").add(workerObject.get("x").getAsFloat());
+                  AddonSettings.workerCoordinates.get("x").add(workerObject.get("x").getAsDouble());
                 }
                 if(workerObject.has("z")) {
-                  AddonSettings.workerCoordinates.get("z").add(workerObject.get("z").getAsFloat());
+                  AddonSettings.workerCoordinates.get("z").add(workerObject.get("z").getAsDouble());
                 }
               }
             });
@@ -237,10 +237,10 @@ public class ApiUtil {
               if(jsonElement.isJsonObject()) {
                 JsonObject workerObject = jsonElement.getAsJsonObject();
                 if(workerObject.has("x")) {
-                  AddonSettings.debrisCoordinates.get("x").add(workerObject.get("x").getAsFloat());
+                  AddonSettings.debrisCoordinates.get("x").add(workerObject.get("x").getAsDouble());
                 }
                 if(workerObject.has("z")) {
-                  AddonSettings.debrisCoordinates.get("z").add(workerObject.get("z").getAsFloat());
+                  AddonSettings.debrisCoordinates.get("z").add(workerObject.get("z").getAsDouble());
                 }
               }
             });

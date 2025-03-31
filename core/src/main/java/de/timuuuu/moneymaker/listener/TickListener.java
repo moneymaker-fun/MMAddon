@@ -32,7 +32,7 @@ public class TickListener {
     if(generalTickCount >= this.addon.addonSettings().CHECK_TICK()) {
       generalTickCount = 0;
 
-      float playerY = Objects.requireNonNull(this.addon.labyAPI().minecraft().getClientPlayer()).position().getY();
+      double playerY = Objects.requireNonNull(this.addon.labyAPI().minecraft().getClientPlayer()).position().getY();
       FarmingCave currentCave = this.addon.addonUtil().farmingCave();
 
       // Gold Ebene

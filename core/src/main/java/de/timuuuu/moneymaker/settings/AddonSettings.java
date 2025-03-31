@@ -7,8 +7,8 @@ import java.util.List;
 
 public class AddonSettings {
 
-  public static HashMap<String, List<Float>> workerCoordinates = new HashMap<>();
-  public static HashMap<String, List<Float>> debrisCoordinates = new HashMap<>();
+  public static HashMap<String, List<Double>> workerCoordinates = new HashMap<>();
+  public static HashMap<String, List<Double>> debrisCoordinates = new HashMap<>();
 
   private int CHECK_TICK = 5*20; // 5*20 (5 seconds)
   private int CHECK_RENDER = 20; // every 20 renders
@@ -22,10 +22,10 @@ public class AddonSettings {
     debrisCoordinates.put("x", new ArrayList<>());
     debrisCoordinates.put("z", new ArrayList<>());
     if(fill) {
-      workerCoordinates.get("x").addAll(Arrays.asList(2.5F, 1001.5F));
-      workerCoordinates.get("z").addAll(Arrays.asList(-1.5F, 6.5F));
-      debrisCoordinates.get("x").addAll(Arrays.asList(5.5F, 1004.5F));
-      debrisCoordinates.get("z").addAll(Arrays.asList(-5.5F, 1.5F));
+      workerCoordinates.get("x").addAll(Arrays.asList(2.5D, 1001.5D));
+      workerCoordinates.get("z").addAll(Arrays.asList(-1.5D, 6.5D));
+      debrisCoordinates.get("x").addAll(Arrays.asList(5.5D, 1004.5D));
+      debrisCoordinates.get("z").addAll(Arrays.asList(-5.5D, 1.5D));
     }
   }
 
