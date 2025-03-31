@@ -60,11 +60,8 @@ public class ChatServerListener {
           case CLEAR -> this.addon.chatActivity().clearChat(true);
 
           case DELETE_MESSAGE -> {
-            if(data.has("data") && data.get("data").isJsonObject()) {
-              JsonObject deleteData = data.get("data").getAsJsonObject();
-              if(deleteData.has("messageId")) {
-                this.addon.chatActivity().deleteMessage(deleteData.get("messageId").getAsString());
-              }
+            if(data.has("data") && data.get("data").isJsonPrimitive()) {
+              this.addon.chatActivity().deleteMessage(data.get("data").getAsString());
             }
           }
 
