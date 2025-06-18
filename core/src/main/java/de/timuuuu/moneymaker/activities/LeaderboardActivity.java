@@ -10,7 +10,6 @@ import java.util.List;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
@@ -192,12 +191,7 @@ public class LeaderboardActivity extends SimpleActivity {
     this.document.addChild(Util.feedbackButton());
     this.document.addChild(Util.discordButton());
     this.document.addChild(Util.leaderboardButton());
-  }
-
-  @Override
-  public void render(ScreenContext context) {
-    super.render(context);
-    Util.drawAuthor(this.labyAPI, this.bounds(), context.stack());
+    Util.addCredits(this.addon, this.document);
   }
 
   public List<LeaderboardEntryWidget> entries() {

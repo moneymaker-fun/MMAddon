@@ -9,7 +9,6 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.Links;
@@ -111,7 +110,7 @@ public class StartActivity extends SimpleActivity {
     this.document.addChild(Util.feedbackButton());
     this.document.addChild(Util.discordButton());
     this.document.addChild(Util.leaderboardButton());
-
+    Util.addCredits(this.addon, this.document);
   }
 
   private void submitInput(String input) {
@@ -129,12 +128,6 @@ public class StartActivity extends SimpleActivity {
       this.addon.pushNotification(Component.translatable("moneymaker.notification.break-goal.title", TextColor.color(255, 255, 85)),
           Component.translatable("moneymaker.notification.break-goal.no-number", TextColor.color(255, 85, 85)));
     }
-  }
-
-  @Override
-  public void render(ScreenContext context) {
-    super.render(context);
-    Util.drawAuthor(this.labyAPI, this.bounds(), context.stack());
   }
 
   public void reloadScreen() {

@@ -1,3 +1,21 @@
+.mm-credit-container {
+  bottom: 18;
+  left: 5;
+
+  .credits-addon-version {
+    top: 1;
+    left: 20;
+    font-size: 0.8;
+  }
+
+  .credits-developer {
+    top: 10;
+    left: 20;
+    font-size: 0.8;
+  }
+
+}
+
 .feedback-button {
   top: 0;
   right: 20;

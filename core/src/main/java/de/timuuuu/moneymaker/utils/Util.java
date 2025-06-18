@@ -17,15 +17,12 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.Laby;
-import net.labymod.api.LabyAPI;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.gui.screen.theme.Theme;
-import net.labymod.api.client.gui.screen.widget.attributes.bounds.Bounds;
+import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.activity.Document;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
-import net.labymod.api.client.render.font.RenderableComponent;
-import net.labymod.api.client.render.font.text.TextRenderer;
-import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.models.OperatingSystem;
 
 public class Util {
@@ -56,45 +53,23 @@ public class Util {
     return leaderboardButton;
   }
 
-  public static void drawAuthor(LabyAPI labyAPI, Bounds bounds, Stack stack) {
-    TextRenderer textRenderer = labyAPI.renderPipeline().textRenderer();
-    Theme currentTheme = labyAPI.themeService().currentTheme();
+  public static void addCredits(MoneyMakerAddon addon, Document document) {
+    DivWidget container = new DivWidget().addId("mm-credit-container");
 
-    if(currentTheme.getId().equalsIgnoreCase("fancy")) {
-      textRenderer.text(
-          RenderableComponent.of(
-              Component.text("Addon-Version", NamedTextColor.GRAY)
-                  .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                  .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
-          )
-      ).scale(0.8f).pos(5, bounds.getHeight() -17).render(stack);
+    ComponentWidget addonVersionWidget = ComponentWidget.component(Component.text("Addon-Version", NamedTextColor.GRAY)
+        .append(Component.text(": ", NamedTextColor.DARK_GRAY))
+        .append(Component.text(addon.addonInfo().getVersion(), NamedTextColor.YELLOW))
+    ).addId("credits-addon-version");
+    container.addChild(addonVersionWidget);
 
-      textRenderer.text(
-          RenderableComponent.of(
-              Component.text("Developed by ", NamedTextColor.GRAY)
-                  .append(Component.text("MisterCore", NamedTextColor.YELLOW))
-                  .append(Component.text(" & ", NamedTextColor.GRAY))
-                  .append(Component.text("Seelenverwandter", NamedTextColor.YELLOW))
-          )
-      ).scale(0.8f).pos(5, bounds.getHeight() -7).render(stack);
-    } else {
-      textRenderer.text(
-          RenderableComponent.of(
-              Component.text("Addon-Version", NamedTextColor.GRAY)
-                  .append(Component.text(": ", NamedTextColor.DARK_GRAY))
-                  .append(Component.text(MoneyMakerAddon.instance().addonInfo().getVersion(), NamedTextColor.YELLOW))
-          )
-      ).scale(0.8f).pos(5, bounds.getHeight() -18).render(stack);
+    ComponentWidget developerWidget = ComponentWidget.component(Component.text("Developed by ", NamedTextColor.GRAY)
+        .append(Component.text("MisterCore", NamedTextColor.YELLOW))
+        .append(Component.text(" & ", NamedTextColor.GRAY))
+        .append(Component.text("Seelenverwandter", NamedTextColor.YELLOW))
+    ).addId("credits-developer");
+    container.addChild(developerWidget);
 
-      textRenderer.text(
-          RenderableComponent.of(
-              Component.text("Developed by ", NamedTextColor.GRAY)
-                  .append(Component.text("MisterCore", NamedTextColor.YELLOW))
-                  .append(Component.text(" & ", NamedTextColor.GRAY))
-                  .append(Component.text("Seelenverwandter", NamedTextColor.YELLOW))
-          )
-      ).scale(0.8f).pos(5, bounds.getHeight() -8).render(stack);
-    }
+    document.addChild(container);
   }
 
   public static String format(int toFormate) {
