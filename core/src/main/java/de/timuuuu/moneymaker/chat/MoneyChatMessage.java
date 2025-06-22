@@ -17,8 +17,10 @@ public class MoneyChatMessage {
   private boolean deleted = false;
   private boolean fromServerCache;
   private String timeStamp;
+  private String addonVersion;
+  private String minecraftVersion;
 
-  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank, boolean fromServerCache, String timeStamp) {
+  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank, boolean fromServerCache, String timeStamp, String addonVersion, String minecraftVersion) {
     this.messageId = messageId;
     this.uuid = uuid;
     this.userName = userName;
@@ -27,6 +29,8 @@ public class MoneyChatMessage {
     this.messageType = ChatClientUtil.getMessageType(uuid.toString());
     this.fromServerCache = fromServerCache;
     this.timeStamp = timeStamp;
+    this.addonVersion = addonVersion;
+    this.minecraftVersion = minecraftVersion;
   }
 
   public static MoneyChatMessage fromJson(JsonObject object) {
@@ -38,7 +42,9 @@ public class MoneyChatMessage {
           object.get("message").getAsString(),
           object.has("rank") ? MoneyRank.byName(object.get("rank").getAsString()) : MoneyRank.USER,
               object.has("fromCache") && object.get("fromCache").getAsBoolean(),
-          object.has("timeStamp") ? object.get("timeStamp").getAsString() : null
+          object.has("timeStamp") ? object.get("timeStamp").getAsString() : null,
+          "",
+          ""
           );
     }
     return null;
@@ -95,4 +101,13 @@ public class MoneyChatMessage {
   public void deleted(boolean deleted) {
     this.deleted = deleted;
   }
+
+  public String addonVersion() {
+    return addonVersion;
+  }
+
+  public String minecraftVersion() {
+    return minecraftVersion;
+  }
+
 }

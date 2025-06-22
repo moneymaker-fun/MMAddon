@@ -36,6 +36,7 @@ import de.timuuuu.moneymaker.listener.MoneyAddonListener;
 import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
+import de.timuuuu.moneymaker.moneychat.MoneyChatClient;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.AddonUtil;
@@ -69,6 +70,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       .append(Component.text("» ", NamedTextColor.DARK_GRAY));
 
   private ChatClient chatClient;
+  private MoneyChatClient moneyChatClient;
 
   private MainActivity mainActivity;
   private PriceOverviewActivity priceOverviewActivity;
@@ -110,6 +112,9 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.mainActivity = new MainActivity(this);
 
     this.chatClient = new ChatClient(this);
+
+    this.moneyChatClient = new MoneyChatClient(this, this.labyAPI().minecraft().sessionAccessor(), this.labyAPI().eventBus());
+    this.moneyChatClient.prepareAsync();
 
     this.gson = GsonUtil.DEFAULT_GSON;
 
@@ -226,6 +231,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public ChatActivity chatActivity() {
     return chatActivity;
+  }
+
+  public MoneyChatClient moneyChatClient() {
+    return moneyChatClient;
   }
 
   public ChatClient chatClient() {

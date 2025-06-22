@@ -10,6 +10,7 @@ dependencies {
 
     // An example of how to add an external dependency that is used by the addon.
     // addonMavenDependency("org.jeasy:easy-random:5.0.0")
+    addonMavenDependency("io.netty:netty-all:4.2.0.Final")
 }
 
 labyModAnnotationProcessor {

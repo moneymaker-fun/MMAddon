@@ -13,6 +13,7 @@ pluginManagement {
 
         dependencies {
             classpath("net.labymod.gradle", "common", labyGradlePluginVersion)
+            classpath("io.netty", "netty-all", "4.2.0.Final")
         }
     }
 }

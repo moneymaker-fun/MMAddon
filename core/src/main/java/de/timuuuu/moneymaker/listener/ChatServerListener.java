@@ -47,6 +47,7 @@ public class ChatServerListener {
       }
     }
 
+    // Netty checked
     if(message.has("chatMessage") && message.get("chatMessage").isJsonObject()) {
       MoneyChatMessage chatMessage = MoneyChatMessage.fromJson(message.get("chatMessage").getAsJsonObject());
       Laby.fireEvent(new MoneyChatReceiveEvent(chatMessage));
@@ -57,8 +58,10 @@ public class ChatServerListener {
       if(ChatClient.actionByName(data.get("action").getAsString()) != null) {
         switch (ChatClient.actionByName(data.get("action").getAsString())) {
 
+          // Netty checked
           case CLEAR -> this.addon.chatActivity().clearChat(true);
 
+          // Netty checked
           case DELETE_MESSAGE -> {
             if(data.has("data") && data.get("data").isJsonPrimitive()) {
               this.addon.chatActivity().deleteMessage(data.get("data").getAsString());
