@@ -223,6 +223,10 @@
           "title": "Der Mute wurde gesendet",
           "text": "%s wurde erfolgreich gemutet.\nGrund: %s"
         }
+      },
+      "ui": {
+        "muted": "Du wurdest aus dem Chat ausgeschlossen.",
+        "unmuted": "Dein Chat Mute wurde aufgehoben."
       }
     },
     "report": {

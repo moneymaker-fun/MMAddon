@@ -4,26 +4,21 @@ import de.timuuuu.moneymaker.moneychat.protocol.Packet;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
 
-public class PacketClearChat extends Packet {
+public class PacketUserRankUpdate extends Packet {
 
   private String uuid;
-  private String username;
-
-  public PacketClearChat(String uuid, String username) {
-    this.uuid = uuid;
-    this.username = username;
-  }
+  private String rank;
 
   @Override
   public void read(PacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readString();
-    this.username = packetBuffer.readString();
+    this.rank = packetBuffer.readString();
   }
 
   @Override
   public void write(PacketBuffer packetBuffer) {
-    packetBuffer.writeString(uuid);
-    packetBuffer.writeString(username);
+    packetBuffer.writeString(this.uuid);
+    packetBuffer.writeString(this.rank);
   }
 
   @Override
@@ -35,8 +30,7 @@ public class PacketClearChat extends Packet {
     return uuid;
   }
 
-  public String username() {
-    return username;
+  public String rank() {
+    return rank;
   }
-
 }

@@ -13,6 +13,10 @@ public class PacketMessage extends Packet {
 
   private MoneyChatMessage message;
 
+  public PacketMessage(MoneyChatMessage message) {
+    this.message = message;
+  }
+
   @Override
   public void read(PacketBuffer packetBuffer) {
     String messageId = packetBuffer.readString();

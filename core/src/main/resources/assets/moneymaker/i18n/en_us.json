@@ -223,6 +223,10 @@
           "title": "Mute has been sent",
           "text": "%s has been successfully muted.\nReason: %s"
         }
+      },
+      "ui": {
+        "muted": "You have been muted.",
+        "unmuted": "Your mute has been lifted."
       }
     },
     "report": {

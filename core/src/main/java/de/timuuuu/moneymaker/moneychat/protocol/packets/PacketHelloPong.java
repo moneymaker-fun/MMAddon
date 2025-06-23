@@ -4,26 +4,22 @@ import de.timuuuu.moneymaker.moneychat.protocol.Packet;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
 
-public class PacketClearChat extends Packet {
+public class PacketHelloPong extends Packet {
 
-  private String uuid;
-  private String username;
+  private long timestamp;
 
-  public PacketClearChat(String uuid, String username) {
-    this.uuid = uuid;
-    this.username = username;
+  public PacketHelloPong(long timestamp) {
+    this.timestamp = timestamp;
   }
 
   @Override
   public void read(PacketBuffer packetBuffer) {
-    this.uuid = packetBuffer.readString();
-    this.username = packetBuffer.readString();
+    this.timestamp = packetBuffer.readLong();
   }
 
   @Override
   public void write(PacketBuffer packetBuffer) {
-    packetBuffer.writeString(uuid);
-    packetBuffer.writeString(username);
+    packetBuffer.writeLong(this.timestamp);
   }
 
   @Override
@@ -31,12 +27,8 @@ public class PacketClearChat extends Packet {
     packetHandler.handle(this);
   }
 
-  public String uuid() {
-    return uuid;
-  }
-
-  public String username() {
-    return username;
+  public long getTimestamp() {
+    return timestamp;
   }
 
 }

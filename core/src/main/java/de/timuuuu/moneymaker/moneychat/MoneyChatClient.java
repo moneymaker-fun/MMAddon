@@ -18,7 +18,6 @@ import net.labymod.api.event.EventBus;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkLoginEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
-import net.labymod.api.event.labymod.labyconnect.session.LabyConnectDisconnectEvent;
 import net.labymod.api.util.I18n;
 import net.labymod.api.util.io.LabyExecutors;
 import net.labymod.api.util.time.TimeUtil;
@@ -46,6 +45,8 @@ public class MoneyChatClient {
   private final NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup(0, (new ThreadFactoryBuilder()).withNameFormat("MoneyChatNio#%d").build());
   private final ExecutorService executor = LabyExecutors.newFixedThreadPool(2, "MoneyChatExecutor#%d");
   private final ScheduledExecutorService timeoutExecutor = LabyExecutors.newScheduledThreadPool(1, "MoneyChatTimeoutExecutor#%d");
+
+  private final byte[] verifyToken = new byte[10];
 
   private long timeLastKeepAlive;
   private long timeNextConnect;
@@ -75,7 +76,7 @@ public class MoneyChatClient {
         long durationKeepAlive = TimeUtil.getMillis() - this.timeLastKeepAlive;
         long durationConnect = this.timeNextConnect - TimeUtil.getMillis();
         if (this.state != MoneyChatState.OFFLINE && durationKeepAlive > 25000L) {
-          this.disconnect(Initiator.CLIENT, "Timeout");
+          this.disconnect(Initiator.CLIENT, I18n.translate("moneymaker.notification.chat.no-connection"));
         }
 
         if (this.state == MoneyChatState.OFFLINE && !this.doNotConnect && durationConnect < 0L) {
@@ -133,7 +134,7 @@ public class MoneyChatClient {
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
     if (event.isAnotherAccount()) {
-      this.disconnect(Initiator.USER, I18n.translate("labymod.activity.labyconnect.protocol.disconnect.sessionSwitch", new Object[0]));
+      this.disconnect(Initiator.USER, I18n.translate("labymod.activity.labyconnect.protocol.disconnect.sessionSwitch"));
       if (event.newSession().isPremium()) {
         this.connect();
       }
@@ -229,6 +230,14 @@ public class MoneyChatClient {
 
   public MoneyMakerAddon addon() {
     return addon;
+  }
+
+  public byte[] getVerifyToken() {
+    return verifyToken;
+  }
+
+  public String getLastDisconnectReason() {
+    return lastDisconnectReason;
   }
 
   public enum MoneyChatState {

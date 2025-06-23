@@ -29,6 +29,7 @@ public class ChatServerListener {
   public void onChatServerMessageReceive(ChatServerMessageReceiveEvent event) {
     JsonObject message = event.message();
 
+    // Netty checked
     if(message.has("playerRankChanged") && message.get("playerRankChanged").isJsonObject()) {
       JsonObject rankChange = message.get("playerRankChanged").getAsJsonObject();
       if(rankChange.has("uuid") && rankChange.has("rank")) {
@@ -72,6 +73,7 @@ public class ChatServerListener {
       }
     }
 
+    // Netty checked
     if(message.has("chatMute") && message.get("chatMute").isJsonObject()) {
       JsonObject data = message.get("chatMute").getAsJsonObject();
       if(data.has("uuid")) {
@@ -85,6 +87,7 @@ public class ChatServerListener {
       }
     }
 
+    // Netty checked
     if(message.has("chatUnMute") && message.get("chatUnMute").isJsonObject()) {
       JsonObject data = message.get("chatUnMute").getAsJsonObject();
       if(data.has("uuid") && this.addon.chatClient().muted()) {
@@ -112,6 +115,7 @@ public class ChatServerListener {
       }
     }
 
+    // Netty checked
     if(message.has("playerStatus") && message.get("playerStatus").isJsonObject()) {
       JsonObject data = message.get("playerStatus").getAsJsonObject();
       UUID uuid = UUID.fromString(data.get("uuid").getAsString());
