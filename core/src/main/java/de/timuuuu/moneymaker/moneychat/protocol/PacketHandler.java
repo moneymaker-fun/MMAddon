@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.moneychat.protocol;
 
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketLoginComplete;
@@ -41,6 +42,8 @@ public abstract class PacketHandler extends SimpleChannelInboundHandler<Packet> 
   public abstract void handle(PacketUserUnmute packet);
   public abstract void handle(PacketUserRankUpdate packet);
   public abstract void handle(PacketPlayerStatus  packet);
+
+  public abstract void handle(PacketDisconnect packet);
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

@@ -11,6 +11,7 @@ import de.timuuuu.moneymaker.moneychat.protocol.Packet;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionResponse;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPong;
@@ -189,6 +190,11 @@ public class MoneyChatSession extends PacketHandler {
             packet.rank()
         )
     ));
+  }
+
+  @Override
+  public void handle(PacketDisconnect packet) {
+    this.moneyChatClient.disconnect(Initiator.SERVER, packet.reason());
   }
 
   public void dispose() {

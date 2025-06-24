@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.moneychat.protocol;
 
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionResponse;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPing;
@@ -48,6 +49,8 @@ public class MoneyChatProtocol {
       register(15, PacketUserUnmute.class); // S -> C
       register(16, PacketUserRankUpdate.class); // S -> C
       register(17, PacketAddonStatistics.class); // C -> S
+
+      register(18, PacketDisconnect.class); // C <-> S
     }
 
     private void register(int id, Class<? extends Packet> clazz) {
