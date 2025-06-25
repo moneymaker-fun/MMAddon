@@ -1,9 +1,8 @@
 package de.timuuuu.moneymaker.activities.popup;
 
-import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
 import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketReport;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
@@ -30,7 +29,7 @@ public class ChatReportActivity extends SimpleActivity {
   private UUID reporterUUID;
   private String reporterName;
   private MoneyChatMessage chatMessage;
-  private String uuid;
+  private UUID uuid;
   private String userName;
 
   private ScreenInstance previousScreen;
@@ -43,7 +42,7 @@ public class ChatReportActivity extends SimpleActivity {
     this.reporterUUID = reporterUUID;
     this.reporterName = reporterName;
     this.chatMessage = chatMessage;
-    this.uuid = chatMessage.uuid().toString();
+    this.uuid = chatMessage.uuid();
     this.userName = chatMessage.userName();
     this.previousScreen = previousScreen;
   }
@@ -55,7 +54,7 @@ public class ChatReportActivity extends SimpleActivity {
     FlexibleContentWidget container = new FlexibleContentWidget().addId("container");
     HorizontalListWidget header = new HorizontalListWidget().addId("header");
 
-    IconWidget headWidget = new IconWidget(Icon.head(UUID.fromString(this.uuid))).addId("head");
+    IconWidget headWidget = new IconWidget(Icon.head(this.uuid)).addId("head");
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.report.form.title", this.userName).addId("title");
     header.addEntry(headWidget);
     header.addEntry(titleWidget);
@@ -74,13 +73,12 @@ public class ChatReportActivity extends SimpleActivity {
 
     ButtonWidget sendButton = ButtonWidget.i18n("moneymaker.report.form.send").addId("send-button");
     sendButton.setPressable(() -> {
-      if(sendForm()) {
-        Laby.labyAPI().minecraft().minecraftWindow().displayScreen(this.previousScreen);
-        this.addon.pushNotification(
-            Component.translatable("moneymaker.report.form.success.title", NamedTextColor.DARK_GREEN),
-            Component.translatable("moneymaker.report.form.success.text", NamedTextColor.GREEN, Component.text(this.userName, NamedTextColor.YELLOW))
-        );
-      }
+      this.addon.moneyChatClient().sendPacket(new PacketReport(this.uuid, this.userName, this.reporterUUID, this.reporterName, this.reportReason.getName(), this.chatMessage.message()));
+      Laby.labyAPI().minecraft().minecraftWindow().displayScreen(this.previousScreen);
+      this.addon.pushNotification(
+          Component.translatable("moneymaker.report.form.success.title", NamedTextColor.DARK_GREEN),
+          Component.translatable("moneymaker.report.form.success.text", NamedTextColor.GREEN, Component.text(this.userName, NamedTextColor.YELLOW))
+      );
     });
 
     ButtonWidget closeButton = ButtonWidget.i18n("moneymaker.report.form.abort").addId("close-button");
@@ -109,24 +107,6 @@ public class ChatReportActivity extends SimpleActivity {
     container.addContent(content);
 
     this.document.addChild(container);
-  }
-
-  private boolean sendForm() {
-    JsonObject object = new JsonObject();
-    object.addProperty("uuid", this.uuid);
-    object.addProperty("playerName", this.userName);
-    object.addProperty("reason", this.reportReason.getName());
-    object.addProperty("originalChatMessage", this.chatMessage.message());
-
-    if(!this.addon.chatClient().sendChatAction(this.reporterUUID, this.reporterName, ChatAction.REPORT, object)) {
-      this.addon.pushNotification(
-          Component.translatable("moneymaker.mute.form.invalid.title", NamedTextColor.DARK_RED),
-          Component.translatable("moneymaker.mute.form.invalid.chatError", NamedTextColor.RED)
-      );
-      return false;
-    }
-
-    return true;
   }
 
   public enum ReportReason {

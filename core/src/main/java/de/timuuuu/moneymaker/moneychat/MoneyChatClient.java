@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.moneychat;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyChatProtocol;
 import de.timuuuu.moneymaker.moneychat.protocol.Packet;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPing;
 import de.timuuuu.moneymaker.moneychat.session.MoneySession;
 import io.netty.bootstrap.Bootstrap;
@@ -222,6 +223,10 @@ public class MoneyChatClient {
 
   public NioSocketChannel getChannel() {
     return this.channelHandler == null ? null : this.channelHandler.getChannel();
+  }
+
+  public MoneyChatSession session() {
+    return session;
   }
 
   public MoneyChatProtocol protocol() {

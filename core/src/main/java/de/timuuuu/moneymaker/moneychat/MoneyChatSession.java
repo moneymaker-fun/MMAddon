@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.moneychat;
 
+import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
@@ -27,6 +28,7 @@ import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserUnmute;
 import de.timuuuu.moneymaker.moneychat.util.CryptManager;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
+import de.timuuuu.moneymaker.utils.Util;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
@@ -46,6 +48,9 @@ public class MoneyChatSession extends PacketHandler {
   private boolean premium;
   private boolean connectionEstablished;
   private boolean authenticated;
+
+  private boolean muted;
+  private String muteReason;
 
   public MoneyChatSession(MoneyChatClient moneyChatClient, Session session) {
     this.moneyChatClient = moneyChatClient;
@@ -123,6 +128,10 @@ public class MoneyChatSession extends PacketHandler {
     this.moneyChatClient.updateState(MoneyChatState.PLAY);
     this.authenticated = true;
     this.moneyChatClient.keepAlive();
+
+    this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+        Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+
   }
 
   @Override
@@ -143,8 +152,8 @@ public class MoneyChatSession extends PacketHandler {
   @Override
   public void handle(PacketUserMute packet) {
     if(this.moneyChatClient.addon().labyAPI().getUniqueId().equals(packet.targetUUID())) {
-      this.moneyChatClient.addon().chatClient().muted(true);
-      this.moneyChatClient.addon().chatClient().muteReason(packet.reason());
+      this.muted = true;
+      this.muteReason = packet.reason();
       this.moneyChatClient.addon().chatActivity().addCustomChatMessage(Component.translatable("moneymaker.mute.ui.muted", NamedTextColor.RED));
       this.moneyChatClient.addon().chatActivity().reloadScreen();
     }
@@ -153,8 +162,8 @@ public class MoneyChatSession extends PacketHandler {
   @Override
   public void handle(PacketUserUnmute packet) {
     if(this.moneyChatClient.addon().labyAPI().getUniqueId().equals(packet.targetUUID())) {
-      this.moneyChatClient.addon().chatClient().muted(false);
-      this.moneyChatClient.addon().chatClient().muteReason("");
+      this.muted = false;
+      this.muteReason = "";
       this.moneyChatClient.addon().chatActivity().addCustomChatMessage(Component.translatable("moneymaker.mute.ui.unmuted", NamedTextColor.GREEN));
       this.moneyChatClient.addon().chatActivity().reloadScreen();
     }
@@ -219,4 +228,13 @@ public class MoneyChatSession extends PacketHandler {
   public boolean isConnectionEstablished() {
     return connectionEstablished;
   }
+
+  public boolean muted() {
+    return muted;
+  }
+
+  public String muteReason() {
+    return muteReason;
+  }
+
 }

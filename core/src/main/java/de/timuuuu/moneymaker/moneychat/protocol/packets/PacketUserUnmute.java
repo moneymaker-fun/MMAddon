@@ -12,6 +12,13 @@ public class PacketUserUnmute extends Packet {
   private UUID targetUUID;
   private String targetUsername;
 
+  public PacketUserUnmute(UUID uuid, String username, UUID targetUUID, String targetUsername) {
+    this.uuid = uuid;
+    this.username = username;
+    this.targetUUID = targetUUID;
+    this.targetUsername = targetUsername;
+  }
+
   @Override
   public void read(PacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();

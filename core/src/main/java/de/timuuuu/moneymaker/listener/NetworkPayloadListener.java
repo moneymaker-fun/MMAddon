@@ -4,9 +4,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.LanguageInfoActivity;
+import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import de.timuuuu.moneymaker.boosters.Booster;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
@@ -92,7 +95,11 @@ public class NetworkPayloadListener {
               this.addon.addonUtil().inFarming(gameMode.contains("Farming"));
 
               if(!this.addon.addonUtil().inFarming()) {
-                this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
+                if(this.addon.moneyChatClient().isAuthenticated()) {
+                  this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
+                      Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+                      Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+                }
               }
 
               if(this.addon.addonUtil().inMine()) {

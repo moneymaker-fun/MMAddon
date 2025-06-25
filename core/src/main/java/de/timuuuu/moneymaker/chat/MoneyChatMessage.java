@@ -1,8 +1,8 @@
 package de.timuuuu.moneymaker.chat;
 
 import com.google.gson.JsonObject;
+import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.enums.MoneyRank;
-import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ public class MoneyChatMessage {
   private String userName;
   private String message;
   private MoneyRank rank;
-  private ChatClientUtil.MessageType messageType;
+  private MoneyChatMessageType messageType;
   private boolean deleted = false;
   private boolean fromServerCache;
   private String timeStamp;
@@ -26,7 +26,7 @@ public class MoneyChatMessage {
     this.userName = userName;
     this.message = message;
     this.rank = rank;
-    this.messageType = ChatClientUtil.getMessageType(uuid.toString());
+    this.messageType = MoneyChatMessageType.getMessageType(uuid.toString());
     this.fromServerCache = fromServerCache;
     this.timeStamp = timeStamp;
     this.addonVersion = addonVersion;
@@ -82,7 +82,7 @@ public class MoneyChatMessage {
     return rank;
   }
 
-  public MessageType messageType() {
+  public MoneyChatMessageType messageType() {
     return messageType;
   }
 

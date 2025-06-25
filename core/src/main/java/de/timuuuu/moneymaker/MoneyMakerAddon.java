@@ -12,9 +12,9 @@ import de.timuuuu.moneymaker.badges.MoneyIconTag;
 import de.timuuuu.moneymaker.badges.MoneyTabBadge;
 import de.timuuuu.moneymaker.badges.MoneyTextTag;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
-import de.timuuuu.moneymaker.chat.ChatClient;
 import de.timuuuu.moneymaker.commands.ResetCommand;
 import de.timuuuu.moneymaker.commands.TimerCommand;
+import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisTimerWidget;
@@ -29,7 +29,6 @@ import de.timuuuu.moneymaker.hudwidget.farming.KillCountWidget;
 import de.timuuuu.moneymaker.hudwidget.farming.LatestBoosterDisplayWidget;
 import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
-import de.timuuuu.moneymaker.listener.ChatServerListener;
 import de.timuuuu.moneymaker.listener.EntityRenderListener;
 import de.timuuuu.moneymaker.listener.InventoryListener;
 import de.timuuuu.moneymaker.listener.MoneyAddonListener;
@@ -37,6 +36,7 @@ import de.timuuuu.moneymaker.listener.NetworkPayloadListener;
 import de.timuuuu.moneymaker.listener.ScoreBoardListener;
 import de.timuuuu.moneymaker.listener.TickListener;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.AddonUtil;
@@ -44,6 +44,7 @@ import de.timuuuu.moneymaker.utils.ApiUtil;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
+import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.addon.LabyAddon;
 import net.labymod.api.client.component.Component;
@@ -69,7 +70,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
       .append(Component.text("MoneyMaker ", NamedTextColor.GOLD))
       .append(Component.text("» ", NamedTextColor.DARK_GRAY));
 
-  private ChatClient chatClient;
   private MoneyChatClient moneyChatClient;
 
   private MainActivity mainActivity;
@@ -111,8 +111,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.chatActivity = new ChatActivity(this);
     this.mainActivity = new MainActivity(this);
 
-    this.chatClient = new ChatClient(this);
-
     this.moneyChatClient = new MoneyChatClient(this, this.labyAPI().minecraft().sessionAccessor(), this.labyAPI().eventBus());
     this.moneyChatClient.prepareAsync();
 
@@ -126,7 +124,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener(this));
     this.registerListener(new MoneyAddonListener(this));
-    this.registerListener(new ChatServerListener(this));
     this.registerListener(new ScoreBoardListener(this));
     this.registerListener(this.entityRenderListener = new EntityRenderListener(this));
     this.registerListener(new TickListener(this));
@@ -159,8 +156,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.logger().info("Enabled the Addon");
 
-    this.chatClient.connectStartUp();
-
     this.addonSettings.setFallbackCoordinates(false);
     this.addonSettings.selectUpdateMode(this.configuration().updateMode().get());
     this.apiUtil.loadCoordinates();
@@ -170,8 +165,12 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.configuration().updateMode().addChangeListener((type, oldValue, newValue) -> this.addonSettings.selectUpdateMode(newValue));
 
-    this.configuration().chatConfiguration.showDetailedLocation().addChangeListener((type, oldValue, newValue) ->
-        this.chatClient().util().sendPlayerStatus(this.labyAPI().getUniqueId().toString(), this.labyAPI().getName(), false)
+    this.configuration().chatConfiguration.showDetailedLocation().addChangeListener((type, oldValue, newValue) -> {
+          if(this.moneyChatClient.isAuthenticated()) {
+            this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+                Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+          }
+        }
     );
 
     this.configuration().discordConfiguration.enabled().addChangeListener((type, oldValue, newValue) -> {
@@ -235,10 +234,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public MoneyChatClient moneyChatClient() {
     return moneyChatClient;
-  }
-
-  public ChatClient chatClient() {
-    return chatClient;
   }
 
   public StartActivity startActivity() {

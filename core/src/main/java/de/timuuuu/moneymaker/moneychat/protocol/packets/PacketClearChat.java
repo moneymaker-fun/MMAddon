@@ -3,26 +3,27 @@ package de.timuuuu.moneymaker.moneychat.protocol.packets;
 import de.timuuuu.moneymaker.moneychat.protocol.Packet;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
+import java.util.UUID;
 
 public class PacketClearChat extends Packet {
 
-  private String uuid;
+  private UUID uuid;
   private String username;
 
-  public PacketClearChat(String uuid, String username) {
+  public PacketClearChat(UUID uuid, String username) {
     this.uuid = uuid;
     this.username = username;
   }
 
   @Override
   public void read(PacketBuffer packetBuffer) {
-    this.uuid = packetBuffer.readString();
+    this.uuid = packetBuffer.readUUID();
     this.username = packetBuffer.readString();
   }
 
   @Override
   public void write(PacketBuffer packetBuffer) {
-    packetBuffer.writeString(uuid);
+    packetBuffer.writeUUID(uuid);
     packetBuffer.writeString(username);
   }
 
@@ -31,7 +32,7 @@ public class PacketClearChat extends Packet {
     packetHandler.handle(this);
   }
 
-  public String uuid() {
+  public UUID uuid() {
     return uuid;
   }
 
