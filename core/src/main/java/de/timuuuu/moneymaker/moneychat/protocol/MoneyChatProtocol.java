@@ -3,11 +3,11 @@ package de.timuuuu.moneymaker.moneychat.protocol;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionRequest;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionResponse;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPing;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPong;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketLoginComplete;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketEncryptionRequest;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketEncryptionResponse;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketHelloPing;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketHelloPong;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketLoginComplete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPing;
@@ -36,8 +36,8 @@ public class MoneyChatProtocol {
       register(3, PacketPing.class);
       register(4, PacketPong.class);
 
-      register(5, PacketHandshake.class); // C -> S (idk ob es gebraucht wird)
-      register(6, PacketLogin.class); // C -> S
+      //register(5, PacketHandshake.class); // C -> S (idk ob es gebraucht wird)
+      //register(6, PacketLogin.class); // C -> S
       register(7, PacketEncryptionRequest.class); // S -> C
       register(8, PacketEncryptionResponse.class); // C -> S
       register(9, PacketMessage.class); // S <-> C

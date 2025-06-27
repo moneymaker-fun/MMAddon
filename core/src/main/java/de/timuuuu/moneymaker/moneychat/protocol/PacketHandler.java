@@ -1,11 +1,10 @@
 package de.timuuuu.moneymaker.moneychat.protocol;
 
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketEncryptionRequest;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPong;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketLoginComplete;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketEncryptionRequest;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketHelloPong;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketLoginComplete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPing;

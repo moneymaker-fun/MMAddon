@@ -4,7 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyChatProtocol;
 import de.timuuuu.moneymaker.moneychat.protocol.Packet;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketHelloPing;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketHelloPing;
 import de.timuuuu.moneymaker.moneychat.session.MoneySession;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;

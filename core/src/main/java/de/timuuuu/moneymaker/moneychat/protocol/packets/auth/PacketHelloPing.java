@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.moneychat.protocol.packets;
+package de.timuuuu.moneymaker.moneychat.protocol.packets.auth;
 
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient;
 import de.timuuuu.moneymaker.moneychat.protocol.Packet;
