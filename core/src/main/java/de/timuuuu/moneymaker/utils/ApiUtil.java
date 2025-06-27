@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.PriceOverviewActivity.MineData;
 import de.timuuuu.moneymaker.activities.widgets.LeaderboardEntryWidget;
-import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

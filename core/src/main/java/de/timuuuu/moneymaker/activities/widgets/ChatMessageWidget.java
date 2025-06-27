@@ -3,7 +3,7 @@ package de.timuuuu.moneymaker.activities.widgets;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatReportActivity;
 import de.timuuuu.moneymaker.activities.popup.MuteActivity;
-import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;

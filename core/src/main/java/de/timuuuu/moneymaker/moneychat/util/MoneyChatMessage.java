@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.chat;
+package de.timuuuu.moneymaker.moneychat.util;
 
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.enums.MoneyChatMessageType;

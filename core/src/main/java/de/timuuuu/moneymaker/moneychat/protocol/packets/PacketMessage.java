@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.moneychat.protocol.packets;
 
-import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.moneychat.protocol.Packet;
 import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;

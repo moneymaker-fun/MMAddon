@@ -1,4 +1,4 @@
-package de.timuuuu.moneymaker.chat;
+package de.timuuuu.moneymaker.utils;
 
 import java.util.regex.Pattern;
 
