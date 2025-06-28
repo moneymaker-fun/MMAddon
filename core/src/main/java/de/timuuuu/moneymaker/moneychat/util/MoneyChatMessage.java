@@ -50,14 +50,6 @@ public class MoneyChatMessage {
     return null;
   }
 
-  public JsonObject toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("uuid", this.uuid.toString());
-    object.addProperty("userName", this.userName);
-    object.addProperty("message", this.message);
-    return object;
-  }
-
   public String messageId() {
     return messageId;
   }
