@@ -11,8 +11,8 @@ public class MoneyPacketEncryptionResponse extends MoneyPacket {
 
   private byte[] sharedSecret;
 
-  public MoneyPacketEncryptionResponse(SecretKey key, PublicKey publicKey, byte[] hash) {
-    this.sharedSecret = CryptManager.encryptData(publicKey, key.getEncoded());
+  public MoneyPacketEncryptionResponse(byte[] sharedSecret) {
+    this.sharedSecret = sharedSecret;
   }
 
   @Override
