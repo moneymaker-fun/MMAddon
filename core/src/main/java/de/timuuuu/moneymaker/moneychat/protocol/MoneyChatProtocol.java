@@ -1,18 +1,17 @@
 package de.timuuuu.moneymaker.moneychat.protocol;
 
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionResponse;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketHelloPing;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketHelloPong;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLogin;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLoginComplete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketReport;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserMute;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserRankUpdate;
@@ -30,27 +29,22 @@ public class MoneyChatProtocol {
     // Add Player Status Retrieve Packet
 
     public MoneyChatProtocol() {
-      register(0, MoneyPacketHelloPing.class);
-      register(1, MoneyPacketHelloPong.class);
-      register(2, MoneyPacketLoginComplete.class);
-      register(3, MoneyPacketPing.class);
-      register(4, MoneyPacketPong.class);
-
-      //register(5, PacketHandshake.class); // C -> S (idk ob es gebraucht wird)
-      //register(6, PacketLogin.class); // C -> S
-      register(7, MoneyPacketEncryptionRequest.class); // S -> C
-      register(8, MoneyPacketEncryptionResponse.class); // C -> S
-      register(9, PacketMessage.class); // S <-> C
-      register(10, PacketMessageDelete.class); // S -> C
-      register(11, PacketClearChat.class); // C <-> S
-      register(12, PacketPlayerStatus.class); // C <-> S
-      register(13, PacketReport.class); // C -> S
-      register(14, PacketUserMute.class); // S -> C
-      register(15, PacketUserUnmute.class); // S -> C
-      register(16, PacketUserRankUpdate.class); // S -> C
-      register(17, PacketAddonStatistics.class); // C -> S
-
-      register(18, MoneyPacketDisconnect.class); // C <-> S
+      register(0, MoneyPacketLogin.class); // C -> S
+      register(1, MoneyPacketEncryptionRequest.class); // S -> C
+      register(2, MoneyPacketEncryptionResponse.class); // C -> S
+      register(3, MoneyPacketLoginComplete.class); // S -> C
+      register(4, PacketMessage.class); // S <-> C
+      register(5, PacketMessageDelete.class); // S -> C
+      register(6, PacketClearChat.class); // C <-> S
+      register(7, PacketPlayerStatus.class); // C <-> S
+      register(8, PacketReport.class); // C -> S
+      register(9, PacketUserMute.class); // S -> C
+      register(10, PacketUserUnmute.class); // S -> C
+      register(11, PacketUserRankUpdate.class); // S -> C
+      register(12, PacketAddonStatistics.class); // C -> S
+      register(13, MoneyPacketDisconnect.class); // C <-> S
+      register(14, MoneyPacketPing.class); // S -> C
+      register(15, MoneyPacketPong.class); // C -> S
     }
 
     private void register(int id, Class<? extends MoneyPacket> clazz) {

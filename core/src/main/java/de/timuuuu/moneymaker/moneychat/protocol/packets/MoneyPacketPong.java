@@ -17,6 +17,7 @@ public class MoneyPacketPong extends MoneyPacket {
   }
 
   @Override
-  public void handle(MoneyPacketHandler packetHandler) {}
+  public void handle(MoneyPacketHandler packetHandler) {
 
+  }
 }
