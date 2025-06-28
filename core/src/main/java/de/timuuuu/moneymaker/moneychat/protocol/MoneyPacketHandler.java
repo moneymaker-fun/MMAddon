@@ -1,13 +1,12 @@
 package de.timuuuu.moneymaker.moneychat.protocol;
 
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketHelloPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLoginComplete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserMute;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserRankUpdate;
@@ -26,14 +25,8 @@ public abstract class MoneyPacketHandler extends SimpleChannelInboundHandler<Mon
     packet.handle(this);
   }
 
-  public abstract void handle(MoneyPacketHelloPong packet);
-
   public abstract void handle(MoneyPacketEncryptionRequest packet);
-
-  public abstract void handle(MoneyPacketPing packet);
-
   public abstract void handle(MoneyPacketLoginComplete packet);
-
   public abstract void handle(PacketMessage packet);
   public abstract void handle(PacketClearChat packet);
   public abstract void handle(PacketMessageDelete packet);
@@ -43,6 +36,8 @@ public abstract class MoneyPacketHandler extends SimpleChannelInboundHandler<Mon
   public abstract void handle(PacketPlayerStatus  packet);
 
   public abstract void handle(MoneyPacketDisconnect packet);
+
+  public abstract void handle(MoneyPacketPing packet);
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

@@ -10,18 +10,17 @@ import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncryptingDecoder;
 import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncryptingEncoder;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionResponse;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketHelloPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLoginComplete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserMute;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserRankUpdate;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserUnmute;
@@ -36,7 +35,6 @@ import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.session.MinecraftAuthenticator;
 import net.labymod.api.client.session.Session;
 import javax.crypto.SecretKey;
-import java.math.BigInteger;
 import java.security.PublicKey;
 import java.util.UUID;
 
@@ -66,37 +64,18 @@ public class MoneyChatSession extends MoneyPacketHandler {
     this.moneyChatClient.keepAlive();
   }
 
-  public void handle(MoneyPacketHelloPong packet) {
-    if (this.session.isPremium()) {
-      this.moneyChatClient.sendPacket(new PacketAddonStatistics("add", this.session.getUniqueId(), this.session.getUsername(),
-          this.moneyChatClient.addon().addonInfo().getVersion(), this.moneyChatClient.addon().labyAPI().minecraft().getVersion(), this.moneyChatClient.addon().labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
-      this.moneyChatClient.updateState(MoneyChatState.LOGIN);
-      //this.labyConnect.sendPacket(new PacketLoginData(this.session.getUniqueId(), this.session.getUsername(), ""));
-      //this.labyConnect.sendPacket(new PacketLoginOptions(showServer, status, Calendar.getInstance().getTimeZone()));
-    }
-
-    this.moneyChatClient.keepAlive();
-  }
-
   public void handle(MoneyPacketEncryptionRequest encryptionRequest) {
     try {
       PublicKey publicKey = CryptManager.decodePublicKey(encryptionRequest.getPublicKey());
       SecretKey secretKey = CryptManager.createNewSharedKey();
       String serverId = encryptionRequest.getServerId();
       MinecraftAuthenticator authenticator = this.moneyChatClient.addon().labyAPI().minecraft().authenticator();
-      byte[] bytes = CryptManager.getServerIdHash(serverId, publicKey, secretKey);
-      if (bytes == null) {
-        this.moneyChatClient.disconnect(MoneyChatClient.Initiator.CLIENT, "Failed to hash server id");
-        return;
-      }
 
-      String hash = (new BigInteger(bytes)).toString(16);
+      String hash = CryptManager.getServerIdHash(serverId, publicKey, secretKey);
       NioSocketChannel nio = this.moneyChatClient.getChannel();
       authenticator.joinServer(this.session, hash).exceptionally((throwable) -> false).thenAccept((result) -> {
         if (this.moneyChatClient.getChannel() == nio) {
-          byte[] verifyTokenBuffer = this.moneyChatClient.getVerifyToken();
-          System.arraycopy(encryptionRequest.getVerifyToken(), 0, verifyTokenBuffer, 0, 4);
-          this.moneyChatClient.sendPacket(new MoneyPacketEncryptionResponse(secretKey, publicKey, verifyTokenBuffer), (channel) -> {
+          this.moneyChatClient.sendPacket(new MoneyPacketEncryptionResponse(secretKey.getEncoded()), (channel) -> {
             channel.pipeline().addBefore("decoder", "decrypt", new PacketEncryptingDecoder(CryptManager.createNetCipherInstance(2, secretKey)));
             channel.pipeline().addBefore("encoder", "encrypt", new PacketEncryptingEncoder(CryptManager.createNetCipherInstance(1, secretKey)));
           });
@@ -113,21 +92,15 @@ public class MoneyChatSession extends MoneyPacketHandler {
   public void handle(MoneyPacketPing packet) {
     this.moneyChatClient.sendPacket(new MoneyPacketPong());
     this.moneyChatClient.keepAlive();
-    /*if (this.isAuthenticated()) {
-      for(TokenStorage.Purpose purpose : Purpose.values()) {
-        if (!this.tokenStorage.hasValidToken(purpose, this.self.getUniqueId())) {
-          JsonObject payload = new JsonObject();
-          payload.addProperty("purpose", purpose.name());
-          this.moneyChatClient.sendPacket(new PacketAddonMessage("request_token", payload));
-        }
-      }
-    }*/
   }
 
   public void handle(MoneyPacketLoginComplete packet) {
     this.moneyChatClient.updateState(MoneyChatState.PLAY);
     this.authenticated = true;
     this.moneyChatClient.keepAlive();
+
+    this.moneyChatClient.sendPacket(new PacketAddonStatistics("add", this.session.getUniqueId(), this.session.getUsername(),
+        this.moneyChatClient.addon().addonInfo().getVersion(), this.moneyChatClient.addon().labyAPI().minecraft().getVersion(), this.moneyChatClient.addon().labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
 
     this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
         Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
