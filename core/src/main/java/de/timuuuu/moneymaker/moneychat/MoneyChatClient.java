@@ -4,7 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyChatProtocol;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketHelloPing;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLogin;
 import de.timuuuu.moneymaker.moneychat.session.MoneySession;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
@@ -121,7 +121,7 @@ public class MoneyChatClient {
 
           try {
             this.bootstrap.connect(ADDRESS, PORT).syncUninterruptibly();
-            this.sendPacket(new MoneyPacketHelloPing(TimeUtil.getMillis()));
+            this.sendPacket(new MoneyPacketLogin(this.addon.labyAPI().getName(), this.addon.labyAPI().getUniqueId()));
           } catch (Exception e) {
             e.printStackTrace();
             this.updateState(MoneyChatState.OFFLINE);
