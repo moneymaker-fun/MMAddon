@@ -33,7 +33,7 @@ public class MoneyChatClient {
   private MoneyMakerAddon addon;
 
   private final String ADDRESS = "chat.moneymakeraddon.de";
-  private final int PORT = 12345;
+  private final int PORT = 62894;
   public static final int PROTOCOL_VERSION = 29;
 
   private SessionAccessor sessionAccessor;
