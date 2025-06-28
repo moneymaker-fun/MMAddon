@@ -43,8 +43,8 @@ public class MoneyChatMessage {
           object.has("rank") ? MoneyRank.byName(object.get("rank").getAsString()) : MoneyRank.USER,
               object.has("fromCache") && object.get("fromCache").getAsBoolean(),
           object.has("timeStamp") ? object.get("timeStamp").getAsString() : null,
-          "",
-          ""
+          object.has("addonVersion") ? object.get("addonVersion").getAsString() : "N/A",
+          object.has("minecraftVersion") ? object.get("minecraftVersion").getAsString() : "N/A"
           );
     }
     return null;

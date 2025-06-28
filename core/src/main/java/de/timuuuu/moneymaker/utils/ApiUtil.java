@@ -304,6 +304,8 @@ public class ApiUtil {
                   chatMessage.addProperty("rank", object.get("Rang").getAsString());
                   chatMessage.addProperty("fromCache", true);
                   chatMessage.addProperty("timeStamp", object.get("formatted_timestamp").getAsString());
+                  chatMessage.addProperty("addonVersion", object.has("AddonVersion") ? object.get("AddonVersion").getAsString() : "N/A");
+                  chatMessage.addProperty("minecraftVersion", object.has("MinecraftVersion") ? object.get("MinecraftVersion").getAsString() : "N/A");
                   messages.add(MoneyChatMessage.fromJson(chatMessage));
                 }
               }
