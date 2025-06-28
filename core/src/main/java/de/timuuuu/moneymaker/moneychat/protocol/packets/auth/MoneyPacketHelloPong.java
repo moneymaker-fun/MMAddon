@@ -1,24 +1,25 @@
-package de.timuuuu.moneymaker.moneychat.protocol.packets;
+package de.timuuuu.moneymaker.moneychat.protocol.packets.auth;
 
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 
-public class PacketUserRankUpdate extends MoneyPacket {
+public class MoneyPacketHelloPong extends MoneyPacket {
 
-  private String uuid;
-  private String rank;
+  private long timestamp;
+
+  public MoneyPacketHelloPong(long timestamp) {
+    this.timestamp = timestamp;
+  }
 
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
-    this.uuid = packetBuffer.readString();
-    this.rank = packetBuffer.readString();
+    this.timestamp = packetBuffer.readLong();
   }
 
   @Override
   public void write(MoneyPacketBuffer packetBuffer) {
-    packetBuffer.writeString(this.uuid);
-    packetBuffer.writeString(this.rank);
+    packetBuffer.writeLong(this.timestamp);
   }
 
   @Override
@@ -26,11 +27,8 @@ public class PacketUserRankUpdate extends MoneyPacket {
     packetHandler.handle(this);
   }
 
-  public String uuid() {
-    return uuid;
+  public long getTimestamp() {
+    return timestamp;
   }
 
-  public String rank() {
-    return rank;
-  }
 }

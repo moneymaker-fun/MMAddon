@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-public record PacketBuffer(ByteBuf buffer) {
+public record MoneyPacketBuffer(ByteBuf buffer) {
 
     public int readVarIntFromBuffer() {
         int var1 = 0;

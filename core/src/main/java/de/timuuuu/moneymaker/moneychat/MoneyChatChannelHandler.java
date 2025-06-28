@@ -2,7 +2,7 @@ package de.timuuuu.moneymaker.moneychat;
 
 import de.timuuuu.moneymaker.moneychat.pipeline.PacketDecoder;
 import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncoder;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
 public class MoneyChatChannelHandler extends ChannelInitializer<NioSocketChannel> {
 
   private MoneyChatClient moneyChatClient;
-  private final PacketHandler packetHandler;
+  private final MoneyPacketHandler packetHandler;
   private NioSocketChannel channel;
 
-  public MoneyChatChannelHandler(MoneyChatClient moneyChatClient, PacketHandler packetHandler) {
+  public MoneyChatChannelHandler(MoneyChatClient moneyChatClient, MoneyPacketHandler packetHandler) {
     this.moneyChatClient = moneyChatClient;
     this.packetHandler = packetHandler;
   }

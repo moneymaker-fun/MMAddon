@@ -1,8 +1,8 @@
 package de.timuuuu.moneymaker.moneychat.pipeline;
 
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient;
-import de.timuuuu.moneymaker.moneychat.protocol.Packet;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -19,9 +19,9 @@ public class PacketDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
         if (byteBuf.readableBytes() >= 1) {
-            PacketBuffer packetBuffer = new PacketBuffer(byteBuf);
+            MoneyPacketBuffer packetBuffer = new MoneyPacketBuffer(byteBuf);
             int id = packetBuffer.readVarIntFromBuffer();
-            Packet packet = this.moneyChatClient.protocol().getPacket(id);
+            MoneyPacket packet = this.moneyChatClient.protocol().getPacket(id);
 
             packet.read(packetBuffer);
             if (byteBuf.readableBytes() > 0) {

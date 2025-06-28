@@ -2,9 +2,9 @@ package de.timuuuu.moneymaker.moneychat;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyChatProtocol;
-import de.timuuuu.moneymaker.moneychat.protocol.Packet;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketHelloPing;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketHelloPing;
 import de.timuuuu.moneymaker.moneychat.session.MoneySession;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
@@ -121,7 +121,7 @@ public class MoneyChatClient {
 
           try {
             this.bootstrap.connect(ADDRESS, PORT).syncUninterruptibly();
-            this.sendPacket(new PacketHelloPing(TimeUtil.getMillis()));
+            this.sendPacket(new MoneyPacketHelloPing(TimeUtil.getMillis()));
           } catch (Exception e) {
             e.printStackTrace();
             this.updateState(MoneyChatState.OFFLINE);
@@ -165,7 +165,7 @@ public class MoneyChatClient {
 
       //this.fireEventSync(new LabyConnectDisconnectEvent(this, initiator, I18n.translate(reason, new Object[0])));
       this.updateState(MoneyChatState.OFFLINE);
-      this.sendPacket(new PacketDisconnect("Logout"), (channel) -> {
+      this.sendPacket(new MoneyPacketDisconnect("Logout"), (channel) -> {
         if (channel.isOpen()) {
           channel.close();
         }
@@ -176,11 +176,11 @@ public class MoneyChatClient {
 
   }
 
-  public void sendPacket(Packet packet) {
+  public void sendPacket(MoneyPacket packet) {
     this.sendPacket(packet, null);
   }
 
-  public void sendPacket(Packet packet, Consumer<NioSocketChannel> callback) {
+  public void sendPacket(MoneyPacket packet, Consumer<NioSocketChannel> callback) {
     NioSocketChannel channel = this.getChannel();
     if (channel != null && channel.isActive()) {
       if (channel.eventLoop().inEventLoop()) {

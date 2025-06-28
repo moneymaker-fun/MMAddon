@@ -1,13 +1,13 @@
 package de.timuuuu.moneymaker.moneychat.pipeline;
 
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient;
-import de.timuuuu.moneymaker.moneychat.protocol.Packet;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
-public class PacketEncoder extends MessageToByteEncoder<Packet> {
+public class PacketEncoder extends MessageToByteEncoder<MoneyPacket> {
 
     private final MoneyChatClient moneyChatClient;
 
@@ -16,9 +16,9 @@ public class PacketEncoder extends MessageToByteEncoder<Packet> {
     }
 
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Packet packet, ByteBuf byteBuf) {
+    protected void encode(ChannelHandlerContext channelHandlerContext, MoneyPacket packet, ByteBuf byteBuf) {
         int packetId = this.moneyChatClient.protocol().getPacketId(packet);
-        PacketBuffer packetBuffer = new PacketBuffer(byteBuf);
+        MoneyPacketBuffer packetBuffer = new MoneyPacketBuffer(byteBuf);
         packetBuffer.writeVarIntToBuffer(packetId);
         packet.write(packetBuffer);
     }

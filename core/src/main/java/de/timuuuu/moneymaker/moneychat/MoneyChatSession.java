@@ -8,20 +8,20 @@ import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.MoneyChatState;
 import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncryptingDecoder;
 import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncryptingEncoder;
-import de.timuuuu.moneymaker.moneychat.protocol.Packet;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketDisconnect;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketEncryptionRequest;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketEncryptionResponse;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketHelloPong;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.PacketLoginComplete;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionResponse;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketHelloPong;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLoginComplete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPing;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPong;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserMute;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserRankUpdate;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserUnmute;
@@ -40,7 +40,7 @@ import java.math.BigInteger;
 import java.security.PublicKey;
 import java.util.UUID;
 
-public class MoneyChatSession extends PacketHandler {
+public class MoneyChatSession extends MoneyPacketHandler {
 
   private final MoneyChatClient moneyChatClient;
 
@@ -60,13 +60,13 @@ public class MoneyChatSession extends PacketHandler {
     this.authenticated = false;
   }
 
-  protected void handlePacket(Packet packet) {
+  protected void handlePacket(MoneyPacket packet) {
     this.connectionEstablished = true;
     super.handlePacket(packet);
     this.moneyChatClient.keepAlive();
   }
 
-  public void handle(PacketHelloPong packet) {
+  public void handle(MoneyPacketHelloPong packet) {
     if (this.session.isPremium()) {
       this.moneyChatClient.sendPacket(new PacketAddonStatistics("add", this.session.getUniqueId(), this.session.getUsername(),
           this.moneyChatClient.addon().addonInfo().getVersion(), this.moneyChatClient.addon().labyAPI().minecraft().getVersion(), this.moneyChatClient.addon().labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
@@ -78,7 +78,7 @@ public class MoneyChatSession extends PacketHandler {
     this.moneyChatClient.keepAlive();
   }
 
-  public void handle(PacketEncryptionRequest encryptionRequest) {
+  public void handle(MoneyPacketEncryptionRequest encryptionRequest) {
     try {
       PublicKey publicKey = CryptManager.decodePublicKey(encryptionRequest.getPublicKey());
       SecretKey secretKey = CryptManager.createNewSharedKey();
@@ -96,7 +96,7 @@ public class MoneyChatSession extends PacketHandler {
         if (this.moneyChatClient.getChannel() == nio) {
           byte[] verifyTokenBuffer = this.moneyChatClient.getVerifyToken();
           System.arraycopy(encryptionRequest.getVerifyToken(), 0, verifyTokenBuffer, 0, 4);
-          this.moneyChatClient.sendPacket(new PacketEncryptionResponse(secretKey, publicKey, verifyTokenBuffer), (channel) -> {
+          this.moneyChatClient.sendPacket(new MoneyPacketEncryptionResponse(secretKey, publicKey, verifyTokenBuffer), (channel) -> {
             channel.pipeline().addBefore("decoder", "decrypt", new PacketEncryptingDecoder(CryptManager.createNetCipherInstance(2, secretKey)));
             channel.pipeline().addBefore("encoder", "encrypt", new PacketEncryptingEncoder(CryptManager.createNetCipherInstance(1, secretKey)));
           });
@@ -110,8 +110,8 @@ public class MoneyChatSession extends PacketHandler {
   }
 
   @Override
-  public void handle(PacketPing packet) {
-    this.moneyChatClient.sendPacket(new PacketPong());
+  public void handle(MoneyPacketPing packet) {
+    this.moneyChatClient.sendPacket(new MoneyPacketPong());
     this.moneyChatClient.keepAlive();
     /*if (this.isAuthenticated()) {
       for(TokenStorage.Purpose purpose : Purpose.values()) {
@@ -124,7 +124,7 @@ public class MoneyChatSession extends PacketHandler {
     }*/
   }
 
-  public void handle(PacketLoginComplete packet) {
+  public void handle(MoneyPacketLoginComplete packet) {
     this.moneyChatClient.updateState(MoneyChatState.PLAY);
     this.authenticated = true;
     this.moneyChatClient.keepAlive();
@@ -202,7 +202,7 @@ public class MoneyChatSession extends PacketHandler {
   }
 
   @Override
-  public void handle(PacketDisconnect packet) {
+  public void handle(MoneyPacketDisconnect packet) {
     this.moneyChatClient.disconnect(Initiator.SERVER, packet.reason());
   }
 

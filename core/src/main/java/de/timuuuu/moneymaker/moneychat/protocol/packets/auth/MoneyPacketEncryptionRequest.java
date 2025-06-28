@@ -1,37 +1,37 @@
 package de.timuuuu.moneymaker.moneychat.protocol.packets.auth;
 
-import de.timuuuu.moneymaker.moneychat.protocol.Packet;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 
-public class PacketEncryptionRequest extends Packet {
+public class MoneyPacketEncryptionRequest extends MoneyPacket {
 
   private String serverId;
   private byte[] publicKey;
   private byte[] verifyToken;
 
-  public PacketEncryptionRequest(String serverId, byte[] publicKey, byte[] verifyToken) {
+  public MoneyPacketEncryptionRequest(String serverId, byte[] publicKey, byte[] verifyToken) {
     this.serverId = serverId;
     this.publicKey = publicKey;
     this.verifyToken = verifyToken;
   }
 
   @Override
-  public void read(PacketBuffer packetBuffer) {
+  public void read(MoneyPacketBuffer packetBuffer) {
     this.serverId = packetBuffer.readString();
     this.publicKey = packetBuffer.readByteArray();
     this.verifyToken = packetBuffer.readByteArray();
   }
 
   @Override
-  public void write(PacketBuffer packetBuffer) {
+  public void write(MoneyPacketBuffer packetBuffer) {
     packetBuffer.writeString(this.serverId);
     packetBuffer.writeByteArray(this.publicKey);
     packetBuffer.writeByteArray(this.verifyToken);
   }
 
   @Override
-  public void handle(PacketHandler packetHandler) {
+  public void handle(MoneyPacketHandler packetHandler) {
     packetHandler.handle(this);
   }
 

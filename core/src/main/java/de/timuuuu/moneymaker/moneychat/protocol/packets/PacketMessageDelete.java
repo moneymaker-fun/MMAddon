@@ -1,11 +1,11 @@
 package de.timuuuu.moneymaker.moneychat.protocol.packets;
 
-import de.timuuuu.moneymaker.moneychat.protocol.Packet;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketBuffer;
-import de.timuuuu.moneymaker.moneychat.protocol.PacketHandler;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
+import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 import java.util.UUID;
 
-public class PacketMessageDelete extends Packet {
+public class PacketMessageDelete extends MoneyPacket {
 
   private UUID uuid;
   private String username;
@@ -18,21 +18,21 @@ public class PacketMessageDelete extends Packet {
   }
 
   @Override
-  public void read(PacketBuffer packetBuffer) {
+  public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();
     this.username = packetBuffer.readString();
     this.messageId = packetBuffer.readString();
   }
 
   @Override
-  public void write(PacketBuffer packetBuffer) {
+  public void write(MoneyPacketBuffer packetBuffer) {
     packetBuffer.writeUUID(this.uuid);
     packetBuffer.writeString(this.username);
     packetBuffer.writeString(this.messageId);
   }
 
   @Override
-  public void handle(PacketHandler packetHandler) {
+  public void handle(MoneyPacketHandler packetHandler) {
     packetHandler.handle(this);
   }
 
