@@ -8,7 +8,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -45,13 +45,13 @@ public class CryptManager {
     }
   }
 
-  public static byte[] getServerIdHash(String input, PublicKey publicKey, SecretKey secretKey) {
-    try {
-      return digestOperation(input.getBytes("ISO_8859_1"), secretKey.getEncoded(), publicKey.getEncoded());
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-      return null;
-    }
+  public static String getServerIdHash(String baseServerId, PublicKey publicKey, SecretKey secretKey) throws Exception {
+    MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+    messageDigest.update(baseServerId.getBytes("ISO_8859_1"));
+    messageDigest.update(secretKey.getEncoded());
+    messageDigest.update(publicKey.getEncoded());
+    byte[] digestData = messageDigest.digest();
+    return new BigInteger(digestData).toString(16);
   }
 
   private static byte[] digestOperation(byte[]... bytes) {
