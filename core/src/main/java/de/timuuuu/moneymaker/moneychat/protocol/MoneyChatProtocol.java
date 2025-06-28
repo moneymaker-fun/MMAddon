@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.moneychat.protocol;
 
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyDummyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
@@ -58,10 +59,15 @@ public class MoneyChatProtocol {
 
     public MoneyPacket getPacket(int id) throws Exception {
         if (!packets.containsKey(id)) {
-            throw new IllegalArgumentException("No packet with id " + id);
+            return new MoneyDummyPacket();
         } else {
             return this.packets.get(id).getConstructor().newInstance();
         }
+        /*if (!packets.containsKey(id)) {
+            throw new IllegalArgumentException("No packet with id " + id);
+        } else {
+            return this.packets.get(id).getConstructor().newInstance();
+        }*/
     }
 
     public int getPacketId(MoneyPacket packet) {
