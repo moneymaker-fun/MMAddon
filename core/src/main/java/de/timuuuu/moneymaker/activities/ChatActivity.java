@@ -104,13 +104,6 @@ public class ChatActivity extends SimpleActivity {
           Task.builder(() -> {
             reconnectButton.setEnabled(true);
             this.addon.moneyChatClient().connect();
-            // TODO: Move into Login Completed
-            /*if(this.addon.chatClient().online()) {
-              this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
-
-              this.addon.chatClient().util().sendRetrievePlayerData(this.addon.labyAPI().getUniqueId().toString());
-            }*/
-
           }).delay(5, TimeUnit.SECONDS).build().execute();
       });
       this.document.addChild(reconnectButton);
