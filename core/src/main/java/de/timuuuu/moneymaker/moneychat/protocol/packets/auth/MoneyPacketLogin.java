@@ -15,6 +15,8 @@ public class MoneyPacketLogin extends MoneyPacket {
     this.uuid = uuid;
   }
 
+  public MoneyPacketLogin() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     username = packetBuffer.readString();

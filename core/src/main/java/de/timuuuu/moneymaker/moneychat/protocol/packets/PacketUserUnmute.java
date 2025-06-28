@@ -19,6 +19,8 @@ public class PacketUserUnmute extends MoneyPacket {
     this.targetUsername = targetUsername;
   }
 
+  public PacketUserUnmute() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();

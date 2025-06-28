@@ -12,6 +12,8 @@ public class MoneyPacketDisconnect extends MoneyPacket {
     this.reason = reason;
   }
 
+  public MoneyPacketDisconnect() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.reason = packetBuffer.readString();
@@ -19,7 +21,11 @@ public class MoneyPacketDisconnect extends MoneyPacket {
 
   @Override
   public void write(MoneyPacketBuffer packetBuffer) {
-    packetBuffer.writeString(reason);
+    if(this.reason != null) {
+      packetBuffer.writeString(this.reason);
+    } else {
+      packetBuffer.writeString("Client error");
+    }
   }
 
   @Override

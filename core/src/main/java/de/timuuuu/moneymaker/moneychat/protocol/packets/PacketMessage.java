@@ -17,6 +17,8 @@ public class PacketMessage extends MoneyPacket {
     this.message = message;
   }
 
+  public PacketMessage() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     String messageId = packetBuffer.readString();

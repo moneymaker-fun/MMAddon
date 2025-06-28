@@ -15,6 +15,8 @@ public class MoneyPacketEncryptionRequest extends MoneyPacket {
     this.publicKey = packetBuffer.readByteArray();
   }
 
+  public MoneyPacketEncryptionRequest() {}
+
   @Override
   public void write(MoneyPacketBuffer packetBuffer) {}
 

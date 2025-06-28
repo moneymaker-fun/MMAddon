@@ -9,6 +9,14 @@ public class PacketUserRankUpdate extends MoneyPacket {
   private String uuid;
   private String rank;
 
+  public PacketUserRankUpdate(String uuid, String rank) {
+    this.uuid = uuid;
+    this.rank = rank;
+  }
+
+
+  public PacketUserRankUpdate() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readString();

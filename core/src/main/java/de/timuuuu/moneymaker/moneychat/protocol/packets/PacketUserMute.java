@@ -22,6 +22,8 @@ public class PacketUserMute extends MoneyPacket {
     this.reason = reason;
   }
 
+  public PacketUserMute() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();

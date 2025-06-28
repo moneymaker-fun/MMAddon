@@ -17,6 +17,8 @@ public class PacketMessageDelete extends MoneyPacket {
     this.messageId = messageId;
   }
 
+  public PacketMessageDelete() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();

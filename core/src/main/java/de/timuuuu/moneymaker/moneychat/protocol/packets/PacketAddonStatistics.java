@@ -24,6 +24,8 @@ public class PacketAddonStatistics extends MoneyPacket {
     this.developmentEnvironment = developmentEnvironment;
   }
 
+  public PacketAddonStatistics() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.action = packetBuffer.readString();

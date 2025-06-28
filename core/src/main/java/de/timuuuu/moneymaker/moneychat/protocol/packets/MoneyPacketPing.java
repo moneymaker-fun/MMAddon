@@ -7,14 +7,10 @@ import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 public class MoneyPacketPing extends MoneyPacket {
 
   @Override
-  public void read(MoneyPacketBuffer packetBuffer) {
-
-  }
+  public void read(MoneyPacketBuffer packetBuffer) {}
 
   @Override
-  public void write(MoneyPacketBuffer packetBuffer) {
-
-  }
+  public void write(MoneyPacketBuffer packetBuffer) {}
 
   @Override
   public void handle(MoneyPacketHandler packetHandler) {

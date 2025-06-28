@@ -15,6 +15,8 @@ public class MoneyPacketEncryptionResponse extends MoneyPacket {
     this.sharedSecret = sharedSecret;
   }
 
+  public MoneyPacketEncryptionResponse() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.sharedSecret = packetBuffer.readByteArray();

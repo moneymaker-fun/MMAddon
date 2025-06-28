@@ -27,6 +27,8 @@ public class PacketPlayerStatus extends MoneyPacket {
     this.developmentEnvironment = developmentEnvironment;
   }
 
+  public PacketPlayerStatus() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();

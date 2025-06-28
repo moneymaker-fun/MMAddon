@@ -24,6 +24,8 @@ public class PacketReport extends MoneyPacket {
     this.reportedMessage = reportedMessage;
   }
 
+  public PacketReport() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.targetUUID = packetBuffer.readUUID();

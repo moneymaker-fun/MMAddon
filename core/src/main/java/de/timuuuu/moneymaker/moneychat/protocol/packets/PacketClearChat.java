@@ -15,6 +15,8 @@ public class PacketClearChat extends MoneyPacket {
     this.username = username;
   }
 
+  public PacketClearChat() {}
+
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();
