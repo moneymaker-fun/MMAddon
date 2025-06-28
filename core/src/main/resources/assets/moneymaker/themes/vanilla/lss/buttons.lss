@@ -1,9 +1,9 @@
 .mm-credit-container {
-  bottom: 22;
+  bottom: 20;
   left: 5;
 
   .credits-addon-version {
-    top: 1;
+    top: 3;
     left: 20;
     font-size: 0.8;
   }
