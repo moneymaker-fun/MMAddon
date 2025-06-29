@@ -79,7 +79,7 @@ public class MoneyChatProtocol {
             }
         }
 
-        throw new RuntimeException("Packet not found");
+        throw new RuntimeException("Packet " + packet + " is not registered.");
     }
 
 }
