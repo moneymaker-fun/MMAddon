@@ -3,7 +3,6 @@ package de.timuuuu.moneymaker.moneychat.pipeline;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyDummyPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -27,16 +26,14 @@ public class PacketDecoder extends ByteToMessageDecoder {
             int id = packetBuffer.readVarIntFromBuffer();
             MoneyPacket packet = this.moneyChatClient.protocol().getPacket(id);
 
-            if(!(packet instanceof MoneyDummyPacket)) {
-              LOGGER.debug("[MoneyChatClient] [IN] " + id + " " + packet.getClass().getSimpleName());
+            LOGGER.debug("[MoneyChatClient] [IN] " + id + " " + packet.getClass().getSimpleName());
 
-              packet.read(packetBuffer);
-              if (byteBuf.readableBytes() > 0) {
-                String simpleName = packet.getClass().getSimpleName();
-                throw new RuntimeException("Unknown packet type: " + simpleName);
-              } else {
-                list.add(packet);
-              }
+            packet.read(packetBuffer);
+            if (byteBuf.readableBytes() > 0) {
+              String simpleName = packet.getClass().getSimpleName();
+              throw new RuntimeException("Unknown packet type: " + simpleName);
+            } else {
+              list.add(packet);
             }
 
         }
