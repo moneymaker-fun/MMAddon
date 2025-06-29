@@ -59,9 +59,10 @@ public class MoneyChatProtocol {
 
     public MoneyPacket getPacket(int id) throws Exception {
         if (!packets.containsKey(id)) {
-            return new MoneyDummyPacket();
+          LOGGER.debug("No packet registered for id {}", id);
+          return new MoneyDummyPacket();
         } else {
-            return this.packets.get(id).getConstructor().newInstance();
+          return this.packets.get(id).getConstructor().newInstance();
         }
         /*if (!packets.containsKey(id)) {
             throw new IllegalArgumentException("No packet with id " + id);
