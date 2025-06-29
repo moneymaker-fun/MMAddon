@@ -34,7 +34,6 @@ public class MoneyChatClient {
 
   private final String ADDRESS = "chat.moneymakeraddon.de";
   private final int PORT = 62894;
-  public static final int PROTOCOL_VERSION = 29;
 
   private SessionAccessor sessionAccessor;
   private MoneyChatProtocol protocol = new  MoneyChatProtocol();
