@@ -401,7 +401,7 @@ public class ChatActivity extends SimpleActivity {
         message,
         MoneyRank.USER,
         false,
-        "",
+        "N/A",
         this.addon.addonInfo().getVersion(),
         this.addon.labyAPI().minecraft().getVersion());
     this.addon.moneyChatClient().sendPacket(new PacketMessage(chatMessage));

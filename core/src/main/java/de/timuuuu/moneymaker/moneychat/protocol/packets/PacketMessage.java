@@ -5,8 +5,6 @@ import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 public class PacketMessage extends MoneyPacket {
@@ -26,7 +24,7 @@ public class PacketMessage extends MoneyPacket {
     String username = packetBuffer.readString();
     String message = packetBuffer.readString();
     MoneyRank rank = MoneyRank.byName(packetBuffer.readString());
-    String time = new SimpleDateFormat("dd.MM HH:mm").format(new Date());
+    String time = packetBuffer.readString();
     String addonVersion = packetBuffer.readString();
     String minecraftVersion = packetBuffer.readString();
     if(rank.isStaff()) {

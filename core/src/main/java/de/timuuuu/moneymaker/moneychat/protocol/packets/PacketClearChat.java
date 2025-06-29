@@ -25,8 +25,8 @@ public class PacketClearChat extends MoneyPacket {
 
   @Override
   public void write(MoneyPacketBuffer packetBuffer) {
-    packetBuffer.writeUUID(uuid);
-    packetBuffer.writeString(username);
+    packetBuffer.writeUUID(this.uuid);
+    packetBuffer.writeString(this.username);
   }
 
   @Override

@@ -14,7 +14,6 @@ public class PacketUserRankUpdate extends MoneyPacket {
     this.rank = rank;
   }
 
-
   public PacketUserRankUpdate() {}
 
   @Override

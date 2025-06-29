@@ -33,8 +33,7 @@ public class PacketPlayerStatus extends MoneyPacket {
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();
     this.username = packetBuffer.readString();
-    String rankeName = packetBuffer.readString();
-    this.rank = MoneyRank.byName(rankeName) != null ? MoneyRank.byName(rankeName) : MoneyRank.USER;
+    this.rank = MoneyRank.byName(packetBuffer.readString());
     this.server = packetBuffer.readString();
     this.addonVersion = packetBuffer.readString();
     this.minecraftVersion = packetBuffer.readString();
