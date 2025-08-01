@@ -24,6 +24,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.Constants.Resources;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.screen.Parent;
@@ -102,8 +103,8 @@ public class ChatActivity extends SimpleActivity {
         this.addon.moneyChatClient().disconnect(Initiator.CLIENT, "Reconnect");
         reconnectButton.setEnabled(false);
           Task.builder(() -> {
-            reconnectButton.setEnabled(true);
             this.addon.moneyChatClient().connect();
+            Laby.labyAPI().minecraft().executeOnRenderThread(() -> reconnectButton.setEnabled(true));
           }).delay(5, TimeUnit.SECONDS).build().execute();
       });
       this.document.addChild(reconnectButton);
