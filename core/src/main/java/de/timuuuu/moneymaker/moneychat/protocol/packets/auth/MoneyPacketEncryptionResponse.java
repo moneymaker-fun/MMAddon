@@ -3,9 +3,6 @@ package de.timuuuu.moneymaker.moneychat.protocol.packets.auth;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
-import de.timuuuu.moneymaker.moneychat.util.CryptManager;
-import javax.crypto.SecretKey;
-import java.security.PublicKey;
 
 public class MoneyPacketEncryptionResponse extends MoneyPacket {
 
