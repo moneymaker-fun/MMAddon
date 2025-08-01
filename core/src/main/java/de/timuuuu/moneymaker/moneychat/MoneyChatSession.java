@@ -6,8 +6,6 @@ import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.MoneyChatState;
-import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncryptingDecoder;
-import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncryptingEncoder;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
@@ -75,10 +73,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
       NioSocketChannel nio = this.moneyChatClient.getChannel();
       authenticator.joinServer(this.session, hash).exceptionally((throwable) -> false).thenAccept((result) -> {
         if (this.moneyChatClient.getChannel() == nio) {
-          this.moneyChatClient.sendPacket(new MoneyPacketEncryptionResponse(secretKey.getEncoded()), (channel) -> {
-            channel.pipeline().addBefore("decoder", "decrypt", new PacketEncryptingDecoder(CryptManager.createNetCipherInstance(2, secretKey)));
-            channel.pipeline().addBefore("encoder", "encrypt", new PacketEncryptingEncoder(CryptManager.createNetCipherInstance(1, secretKey)));
-          });
+          this.moneyChatClient.sendPacket(new MoneyPacketEncryptionResponse(secretKey.getEncoded()));
         }
       });
     } catch (Exception e) {
