@@ -26,7 +26,7 @@ public class PacketDecoder extends ByteToMessageDecoder {
             int id = packetBuffer.readVarIntFromBuffer();
             MoneyPacket packet = this.moneyChatClient.protocol().getPacket(id);
 
-            LOGGER.debug("[MoneyChatClient] [IN] " + id + " " + packet.getClass().getSimpleName());
+            LOGGER.info("[MoneyChatClient] [IN] " + id + " " + packet.getClass().getSimpleName());
 
             packet.read(packetBuffer);
             if (byteBuf.readableBytes() > 0) {
