@@ -22,7 +22,9 @@ public class PacketEncoder extends MessageToByteEncoder<MoneyPacket> {
     protected void encode(ChannelHandlerContext channelHandlerContext, MoneyPacket packet, ByteBuf byteBuf) {
       int packetId = this.moneyChatClient.protocol().getPacketId(packet);
 
-      LOGGER.info("[MoneyChatClient] [OUT] " + packetId + " " + packet.getClass().getSimpleName());
+      if(packetId != 14 && packetId != 15) {
+        LOGGER.debug("[MoneyChatClient] [OUT] " + packetId + " " + packet.getClass().getSimpleName());
+      }
 
       MoneyPacketBuffer packetBuffer = new MoneyPacketBuffer(byteBuf);
       packetBuffer.writeVarIntToBuffer(packetId);

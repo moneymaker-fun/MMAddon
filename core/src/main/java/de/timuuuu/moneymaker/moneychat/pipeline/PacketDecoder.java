@@ -7,6 +7,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import net.labymod.api.util.logging.Logging;
+import java.io.IOException;
 import java.util.List;
 
 public class PacketDecoder extends ByteToMessageDecoder {
@@ -26,12 +27,14 @@ public class PacketDecoder extends ByteToMessageDecoder {
             int id = packetBuffer.readVarIntFromBuffer();
             MoneyPacket packet = this.moneyChatClient.protocol().getPacket(id);
 
-            LOGGER.info("[MoneyChatClient] [IN] " + id + " " + packet.getClass().getSimpleName());
+            if(id != 14 && id != 15) {
+              LOGGER.debug("[MoneyChatClient] [IN] " + id + " " + packet.getClass().getSimpleName());
+            }
 
             packet.read(packetBuffer);
             if (byteBuf.readableBytes() > 0) {
               String simpleName = packet.getClass().getSimpleName();
-              throw new RuntimeException("Unknown packet type: " + simpleName);
+              throw new IOException("Packet " + simpleName + " was larger than I expected, found " + byteBuf.readableBytes() + " bytes extra whilst reading packet " + packet);
             } else {
               list.add(packet);
             }
