@@ -190,6 +190,12 @@
           font-size: 0.8;
         }
 
+        .labymod-rank {
+          padding: 0 2 0 2;
+          width: 10;
+          height: 10;
+        }
+
         .timestamp {
           margin: 0 0 2 2;
           alignment-y: bottom;

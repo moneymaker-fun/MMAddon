@@ -10,8 +10,11 @@ import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.UUID;
 import net.labymod.api.Laby;
+import net.labymod.api.Textures.SpriteLabyMod;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
@@ -22,6 +25,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWi
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
+import net.labymod.api.user.group.Group;
 
 public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleContentWidget | Default > HorizontalListWidget
 
@@ -60,6 +64,24 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       Component senderComponent = Component.text(chatMessage.rank().getChatPrefix() + chatMessage.userName());
       senderComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.chatMessage().userName()));
       header.addEntry(ComponentWidget.component(senderComponent).addId("sender"));
+
+      Group labyRank = Laby.references().gameUserService().gameUser(chatMessage.uuid()).visibleGroup();
+      Icon labyIcon;
+      int color = -1;
+      if(!labyRank.isDefault()) {
+        labyIcon = SpriteLabyMod.WHITE_WOLF_HIGH_RES;
+        color = labyRank.getColor().getRGB();
+      } else {
+        labyIcon = SpriteLabyMod.DEFAULT_WOLF_HIGH_RES;
+      }
+      IconWidget labyIconWidget = new IconWidget(labyIcon).addId("labymod-rank");
+      if(color != -1) {
+        labyIconWidget.color().set(color);
+      }
+      labyIconWidget.setHoverComponent(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
+          TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor())));
+      header.addEntry(labyIconWidget);
+
     } else {
       header.addEntry(new IconWidget(this.messageType.icon()).addId("avatar"));
       header.addEntry(ComponentWidget.component(this.messageType.userName()).addId("sender"));
