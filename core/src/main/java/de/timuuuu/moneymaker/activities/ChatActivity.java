@@ -6,6 +6,7 @@ import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
 import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
@@ -36,6 +37,7 @@ import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
@@ -109,12 +111,27 @@ public class ChatActivity extends SimpleActivity {
       this.document.addChild(reconnectButton);
     }
 
+    // Show Chat Reconnect Button
+    SwitchWidget chatReconnectSwitch = SwitchWidget.create(value -> {
+      this.addon.configuration().chatConfiguration.hideOnlineStatus.set(value);
+      this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+          Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), value));
+
+    }).addId("hide-online-switch");
+    chatReconnectSwitch.setValue(this.addon.configuration().chatConfiguration.hideOnlineStatus.get());
+    this.document.addChild(chatReconnectSwitch);
+
+    ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.chat.hide-online-status").addId("hide-online-title");
+    this.document.addChild(chatReconnectTitle);
+
+
     // Online Container
 
     AtomicInteger onlineCount = new AtomicInteger(0);
     AddonUtil.playerStatus.values().forEach(moneyPlayer -> {
       String server = moneyPlayer.server();
-      if(server.startsWith("Mine") || server.startsWith("Farming")) {
+      if((server.startsWith("Mine") || server.startsWith("Farming")) && !moneyPlayer.hideOnlineStatus()) {
         onlineCount.getAndIncrement();
       }
     });
@@ -143,7 +160,8 @@ public class ChatActivity extends SimpleActivity {
       players.forEach(moneyPlayer -> {
         String server = moneyPlayer.server();
         if(server.startsWith("Mine") || server.startsWith("Farming")) {
-          onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, false));
+          boolean hideOnlineStatus = moneyPlayer.hideOnlineStatus() && Util.isAdmin(this.addon.labyAPI().getUniqueId());
+          onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, false, hideOnlineStatus));
         }
       });
 
@@ -151,7 +169,7 @@ public class ChatActivity extends SimpleActivity {
         onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online andere Server", NamedTextColor.GRAY))));
         players.forEach(moneyPlayer -> {
           if(moneyPlayer.server().equalsIgnoreCase("Other")) {
-            onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, true));
+            onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, true, false));
           }
         });
       }

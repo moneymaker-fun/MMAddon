@@ -8,11 +8,13 @@ import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
+import net.labymod.api.client.gui.screen.widget.attributes.BorderRadius;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.util.Color;
 import net.labymod.api.util.I18n;
 
 public class OnlineEntryWidget extends FlexibleContentWidget {
@@ -20,15 +22,17 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
   private MoneyMakerAddon addon;
 
   private boolean otherServers;
+  private boolean hideOnlineStatus;
   private MoneyPlayer player;
 
   private boolean placeholder = false;
   private Component placeholderTitle = Component.text("");
 
-  public OnlineEntryWidget(MoneyMakerAddon addon, MoneyPlayer player, boolean otherServers) {
+  public OnlineEntryWidget(MoneyMakerAddon addon, MoneyPlayer player, boolean otherServers, boolean hideOnlineStatus) {
     this.addon = addon;
     this.player = player;
     this.otherServers = otherServers;
+    this.hideOnlineStatus = hideOnlineStatus;
   }
 
   public OnlineEntryWidget(MoneyMakerAddon addon, Component placeholderTitle) {
@@ -44,6 +48,12 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
     HorizontalListWidget entry = new HorizontalListWidget().addId("head");
     if(this.placeholder) {
       this.addId("placeholder");
+    }
+    if(this.hideOnlineStatus) {
+      backgroundColor().set(Color.ofRGB(15, 17, 21).get());
+      setBorderRadius(new BorderRadius(5, 5, 5, 5));
+      paddingTop().set(3.0f);
+      setHoverComponent(Component.text("User has hidden his Online Status"));
     }
 
     entry.addEntry(new IconWidget(!this.placeholder ? Icon.head(this.player.uuid()) : Icon.texture(

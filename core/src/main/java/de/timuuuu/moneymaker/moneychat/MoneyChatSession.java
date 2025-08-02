@@ -98,7 +98,8 @@ public class MoneyChatSession extends MoneyPacketHandler {
         this.moneyChatClient.addon().addonInfo().getVersion(), this.moneyChatClient.addon().labyAPI().minecraft().getVersion(), this.moneyChatClient.addon().labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
 
     this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
-        Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+        Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+        Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.moneyChatClient.addon().configuration().chatConfiguration.hideOnlineStatus.get()));
 
   }
 
@@ -164,7 +165,8 @@ public class MoneyChatSession extends MoneyPacketHandler {
             packet.server(),
             packet.addonVersion(),
             packet.minecraftVersion(),
-            packet.rank()
+            packet.rank(),
+            packet.hideOnlineStatus()
         )
     ));
   }

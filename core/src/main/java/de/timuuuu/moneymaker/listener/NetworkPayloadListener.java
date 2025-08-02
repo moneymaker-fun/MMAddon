@@ -98,7 +98,8 @@ public class NetworkPayloadListener {
                 if(this.addon.moneyChatClient().isAuthenticated()) {
                   this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
                       Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
-                      Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+                      Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+                      Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
                 }
               }
 

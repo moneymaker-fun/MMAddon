@@ -537,7 +537,8 @@
         "button": {
           "report": "Report",
           "mute": "Mute"
-        }
+        },
+        "hide-online-status": "Hide Online Status"
       },
 
       "secret": {

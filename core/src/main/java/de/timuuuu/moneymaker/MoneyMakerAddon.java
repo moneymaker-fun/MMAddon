@@ -168,7 +168,8 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.configuration().chatConfiguration.showDetailedLocation().addChangeListener((type, oldValue, newValue) -> {
           if(this.moneyChatClient.isAuthenticated()) {
             this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
-                Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+                Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+                Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), configuration().chatConfiguration.hideOnlineStatus.get()));
           }
         }
     );

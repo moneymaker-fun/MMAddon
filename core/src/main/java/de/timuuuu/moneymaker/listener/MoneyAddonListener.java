@@ -73,7 +73,8 @@ public class MoneyAddonListener {
     if(this.addon.moneyChatClient().isAuthenticated()) {
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
           Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
-          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+          Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
     }
 
     this.addon.discordAPI().removeCustom();
@@ -92,10 +93,12 @@ public class MoneyAddonListener {
 
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
           event.previousSession().getUniqueId(), event.previousSession().getUsername(), MoneyRank.USER,
-          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+          Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
           event.newSession().getUniqueId(), event.newSession().getUsername(), MoneyRank.USER,
-          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+          Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
 
 
     }
@@ -140,7 +143,8 @@ public class MoneyAddonListener {
       this.addon.moneyChatClient().sendPacket(new PacketAddonStatistics("remove", Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), "", "", false));
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
           Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
-          "OFFLINE", MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+          "OFFLINE", MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+          Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
     }
     //TODO: Move Leaderboard to Rest API
     //this.addon.chatClient().util().sendLeaderboard(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
@@ -159,7 +163,8 @@ public class MoneyAddonListener {
       if(this.addon.moneyChatClient().isAuthenticated()) {
         this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
             Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
-            Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+            Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+            Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
       }
       if(event.getNewMine() != null) {
         this.addon.sendServerUpdate("MoneyMaker » " + I18n.translate(event.getNewMine().translation()));
@@ -180,7 +185,8 @@ public class MoneyAddonListener {
       if(this.addon.moneyChatClient().isAuthenticated()) {
         this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
             Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
-            Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
+            Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+            Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
       }
       this.addon.sendServerUpdate("MoneyMaker » " + I18n.translate(event.newCave().translation()));
     }
@@ -197,6 +203,10 @@ public class MoneyAddonListener {
 
     if(AddonUtil.playerStatus.containsKey(uuid)) {
       String serverBefore = AddonUtil.playerStatus.get(uuid).server();
+
+      if(AddonUtil.playerStatus.get(uuid).hideOnlineStatus() != player.hideOnlineStatus()) {
+        this.addon.chatActivity().reloadScreen();
+      }
 
       // Online
       if(serverBefore.equalsIgnoreCase("Other") && (player.server().equalsIgnoreCase("Mine") || player.server().startsWith("Farming"))) {

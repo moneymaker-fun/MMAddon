@@ -15,9 +15,10 @@ public class PacketPlayerStatus extends MoneyPacket {
   private String addonVersion;
   private String minecraftVersion;
   private boolean developmentEnvironment;
+  private boolean hideOnlineStatus;
 
   public PacketPlayerStatus(UUID uuid, String username, MoneyRank rank, String server,
-      String addonVersion, String minecraftVersion, boolean developmentEnvironment) {
+      String addonVersion, String minecraftVersion, boolean developmentEnvironment, boolean hideOnlineStatus) {
     this.uuid = uuid;
     this.username = username;
     this.rank = rank;
@@ -25,6 +26,7 @@ public class PacketPlayerStatus extends MoneyPacket {
     this.addonVersion = addonVersion;
     this.minecraftVersion = minecraftVersion;
     this.developmentEnvironment = developmentEnvironment;
+    this.hideOnlineStatus = hideOnlineStatus;
   }
 
   public PacketPlayerStatus() {}
@@ -38,6 +40,7 @@ public class PacketPlayerStatus extends MoneyPacket {
     this.addonVersion = packetBuffer.readString();
     this.minecraftVersion = packetBuffer.readString();
     this.developmentEnvironment = packetBuffer.readBoolean();
+    this.hideOnlineStatus = packetBuffer.readBoolean();
   }
 
   @Override
@@ -49,6 +52,7 @@ public class PacketPlayerStatus extends MoneyPacket {
     packetBuffer.writeString(this.addonVersion);
     packetBuffer.writeString(this.minecraftVersion);
     packetBuffer.writeBoolean(this.developmentEnvironment);
+    packetBuffer.writeBoolean(this.hideOnlineStatus);
   }
 
   @Override
@@ -83,4 +87,9 @@ public class PacketPlayerStatus extends MoneyPacket {
   public boolean developmentEnvironment() {
     return developmentEnvironment;
   }
+
+  public boolean hideOnlineStatus() {
+    return hideOnlineStatus;
+  }
+
 }
