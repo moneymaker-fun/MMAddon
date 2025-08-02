@@ -71,7 +71,6 @@ public class ChatActivity extends SimpleActivity {
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.ui.chat.title").addId("chat-title");
     this.document.addChild(titleWidget);
 
-    //TODO: Change Chat Status like LabyMod (LabyConnectOfflineActivity.class)
     ComponentWidget statusWidget;
     if(this.addon.moneyChatClient().isAuthenticated()) {
       statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server.online", NamedTextColor.GREEN);
