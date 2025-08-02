@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.moneychat;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.moneychat.event.MoneyChatStateUpdateEvent;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyChatProtocol;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
@@ -11,10 +12,12 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import net.labymod.api.Laby;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.client.session.Session.Type;
 import net.labymod.api.client.session.SessionAccessor;
 import net.labymod.api.concurrent.ThreadFactoryBuilder;
+import net.labymod.api.event.Event;
 import net.labymod.api.event.EventBus;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkLoginEvent;
@@ -134,7 +137,7 @@ public class MoneyChatClient {
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
     if (event.isAnotherAccount()) {
-      this.disconnect(Initiator.USER, I18n.translate("labymod.activity.labyconnect.protocol.disconnect.sessionSwitch"));
+      this.disconnect(Initiator.USER, "Session Update");
       if (event.newSession().isPremium()) {
         this.connect();
       }
@@ -204,12 +207,15 @@ public class MoneyChatClient {
     synchronized(this) {
       this.state = state;
     }
-
-    //this.fireEventSync(new LabyConnectStateUpdateEvent(this, this.state));
+    this.fireEventSync(new MoneyChatStateUpdateEvent(this, this.state));
   }
 
   public void keepAlive() {
     this.timeLastKeepAlive = TimeUtil.getMillis();
+  }
+
+  public void fireEventSync(Event event) {
+    Laby.labyAPI().eventBus().fire(event);
   }
 
   public boolean isAuthenticated() {
