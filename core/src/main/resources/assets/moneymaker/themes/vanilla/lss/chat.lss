@@ -227,6 +227,13 @@
           margin: 0 0 2 0;
         }
 
+        .deleted-info {
+          text-color: rgb(150, 150, 150);
+          font-size: 0.525;
+          alignment-y: bottom;
+          margin: 0 0 2 0;
+        }
+
         .mute-button {
           height: 10;
           width: fit-content;
@@ -278,6 +285,10 @@
           padding: 2 3 2 2;
           font-size: 0.8;
           background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .deleted {
+          background-color: rgba(150, 0, 0, 0.2);
         }
 
       }

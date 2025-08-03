@@ -86,8 +86,13 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       header.addEntry(cacheInfoWidget);
     }
     if(Util.isStaff(uuid)) {
-      if(this.chatMessage != null && !this.chatMessage.messageId().equals("UNKNOWN")) {
-        header.addEntry(ComponentWidget.text("(ID: " + this.chatMessage.messageId() + ")").addId("message-id"));
+      if(this.chatMessage != null) {
+        if(!this.chatMessage.messageId().equals("UNKNOWN")) {
+          header.addEntry(ComponentWidget.text("(ID: " + this.chatMessage.messageId() + ")").addId("message-id"));
+        }
+        if(this.chatMessage.deleted()) {
+          header.addEntry(ComponentWidget.text("(Gelöscht)").addId("deleted-info"));
+        }
       }
     }
 
@@ -156,6 +161,9 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     if(chatMessage != null) {
       componentMessageWidget = ComponentWidget.component(PlainTextComponentSerializer.plainUrl()
           .deserialize(chatMessage.message()));
+      if(this.chatMessage.deleted()) {
+        componentMessageWidget.addId("deleted");
+      }
     } else {
       componentMessageWidget = ComponentWidget.component(customMessage);
     }

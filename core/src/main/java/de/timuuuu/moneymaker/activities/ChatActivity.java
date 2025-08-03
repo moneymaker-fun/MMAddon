@@ -101,7 +101,8 @@ public class ChatActivity extends SimpleActivity {
       ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
       reconnectButton.addId("chat-reconnect-button");
       reconnectButton.setPressable(() -> {
-        this.addon.moneyChatClient().disconnect(Initiator.CLIENT, "Reconnect");
+        this.addon.moneyChatClient().disconnect(Initiator.USER, "Reconnect");
+        reloadScreen();
         reconnectButton.setEnabled(false);
           Task.builder(() -> {
             this.addon.moneyChatClient().connect();
@@ -338,7 +339,6 @@ public class ChatActivity extends SimpleActivity {
         );
       } else {
         this.addCustomChatMessage(Component.text("Bitte nutze /unmute <Spieler>", NamedTextColor.RED));
-        return;
       }
     }
   }
@@ -378,8 +378,10 @@ public class ChatActivity extends SimpleActivity {
           if(messageWidget.messageType() != MoneyChatMessageType.PLAYER) {
             remove.add(messageWidget);
           } else {
-            messageWidget.chatMessage().message("§7§o" + I18n.translate("moneymaker.ui.chat.messageDeleted"));
             messageWidget.chatMessage().deleted(true);
+            if(!Util.isAdmin(this.addon.labyAPI().getUniqueId())) {
+              messageWidget.chatMessage().message("§7§o" + I18n.translate("moneymaker.ui.chat.messageDeleted"));
+            }
           }
         }
       }
