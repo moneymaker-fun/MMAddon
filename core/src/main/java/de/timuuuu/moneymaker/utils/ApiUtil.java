@@ -294,14 +294,14 @@ public class ApiUtil {
             if(jsonElement.isJsonObject()) {
               JsonObject object = jsonElement.getAsJsonObject();
               if(object.has("UUID") && object.has("UserName") && object.has("Message")
-                  && object.has("Rang") && object.has("MessageID") && object.has("formatted_timestamp")) {
+                  && object.has("Rank") && object.has("MessageID") && object.has("formatted_timestamp")) {
                 if(!object.get("MessageID").getAsString().isEmpty()) {
                   JsonObject chatMessage = new JsonObject();
                   chatMessage.addProperty("messageId", object.get("MessageID").getAsString());
                   chatMessage.addProperty("uuid", object.get("UUID").getAsString());
                   chatMessage.addProperty("userName", object.get("UserName").getAsString());
                   chatMessage.addProperty("message", object.get("Message").getAsString());
-                  chatMessage.addProperty("rank", object.get("Rang").getAsString());
+                  chatMessage.addProperty("rank", object.get("Rank").getAsString());
                   chatMessage.addProperty("fromCache", true);
                   chatMessage.addProperty("timeStamp", object.get("formatted_timestamp").getAsString());
                   chatMessage.addProperty("addonVersion", object.has("AddonVersion") ? object.get("AddonVersion").getAsString() : "N/A");
