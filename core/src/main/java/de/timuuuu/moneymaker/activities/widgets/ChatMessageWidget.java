@@ -66,22 +66,15 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       header.addEntry(ComponentWidget.component(senderComponent).addId("sender"));
 
       Group labyRank = Laby.references().gameUserService().gameUser(chatMessage.uuid()).visibleGroup();
-      Icon labyIcon;
-      int color = -1;
       if(!labyRank.isDefault()) {
-        labyIcon = SpriteLabyMod.WHITE_WOLF_HIGH_RES;
-        color = labyRank.getColor().getRGB();
-      } else {
-        labyIcon = SpriteLabyMod.DEFAULT_WOLF_HIGH_RES;
+        IconWidget labyIconWidget = new IconWidget(SpriteLabyMod.WHITE_WOLF_HIGH_RES).addId("labymod-rank");
+        labyIconWidget.color().set(labyRank.getColor().getRGB());
+        if(labyRank.getTagName() != null) {
+          labyIconWidget.setHoverComponent(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor())));
+        }
+        header.addEntry(labyIconWidget);
       }
-      IconWidget labyIconWidget = new IconWidget(labyIcon).addId("labymod-rank");
-      if(color != -1) {
-        labyIconWidget.color().set(color);
-      }
-      labyIconWidget.setHoverComponent(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
-          TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor())));
-      header.addEntry(labyIconWidget);
-
     } else {
       header.addEntry(new IconWidget(this.messageType.icon()).addId("avatar"));
       header.addEntry(ComponentWidget.component(this.messageType.userName()).addId("sender"));
