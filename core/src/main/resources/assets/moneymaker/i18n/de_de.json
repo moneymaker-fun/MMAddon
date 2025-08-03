@@ -111,6 +111,7 @@
         "connected": "Erfolgreich zum Chat-Server verbunden.",
         "no-connection": "Keine Verbindung zum Chat-Server möglich.",
         "timed": "Verbindung zum Chat-Server verloren.",
+        "disconnect": "Getrennt: %s",
         "reply": "Antworten",
         "user": {
           "online": "%s spielt nun MoneyMaker.",
@@ -538,7 +539,14 @@
           "report": "Melden",
           "mute": "Muten"
         },
-        "hide-online-status": "Online Status verstecken"
+        "hide-online-status": "Online Status verstecken",
+        "protocol": {
+          "disconnect": {
+            "timeout": "Verbindung zum Server aufgrund von Inaktivität getrennt",
+            "sessionSwitch": "Zu anderer Sitzung gewechselt",
+            "notPremium": "Dieser Account ist kein Minecraft Premium-Account"
+          }
+        }
       },
 
       "secret": {

@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.moneychat.protocol;
 
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketAddonMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
@@ -45,6 +46,7 @@ public class MoneyChatProtocol {
       register(13, MoneyPacketDisconnect.class); // C <-> S
       register(14, MoneyPacketPing.class); // S -> C
       register(15, MoneyPacketPong.class); // C -> S
+      register(20, MoneyPacketAddonMessage.class); // C <-> S
     }
 
     private void register(int id, Class<? extends MoneyPacket> clazz) {

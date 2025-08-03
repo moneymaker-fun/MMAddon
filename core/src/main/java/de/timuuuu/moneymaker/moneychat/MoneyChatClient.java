@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.moneychat;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.moneychat.event.MoneyChatDisconnectEvent;
 import de.timuuuu.moneymaker.moneychat.event.MoneyChatStateUpdateEvent;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyChatProtocol;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
@@ -12,7 +13,6 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import net.labymod.api.Laby;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.client.session.Session.Type;
 import net.labymod.api.client.session.SessionAccessor;
@@ -20,7 +20,7 @@ import net.labymod.api.concurrent.ThreadFactoryBuilder;
 import net.labymod.api.event.Event;
 import net.labymod.api.event.EventBus;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.network.server.NetworkLoginEvent;
+import net.labymod.api.event.client.network.server.ServerJoinEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
 import net.labymod.api.util.I18n;
 import net.labymod.api.util.io.LabyExecutors;
@@ -54,7 +54,6 @@ public class MoneyChatClient {
   private long timeLastKeepAlive;
   private long timeNextConnect;
   private boolean doNotConnect;
-  private int connectTries;
   private long lastConnectTriesReset;
   private String lastDisconnectReason;
 
@@ -62,7 +61,6 @@ public class MoneyChatClient {
     this.addon = addon;
     this.state = MoneyChatState.OFFLINE;
     this.timeNextConnect = TimeUtil.getMillis();
-    this.connectTries = 0;
     this.lastConnectTriesReset = 0L;
     this.sessionAccessor = sessionAccessor;
 
@@ -79,7 +77,8 @@ public class MoneyChatClient {
         long durationKeepAlive = TimeUtil.getMillis() - this.timeLastKeepAlive;
         long durationConnect = this.timeNextConnect - TimeUtil.getMillis();
         if (this.state != MoneyChatState.OFFLINE && durationKeepAlive > 25000L) {
-          this.disconnect(Initiator.CLIENT, I18n.translate("moneymaker.notification.chat.no-connection"));
+          this.disconnect(Initiator.CLIENT, I18n.translate("moneymaker.ui.chat.protocol.disconnect.timeout"));
+          this.addon.chatActivity().reloadScreen();
         }
 
         if (this.state == MoneyChatState.OFFLINE && !this.doNotConnect && durationConnect < 0L) {
@@ -88,7 +87,6 @@ public class MoneyChatClient {
 
         if (this.lastConnectTriesReset + 300000L < TimeUtil.getMillis()) {
           this.lastConnectTriesReset = TimeUtil.getMillis();
-          this.connectTries = 0;
         }
       } catch (Throwable e) {
         e.printStackTrace();
@@ -103,8 +101,7 @@ public class MoneyChatClient {
       synchronized(this) {
         if (this.state == MoneyChatState.OFFLINE) {
           this.keepAlive();
-          this.updateState(MoneyChatState.HELLO);
-          ++this.connectTries;
+          this.updateState(MoneyChatState.LOGIN);
           Session session = this.sessionAccessor.getSession();
           if (session == null) {
             session = new MoneySession("Player", UUID.randomUUID(), null, Type.LEGACY);
@@ -123,6 +120,7 @@ public class MoneyChatClient {
 
           try {
             this.bootstrap.connect(ADDRESS, PORT).syncUninterruptibly();
+            this.addon.chatActivity().reloadScreen();
             this.sendPacket(new MoneyPacketLogin(this.addon.labyAPI().getName(), this.addon.labyAPI().getUniqueId()));
           } catch (Exception e) {
             e.printStackTrace();
@@ -137,7 +135,7 @@ public class MoneyChatClient {
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
     if (event.isAnotherAccount()) {
-      this.disconnect(Initiator.USER, "Session Update");
+      this.disconnect(Initiator.USER, I18n.translate("moneymaker.ui.chat.protocol.disconnect.sessionSwitch"));
       if (event.newSession().isPremium()) {
         this.connect();
       }
@@ -146,7 +144,7 @@ public class MoneyChatClient {
   }
 
   @Subscribe
-  public void onNetworkLogin(NetworkLoginEvent event) {
+  public void onNetworkLogin(ServerJoinEvent event) {
     if (!this.isAuthenticated()) {
       this.timeNextConnect = TimeUtil.getMillis() + 10000L;
     }
@@ -165,13 +163,12 @@ public class MoneyChatClient {
         this.session.dispose();
       }
 
-      //this.fireEventSync(new LabyConnectDisconnectEvent(this, initiator, I18n.translate(reason, new Object[0])));
+      this.fireEventSync(new MoneyChatDisconnectEvent(this, initiator, I18n.translate(reason)));
       this.updateState(MoneyChatState.OFFLINE);
       this.sendPacket(new MoneyPacketDisconnect("Logout"), (channel) -> {
         if (channel.isOpen()) {
           channel.close();
         }
-
       });
       this.session = null;
     }
@@ -215,7 +212,7 @@ public class MoneyChatClient {
   }
 
   public void fireEventSync(Event event) {
-    Laby.labyAPI().eventBus().fire(event);
+    this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().eventBus().fire(event));
   }
 
   public boolean isAuthenticated() {
@@ -251,7 +248,6 @@ public class MoneyChatClient {
   }
 
   public enum MoneyChatState {
-    HELLO(-1),
     LOGIN(0),
     PLAY(1),
     ALL(2),

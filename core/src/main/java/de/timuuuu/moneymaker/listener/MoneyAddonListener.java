@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
+import de.timuuuu.moneymaker.moneychat.event.MoneyChatDisconnectEvent;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.enums.MoneyRank;
@@ -54,12 +55,12 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onDisconnect(ServerDisconnectEvent event) {
-    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
+    /*if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
         event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
       //TODO: Move Leaderboard to Rest API
       //this.addon.chatClient().util().sendLeaderboard(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
-    }
+    }*/
 
     this.addon.addonUtil().resetValues(true);
 
@@ -173,6 +174,16 @@ public class MoneyAddonListener {
             Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
       }
       this.addon.sendServerUpdate("MoneyMaker » " + I18n.translate(event.newCave().translation()));
+    }
+  }
+
+  @Subscribe
+  public void onMoneyChatDisconnect(MoneyChatDisconnectEvent event) {
+    if(event.getInitiator() != Initiator.USER) {
+      this.addon.pushNotification(
+          Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
+          Component.translatable("moneymaker.notification.chat.disconnect", NamedTextColor.GRAY, Component.text(event.getReason()))
+      );
     }
   }
 

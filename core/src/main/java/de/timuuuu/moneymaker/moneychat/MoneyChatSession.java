@@ -8,6 +8,7 @@ import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.MoneyChatState;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketAddonMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
@@ -93,6 +94,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
     this.moneyChatClient.updateState(MoneyChatState.PLAY);
     this.authenticated = true;
     this.moneyChatClient.keepAlive();
+    this.moneyChatClient.addon().chatActivity().reloadScreen();
 
     this.moneyChatClient.sendPacket(new PacketAddonStatistics("add", this.session.getUniqueId(), this.session.getUsername(),
         this.moneyChatClient.addon().addonInfo().getVersion(), this.moneyChatClient.addon().labyAPI().minecraft().getVersion(), this.moneyChatClient.addon().labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
@@ -176,6 +178,13 @@ public class MoneyChatSession extends MoneyPacketHandler {
     this.moneyChatClient.disconnect(Initiator.SERVER, packet.reason());
   }
 
+  @Override
+  public void handle(MoneyPacketAddonMessage packet) {
+    if(packet.getKey().equals("unauthenticated")) {
+      this.resetAuthentication();
+    }
+  }
+
   public void dispose() {
     this.connectionEstablished = false;
   }
@@ -183,7 +192,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
   private void resetAuthentication() {
     this.authenticated = false;
     this.premium = false;
-    this.moneyChatClient.updateState(MoneyChatState.HELLO);
+    this.moneyChatClient.updateState(MoneyChatState.LOGIN);
     //this.labyConnect.fireEventSync(new LabyConnectRejectAuthenticationEvent(this.labyConnect));
   }
 
