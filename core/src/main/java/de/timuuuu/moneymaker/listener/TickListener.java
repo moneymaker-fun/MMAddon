@@ -87,7 +87,7 @@ public class TickListener {
         mobsLine = ChatUtil.stripColor(mobsLine);
 
         if(rankingLine.startsWith("Ranking: ")) {
-          if(!(rankingLine.contains("Lädt...") || rankingLine.contains("Loading...") || rankingLine.isBlank())) {
+          if(!(rankingLine.contains("Lädt") || rankingLine.contains("Loading") || rankingLine.isBlank())) {
             this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
                 .replace(".", "").replace(",", ""), this.getClass()));
           }
