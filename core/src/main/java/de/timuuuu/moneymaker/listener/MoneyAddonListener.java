@@ -48,14 +48,7 @@ public class MoneyAddonListener {
     if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
         event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
-
-      String uuid = this.addon.labyAPI().getUniqueId().toString();
-      //TODO: Migrate?
-      //this.addon.chatClient().util().sendRetrievePlayerData(uuid);
-      //this.addon.chatClient().util().sendCheckMute(uuid);
-
       this.addon.apiUtil().loadChatHistory();
-
     }
   }
 
@@ -103,16 +96,7 @@ public class MoneyAddonListener {
 
     }
 
-    //this.addon.chatClient().util().sendStatistics(true, event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
-    //this.addon.chatClient().util().sendStatistics(false, event.newSession().getUniqueId().toString(), event.newSession().getUsername());
     AddonUtil.playerStatus.remove(event.previousSession().getUniqueId());
-
-    //this.addon.chatClient().util().sendPlayerStatus(event.previousSession().getUniqueId().toString(), event.previousSession().getUsername(), true);
-    //this.addon.chatClient().util().sendPlayerStatus(event.newSession().getUniqueId().toString(), event.newSession().getUsername(), false);
-
-    //TODO: Migrate?
-    //this.addon.chatClient().util().sendCheckMute(event.newSession().getUniqueId().toString());
-    //this.addon.chatClient().util().sendRetrievePlayerData(event.newSession().getUniqueId().toString());
 
     //TODO: Move Leaderboard to Rest API
     //this.addon.chatClient().util().sendLeaderboard(event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
