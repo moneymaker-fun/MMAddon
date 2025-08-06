@@ -146,4 +146,10 @@ public record MoneyPacketBuffer(ByteBuf buffer) {
 
         buf.writeByte(input);
     }
+
+  @Override
+  public ByteBuf buffer() {
+    return this.buffer;
+  }
+
 }

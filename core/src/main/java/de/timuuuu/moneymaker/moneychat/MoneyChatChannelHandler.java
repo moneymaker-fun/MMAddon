@@ -2,6 +2,8 @@ package de.timuuuu.moneymaker.moneychat;
 
 import de.timuuuu.moneymaker.moneychat.pipeline.PacketDecoder;
 import de.timuuuu.moneymaker.moneychat.pipeline.PacketEncoder;
+import de.timuuuu.moneymaker.moneychat.pipeline.PacketSplitter;
+import de.timuuuu.moneymaker.moneychat.pipeline.PacketPrepender;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -23,7 +25,9 @@ public class MoneyChatChannelHandler extends ChannelInitializer<NioSocketChannel
     this.channel = channel;
     channel.pipeline()
         .addLast("timeout", new ReadTimeoutHandler(30L, TimeUnit.SECONDS))
+        .addLast("splitter", new PacketSplitter())
         .addLast("decoder", new PacketDecoder(this.moneyChatClient))
+        .addLast("prepender", new PacketPrepender())
         .addLast("encoder", new PacketEncoder(this.moneyChatClient))
         .addLast(this.packetHandler);
   }
