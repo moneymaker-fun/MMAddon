@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.moneychat.protocol.packets;
 
+import com.google.gson.JsonElement;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
@@ -21,6 +22,15 @@ public class MoneyPacketAddonMessage extends MoneyPacket {
   public MoneyPacketAddonMessage(String key, byte[] data) {
     this.key = key;
     this.data = data;
+  }
+
+  public MoneyPacketAddonMessage(String key, String json) {
+    this.key = key;
+    this.data = this.toBytes(json);
+  }
+
+  public MoneyPacketAddonMessage(String key, JsonElement element) {
+    this(key, element.toString());
   }
 
   public MoneyPacketAddonMessage() {
