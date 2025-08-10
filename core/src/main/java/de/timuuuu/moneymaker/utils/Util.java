@@ -5,8 +5,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.activities.popup.FeedbackActivity;
 import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
+import de.timuuuu.moneymaker.utils.AddonUtil.MineType;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -29,14 +30,35 @@ public class Util {
 
   public static HashMap<String, MoneyTimer> timers = new HashMap<>();
 
+  public static String currentServer() {
+    if(MoneyMakerAddon.instance().addonUtil().inMine()) return currentMine(MoneyMakerAddon.instance().addonUtil().currentMine());
+    if(MoneyMakerAddon.instance().addonUtil().inFarming()) return currentCave(MoneyMakerAddon.instance().addonUtil().farmingCave());
+    return "Other";
+  }
+
+  public static String currentMine(MineType mine) {
+    if(mine == null) return "Mine";
+    if(!MoneyMakerAddon.instance().configuration().chatConfiguration.showDetailedLocation().get()) {
+      return "Mine";
+    }
+    return "Mine - " + mine.internalName();
+  }
+
+  public static String currentCave(FarmingCave cave) {
+    if(!MoneyMakerAddon.instance().configuration().chatConfiguration.showDetailedLocation().get()) {
+      return "Farming";
+    }
+    return "Farming - " + cave.internalName();
+  }
+
   public static ButtonWidget feedbackButton() {
     ButtonWidget feedbackButton = ButtonWidget.component(
         Component.text("Feedback", NamedTextColor.GOLD).append(Component.text(" / ", NamedTextColor.GRAY)).append(Component.text("Bugreport", NamedTextColor.RED)),
         SpriteCommon.BUG
     ).addId("feedback-button");
     feedbackButton.setPressable(() -> {
-      //OperatingSystem.getPlatform().openUrl("https://moneymakeraddon.de/?page=feedback&minecraft-name="+Laby.labyAPI().getName()+"&minecraft-version="+Laby.labyAPI().minecraft().getVersion());
-      Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new FeedbackActivity(MoneyMakerAddon.instance(), Laby.labyAPI().minecraft().minecraftWindow().currentScreen())));
+      OperatingSystem.getPlatform().openUrl("https://moneymakeraddon.de/feedback?mcname=" + Laby.labyAPI().getName() + "&mcversion=" + Laby.labyAPI().minecraft().getVersion());
+      //Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new FeedbackActivity(MoneyMakerAddon.instance(), Laby.labyAPI().minecraft().minecraftWindow().currentScreen())));
     });
     return feedbackButton;
   }

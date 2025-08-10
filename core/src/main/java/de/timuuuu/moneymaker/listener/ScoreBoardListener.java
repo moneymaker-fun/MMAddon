@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.utils.ChatUtil;
 import de.timuuuu.moneymaker.enums.ChatMessages;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import de.timuuuu.moneymaker.utils.Util;

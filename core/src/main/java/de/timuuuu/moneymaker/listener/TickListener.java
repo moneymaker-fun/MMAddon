@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.utils.ChatUtil;
 import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.SwordTickEvent;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
@@ -87,7 +87,7 @@ public class TickListener {
         mobsLine = ChatUtil.stripColor(mobsLine);
 
         if(rankingLine.startsWith("Ranking: ")) {
-          if(!(rankingLine.contains("Lädt...") || rankingLine.contains("Loading...") || rankingLine.isBlank())) {
+          if(!(rankingLine.contains("Lädt") || rankingLine.contains("Loading") || rankingLine.isBlank())) {
             this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
                 .replace(".", "").replace(",", ""), this.getClass()));
           }

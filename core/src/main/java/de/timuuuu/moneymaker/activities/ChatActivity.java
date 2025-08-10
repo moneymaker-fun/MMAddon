@@ -1,14 +1,18 @@
 package de.timuuuu.moneymaker.activities;
 
-import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
+import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.enums.MoneyRank;
-import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
-import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
-import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
+import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserMute;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserUnmute;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import de.timuuuu.moneymaker.utils.Util;
@@ -21,6 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.labymod.api.Constants.Resources;
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.screen.Parent;
@@ -32,6 +37,7 @@ import net.labymod.api.client.gui.screen.widget.action.ListSession;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.DivWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
+import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.ScrollWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
@@ -68,7 +74,7 @@ public class ChatActivity extends SimpleActivity {
     this.document.addChild(titleWidget);
 
     ComponentWidget statusWidget;
-    if(this.addon.chatClient().online()) {
+    if(this.addon.moneyChatClient().isAuthenticated()) {
       statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server.online", NamedTextColor.GREEN);
     } else {
       statusWidget = ComponentWidget.i18n("moneymaker.ui.chat.server.offline", NamedTextColor.RED);
@@ -95,28 +101,38 @@ public class ChatActivity extends SimpleActivity {
       ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
       reconnectButton.addId("chat-reconnect-button");
       reconnectButton.setPressable(() -> {
-        this.addon.chatClient().closeConnection();
+        this.addon.moneyChatClient().disconnect(Initiator.USER, "Reconnect");
+        reloadScreen();
         reconnectButton.setEnabled(false);
           Task.builder(() -> {
-            reconnectButton.setEnabled(true);
-            this.addon.chatClient().connect(true);
-            if(this.addon.chatClient().online()) {
-              this.addon.chatClient().util().sendPlayerStatus(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName(), false);
-
-              this.addon.chatClient().util().sendRetrievePlayerData(this.addon.labyAPI().getUniqueId().toString());
-            }
-
+            this.addon.moneyChatClient().connect();
+            Laby.labyAPI().minecraft().executeOnRenderThread(() -> reconnectButton.setEnabled(true));
           }).delay(5, TimeUnit.SECONDS).build().execute();
       });
       this.document.addChild(reconnectButton);
     }
+
+    // Show Chat Reconnect Button
+    SwitchWidget chatReconnectSwitch = SwitchWidget.create(value -> {
+      this.addon.configuration().chatConfiguration.hideOnlineStatus.set(value);
+      this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+          Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
+          Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), value));
+
+    }).addId("hide-online-switch");
+    chatReconnectSwitch.setValue(this.addon.configuration().chatConfiguration.hideOnlineStatus.get());
+    this.document.addChild(chatReconnectSwitch);
+
+    ComponentWidget chatReconnectTitle = ComponentWidget.i18n("moneymaker.ui.chat.hide-online-status").addId("hide-online-title");
+    this.document.addChild(chatReconnectTitle);
+
 
     // Online Container
 
     AtomicInteger onlineCount = new AtomicInteger(0);
     AddonUtil.playerStatus.values().forEach(moneyPlayer -> {
       String server = moneyPlayer.server();
-      if(server.startsWith("Mine") || server.startsWith("Farming")) {
+      if((server.startsWith("Mine") || server.startsWith("Farming")) && !moneyPlayer.hideOnlineStatus()) {
         onlineCount.getAndIncrement();
       }
     });
@@ -130,7 +146,7 @@ public class ChatActivity extends SimpleActivity {
 
     VerticalListWidget<OnlineEntryWidget> onlineList = new VerticalListWidget<>().addId("online-list");
 
-    if(this.addon.chatClient().online()) {
+    if(this.addon.moneyChatClient().isAuthenticated()) {
       List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
       players.sort(Comparator.comparing(moneyPlayer -> {
         if(moneyPlayer.rank() != null) {
@@ -145,7 +161,8 @@ public class ChatActivity extends SimpleActivity {
       players.forEach(moneyPlayer -> {
         String server = moneyPlayer.server();
         if(server.startsWith("Mine") || server.startsWith("Farming")) {
-          onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, false));
+          boolean hideOnlineStatus = moneyPlayer.hideOnlineStatus() && Util.isAdmin(this.addon.labyAPI().getUniqueId());
+          onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, false, hideOnlineStatus));
         }
       });
 
@@ -153,7 +170,7 @@ public class ChatActivity extends SimpleActivity {
         onlineList.addChild(new OnlineEntryWidget(this.addon, Component.text("→ ", NamedTextColor.DARK_GRAY).append(Component.text("Online andere Server", NamedTextColor.GRAY))));
         players.forEach(moneyPlayer -> {
           if(moneyPlayer.server().equalsIgnoreCase("Other")) {
-            onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, true));
+            onlineList.addChild(new OnlineEntryWidget(this.addon, moneyPlayer, true, false));
           }
         });
       }
@@ -185,10 +202,10 @@ public class ChatActivity extends SimpleActivity {
 
     DivWidget inputContainer = new DivWidget().addId("input-container");
 
-    if(this.addon.chatClient().online()) {
-      if(this.addon.chatClient().muted() & !Util.isStaff(this.labyAPI.getUniqueId())) {
+    if(this.addon.moneyChatClient().isAuthenticated()) {
+      if(this.addon.moneyChatClient().session().muted() & !Util.isStaff(this.labyAPI.getUniqueId())) {
         ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.muted.title").addId("chat-muted-title");
-        ComponentWidget reasonWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.reason").append(Component.text(this.addon.chatClient().muteReason()))).addId("chat-muted-reason");
+        ComponentWidget reasonWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.reason").append(Component.text(this.addon.moneyChatClient().session().muteReason()))).addId("chat-muted-reason");
         inputContainer.addChild(componentWidget);
         inputContainer.addChild(reasonWidget);
       } else {
@@ -237,21 +254,20 @@ public class ChatActivity extends SimpleActivity {
         this.chatInput.setText("");
         return;
       }
-      if(this.sendToServer(message)) {
-        this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
-        this.chatInput.setText("");
-        if(!Util.isAdmin(this.labyAPI.getUniqueId())) {
-          this.chatInput.setEditable(false);
-          this.chatInput.addId("blocked");
-          Task.builder(() -> {
-            this.chatInput.setEditable(true);
-            this.chatInput.removeId("blocked");
-            this.reloadScreen();
-            this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
-          }).delay(3, TimeUnit.SECONDS).build().execute();
-        } else {
+      this.sendToServer(message);
+      this.addon.labyAPI().minecraft().sounds().playSound(Resources.SOUND_CHAT_MESSAGE, 0.35F, 1.0F);
+      this.chatInput.setText("");
+      if(!Util.isAdmin(this.labyAPI.getUniqueId())) {
+        this.chatInput.setEditable(false);
+        this.chatInput.addId("blocked");
+        Task.builder(() -> {
+          this.chatInput.setEditable(true);
+          this.chatInput.removeId("blocked");
+          this.reloadScreen();
           this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
-        }
+        }).delay(3, TimeUnit.SECONDS).build().execute();
+      } else {
+        this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
       }
     }
   }
@@ -259,10 +275,8 @@ public class ChatActivity extends SimpleActivity {
   private void handleCommands(String input) {
     if(!Util.isStaff(this.labyAPI.getUniqueId())) return;
 
-    boolean successful = false;
-
     if(input.equalsIgnoreCase("/clear")) {
-      successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.CLEAR, null);
+      this.addon.moneyChatClient().sendPacket(new PacketClearChat(this.labyAPI.getUniqueId(), this.labyAPI.getName()));
     }
 
     // /mute <Spieler> <Grund>
@@ -289,23 +303,16 @@ public class ChatActivity extends SimpleActivity {
           return;
         }
 
-        JsonObject object = new JsonObject();
-        object.addProperty("uuid", uuid.toString());
-        object.addProperty("playerName", playerName);
-        object.addProperty("reason", reason);
-
-        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.MUTE, object);
-        if(successful) {
-          this.addCustomChatMessage(
-              Component.text("Du hast ", NamedTextColor.GRAY)
-                  .append(Component.text(playerName, NamedTextColor.YELLOW))
-                  .append(Component.text(" erfolgreich gemutet.", NamedTextColor.GRAY))
-          );
-          this.addCustomChatMessage(
-              Component.text("Grund: ", NamedTextColor.GRAY)
-                  .append(Component.text(reason, NamedTextColor.YELLOW))
-          );
-        }
+        this.addon.moneyChatClient().sendPacket(new PacketUserMute(this.labyAPI.getUniqueId(), this.labyAPI.getName(), uuid, playerName, reason));
+        this.addCustomChatMessage(
+            Component.text("Du hast ", NamedTextColor.GRAY)
+                .append(Component.text(playerName, NamedTextColor.YELLOW))
+                .append(Component.text(" erfolgreich gemutet.", NamedTextColor.GRAY))
+        );
+        this.addCustomChatMessage(
+            Component.text("Grund: ", NamedTextColor.GRAY)
+                .append(Component.text(reason, NamedTextColor.YELLOW))
+        );
       } else {
         this.addCustomChatMessage(Component.text("Bitte nutze /mute <Spieler> <Grund>", NamedTextColor.RED));
         return;
@@ -324,29 +331,15 @@ public class ChatActivity extends SimpleActivity {
           return;
         }
 
-        JsonObject object = new JsonObject();
-        object.addProperty("uuid", requestUuid.get().toString());
-        object.addProperty("playerName", playerName);
-
-        successful = this.addon.chatClient().sendChatAction(this.labyAPI.getUniqueId(), this.labyAPI.getName(), ChatAction.UNMUTE, object);
-        if(successful) {
-          this.addCustomChatMessage(
-              Component.text("Du hast ", NamedTextColor.GRAY)
-                  .append(Component.text(playerName, NamedTextColor.YELLOW))
-                  .append(Component.text(" erfolgreich entmutet.", NamedTextColor.GRAY))
-          );
-        }
+        this.addon.moneyChatClient().sendPacket(new PacketUserUnmute(this.labyAPI.getUniqueId(), this.labyAPI.getName(), requestUuid.get(), playerName));
+        this.addCustomChatMessage(
+            Component.text("Du hast ", NamedTextColor.GRAY)
+                .append(Component.text(playerName, NamedTextColor.YELLOW))
+                .append(Component.text(" erfolgreich entmutet.", NamedTextColor.GRAY))
+        );
       } else {
         this.addCustomChatMessage(Component.text("Bitte nutze /unmute <Spieler>", NamedTextColor.RED));
-        return;
       }
-    }
-
-    if(!successful) {
-      this.addCustomChatMessage(
-          Component.text("Befehl konnte nicht ausgeführt werden. ", NamedTextColor.RED)
-              .append(Component.text("(Nur für dich sichtbar)", NamedTextColor.GRAY))
-      );
     }
   }
 
@@ -382,11 +375,13 @@ public class ChatActivity extends SimpleActivity {
     for(ChatMessageWidget messageWidget : chatMessages) {
       if(messageWidget.chatMessage() != null) {
         if(messageWidget.chatMessage().messageId().equals(id)) {
-          if(messageWidget.messageType() != MessageType.PLAYER) {
+          if(messageWidget.messageType() != MoneyChatMessageType.PLAYER) {
             remove.add(messageWidget);
           } else {
-            messageWidget.chatMessage().message("§7§o" + I18n.translate("moneymaker.ui.chat.messageDeleted"));
             messageWidget.chatMessage().deleted(true);
+            if(!Util.isAdmin(this.addon.labyAPI().getUniqueId())) {
+              messageWidget.chatMessage().message("§7§o" + I18n.translate("moneymaker.ui.chat.messageDeleted"));
+            }
           }
         }
       }
@@ -418,7 +413,7 @@ public class ChatActivity extends SimpleActivity {
     this.addon.labyAPI().minecraft().executeOnRenderThread(this::reload);
   }
 
-  private boolean sendToServer(String message) {
+  private void sendToServer(String message) {
     MoneyChatMessage chatMessage = new MoneyChatMessage(
         "UNKNOWN",
         this.addon.labyAPI().getUniqueId(),
@@ -426,8 +421,10 @@ public class ChatActivity extends SimpleActivity {
         message,
         MoneyRank.USER,
         false,
-        "");
-    return this.addon.chatClient().sendChatMessage(chatMessage);
+        "N/A",
+        this.addon.addonInfo().getVersion(),
+        this.addon.labyAPI().minecraft().getVersion());
+    this.addon.moneyChatClient().sendPacket(new PacketMessage(chatMessage));
   }
 
 }

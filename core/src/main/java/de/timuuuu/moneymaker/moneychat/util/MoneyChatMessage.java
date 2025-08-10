@@ -1,8 +1,8 @@
-package de.timuuuu.moneymaker.chat;
+package de.timuuuu.moneymaker.moneychat.util;
 
 import com.google.gson.JsonObject;
+import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.enums.MoneyRank;
-import de.timuuuu.moneymaker.chat.ChatClientUtil.MessageType;
 
 import java.util.UUID;
 
@@ -13,20 +13,24 @@ public class MoneyChatMessage {
   private String userName;
   private String message;
   private MoneyRank rank;
-  private ChatClientUtil.MessageType messageType;
+  private MoneyChatMessageType messageType;
   private boolean deleted = false;
   private boolean fromServerCache;
   private String timeStamp;
+  private String addonVersion;
+  private String minecraftVersion;
 
-  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank, boolean fromServerCache, String timeStamp) {
+  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank, boolean fromServerCache, String timeStamp, String addonVersion, String minecraftVersion) {
     this.messageId = messageId;
     this.uuid = uuid;
     this.userName = userName;
     this.message = message;
     this.rank = rank;
-    this.messageType = ChatClientUtil.getMessageType(uuid.toString());
+    this.messageType = MoneyChatMessageType.getMessageType(uuid.toString());
     this.fromServerCache = fromServerCache;
     this.timeStamp = timeStamp;
+    this.addonVersion = addonVersion;
+    this.minecraftVersion = minecraftVersion;
   }
 
   public static MoneyChatMessage fromJson(JsonObject object) {
@@ -38,18 +42,12 @@ public class MoneyChatMessage {
           object.get("message").getAsString(),
           object.has("rank") ? MoneyRank.byName(object.get("rank").getAsString()) : MoneyRank.USER,
               object.has("fromCache") && object.get("fromCache").getAsBoolean(),
-          object.has("timeStamp") ? object.get("timeStamp").getAsString() : null
+          object.has("timeStamp") ? object.get("timeStamp").getAsString() : null,
+          object.has("addonVersion") ? object.get("addonVersion").getAsString() : "N/A",
+          object.has("minecraftVersion") ? object.get("minecraftVersion").getAsString() : "N/A"
           );
     }
     return null;
-  }
-
-  public JsonObject toJson() {
-    JsonObject object = new JsonObject();
-    object.addProperty("uuid", this.uuid.toString());
-    object.addProperty("userName", this.userName);
-    object.addProperty("message", this.message);
-    return object;
   }
 
   public String messageId() {
@@ -76,7 +74,7 @@ public class MoneyChatMessage {
     return rank;
   }
 
-  public MessageType messageType() {
+  public MoneyChatMessageType messageType() {
     return messageType;
   }
 
@@ -95,4 +93,13 @@ public class MoneyChatMessage {
   public void deleted(boolean deleted) {
     this.deleted = deleted;
   }
+
+  public String addonVersion() {
+    return addonVersion;
+  }
+
+  public String minecraftVersion() {
+    return minecraftVersion;
+  }
+
 }

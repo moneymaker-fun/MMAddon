@@ -3,6 +3,7 @@ package de.timuuuu.moneymaker.settings;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownSetting;
 import net.labymod.api.configuration.loader.Config;
+import net.labymod.api.configuration.loader.annotation.Exclude;
 import net.labymod.api.configuration.loader.annotation.IntroducedIn;
 import net.labymod.api.configuration.loader.annotation.SpriteSlot;
 import net.labymod.api.configuration.loader.annotation.SpriteTexture;
@@ -45,6 +46,9 @@ public class MoneyChatConfiguration extends Config {
   @SettingRequires("onlineOfflineMessages")
   @DropdownSetting
   private final ConfigProperty<NotificationType> onlineOfflineNotifications = new ConfigProperty<>(NotificationType.LABYMOD);
+
+  @Exclude
+  public final ConfigProperty<Boolean> hideOnlineStatus = new ConfigProperty<>(false);
 
 
   public ConfigProperty<Boolean> loadChatHistory() {

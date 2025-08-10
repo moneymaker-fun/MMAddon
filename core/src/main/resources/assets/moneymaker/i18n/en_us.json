@@ -111,6 +111,7 @@
         "connected": "Successfully connected to the chat server.",
         "no-connection": "Unable to connect to the chat server.",
         "timed": "Lost connection to chat server.",
+        "disconnect": "Disconnected: %s",
         "reply": "Reply",
         "user": {
           "online": "%s is now playing MoneyMaker.",
@@ -223,6 +224,10 @@
           "title": "Mute has been sent",
           "text": "%s has been successfully muted.\nReason: %s"
         }
+      },
+      "ui": {
+        "muted": "You have been muted.",
+        "unmuted": "Your mute has been lifted."
       }
     },
     "report": {
@@ -478,6 +483,7 @@
 
       "leaderboard": {
         "title": "MoneyMaker Leaderboard",
+        "liveDataInfo": "This leaderboard is not based on live data,\nso duplicate ranking and out-of-date information may occur.",
         "update": "Update",
         "toggleBlocks": {
           "enabled": "Shown own blocks",
@@ -532,6 +538,14 @@
         "button": {
           "report": "Report",
           "mute": "Mute"
+        },
+        "hide-online-status": "Hide Online Status",
+        "protocol": {
+          "disconnect": {
+            "timeout": "Disconnected from Server due to inactivity",
+            "sessionSwitch": "Switched to another session",
+            "notPremium": "The account is not a Minecraft premium Account"
+          }
         }
       },
 

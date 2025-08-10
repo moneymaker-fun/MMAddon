@@ -50,6 +50,9 @@ public class LeaderboardActivity extends SimpleActivity {
     DivWidget container = new DivWidget();
     container.addId("container");
 
+    ComponentWidget liveDataInfoWidget = ComponentWidget.i18n("moneymaker.ui.leaderboard.liveDataInfo").addId("liveData-info");
+    container.addChild(liveDataInfoWidget);
+
     ButtonWidget toggleBlocksButton = ButtonWidget.component(
         Component.translatable("moneymaker.ui.leaderboard.toggleBlocks." + (this.addon.addonUtil().leaderboardShowBlocks() ? "enabled": "disabled"), NamedTextColor.YELLOW)
     ).addId("toggle-blocks-button");

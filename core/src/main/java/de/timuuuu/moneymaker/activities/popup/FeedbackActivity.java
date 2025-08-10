@@ -1,32 +1,14 @@
 package de.timuuuu.moneymaker.activities.popup;
 
-import com.google.gson.JsonObject;
-import de.timuuuu.moneymaker.MoneyMakerAddon;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
-import net.labymod.api.Laby;
-import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.ScreenInstance;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
 import net.labymod.api.client.gui.screen.activity.types.SimpleActivity;
-import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
-import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget;
-import net.labymod.api.client.gui.screen.widget.widgets.input.TextFieldWidget;
-import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget;
-import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWidget;
-import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
-import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 
 @Link("popup/feedback.lss")
 @AutoActivity
 public class FeedbackActivity extends SimpleActivity {
 
-  private MoneyMakerAddon addon;
+  /*private MoneyMakerAddon addon;
 
   private ScreenInstance previousScreen;
 
@@ -256,6 +238,6 @@ public class FeedbackActivity extends SimpleActivity {
   public enum FeedbackType {
     IDEA,
     BUGREPORT
-  }
+  }*/
 
 }

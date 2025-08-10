@@ -14,6 +14,19 @@
   background-color: red !important;
 }
 
+.hide-online-switch {
+  top: 28;
+  left: 190;
+  height: 12;
+  width: 30;
+}
+
+.hide-online-title {
+  top: 30;
+  left: 223;
+  font-size: 0.8;
+}
+
 .rules-button {
   width: fit-content;
   top: 28;
@@ -190,6 +203,12 @@
           font-size: 0.8;
         }
 
+        .labymod-rank {
+          padding: 0 2 0 2;
+          width: 10;
+          height: 10;
+        }
+
         .timestamp {
           margin: 0 0 2 2;
           alignment-y: bottom;
@@ -202,6 +221,13 @@
         }
 
         .message-id {
+          text-color: rgb(150, 150, 150);
+          font-size: 0.525;
+          alignment-y: bottom;
+          margin: 0 0 2 0;
+        }
+
+        .deleted-info {
           text-color: rgb(150, 150, 150);
           font-size: 0.525;
           alignment-y: bottom;
@@ -259,6 +285,10 @@
           padding: 2 3 2 2;
           font-size: 0.8;
           background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .deleted {
+          background-color: rgba(150, 0, 0, 0.2);
         }
 
       }

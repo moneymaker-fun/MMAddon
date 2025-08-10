@@ -11,14 +11,16 @@ public class MoneyPlayer {
   private String addonVersion;
   private String minecraftVersion;
   private MoneyRank rank;
+  private boolean hideOnlineStatus;
 
-  public MoneyPlayer(UUID uuid, String userName, String server, String addonVersion, String minecraftVersion, MoneyRank rank) {
+  public MoneyPlayer(UUID uuid, String userName, String server, String addonVersion, String minecraftVersion, MoneyRank rank, boolean hideOnlineStatus) {
     this.uuid = uuid;
     this.userName = userName;
     this.server = server;
     this.addonVersion = addonVersion;
     this.minecraftVersion = minecraftVersion;
     this.rank = rank;
+    this.hideOnlineStatus = hideOnlineStatus;
   }
 
   public UUID uuid() {
@@ -48,4 +50,13 @@ public class MoneyPlayer {
   public void rank(MoneyRank rank) {
     this.rank = rank;
   }
+
+  public boolean hideOnlineStatus() {
+    return hideOnlineStatus;
+  }
+
+  public void hideOnlineStatus(boolean hideOnlineStatus) {
+    this.hideOnlineStatus = hideOnlineStatus;
+  }
+
 }

@@ -1,9 +1,8 @@
 package de.timuuuu.moneymaker.activities.popup;
 
-import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.chat.ChatClient.ChatAction;
-import de.timuuuu.moneymaker.chat.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserMute;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
@@ -30,7 +29,7 @@ public class MuteActivity extends SimpleActivity {
   private UUID executorUUID;
   private String executorName;
   private MoneyChatMessage chatMessage;
-  private String uuid;
+  private UUID uuid;
   private String userName;
 
   private ScreenInstance previousScreen;
@@ -43,7 +42,7 @@ public class MuteActivity extends SimpleActivity {
     this.executorUUID = executorUUID;
     this.executorName = executorName;
     this.chatMessage = chatMessage;
-    this.uuid = chatMessage.uuid().toString();
+    this.uuid = chatMessage.uuid();
     this.userName = chatMessage.userName();
     this.previousScreen = previousScreen;
   }
@@ -55,7 +54,7 @@ public class MuteActivity extends SimpleActivity {
     FlexibleContentWidget container = new FlexibleContentWidget().addId("container");
     HorizontalListWidget header = new HorizontalListWidget().addId("header");
 
-    IconWidget headWidget = new IconWidget(Icon.head(UUID.fromString(this.uuid))).addId("head");
+    IconWidget headWidget = new IconWidget(Icon.head(this.uuid)).addId("head");
     ComponentWidget titleWidget = ComponentWidget.i18n("moneymaker.mute.form.title", this.userName).addId("title");
     header.addEntry(headWidget);
     header.addEntry(titleWidget);
@@ -127,18 +126,7 @@ public class MuteActivity extends SimpleActivity {
       return false;
     }
 
-    JsonObject object = new JsonObject();
-    object.addProperty("uuid", this.uuid);
-    object.addProperty("playerName", this.userName);
-    object.addProperty("reason", reasonInput.getText());
-
-    if(!this.addon.chatClient().sendChatAction(this.executorUUID, this.executorName, ChatAction.MUTE, object)) {
-      this.addon.pushNotification(
-          Component.translatable("moneymaker.mute.form.invalid.title", NamedTextColor.DARK_RED),
-          Component.translatable("moneymaker.mute.form.invalid.chatError", NamedTextColor.RED)
-      );
-      return false;
-    }
+    this.addon.moneyChatClient().sendPacket(new PacketUserMute(this.executorUUID, this.executorName, this.uuid, this.userName, reasonInput.getText()));
 
     return true;
   }

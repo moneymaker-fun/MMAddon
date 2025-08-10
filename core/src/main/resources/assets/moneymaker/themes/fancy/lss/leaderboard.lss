@@ -17,6 +17,13 @@
   background-color: var(--background-color);
   box-shadow: none;
 
+  .liveData-info {
+    top: 7;
+    left: 130;
+    font-size: 0.8;
+    text-color: gray;
+  }
+
   .error-text {
     alignment-y: center;
     alignment-x: center;

@@ -111,6 +111,7 @@
         "connected": "Erfolgreich zum Chat-Server verbunden.",
         "no-connection": "Keine Verbindung zum Chat-Server möglich.",
         "timed": "Verbindung zum Chat-Server verloren.",
+        "disconnect": "Getrennt: %s",
         "reply": "Antworten",
         "user": {
           "online": "%s spielt nun MoneyMaker.",
@@ -223,6 +224,10 @@
           "title": "Der Mute wurde gesendet",
           "text": "%s wurde erfolgreich gemutet.\nGrund: %s"
         }
+      },
+      "ui": {
+        "muted": "Du wurdest aus dem Chat ausgeschlossen.",
+        "unmuted": "Dein Chat Mute wurde aufgehoben."
       }
     },
     "report": {
@@ -478,6 +483,7 @@
 
       "leaderboard": {
         "title": "MoneyMaker Bestenliste",
+        "liveDataInfo": "Bei dieser Bestenliste handelt es sich nicht um Live Daten,\ndaher kann es zu doppelt belegen Plätzen und nicht aktuellen Informationen kommen.",
         "update": "Aktualisieren",
         "toggleBlocks": {
           "enabled": "Eigene Blöcke anzeigen",
@@ -532,6 +538,14 @@
         "button": {
           "report": "Melden",
           "mute": "Muten"
+        },
+        "hide-online-status": "Online Status verstecken",
+        "protocol": {
+          "disconnect": {
+            "timeout": "Verbindung zum Server aufgrund von Inaktivität getrennt",
+            "sessionSwitch": "Zu anderer Sitzung gewechselt",
+            "notPremium": "Dieser Account ist kein Minecraft Premium-Account"
+          }
         }
       },
 

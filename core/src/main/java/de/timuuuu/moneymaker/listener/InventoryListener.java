@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.chat.ChatUtil;
+import de.timuuuu.moneymaker.utils.ChatUtil;
 import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;

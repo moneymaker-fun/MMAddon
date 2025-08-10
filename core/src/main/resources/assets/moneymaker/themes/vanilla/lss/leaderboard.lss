@@ -13,6 +13,13 @@
   box-shadow: classic left top right bottom;
   renderer: "DirtBackground";
 
+  .liveData-info {
+    top: 7;
+    left: 130;
+    font-size: 0.8;
+    text-color: gray;
+  }
+
   .error-text {
     alignment-y: center;
     alignment-x: center;
