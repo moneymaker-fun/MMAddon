@@ -1,0 +1,41 @@
+{
+  "scoreBoard": {
+    "place": "Rank"
+  },
+  "chat": {
+    "prefix": "[MoneyMaker]",
+    "spacerLine": "[MoneyMaker] eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "workerEffect": "[MoneyMaker] You have activated the effect of this worker",
+    "workplace": {
+      "upgrade": "[MoneyMaker] You have upgraded the workplace to level",
+      "unlocked": "[MoneyMaker] The workplace was successfully unlocked"
+    },
+    "buyWorker": {
+      "start": "[MoneyMaker] You have purchased a ",
+      "contains": " "
+    },
+    "sellWorker": {
+      "start": "[MoneyMaker] You have sold ",
+      "contains": " "
+    },
+    "teleport": {
+      "start": "[MoneyMaker] You were teleported to",
+      "contains": " "
+    },
+    "booster": {
+      "found": "[MoneyMaker] Congratulations! You have found a booster:",
+      "fullInventory": "[MoneyMaker] Your booster inventory has reached the limit of",
+      "activated": {
+        "1": "[MoneyMaker] Your +",
+        "2": "% booster ",
+        "3": " was activated"
+      }
+    },
+    "debris": {
+      "remove": {
+        "start": "[MoneyMaker] Debris will be removed in",
+        "contains": "entfernt"
+      }
+    }
+  }
+}

@@ -2,7 +2,6 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.ChatUtil;
-import de.timuuuu.moneymaker.enums.ChatMessages;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Constants.Resources;
@@ -11,11 +10,15 @@ import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
 
+import java.io.IOException;
+
 import static de.timuuuu.moneymaker.utils.Util.convertToReadableFormat;
 
 public class ScoreBoardListener {
 
   private MoneyMakerAddon addon;
+
+  private String cachedLanguage = "";
 
   public ScoreBoardListener(MoneyMakerAddon addon) {
     this.addon = addon;
@@ -24,6 +27,29 @@ public class ScoreBoardListener {
   @Subscribe
   public void onScoreboardScoreUpdate(ScoreboardScoreUpdateEvent event) {
     if(!this.addon.addonUtil().connectedToMoneyMaker()) return;
+
+    if(event.score().getValue() == MoneyScore.LANG_CHECK.score()) {
+      String scoreName = ChatUtil.stripColor(event.score().getName());
+      if(this.addon.chatMessageLoader().availableLanguages.containsKey(scoreName)) {
+        String language = this.addon.chatMessageLoader().availableLanguages.get(scoreName);
+        if(!language.equals(this.cachedLanguage)) {
+          this.cachedLanguage = language;
+          try {
+            this.addon.chatMessageLoader().loadMessages("moneymaker", language);
+            this.addon.pushNotification(
+                Component.text("ChatMessageLoader"),
+                Component.text("Chat Messages for " + language + " loaded")
+            );
+          } catch (IOException e) {
+            this.addon.pushNotification(
+                Component.text("ChatMessageLoader"),
+                Component.text("Failed to load Chat Messages for " + language)
+            );
+            throw new RuntimeException(e);
+          }
+        }
+      }
+    }
 
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && this.addon.addonUtil().inFarming()) {
       String scoreName = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
@@ -66,10 +92,9 @@ public class ScoreBoardListener {
     if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && this.addon.addonUtil().inFarming()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(scoreName.contains("Loading") || scoreName.contains("Lädt")) return;
-      if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
+      if(scoreName.startsWith(this.addon.chatMessageLoader().message("scoreBoard.place"))) {
         this.addon.addonUtil().pickaxeRanking(Util.parseInteger(scoreName
-            .replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
-            .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
+            .replace(this.addon.chatMessageLoader().message("scoreBoard.place") + " ", "")
             .replace(".", "").replace(",", ""), this.getClass()));
       }
     }
@@ -77,10 +102,9 @@ public class ScoreBoardListener {
     if(event.score().getValue() == MoneyScore.RANK.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
       if(scoreName.contains("Loading") || scoreName.contains("Lädt")) return;
-      if(ChatMessages.SB_PLACE_DE.startWith(scoreName) || ChatMessages.SB_PLACE_EN.startWith(scoreName)) {
+      if(scoreName.startsWith(this.addon.chatMessageLoader().message("scoreBoard.place"))) {
         this.addon.addonUtil().ranking(Util.parseInteger(scoreName.
-            replace(ChatMessages.SB_PLACE_DE.message() + " ", "")
-            .replace(ChatMessages.SB_PLACE_EN.message() + " ", "")
+            replace(this.addon.chatMessageLoader().message("scoreBoard.place") + " ", "")
             .replace(".", "").replace(",", ""), this.getClass()
         ));
       }
@@ -141,7 +165,9 @@ public class ScoreBoardListener {
 
     RANK(9),
 
-    BALANCE(12);
+    BALANCE(12),
+
+    LANG_CHECK(13);
 
     private final int score;
 

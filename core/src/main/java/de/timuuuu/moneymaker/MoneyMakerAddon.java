@@ -42,6 +42,7 @@ import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.MoneyMakerConfiguration;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.ApiUtil;
+import de.timuuuu.moneymaker.utils.ChatMessageLoader;
 import de.timuuuu.moneymaker.utils.CurrencyUtil;
 import de.timuuuu.moneymaker.utils.DiscordAPI;
 import de.timuuuu.moneymaker.utils.MoneyTextures.Common;
@@ -84,6 +85,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   private AddonSettings addonSettings;
   private AddonUtil addonUtil;
+  private ChatMessageLoader chatMessageLoader;
 
   private EntityRenderListener entityRenderListener;
 
@@ -105,6 +107,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.addonSettings = new AddonSettings();
     this.addonUtil = new AddonUtil(this);
+    this.chatMessageLoader = new ChatMessageLoader();
 
     this.startActivity = new StartActivity(this);
     this.priceOverviewActivity = new PriceOverviewActivity(this);
@@ -213,6 +216,10 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public AddonUtil addonUtil() {
     return addonUtil;
+  }
+
+  public ChatMessageLoader chatMessageLoader() {
+    return chatMessageLoader;
   }
 
   public AddonSettings addonSettings() {

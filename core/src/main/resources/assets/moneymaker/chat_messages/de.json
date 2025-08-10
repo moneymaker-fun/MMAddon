@@ -1,0 +1,41 @@
+{
+  "scoreBoard": {
+    "place": "Platz"
+  },
+  "chat": {
+    "prefix": "[MoneyMaker]",
+    "spacerLine": "[MoneyMaker] eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "workerEffect": "[MoneyMaker] Du hast den Effekt dieses Arbeiters aktiviert",
+    "workplace": {
+      "upgrade": "[MoneyMaker] Du hast den Arbeitsplatz auf Level",
+      "unlocked": "[MoneyMaker] Der Arbeitsplatz wurde erfolgreich freigeschaltet"
+    },
+    "buyWorker": {
+      "start": "[MoneyMaker] Du hast einen ",
+      "contains": " gekauft"
+    },
+    "sellWorker": {
+      "start": "[MoneyMaker] Du hast den ",
+      "contains": " verkauft"
+    },
+    "teleport": {
+      "start": "[MoneyMaker] Du wurdest",
+      "contains": "teleportiert"
+    },
+    "booster": {
+      "found": "[MoneyMaker] Glückwunsch! Du hast einen Booster gefunden:",
+      "fullInventory": "[MoneyMaker] Dein Booster-Inventar hat das Limit von",
+      "activated": {
+        "1": "[MoneyMaker] Dein +",
+        "2": " % Booster ",
+        "3": " wurde aktiviert"
+      }
+    },
+    "debris": {
+      "remove": {
+        "start": "[MoneyMaker] Das Geröll wird in",
+        "contains": "entfernt"
+      }
+    }
+  }
+}

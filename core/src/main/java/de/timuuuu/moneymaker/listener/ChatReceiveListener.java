@@ -3,7 +3,6 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
-import de.timuuuu.moneymaker.enums.ChatMessages;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -29,54 +28,49 @@ public class ChatReceiveListener {
     if (!this.addon.addonUtil().connectedToMoneyMaker()) return;
     String plain = event.chatMessage().getOriginalPlainText();
 
-    if (ChatMessages.PREFIX.contains(plain)) {
+    if (plain.contains(this.addon.chatMessageLoader().message("chat.prefix"))) {
 
-      if((ChatMessages.WORKPLACE_UPGRADE_DE_1.startWith(plain) && ChatMessages.WORKPLACE_UPGRADE_DE_2.contains(plain)) ||
-          (ChatMessages.WORKPLACE_UPGRADE_EN.startWith(plain))) {
+      if(plain.startsWith(this.addon.chatMessageLoader().message("chat.workplace.upgrade"))) {
         if(this.addon.configuration().gameplayConfiguration.hideWorkerUpgradeMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if((ChatMessages.BUY_WORKER_DE_1.startWith(plain) && ChatMessages.BUY_WORKER_DE_2.contains(plain)) ||
-          (ChatMessages.BUY_WORKER_EN.startWith(plain))) {
+      if(plain.startsWith(this.addon.chatMessageLoader().message("chat.buyWorker.start")) && plain.contains(this.addon.chatMessageLoader().message("chat.buyWorker.contains"))) {
         if(this.addon.configuration().gameplayConfiguration.hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if((ChatMessages.SELL_WORKER_DE_1.startWith(plain) && ChatMessages.SELL_WORKER_DE_2.contains(plain)) ||
-          (ChatMessages.SELL_WORKER_EN.startWith(plain))) {
+      if(plain.startsWith(this.addon.chatMessageLoader().message("chat.sellWorker.start")) && plain.contains(this.addon.chatMessageLoader().message("chat.sellWorker.contains"))) {
         if(this.addon.configuration().gameplayConfiguration.hideBuySellWorkerMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if((ChatMessages.TELEPORT_DE_1.startWith(plain) && ChatMessages.TELEPORT_DE_2.contains(plain)) ||
-          (ChatMessages.TELEPORT_EN.startWith(plain))) {
+      if(plain.startsWith(this.addon.chatMessageLoader().message("chat.teleport.start")) && plain.contains(this.addon.chatMessageLoader().message("chat.teleport.contains"))) {
         if(this.addon.configuration().gameplayConfiguration.hideTeleportMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if(ChatMessages.PARTING_LINE.equals(plain) || ChatMessages.PREFIX.equals(plain)) {
+      if(plain.equals(this.addon.chatMessageLoader().message("chat.spacerLine")) || plain.equals(this.addon.chatMessageLoader().message("chat.prefix"))) {
         if(this.addon.configuration().gameplayConfiguration.hideEmptyMessages().get() || this.addon.configuration().gameplayConfiguration.shortBoosterMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if (ChatMessages.BOOSTER_FOUND_DE.equals(plain) || ChatMessages.BOOSTER_FOUND_EN.equals(plain)) {
+      if (plain.equals(this.addon.chatMessageLoader().message("chat.booster.found"))) {
         if(this.addon.configuration().gameplayConfiguration.shortBoosterMessage().get()) {
           event.setCancelled(true);
         }
       }
 
-      if (plain.contains("Booster (") && plain.contains(")") &&
-          !(ChatMessages.BOOSTER_ACTIVATED_DE_3.contains(plain) || ChatMessages.BOOSTER_ACTIVATED_EN_3.contains(plain))) {
+      if (plain.contains("Booster (") && plain.contains(")") && !plain.contains(this.addon.chatMessageLoader().message("chat.booster.activated.3"))) {
         if(this.addon.configuration().gameplayConfiguration.shortBoosterMessage().get()) {
           // Shorted DE: +70 % Booster (15 Minuten)
           // Shorted EN: +40% Booster (20 minutes)
-          String boosterString = plain.replace(ChatMessages.PREFIX.message() + " ", "");
+          String boosterString = plain.replace(this.addon.chatMessageLoader().message("chat.prefix") + " ", "");
           String boostString = boosterString.split("\\(")[0].replace("%", "").replace("+", "").split(" ")[0];
           String timeString = plain.split(" \\(")[1].split(" ")[0];
 
@@ -145,10 +139,7 @@ public class ChatReceiveListener {
               time *= 60;
             }
           }
-
-        } catch (NumberFormatException ignored) {
-
-        }
+        } catch (NumberFormatException ignored) {}
         if(boost != 0 && time != 0) {
           Booster.sessionBoost.addAndGet(boost);
           Booster.sessionBoosters.addAndGet(1);
@@ -160,20 +151,19 @@ public class ChatReceiveListener {
           //time *= 60;
       }
 
-      if(ChatMessages.WORKPLACE_UNLOCKED_DE.equals(plain) || ChatMessages.WORKPLACE_UNLOCKED_EN.equals(plain)) {
+      if(plain.equals(this.addon.chatMessageLoader().message("chat.workplace.unlocked"))) {
         this.addon.addonUtil().nextWorkerCost("X");
         this.addon.addonUtil().workerNotifySent(false);
       }
 
-      if((ChatMessages.DEBRIS_REMOVE_DE_1.startWith(plain) && ChatMessages.DEBRIS_REMOVE_DE_2.contains(plain)) ||
-          (ChatMessages.DEBRIS_REMOVE_EN.startWith(plain))) {
+      if(plain.startsWith(this.addon.chatMessageLoader().message("chat.debris.remove.start")) && plain.contains(this.addon.chatMessageLoader().message("chat.debris.remove.contains"))) {
         Task.builder(() -> {
           this.addon.addonUtil().debrisCost("X");
           this.addon.addonUtil().debrisNotifySent(false);
         }).delay(3, TimeUnit.SECONDS).build().execute();
       }
 
-      if(ChatMessages.WORKER_EFFECT_DE.equals(plain) || ChatMessages.WORKER_EFFECT_EN.equals(plain)) {
+      if(plain.equals(this.addon.chatMessageLoader().message("chat.workerEffect"))) {
         if(this.addon.configuration().gameplayConfiguration.hideEffectMessage().get()) {
           event.setCancelled(true);
         }
@@ -198,7 +188,7 @@ public class ChatReceiveListener {
         }
       }
 
-      if(ChatMessages.BOOSTER_INVENTORY_DE.startWith(plain) || ChatMessages.BOOSTER_INVENTORY_EN.startWith(plain)) {
+      if(plain.startsWith(this.addon.chatMessageLoader().message("chat.booster.fullInventory"))) {
         if(this.addon.configuration().gameplayConfiguration.hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
@@ -207,16 +197,16 @@ public class ChatReceiveListener {
       // DE: [MoneyMaker] Dein +30 % Booster (15 Minuten) wurde aktiviert
       // EN: [MoneyMaker] Your +30% booster (15 Minutes) was activated
 
-      if(ChatMessages.BOOSTER_ACTIVATED_DE_1.contains(plain) && ChatMessages.BOOSTER_ACTIVATED_DE_2.contains(plain) &&
-          ChatMessages.BOOSTER_ACTIVATED_DE_3.contains(plain)) {
+      if(plain.startsWith(this.addon.chatMessageLoader().message("chat.booster.activated.1")) && plain.contains(this.addon.chatMessageLoader().message("chat.booster.activated.2")) &&
+          plain.contains(this.addon.chatMessageLoader().message("chat.booster.activated.3"))) {
 
         if(this.addon.configuration().gameplayConfiguration.hideFullBoosterInventory().get()) {
           event.setCancelled(true);
         }
 
         String message = plain.split(" \\(")[0]
-            .replace(ChatMessages.BOOSTER_ACTIVATED_DE_1.message(), "")
-            .replace(ChatMessages.BOOSTER_ACTIVATED_DE_2.message(), "");
+            .replace(this.addon.chatMessageLoader().message("chat.booster.activated.1"), "")
+            .replace(this.addon.chatMessageLoader().message("chat.booster.activated.2"), "");
 
         try {
           int boost = Util.parseInteger(message, this.getClass());
@@ -225,7 +215,7 @@ public class ChatReceiveListener {
 
       }
 
-      if(ChatMessages.BOOSTER_ACTIVATED_EN_1.contains(plain) && ChatMessages.BOOSTER_ACTIVATED_EN_2.contains(plain) &&
+      /*if(ChatMessages.BOOSTER_ACTIVATED_EN_1.contains(plain) && ChatMessages.BOOSTER_ACTIVATED_EN_2.contains(plain) &&
           ChatMessages.BOOSTER_ACTIVATED_EN_3.contains(plain)) {
 
         if(this.addon.configuration().gameplayConfiguration.hideFullBoosterInventory().get()) {
@@ -241,7 +231,7 @@ public class ChatReceiveListener {
           Booster.activatedBoost.addAndGet(boost);
         } catch (NumberFormatException ignored) {}
 
-      }
+      }*/
 
     }
   }
