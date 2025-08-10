@@ -4,6 +4,7 @@ import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketAddonMessage;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPing;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketWebsiteToken;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLoginComplete;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
@@ -41,6 +42,8 @@ public abstract class MoneyPacketHandler extends SimpleChannelInboundHandler<Mon
   public abstract void handle(MoneyPacketPing packet);
 
   public abstract void handle(MoneyPacketAddonMessage packet);
+
+  public abstract void handle(PacketWebsiteToken packet);
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

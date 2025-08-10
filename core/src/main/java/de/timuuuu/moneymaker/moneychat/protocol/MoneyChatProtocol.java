@@ -6,6 +6,7 @@ import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketWebsiteToken;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionResponse;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLogin;
@@ -46,7 +47,10 @@ public class MoneyChatProtocol {
       register(13, MoneyPacketDisconnect.class); // C <-> S
       register(14, MoneyPacketPing.class); // S -> C
       register(15, MoneyPacketPong.class); // C -> S
+
       register(20, MoneyPacketAddonMessage.class); // C <-> S
+
+      register(30, PacketWebsiteToken.class); // S -> C
     }
 
     private void register(int id, Class<? extends MoneyPacket> clazz) {

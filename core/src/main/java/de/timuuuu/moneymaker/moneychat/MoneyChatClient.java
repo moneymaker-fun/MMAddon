@@ -107,7 +107,7 @@ public class MoneyChatClient {
             session = new MoneySession("Player", UUID.randomUUID(), null, Type.LEGACY);
           }
 
-          this.session = new MoneyChatSession(this, session);
+          this.session = new MoneyChatSession(this.addon, this, session);
           this.channelHandler = new MoneyChatChannelHandler(this, this.session);
           this.lastDisconnectReason = null;
           this.bootstrap = new Bootstrap();

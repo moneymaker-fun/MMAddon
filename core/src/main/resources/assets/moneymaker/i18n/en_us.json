@@ -33,6 +33,15 @@
         "miners": "Your saved miner data has been reset.",
         "debris": "Your saved debris data has been reset.",
         "all": "All saved data has been reset."
+      },
+      "website": {
+        "usage": "Please use /mm-website <open, register>",
+        "request": {
+          "chatNotConnected": "You are currently not connected to the chat server.",
+          "sent": "A request to our Server has been sent, awaiting server response",
+          "failed": "Failed to create an registration token for your account. Reason: %s",
+          "success": "Your token has been create successfully. Please finish your registration at the following link:"
+        }
       }
     },
     "text": {

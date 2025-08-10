@@ -33,6 +33,15 @@
         "miners": "Deine gespeicherten Arbeiter Daten wurden zurückgesetzt.",
         "debris": "Deine gespeicherten Geröll Daten wurden zurückgesetzt.",
         "all": "Alle gespeicherten Daten wurde zurückgesetzt."
+      },
+      "website": {
+        "usage": "Bitte nutze /mm-website <open, register>",
+        "request": {
+          "chatNotConnected": "Du bist aktuell nicht mit dem Chat Server verbunden.",
+          "sent": "Es wurde eine Anfrage an den Server gesendet, warte auf eine Antwort des Servers.",
+          "failed": "Fehler beim erstellen des Token für deinen Account. Grund: %s",
+          "success": "Dein Token wurde erfolgreich generiert. Bitte schließe die Registrierung über den folgenden Link ab:"
+        }
       }
     },
     "text": {

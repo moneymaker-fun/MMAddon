@@ -6,6 +6,8 @@ import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.MoneyChatState;
+import de.timuuuu.moneymaker.moneychat.message.MessageListener;
+import de.timuuuu.moneymaker.moneychat.message.WebsiteRegistrationMessageListener;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketAddonMessage;
@@ -14,6 +16,7 @@ import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketWebsiteToken;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionResponse;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLoginComplete;
@@ -31,15 +34,22 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.client.session.MinecraftAuthenticator;
 import net.labymod.api.client.session.Session;
+import net.labymod.api.util.logging.Logging;
 import javax.crypto.SecretKey;
 import java.security.PublicKey;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class MoneyChatSession extends MoneyPacketHandler {
 
+  private final MoneyMakerAddon addon;
   private final MoneyChatClient moneyChatClient;
+
+  private final Logging LOGGER = Logging.getLogger();
 
   private Session session;
   private boolean premium;
@@ -49,12 +59,22 @@ public class MoneyChatSession extends MoneyPacketHandler {
   private boolean muted;
   private String muteReason;
 
-  public MoneyChatSession(MoneyChatClient moneyChatClient, Session session) {
+  private final Map<String, MessageListener> messageListeners;
+
+  public MoneyChatSession(MoneyMakerAddon addon, MoneyChatClient moneyChatClient, Session session) {
+    this.addon = addon;
     this.moneyChatClient = moneyChatClient;
     this.session = session;
     this.premium = session.isPremium();
     this.connectionEstablished = false;
     this.authenticated = false;
+    this.messageListeners = new HashMap<>();
+    this.registerMessageListeners();
+  }
+
+  private void registerMessageListeners() {
+    this.messageListeners.put("unauthenticated", (MessageListener) -> this.resetAuthentication());
+    this.messageListeners.put("website_register", new WebsiteRegistrationMessageListener(this.moneyChatClient.addon()));
   }
 
   protected void handlePacket(MoneyPacket packet) {
@@ -125,8 +145,8 @@ public class MoneyChatSession extends MoneyPacketHandler {
     if(this.moneyChatClient.addon().labyAPI().getUniqueId().equals(packet.targetUUID())) {
       this.muted = true;
       this.muteReason = packet.reason();
-      this.moneyChatClient.addon().chatActivity().addCustomChatMessage(Component.translatable("moneymaker.mute.ui.muted", NamedTextColor.RED));
-      this.moneyChatClient.addon().chatActivity().reloadScreen();
+      this.addon.chatActivity().addCustomChatMessage(Component.translatable("moneymaker.mute.ui.muted", NamedTextColor.RED));
+      this.addon.chatActivity().reloadScreen();
     }
   }
 
@@ -135,8 +155,8 @@ public class MoneyChatSession extends MoneyPacketHandler {
     if(this.moneyChatClient.addon().labyAPI().getUniqueId().equals(packet.targetUUID())) {
       this.muted = false;
       this.muteReason = "";
-      this.moneyChatClient.addon().chatActivity().addCustomChatMessage(Component.translatable("moneymaker.mute.ui.unmuted", NamedTextColor.GREEN));
-      this.moneyChatClient.addon().chatActivity().reloadScreen();
+      this.addon.chatActivity().addCustomChatMessage(Component.translatable("moneymaker.mute.ui.unmuted", NamedTextColor.GREEN));
+      this.addon.chatActivity().reloadScreen();
     }
   }
 
@@ -148,8 +168,8 @@ public class MoneyChatSession extends MoneyPacketHandler {
       if(AddonUtil.playerStatus.containsKey(uuid)) {
         AddonUtil.playerStatus.get(uuid).rank(rank);
       }
-      if(this.moneyChatClient.addon().labyAPI().getUniqueId().equals(uuid)) {
-        this.moneyChatClient.addon().pushNotification(
+      if(this.addon.labyAPI().getUniqueId().equals(uuid)) {
+        this.addon.pushNotification(
             Component.translatable("moneymaker.notification.chat.rank-changed.title", NamedTextColor.GREEN),
             Component.translatable("moneymaker.notification.chat.rank-changed.text", NamedTextColor.YELLOW, Component.text(rank.getOnlineColor() + rank.getName())),
             rank.getIcon()
@@ -180,8 +200,20 @@ public class MoneyChatSession extends MoneyPacketHandler {
 
   @Override
   public void handle(MoneyPacketAddonMessage packet) {
-    if(packet.getKey().equals("unauthenticated")) {
-      this.resetAuthentication();
+    String key = packet.getKey();
+    MessageListener listener = this.messageListeners.get(key);
+    if(listener != null) {
+      listener.listen(packet.getJson());
+    } else {
+      LOGGER.debug("Unknown addon message {}", key);
+    }
+  }
+
+  @Override
+  public void handle(PacketWebsiteToken packet) {
+    if(packet.token() != null) {
+      this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.command.website.request.success", NamedTextColor.GREEN)));
+      this.addon.displayMessage(PlainTextComponentSerializer.plainUrl().deserialize("https://moneymakeraddon.de/register?token=" + packet.token()).color(NamedTextColor.YELLOW));
     }
   }
 
