@@ -75,7 +75,7 @@ public class AddonSettings {
   }
 
   public enum FarmingReset {
-    AUTOMATICALLY, ASK, HIDE
+    AUTOMATICALLY, ASK_LABY, ASK_CHAT, HIDE
   }
 
   public enum UpdateMode {

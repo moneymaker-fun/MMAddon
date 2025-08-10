@@ -137,6 +137,7 @@
           "title": "Leave farming cave",
           "question": "Do you want to reset the block, kill and booster counters?",
           "button": "Reset",
+          "buttonHover": "Will you reset the counters?",
           "done": "Your block, kill and booster counters have been reset."
         },
         "profile": {
@@ -290,7 +291,8 @@
         "description": "Change the behavior for resetting the counters when leaving the farming cave",
         "type": {
           "automatically": "Automatically Reset",
-          "ask": "Ask to Reset (Notification)",
+          "askLaby": "Ask to Reset (Notification)",
+          "askChat": "Ask to Reset (Chat)",
           "hide": "Hide completely"
         }
       },

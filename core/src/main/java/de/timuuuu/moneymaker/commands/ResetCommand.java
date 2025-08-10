@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.listener.InventoryListener;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 
 public class ResetCommand extends Command {
@@ -55,6 +56,12 @@ public class ResetCommand extends Command {
               InventoryListener.clearAlreadyRendered();
               this.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.command.reset.all", TextColor.color(85, 255, 85))));
 
+            } else if(args[0].equalsIgnoreCase("farming")) {
+              this.addon.addonUtil().sessionBlocks(0);
+              this.addon.addonUtil().sessionKills(0);
+              Booster.sessionBoost.set(0);
+              Booster.sessionBoosters.set(0);
+              this.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.notification.dataReset.farming.done", NamedTextColor.YELLOW)));
             }
           } else {
             this.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.command.reset.usage", TextColor.color(255, 85, 85))));

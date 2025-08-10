@@ -137,6 +137,7 @@
           "title": "Farming-Höhle verlassen",
           "question": "Möchtest du den Block-, Kill- und Boosterzähler zurücksetzen?",
           "button": "Zurücksetzen",
+          "buttonHover": "Möchtest du die Zähler zurücksetzen?",
           "done": "Dein Block-, Kill- und Boosterzähler wurde zurückgesetzt."
         },
         "profile": {
@@ -290,7 +291,8 @@
         "description": "Ändert das Verhalten zum Zurücksetzen der Zähler beim verlassen der Farminghöhle",
         "type": {
           "automatically": "Automatisch",
-          "ask": "Fragen (Notification)",
+          "askLaby": "Fragen (Notification)",
+          "askChat": "Fragen (Chat)",
           "hide": "Verstecken"
         }
       },

@@ -12,6 +12,8 @@ import de.timuuuu.moneymaker.boosters.Booster;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.event.ClickEvent;
+import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.event.Subscribe;
@@ -62,7 +64,7 @@ public class NetworkPayloadListener {
                   this.addon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
                       Component.translatable("moneymaker.notification.farming.left.done", NamedTextColor.YELLOW));
                 }
-                if(farmingReset == FarmingReset.ASK) {
+                if(farmingReset == FarmingReset.ASK_LABY) {
                   MoneyMakerAddon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
                       Component.translatable("moneymaker.notification.dataReset.farming.question", NamedTextColor.GRAY),
                       Component.translatable("moneymaker.notification.dataReset.farming.button"), () -> {
@@ -73,6 +75,13 @@ public class NetworkPayloadListener {
                         this.addon.pushNotification(Component.translatable("moneymaker.notification.dataReset.farming.title", NamedTextColor.AQUA),
                             Component.translatable("moneymaker.notification.dataReset.farming.done", NamedTextColor.YELLOW));
                   });
+                }
+                if(farmingReset == FarmingReset.ASK_CHAT) {
+                  this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.notification.dataReset.farming.question", NamedTextColor.GRAY)));
+                  Component askButton = Component.text("[", NamedTextColor.DARK_GRAY).append(Component.translatable("moneymaker.notification.dataReset.farming.button", NamedTextColor.AQUA)).append(Component.text("]", NamedTextColor.DARK_GRAY));
+                  askButton.clickEvent(ClickEvent.runCommand("/mm-reset farming"));
+                  askButton.hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.notification.dataReset.farming.buttonHover", NamedTextColor.GRAY)));
+                  this.addon.displayMessage(this.addon.prefix.copy().append(askButton));
                 }
               }
 
