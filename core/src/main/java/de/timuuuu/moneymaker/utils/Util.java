@@ -65,7 +65,7 @@ public class Util {
 
   public static ButtonWidget discordButton() {
     ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.button.discord", SpriteCommon.DISCORD).addId("discord-button");
-    discordButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://discord.gg/XKjAZFgknd"));
+    discordButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://discord.moneymakeraddon.de/"));
     return discordButton;
   }
 
