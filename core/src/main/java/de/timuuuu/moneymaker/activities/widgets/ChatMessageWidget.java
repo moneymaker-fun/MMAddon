@@ -4,7 +4,6 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatReportActivity;
 import de.timuuuu.moneymaker.activities.popup.MuteActivity;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
-import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessageDelete;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import de.timuuuu.moneymaker.utils.Util;
@@ -34,7 +33,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
   private String time;
   private MoneyChatMessage chatMessage = null;
   private Component customMessage;
-  private MoneyChatMessageType messageType;
+  private MoneyChatMessage.MessageType messageType;
 
   public ChatMessageWidget(MoneyMakerAddon addon, String time, MoneyChatMessage chatMessage) {
     this.addon = addon;
@@ -47,7 +46,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     this.addon = addon;
     this.time = time;
     this.customMessage = customMessage;
-    this.messageType = MoneyChatMessageType.SERVER;
+    this.messageType = MoneyChatMessage.MessageType.SERVER;
   }
 
   @Override
@@ -59,7 +58,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     VerticalListWidget<Widget> flex = new VerticalListWidget<>().addId("flex");
 
     HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
-    if (this.messageType == MoneyChatMessageType.PLAYER) {
+    if (this.messageType == MoneyChatMessage.MessageType.PLAYER) {
       header.addEntry(new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar"));
       Component senderComponent = Component.text(chatMessage.rank().getChatPrefix() + chatMessage.userName());
       senderComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.chatMessage().userName()));
@@ -96,7 +95,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       }
     }
 
-    if(this.messageType == MoneyChatMessageType.PLAYER) {
+    if(this.messageType == MoneyChatMessage.MessageType.PLAYER) {
       if(this.chatMessage != null && !this.chatMessage.deleted()) {
 
         // User is Staff member - add Mute button
@@ -179,7 +178,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     return chatMessage;
   }
 
-  public MoneyChatMessageType messageType() {
+  public MoneyChatMessage.MessageType messageType() {
     return messageType;
   }
 }

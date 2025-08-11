@@ -4,7 +4,6 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.moneychat.event.MoneyChatDisconnectEvent;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
-import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MineSwitchEvent;
@@ -280,7 +279,7 @@ public class MoneyAddonListener {
     if(!this.addon.addonUtil().connectedToMoneyMaker()) return;
     if(chatMessage.fromServerCache()) return;
     if(!chatMessage.uuid().equals(this.addon.labyAPI().getUniqueId())) {
-      if(chatMessage.messageType() != MoneyChatMessageType.SERVER) {
+      if(chatMessage.messageType() != MoneyChatMessage.MessageType.SERVER) {
 
         if(this.addon.configuration().chatConfiguration.notification().get()) {
           this.addon.pushNotification(

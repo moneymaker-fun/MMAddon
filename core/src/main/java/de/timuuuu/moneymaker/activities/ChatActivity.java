@@ -4,7 +4,6 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
-import de.timuuuu.moneymaker.enums.MoneyChatMessageType;
 import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
@@ -375,7 +374,7 @@ public class ChatActivity extends SimpleActivity {
     for(ChatMessageWidget messageWidget : chatMessages) {
       if(messageWidget.chatMessage() != null) {
         if(messageWidget.chatMessage().messageId().equals(id)) {
-          if(messageWidget.messageType() != MoneyChatMessageType.PLAYER) {
+          if(messageWidget.messageType() != MoneyChatMessage.MessageType.PLAYER) {
             remove.add(messageWidget);
           } else {
             messageWidget.chatMessage().deleted(true);
