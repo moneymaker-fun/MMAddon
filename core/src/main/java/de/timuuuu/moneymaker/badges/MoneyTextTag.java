@@ -23,10 +23,10 @@ public class MoneyTextTag extends NameTag {
   @Override
   protected @Nullable RenderableComponent getRenderableComponent() {
     if(!visible(entity)) return null;
-    Component component = Component.text("MoneyMaker-Addon", TextColor.color(this.addon.configuration().badgeConfiguration.textColor().get().get()));
+    Component component = Component.text("MoneyMaker-Addon ", TextColor.color(this.addon.configuration().badgeConfiguration.textColor().get().get()));
     Group group = AddonUtil.playerStatus.get(entity.getUniqueId()).group();
     if(group.getTagName() != null) {
-      component.append(Component.text(group.getTagName()));
+      component.append(Component.text(group.getTagName(), group.getTextColor()));
     }
     return RenderableComponent.of(component);
   }
