@@ -36,16 +36,8 @@ public class ScoreBoardListener {
           this.cachedLanguage = language;
           try {
             this.addon.chatMessageLoader().loadMessages("moneymaker", language);
-            this.addon.pushNotification(
-                Component.text("ChatMessageLoader"),
-                Component.text("Chat Messages for " + language + " loaded")
-            );
           } catch (IOException e) {
-            this.addon.pushNotification(
-                Component.text("ChatMessageLoader"),
-                Component.text("Failed to load Chat Messages for " + language)
-            );
-            throw new RuntimeException(e);
+            this.addon.logger().error("Failed to load chat messages for " + language, e);
           }
         }
       }
