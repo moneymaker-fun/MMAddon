@@ -4,7 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
@@ -114,7 +114,7 @@ public class ChatActivity extends SimpleActivity {
     // Show Chat Reconnect Button
     SwitchWidget chatReconnectSwitch = SwitchWidget.create(value -> {
       this.addon.configuration().chatConfiguration.hideOnlineStatus.set(value);
-      this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+      this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
           Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), value));
 
@@ -148,10 +148,10 @@ public class ChatActivity extends SimpleActivity {
     if(this.addon.moneyChatClient().isAuthenticated()) {
       List<MoneyPlayer> players = new ArrayList<>(AddonUtil.playerStatus.values());
       players.sort(Comparator.comparing(moneyPlayer -> {
-        if(moneyPlayer.rank() != null) {
-          return moneyPlayer.rank().getId();
+        if(moneyPlayer.group() != null) {
+          return moneyPlayer.group().getId();
         }
-        return MoneyRank.USER.getId();
+        return GroupService.getGroup("user").getId();
       }));
 
       if(Util.isAdmin(this.addon.labyAPI().getUniqueId()) && this.addon.configuration().chatShowAllPlayers().get()) {
@@ -418,7 +418,7 @@ public class ChatActivity extends SimpleActivity {
         this.addon.labyAPI().getUniqueId(),
         this.addon.labyAPI().getName(),
         message,
-        MoneyRank.USER,
+        GroupService.getGroup("user"),
         false,
         "N/A",
         this.addon.addonInfo().getVersion(),

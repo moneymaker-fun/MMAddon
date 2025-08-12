@@ -1,6 +1,6 @@
 package de.timuuuu.moneymaker.utils;
 
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.Group;
 import java.util.UUID;
 
 public class MoneyPlayer {
@@ -10,16 +10,16 @@ public class MoneyPlayer {
   private String server;
   private String addonVersion;
   private String minecraftVersion;
-  private MoneyRank rank;
+  private Group group;
   private boolean hideOnlineStatus;
 
-  public MoneyPlayer(UUID uuid, String userName, String server, String addonVersion, String minecraftVersion, MoneyRank rank, boolean hideOnlineStatus) {
+  public MoneyPlayer(UUID uuid, String userName, String server, String addonVersion, String minecraftVersion, Group group, boolean hideOnlineStatus) {
     this.uuid = uuid;
     this.userName = userName;
     this.server = server;
     this.addonVersion = addonVersion;
     this.minecraftVersion = minecraftVersion;
-    this.rank = rank;
+    this.group = group;
     this.hideOnlineStatus = hideOnlineStatus;
   }
 
@@ -43,12 +43,12 @@ public class MoneyPlayer {
     return minecraftVersion;
   }
 
-  public MoneyRank rank() {
-    return rank;
+  public Group group() {
+    return group;
   }
 
-  public void rank(MoneyRank rank) {
-    this.rank = rank;
+  public void group(Group group) {
+    this.group = group;
   }
 
   public boolean hideOnlineStatus() {

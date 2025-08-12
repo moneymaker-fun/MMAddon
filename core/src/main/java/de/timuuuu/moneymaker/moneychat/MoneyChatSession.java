@@ -1,9 +1,10 @@
 package de.timuuuu.moneymaker.moneychat;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
+import de.timuuuu.moneymaker.group.Group;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.MoneyChatState;
 import de.timuuuu.moneymaker.moneychat.message.MessageListener;
@@ -119,7 +120,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
     this.moneyChatClient.sendPacket(new PacketAddonStatistics("add", this.session.getUniqueId(), this.session.getUsername(),
         this.moneyChatClient.addon().addonInfo().getVersion(), this.moneyChatClient.addon().labyAPI().minecraft().getVersion(), this.moneyChatClient.addon().labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
 
-    this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+    this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
         Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
         Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.moneyChatClient.addon().configuration().chatConfiguration.hideOnlineStatus.get()));
 
@@ -163,16 +164,16 @@ public class MoneyChatSession extends MoneyPacketHandler {
   @Override
   public void handle(PacketUserRankUpdate packet) {
     UUID uuid = UUID.fromString(packet.uuid());
-    MoneyRank rank = MoneyRank.byName(packet.rank());
-    if(rank != null) {
+    Group group = GroupService.getGroup(packet.rank());
+    if(group != null) {
       if(AddonUtil.playerStatus.containsKey(uuid)) {
-        AddonUtil.playerStatus.get(uuid).rank(rank);
+        AddonUtil.playerStatus.get(uuid).group(group);
       }
       if(this.addon.labyAPI().getUniqueId().equals(uuid)) {
         this.addon.pushNotification(
             Component.translatable("moneymaker.notification.chat.rank-changed.title", NamedTextColor.GREEN),
-            Component.translatable("moneymaker.notification.chat.rank-changed.text", NamedTextColor.YELLOW, Component.text(rank.getOnlineColor() + rank.getName())),
-            rank.getIcon()
+            Component.translatable("moneymaker.notification.chat.rank-changed.text", NamedTextColor.YELLOW, Component.text(group.getDisplayName(), group.getTextColor())),
+            group.getIcon()
         );
       }
     }
@@ -187,7 +188,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
             packet.server(),
             packet.addonVersion(),
             packet.minecraftVersion(),
-            packet.rank(),
+            packet.group(),
             packet.hideOnlineStatus()
         )
     ));

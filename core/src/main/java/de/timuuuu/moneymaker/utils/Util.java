@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.AddonUtil.MineType;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
@@ -109,12 +108,12 @@ public class Util {
 
   public static boolean isAdmin(UUID uuid) {
     if(!AddonUtil.playerStatus.containsKey(uuid)) return false;
-    return AddonUtil.playerStatus.get(uuid).rank() == MoneyRank.ADMIN;
+    return AddonUtil.playerStatus.get(uuid).group().isAdmin();
   }
 
   public static boolean isStaff(UUID uuid) {
     if(!AddonUtil.playerStatus.containsKey(uuid)) return false;
-    return AddonUtil.playerStatus.get(uuid).rank().isStaff();
+    return AddonUtil.playerStatus.get(uuid).group().isStaff();
   }
 
   public static int timeToInt(String input, boolean hours) {

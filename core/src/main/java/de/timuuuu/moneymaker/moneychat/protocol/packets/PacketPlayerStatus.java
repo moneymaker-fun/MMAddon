@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.moneychat.protocol.packets;
 
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.Group;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
@@ -10,18 +11,18 @@ public class PacketPlayerStatus extends MoneyPacket {
 
   private UUID uuid;
   private String username;
-  private MoneyRank rank;
+  private Group group;
   private String server;
   private String addonVersion;
   private String minecraftVersion;
   private boolean developmentEnvironment;
   private boolean hideOnlineStatus;
 
-  public PacketPlayerStatus(UUID uuid, String username, MoneyRank rank, String server,
+  public PacketPlayerStatus(UUID uuid, String username, Group group, String server,
       String addonVersion, String minecraftVersion, boolean developmentEnvironment, boolean hideOnlineStatus) {
     this.uuid = uuid;
     this.username = username;
-    this.rank = rank;
+    this.group = group;
     this.server = server;
     this.addonVersion = addonVersion;
     this.minecraftVersion = minecraftVersion;
@@ -35,7 +36,7 @@ public class PacketPlayerStatus extends MoneyPacket {
   public void read(MoneyPacketBuffer packetBuffer) {
     this.uuid = packetBuffer.readUUID();
     this.username = packetBuffer.readString();
-    this.rank = MoneyRank.byName(packetBuffer.readString());
+    this.group = GroupService.getGroup(packetBuffer.readString());
     this.server = packetBuffer.readString();
     this.addonVersion = packetBuffer.readString();
     this.minecraftVersion = packetBuffer.readString();
@@ -47,7 +48,7 @@ public class PacketPlayerStatus extends MoneyPacket {
   public void write(MoneyPacketBuffer packetBuffer) {
     packetBuffer.writeUUID(this.uuid);
     packetBuffer.writeString(this.username);
-    packetBuffer.writeString(this.rank.getName());
+    packetBuffer.writeString(this.group.getName());
     packetBuffer.writeString(this.server);
     packetBuffer.writeString(this.addonVersion);
     packetBuffer.writeString(this.minecraftVersion);
@@ -68,8 +69,8 @@ public class PacketPlayerStatus extends MoneyPacket {
     return username;
   }
 
-  public MoneyRank rank() {
-    return rank;
+  public Group group() {
+    return group;
   }
 
   public String server() {

@@ -60,7 +60,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
         ResourceLocation.create("moneymaker", "textures/icon.png"))).addId("avatar"));
 
     if(!this.placeholder) {
-      Component nameComponent = Component.text(this.player.rank().getChatPrefix() + this.player.userName());
+      Component nameComponent = Component.text(this.player.group().getChatPrefix() + this.player.userName());
       nameComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.player.userName()));
       entry.addEntry(ComponentWidget.component(nameComponent).addId("userName"));
 

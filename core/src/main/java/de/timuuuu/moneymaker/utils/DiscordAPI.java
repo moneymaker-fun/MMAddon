@@ -1,10 +1,10 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.boosters.Booster;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import de.timuuuu.moneymaker.group.GroupService;
 import net.labymod.api.thirdparty.discord.DiscordActivity;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Asset;
 import net.labymod.api.thirdparty.discord.DiscordActivity.Builder;
@@ -24,9 +24,10 @@ public class DiscordAPI {
 
   public DiscordAPI(MoneyMakerAddon addon) {
     this.addon = addon;
+    this.imageUrl = GroupService.getGroup("user").getIconUrl();
   }
 
-  private String imageUrl = MoneyRank.USER.getIconUrl();
+  private String imageUrl;
   private String line1 = "";
   private String line2 = "";
 
@@ -92,8 +93,8 @@ public class DiscordAPI {
 
       if (this.addon.addonUtil().inMine()) {
         mineCount.getAndAdd(1);
-        if (!imageUrl.equals(this.addon.addonUtil().rank().getIconUrl())) {
-          imageUrl = this.addon.addonUtil().rank().getIconUrl();
+        if (!imageUrl.equals(this.addon.addonUtil().group().getIconUrl())) {
+          imageUrl = this.addon.addonUtil().group().getIconUrl();
         }
         this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently") +
             (this.addon.addonUtil().currentMine() != null && this.addon.configuration().discordConfiguration.showDetailedLocation().get() ? " - " + I18n.translate(this.addon.addonUtil().currentMine().translation()) : "");

@@ -2,9 +2,9 @@ package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.event.MoneyChatDisconnectEvent;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
-import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MineSwitchEvent;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
@@ -65,7 +65,7 @@ public class MoneyAddonListener {
 
     if(this.addon.moneyChatClient().isAuthenticated()) {
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
-          Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+          Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
           Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
     }
@@ -85,11 +85,11 @@ public class MoneyAddonListener {
           event.newSession().getUniqueId(), event.newSession().getUsername(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(), Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment()));
 
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
-          event.previousSession().getUniqueId(), event.previousSession().getUsername(), MoneyRank.USER,
+          event.previousSession().getUniqueId(), event.previousSession().getUsername(), GroupService.getGroup("user"),
           Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
-          event.newSession().getUniqueId(), event.newSession().getUsername(), MoneyRank.USER,
+          event.newSession().getUniqueId(), event.newSession().getUsername(), GroupService.getGroup("user"),
           Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
 
@@ -126,7 +126,7 @@ public class MoneyAddonListener {
     if(this.addon.moneyChatClient().isAuthenticated()) {
       this.addon.moneyChatClient().sendPacket(new PacketAddonStatistics("remove", Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), "", "", false));
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
-          Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+          Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
           "OFFLINE", MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
     }
@@ -146,7 +146,7 @@ public class MoneyAddonListener {
       this.lastMineUpdate = System.currentTimeMillis();
       if(this.addon.moneyChatClient().isAuthenticated()) {
         this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
-            Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+            Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
             Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
             Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
       }
@@ -168,7 +168,7 @@ public class MoneyAddonListener {
       this.lastLevelUpdate = System.currentTimeMillis();
       if(this.addon.moneyChatClient().isAuthenticated()) {
         this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
-            Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+            Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
             Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
             Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
       }
@@ -192,7 +192,7 @@ public class MoneyAddonListener {
     MoneyPlayer player = event.player();
 
     if(uuid.equals(this.addon.labyAPI().getUniqueId())) {
-      this.addon.addonUtil().rank(player.rank());
+      this.addon.addonUtil().group(player.group());
     }
 
     if(AddonUtil.playerStatus.containsKey(uuid)) {
@@ -209,13 +209,13 @@ public class MoneyAddonListener {
             Task.builder(() -> this.addon.pushNotification(
                 Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
                 Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
-                    Component.text(player.rank().getChatPrefix() + player.userName())),
+                    Component.text(player.group().getChatPrefix() + player.userName())),
                 Icon.head(uuid)
             )).delay(2, TimeUnit.SECONDS).build().execute();
           } else {
             this.addon.displayMessage(this.addon.prefix.copy().append(
                 Component.translatable("moneymaker.notification.chat.user.online", TextColor.color(85, 255, 85),
-                    Component.text(player.rank().getChatPrefix() + player.userName()))
+                    Component.text(player.group().getChatPrefix() + player.userName()))
             ));
           }
         }
@@ -228,13 +228,13 @@ public class MoneyAddonListener {
             this.addon.pushNotification(
                 Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
                 Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
-                    Component.text(player.rank().getChatPrefix() + player.userName())),
+                    Component.text(player.group().getChatPrefix() + player.userName())),
                 Icon.head(uuid)
             );
           } else {
             this.addon.displayMessage(this.addon.prefix.copy().append(
                 Component.translatable("moneymaker.notification.chat.user.offline", TextColor.color(255, 85, 85),
-                    Component.text(player.rank().getChatPrefix() + player.userName()))
+                    Component.text(player.group().getChatPrefix() + player.userName()))
             ));
           }
         }

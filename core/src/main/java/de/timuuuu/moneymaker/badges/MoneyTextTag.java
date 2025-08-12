@@ -1,7 +1,8 @@
 package de.timuuuu.moneymaker.badges;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.Group;
+import de.timuuuu.moneymaker.group.Group.GroupDisplay;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -23,9 +24,9 @@ public class MoneyTextTag extends NameTag {
   protected @Nullable RenderableComponent getRenderableComponent() {
     if(!visible(entity)) return null;
     Component component = Component.text("MoneyMaker-Addon", TextColor.color(this.addon.configuration().badgeConfiguration.textColor().get().get()));
-    MoneyRank rank = AddonUtil.playerStatus.get(entity.getUniqueId()).rank();
-    if(rank.getNameTag() != null) {
-      component.append(rank.getNameTag());
+    Group group = AddonUtil.playerStatus.get(entity.getUniqueId()).group();
+    if(group.getTagName() != null) {
+      component.append(Component.text(group.getTagName()));
     }
     return RenderableComponent.of(component);
   }
@@ -47,7 +48,8 @@ public class MoneyTextTag extends NameTag {
     if(!this.addon.configuration().badgeConfiguration.textTag().get()) return false;
     if(!AddonUtil.playerStatus.containsKey(player.profile().getUniqueId())) return false;
     if(AddonUtil.playerStatus.get(player.profile().getUniqueId()) == null) return false;
-    return AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() != MoneyRank.USER;
+    Group group = AddonUtil.playerStatus.get(player.profile().getUniqueId()).group();
+    return group.getDisplayType() == GroupDisplay.BOTH || group.getDisplayType() == GroupDisplay.ABOVE_HEAD;
   }
 
 }

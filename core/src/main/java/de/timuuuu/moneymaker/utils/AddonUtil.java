@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.utils;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.Group;
 import net.labymod.api.util.I18n;
 import java.util.HashMap;
 import java.util.UUID;
@@ -13,8 +13,6 @@ public class AddonUtil {
   public AddonUtil(MoneyMakerAddon addon) {
     this.addon = addon;
   }
-
-
 
   private String currentEvent = "NONE";
   private String motd = "";
@@ -46,7 +44,7 @@ public class AddonUtil {
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
 
-  private MoneyRank rank = MoneyRank.USER;
+  private Group group;
 
   private boolean inMine = false;
   private boolean inFarming = false;
@@ -114,12 +112,12 @@ public class AddonUtil {
   private boolean workerNotifySent = false;
   private boolean debrisNotifySent = false;
 
-  public MoneyRank rank() {
-    return rank;
+  public Group group() {
+    return group;
   }
 
-  public void rank(MoneyRank rank) {
-    this.rank = rank;
+  public void group(Group group) {
+    this.group = group;
   }
 
   public FarmingCave farmingCave() {

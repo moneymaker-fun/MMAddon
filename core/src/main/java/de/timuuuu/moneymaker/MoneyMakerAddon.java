@@ -15,7 +15,7 @@ import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.commands.ResetCommand;
 import de.timuuuu.moneymaker.commands.TimerCommand;
 import de.timuuuu.moneymaker.commands.WebsiteCommand;
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisTimerWidget;
@@ -102,6 +102,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerSettingCategory();
 
     instance = this;
+    new GroupService().loadGroups();
     this.discordAPI = new DiscordAPI(this);
     this.apiUtil = new ApiUtil(this);
 
@@ -172,7 +173,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.configuration().chatConfiguration.showDetailedLocation().addChangeListener((type, oldValue, newValue) -> {
           if(this.moneyChatClient.isAuthenticated()) {
-            this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+            this.moneyChatClient.sendPacket(new PacketPlayerStatus(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
                 Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
                 Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), configuration().chatConfiguration.hideOnlineStatus.get()));
           }

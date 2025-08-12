@@ -30,8 +30,7 @@ public class MoneyChatPrefix implements ChatPrefix {
         MoneyPlayer moneyPlayer = AddonUtil.playerStatus.get(gameProfile.getUniqueId());
         double headSize = 8.0 * scale;
         int margin = 1;
-        moneyPlayer.rank().getIcon().render(stack, x + (float) margin, y + textOffset, (float) headSize);
-
+        moneyPlayer.group().getIcon().render(stack, x + (float) margin, y + textOffset, (float) headSize);
       }
   }
 

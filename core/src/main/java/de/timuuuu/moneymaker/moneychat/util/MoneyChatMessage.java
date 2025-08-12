@@ -1,7 +1,9 @@
 package de.timuuuu.moneymaker.moneychat.util;
 
 import com.google.gson.JsonObject;
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.group.Group;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
@@ -17,7 +19,7 @@ public class MoneyChatMessage {
   private UUID uuid;
   private String userName;
   private String message;
-  private MoneyRank rank;
+  private Group group;
   private MessageType messageType;
   private boolean deleted = false;
   private boolean fromServerCache;
@@ -25,12 +27,12 @@ public class MoneyChatMessage {
   private String addonVersion;
   private String minecraftVersion;
 
-  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, MoneyRank rank, boolean fromServerCache, String timeStamp, String addonVersion, String minecraftVersion) {
+  public MoneyChatMessage(String messageId, UUID uuid, String userName, String message, Group group, boolean fromServerCache, String timeStamp, String addonVersion, String minecraftVersion) {
     this.messageId = messageId;
     this.uuid = uuid;
     this.userName = userName;
     this.message = message;
-    this.rank = rank;
+    this.group = group;
     this.messageType = MessageType.getMessageType(uuid.toString());
     this.fromServerCache = fromServerCache;
     this.timeStamp = timeStamp;
@@ -45,7 +47,7 @@ public class MoneyChatMessage {
           UUID.fromString(object.get("uuid").getAsString()),
           object.get("userName").getAsString(),
           object.get("message").getAsString(),
-          object.has("rank") ? MoneyRank.byName(object.get("rank").getAsString()) : MoneyRank.USER,
+          object.has("rank") ? GroupService.getGroup(object.get("rank").getAsString()) : GroupService.getGroup("user"),
               object.has("fromCache") && object.get("fromCache").getAsBoolean(),
           object.has("timeStamp") ? object.get("timeStamp").getAsString() : null,
           object.has("addonVersion") ? object.get("addonVersion").getAsString() : "N/A",
@@ -75,8 +77,8 @@ public class MoneyChatMessage {
     this.message = message;
   }
 
-  public MoneyRank rank() {
-    return rank;
+  public Group group() {
+    return group;
   }
 
   public MessageType messageType() {

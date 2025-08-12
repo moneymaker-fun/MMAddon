@@ -1,7 +1,8 @@
 package de.timuuuu.moneymaker.moneychat.protocol.packets;
 
+import de.timuuuu.moneymaker.group.Group;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
-import de.timuuuu.moneymaker.enums.MoneyRank;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
@@ -23,14 +24,14 @@ public class PacketMessage extends MoneyPacket {
     UUID uuid = packetBuffer.readUUID();
     String username = packetBuffer.readString();
     String message = packetBuffer.readString();
-    MoneyRank rank = MoneyRank.byName(packetBuffer.readString());
+    Group group = GroupService.getGroup(packetBuffer.readString());
     String time = packetBuffer.readString();
     String addonVersion = packetBuffer.readString();
     String minecraftVersion = packetBuffer.readString();
-    if(rank.isStaff()) {
+    if(group.isStaff()) {
       message = message.replace("&", "§");
     }
-    this.message = new MoneyChatMessage(messageId, uuid, username, message, rank, false, time, addonVersion, minecraftVersion);
+    this.message = new MoneyChatMessage(messageId, uuid, username, message, group, false, time, addonVersion, minecraftVersion);
   }
 
   @Override
@@ -39,7 +40,7 @@ public class PacketMessage extends MoneyPacket {
     packetBuffer.writeUUID(this.message.uuid());
     packetBuffer.writeString(this.message.userName());
     packetBuffer.writeString(this.message.message());
-    packetBuffer.writeString(this.message.rank().getName());
+    packetBuffer.writeString(this.message.group().getName());
     packetBuffer.writeString(this.message.timeStamp());
     packetBuffer.writeString(this.message.addonVersion());
     packetBuffer.writeString(this.message.minecraftVersion());

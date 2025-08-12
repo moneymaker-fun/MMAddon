@@ -5,7 +5,7 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.gui.icon.Icon;
 
-public enum MoneyRank {
+public enum MoneyRankA {
 
   ADMIN(1, "admin", true, "§8[§4Admin§8] §4", "§4", Component.text(" Admin", NamedTextColor.DARK_RED), Common.ICON_DARK_RED, "https://moneymakeraddon.de/addon-assets/lore_red.png"),
   DEVELOPER(2, "developer", true, "§8[§4Dev§8] §4", "§4", Component.text(" Dev", NamedTextColor.RED), Common.ICON_RED, "https://moneymakeraddon.de/addon-assets/lore_light_red.png"),
@@ -23,7 +23,7 @@ public enum MoneyRank {
   private final Icon icon;
   private final String iconUrl;
 
-  MoneyRank(int id, String name, boolean staff, String chatPrefix, String onlineColor, Component nameTag, Icon icon, String iconUrl) {
+  MoneyRankA(int id, String name, boolean staff, String chatPrefix, String onlineColor, Component nameTag, Icon icon, String iconUrl) {
     this.id = id;
     this.name = name;
     this.staff = staff;
@@ -66,9 +66,9 @@ public enum MoneyRank {
     return iconUrl;
   }
 
-  public static MoneyRank byName(String name) {
-    MoneyRank rank = MoneyRank.USER;
-    for(MoneyRank ranks : MoneyRank.values()) {
+  public static MoneyRankA byName(String name) {
+    MoneyRankA rank = MoneyRankA.USER;
+    for(MoneyRankA ranks : MoneyRankA.values()) {
       if(ranks.getName().equalsIgnoreCase(name)) {
         rank = ranks;
       }

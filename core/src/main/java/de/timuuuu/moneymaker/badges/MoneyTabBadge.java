@@ -1,7 +1,7 @@
 package de.timuuuu.moneymaker.badges;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.Group;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import net.labymod.api.client.entity.player.badge.renderer.BadgeRenderer;
 import net.labymod.api.client.network.NetworkPlayerInfo;
@@ -17,9 +17,9 @@ public class MoneyTabBadge extends BadgeRenderer {
 
   @Override
   public void render(Stack stack, float x, float y, NetworkPlayerInfo player) {
-    MoneyRank rank = this.visibleRank(player);
-    if(rank != null) {
-      rank.getIcon().render(stack, x, y, 8.0F);
+    Group group = this.visibleRank(player);
+    if(group != null) {
+      group.getIcon().render(stack, x, y, 8.0F);
     }
   }
 
@@ -28,12 +28,12 @@ public class MoneyTabBadge extends BadgeRenderer {
     return this.visibleRank(player) != null;
   }
 
-  private MoneyRank visibleRank(NetworkPlayerInfo player) {
+  private Group visibleRank(NetworkPlayerInfo player) {
     if(player.profile().getUniqueId() == null) return null;
     if(!this.addon.configuration().enabled().get()) return null;
     if(!this.addon.configuration().badgeConfiguration.tabListIcon().get()) return null;
     if(!AddonUtil.playerStatus.containsKey(player.profile().getUniqueId())) return null;
-    return AddonUtil.playerStatus.get(player.profile().getUniqueId()) != null ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).rank() : null;
+    return AddonUtil.playerStatus.get(player.profile().getUniqueId()) != null ? AddonUtil.playerStatus.get(player.profile().getUniqueId()).group() : null;
   }
 
 }

@@ -4,7 +4,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.LanguageInfoActivity;
-import de.timuuuu.moneymaker.enums.MoneyRank;
+import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketPlayerStatus;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
@@ -106,7 +106,7 @@ public class NetworkPayloadListener {
               if(!this.addon.addonUtil().inFarming()) {
                 if(this.addon.moneyChatClient().isAuthenticated()) {
                   this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
-                      Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), MoneyRank.USER,
+                      Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
                       Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
                       Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
                 }
