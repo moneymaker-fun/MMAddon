@@ -210,16 +210,22 @@
           height: 10;
         }
 
+        .mma-rank {
+          padding: 0 2 0 1;
+          width: 8;
+          height: 8;
+        }
+
         .sender {
           margin-top: 1;
           font-weight: 175;
-          font-size: 0.8;
+          font-size: 0.9;
         }
 
         .labymod-rank {
-          padding: 0 2 0 2;
-          width: 10;
-          height: 10;
+          padding: 0 2 0 0;
+          width: 8;
+          height: 8;
         }
 
         .timestamp {

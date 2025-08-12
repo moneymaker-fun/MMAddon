@@ -60,7 +60,15 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
     if (this.messageType == MoneyChatMessage.MessageType.PLAYER) {
       header.addEntry(new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar"));
-      Component senderComponent = Component.text(chatMessage.rank().getChatPrefix() + chatMessage.userName());
+      if(chatMessage.group().isStaff()) {
+        IconWidget staffIconWidget = new IconWidget(chatMessage.group().getIcon()).addId("mma-rank");
+        if(chatMessage.group().getTagName() != null) {
+          staffIconWidget.setHoverComponent(Component.text("MoneyMaker-Addon", NamedTextColor.WHITE).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(chatMessage.group().getTagName()).color(chatMessage.group().getTextColor())));
+        }
+        header.addEntry(staffIconWidget);
+      }
+      Component senderComponent = Component.text(chatMessage.userName(), chatMessage.group().getTextColor());
       senderComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.chatMessage().userName()));
       header.addEntry(ComponentWidget.component(senderComponent).addId("sender"));
 
@@ -74,6 +82,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
         }
         header.addEntry(labyIconWidget);
       }
+
     } else {
       header.addEntry(new IconWidget(this.messageType.icon()).addId("avatar"));
       header.addEntry(ComponentWidget.component(this.messageType.userName()).addId("sender"));
