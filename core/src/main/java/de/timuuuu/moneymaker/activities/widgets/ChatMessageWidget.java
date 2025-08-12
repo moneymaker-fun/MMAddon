@@ -60,17 +60,6 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     HorizontalListWidget header = new HorizontalListWidget().addId("message-header");
     if (this.messageType == MoneyChatMessage.MessageType.PLAYER) {
       header.addEntry(new IconWidget(Icon.head(chatMessage.uuid())).addId("avatar"));
-      if(chatMessage.group().isStaff()) {
-        IconWidget staffIconWidget = new IconWidget(chatMessage.group().getIcon()).addId("mma-rank");
-        if(chatMessage.group().getTagName() != null) {
-          staffIconWidget.setHoverComponent(Component.text("MoneyMaker-Addon", NamedTextColor.WHITE).decorate(
-              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(chatMessage.group().getTagName()).color(chatMessage.group().getTextColor())));
-        }
-        header.addEntry(staffIconWidget);
-      }
-      Component senderComponent = Component.text(chatMessage.userName(), chatMessage.group().getTextColor());
-      senderComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.chatMessage().userName()));
-      header.addEntry(ComponentWidget.component(senderComponent).addId("sender"));
 
       Group labyRank = Laby.references().gameUserService().gameUser(chatMessage.uuid()).visibleGroup();
       if(!labyRank.isDefault()) {
@@ -82,6 +71,18 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
         }
         header.addEntry(labyIconWidget);
       }
+
+      if(chatMessage.group().isStaff()) {
+        IconWidget staffIconWidget = new IconWidget(chatMessage.group().getIcon()).addId("mma-rank");
+        if(chatMessage.group().getTagName() != null) {
+          staffIconWidget.setHoverComponent(Component.text("MoneyMaker-Addon", NamedTextColor.YELLOW).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(chatMessage.group().getTagName()).color(chatMessage.group().getTextColor())));
+        }
+        header.addEntry(staffIconWidget);
+      }
+      Component senderComponent = Component.text(chatMessage.userName(), chatMessage.group().getTextColor());
+      senderComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.chatMessage().userName()));
+      header.addEntry(ComponentWidget.component(senderComponent).addId("sender"));
 
     } else {
       header.addEntry(new IconWidget(this.messageType.icon()).addId("avatar"));

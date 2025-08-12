@@ -3,9 +3,12 @@ package de.timuuuu.moneymaker.activities.widgets;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.Laby;
+import net.labymod.api.Textures.SpriteLabyMod;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.attributes.BorderRadius;
@@ -14,6 +17,7 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWi
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 import net.labymod.api.client.resources.ResourceLocation;
+import net.labymod.api.user.group.Group;
 import net.labymod.api.util.Color;
 import net.labymod.api.util.I18n;
 
@@ -60,7 +64,27 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
         ResourceLocation.create("moneymaker", "textures/icon.png"))).addId("avatar"));
 
     if(!this.placeholder) {
-      Component nameComponent = Component.text(this.player.group().getChatPrefix() + this.player.userName());
+
+      Group labyRank = Laby.references().gameUserService().gameUser(player.uuid()).visibleGroup();
+      if(!labyRank.isDefault()) {
+        IconWidget labyIconWidget = new IconWidget(SpriteLabyMod.WHITE_WOLF_HIGH_RES).addId("labymod-rank");
+        labyIconWidget.color().set(labyRank.getColor().getRGB());
+        if(labyRank.getTagName() != null) {
+          labyIconWidget.setHoverComponent(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor())));
+        }
+        entry.addEntry(labyIconWidget);
+      }
+
+      if(this.player.group().isStaff()) {
+        IconWidget staffIconWidget = new IconWidget(this.player.group().getIcon()).addId("mma-rank");
+        if(this.player.group().getTagName() != null) {
+          staffIconWidget.setHoverComponent(Component.text("MoneyMaker-Addon", NamedTextColor.YELLOW).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(this.player.group().getTagName()).color(this.player.group().getTextColor())));
+        }
+        entry.addEntry(staffIconWidget);
+      }
+      Component nameComponent = Component.text(this.player.userName(), this.player.group().getTextColor());
       nameComponent.clickEvent(ClickEvent.openUrl("https://laby.net/@" + this.player.userName()));
       entry.addEntry(ComponentWidget.component(nameComponent).addId("userName"));
 
@@ -75,7 +99,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
         entry.addEntry(ComponentWidget.component(versionComponent).addId("versions"));
       }
     } else {
-      entry.addEntry(ComponentWidget.component(this.placeholderTitle).addId("userName"));
+      entry.addEntry(ComponentWidget.component(this.placeholderTitle));
     }
 
     HorizontalListWidget data = new HorizontalListWidget().addId("data");

@@ -88,6 +88,31 @@
       height: 10;
       width: 100%;
 
+      .labymod-rank {
+        width: 10;
+        height: 10;
+      }
+
+      .mma-rank {
+        padding: 0 2 0 1;
+        width: 10;
+        height: 10;
+      }
+
+      .avatar {
+        padding: 0 2 0 2;
+        width: 10;
+        height: 10;
+      }
+
+      .userName {
+        font-size: 1.0;
+      }
+
+      .versions {
+        font-size: 0.6;
+      }
+
       .avatar {
         padding: 0 2 0 2;
         width: 10;
@@ -100,7 +125,7 @@
       margin-top: 5;
 
       .currentServer {
-      margin-left: 5;
+        margin-left: 5;
         text-color: rgb(150, 150, 150);
       }
 
@@ -210,7 +235,6 @@
         }
 
         .labymod-rank {
-          padding: 0 2 0 0;
           width: 8;
           height: 8;
         }
