@@ -100,7 +100,7 @@ public class ChatActivity extends SimpleActivity {
       ButtonWidget reconnectButton = ButtonWidget.i18n("moneymaker.ui.chat.server.reconnect-button");
       reconnectButton.addId("chat-reconnect-button");
       reconnectButton.setPressable(() -> {
-        this.addon.moneyChatClient().disconnect(Initiator.USER, "Reconnect");
+        this.addon.moneyChatClient().disconnect(Initiator.USER, "Reconnecting to Chat Server...", "Reconnect");
         reloadScreen();
         reconnectButton.setEnabled(false);
           Task.builder(() -> {

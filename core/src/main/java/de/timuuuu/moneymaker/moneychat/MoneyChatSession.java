@@ -100,7 +100,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
       });
     } catch (Exception e) {
       e.printStackTrace();
-      this.moneyChatClient.disconnect(Initiator.CLIENT, e.getMessage());
+      this.moneyChatClient.disconnect(Initiator.CLIENT, e.getMessage(), "Client Error - EncryptionRequest");
     }
 
   }
@@ -196,7 +196,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
 
   @Override
   public void handle(MoneyPacketDisconnect packet) {
-    this.moneyChatClient.disconnect(Initiator.SERVER, packet.reason());
+    this.moneyChatClient.disconnect(Initiator.SERVER, packet.reason(), packet.reason());
   }
 
   @Override

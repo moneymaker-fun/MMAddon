@@ -75,7 +75,7 @@ public class MoneyChatClient {
         long durationKeepAlive = TimeUtil.getMillis() - this.timeLastKeepAlive;
         long durationConnect = this.timeNextConnect - TimeUtil.getMillis();
         if (this.state != MoneyChatState.OFFLINE && durationKeepAlive > 25000L) {
-          this.disconnect(Initiator.CLIENT, I18n.translate("moneymaker.ui.chat.protocol.disconnect.timeout"));
+          this.disconnect(Initiator.CLIENT, I18n.translate("moneymaker.ui.chat.protocol.disconnect.timeout"), "Timeout");
           this.addon.chatActivity().reloadScreen();
         }
 
@@ -133,7 +133,7 @@ public class MoneyChatClient {
   @Subscribe
   public void onSessionUpdate(SessionUpdateEvent event) {
     if (event.isAnotherAccount()) {
-      this.disconnect(Initiator.USER, I18n.translate("moneymaker.ui.chat.protocol.disconnect.sessionSwitch"));
+      this.disconnect(Initiator.USER, I18n.translate("moneymaker.ui.chat.protocol.disconnect.sessionSwitch"), "Session Switch");
       if (event.newSession().isPremium()) {
         this.connect();
       }
@@ -149,7 +149,7 @@ public class MoneyChatClient {
 
   }
 
-  public void disconnect(Initiator initiator, String reason) {
+  public void disconnect(Initiator initiator, String reason, String serverReason) {
     long delay = (long)((double)1000.0F * Math.random() * (double)60.0F);
     this.timeNextConnect = TimeUtil.getMillis() + 10000L + delay;
     if (this.doNotConnect && this.lastDisconnectReason != null) {
@@ -163,7 +163,7 @@ public class MoneyChatClient {
 
       this.fireEventSync(new MoneyChatDisconnectEvent(this, initiator, I18n.translate(reason)));
       this.updateState(MoneyChatState.OFFLINE);
-      this.sendPacket(new MoneyPacketDisconnect("Logout"), (channel) -> {
+      this.sendPacket(new MoneyPacketDisconnect(serverReason == null ? "Logout" : serverReason), (channel) -> {
         if (channel.isOpen()) {
           channel.close();
         }

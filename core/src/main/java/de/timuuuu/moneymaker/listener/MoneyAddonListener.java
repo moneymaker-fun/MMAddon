@@ -132,7 +132,7 @@ public class MoneyAddonListener {
     }
     //TODO: Move Leaderboard to Rest API
     //this.addon.chatClient().util().sendLeaderboard(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
-    this.addon.moneyChatClient().disconnect(Initiator.SERVER, "Game Shutdown");
+    this.addon.moneyChatClient().disconnect(Initiator.SERVER, "Game Shutdown", "Game Shutdown");
     if(this.addon.configuration().exportBoosterOnShutdown().get()) {
       BoosterActivity.writeLinkedListToCSV(true);
     }
