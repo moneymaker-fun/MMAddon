@@ -49,8 +49,6 @@ public class MoneyChatClient {
   private final ExecutorService executor = LabyExecutors.newFixedThreadPool(2, "MoneyChatExecutor#%d");
   private final ScheduledExecutorService timeoutExecutor = LabyExecutors.newScheduledThreadPool(1, "MoneyChatTimeoutExecutor#%d");
 
-  private final byte[] verifyToken = new byte[10];
-
   private long timeLastKeepAlive;
   private long timeNextConnect;
   private boolean doNotConnect;
@@ -237,10 +235,6 @@ public class MoneyChatClient {
 
   public MoneyMakerAddon addon() {
     return addon;
-  }
-
-  public byte[] getVerifyToken() {
-    return verifyToken;
   }
 
   public String getLastDisconnectReason() {
