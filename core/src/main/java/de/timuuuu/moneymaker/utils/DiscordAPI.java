@@ -93,7 +93,7 @@ public class DiscordAPI {
 
       if (this.addon.addonUtil().inMine()) {
         mineCount.getAndAdd(1);
-        if (!imageUrl.equals(this.addon.addonUtil().group().getIconUrl())) {
+        if (this.addon.addonUtil().group() != null && !imageUrl.equals(this.addon.addonUtil().group().getIconUrl())) {
           imageUrl = this.addon.addonUtil().group().getIconUrl();
         }
         this.line1 = I18n.translate("moneymaker.discordPresence.mine.currently") +
