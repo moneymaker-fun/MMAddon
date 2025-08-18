@@ -33,15 +33,6 @@
         "miners": "Your saved miner data has been reset.",
         "debris": "Your saved debris data has been reset.",
         "all": "All saved data has been reset."
-      },
-      "website": {
-        "usage": "Please use /mm-website <open, register>",
-        "request": {
-          "chatNotConnected": "You are currently not connected to the chat server.",
-          "sent": "A request to our Server has been sent, awaiting server response",
-          "failed": "Failed to create an registration token for your account. Reason: %s",
-          "success": "Your token has been create successfully. Please finish your registration at the following link:"
-        }
       }
     },
     "text": {
@@ -104,6 +95,45 @@
       "version": {
         "name": "Version: ",
         "date": "Last Update: "
+      }
+    },
+    "verification": {
+      "title": "MoneyMaker Verification",
+      "commandUsage": "Please use /mm-verify <discord, website>",
+      "request": {
+        "chatNotConnected": "You are currently not connected to the chat server.",
+        "sent": "A request to our Server has been sent, awaiting server response",
+        "failed": "Failed to create an token for your account. Reason: %s"
+      },
+      "chat": {
+        "website": {
+          "success": "Your token has been create successfully. Please finish your registration at the following link:"
+        },
+        "discord": {
+          "success": "Your token has been create successfully. Please join our Discord to link your Discord Account",
+          "token": "Your token is: %s",
+          "tokenHover": "Click to copy the token to your clipboard"
+        }
+      },
+      "activity": {
+        "serverWaiting": "Waiting for Chat Server response...",
+        "serverResponseInfo": "If the Popup does not update in a few seconds, please contact us via Discord.",
+        "error": "There was an error while creating your token. Please contact us via Discord.",
+        "errorReason": "Reason: %s",
+        "closeInfo": "Please close the Window only after you have used your Token.",
+        "tokenGenerated": "Your Token has been generated. Do not share this Token with anyone!",
+        "token": "Token: %s",
+        "discordButton": "Join Discord",
+        "website": {
+          "infoText": "Please use this Token to register your Minecraft Account on our Website by clicking on the Button below.",
+          "openButton": "Open Website"
+        },
+        "discord": {
+          "copyToken": "Copy Token",
+          "copied": "Your Token has been copied to your Clipboard.",
+          "infoText1": "1. Join Our Discord Server",
+          "infoText2": "2. Use the Command '/link' in the Channel %s"
+        }
       }
     },
     "notification": {
@@ -274,6 +304,9 @@
         "general": {
           "name": "General Settings"
         },
+        "account": {
+          "name": "Account Connections"
+        },
         "other": {
           "name": "Other Settings"
         }
@@ -281,6 +314,16 @@
 
       "enabled": {
         "name": "Enabled"
+      },
+      "createWebsiteAccount": {
+        "name": "Create Website Account",
+        "description": "Create an Account for our Website for submitting Feedback and other features",
+        "text": "Create"
+      },
+      "linkDiscordAccount": {
+        "name": "Link Discord Account",
+        "description": "Link your Minecraft Account to your Discord Account so that ranks can be synchronized and to use other features",
+        "text": "Link"
       },
       "showBlocksInLeaderboard": {
         "name": "Show own Blocks in Leaderboard",

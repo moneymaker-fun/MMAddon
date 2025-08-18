@@ -7,11 +7,11 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 
-public class WebsiteRegistrationMessageListener implements MessageListener {
+public class DiscordLinkMessageListener implements MessageListener {
 
   private final MoneyMakerAddon addon;
 
-  public WebsiteRegistrationMessageListener(MoneyMakerAddon addon) {
+  public DiscordLinkMessageListener(MoneyMakerAddon addon) {
     this.addon = addon;
   }
 

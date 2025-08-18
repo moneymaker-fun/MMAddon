@@ -1,11 +1,13 @@
 package de.timuuuu.moneymaker.moneychat.protocol.packets;
 
+import de.timuuuu.moneymaker.activities.popup.TokenVerificationActivity.TokenType;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketBuffer;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 
-public class PacketWebsiteToken extends MoneyPacket {
+public class PacketVerificationToken extends MoneyPacket {
 
+  private TokenType type;
   private String token;
 
   @Override
@@ -13,6 +15,7 @@ public class PacketWebsiteToken extends MoneyPacket {
 
   @Override
   public void read(MoneyPacketBuffer packetBuffer) {
+    this.type = TokenType.fromName(packetBuffer.readString());
     this.token = packetBuffer.readString();
   }
 
@@ -23,6 +26,10 @@ public class PacketWebsiteToken extends MoneyPacket {
 
   public String token() {
     return token;
+  }
+
+  public TokenType type() {
+    return type;
   }
 
 }

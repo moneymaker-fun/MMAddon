@@ -1,11 +1,14 @@
 package de.timuuuu.moneymaker.settings;
 
+import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketAddonMessage;
 import de.timuuuu.moneymaker.settings.AddonSettings.FarmingReset;
 import de.timuuuu.moneymaker.settings.AddonSettings.UpdateMode;
 import net.labymod.api.addon.AddonConfig;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
+import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.screen.widget.widgets.input.ButtonWidget.ButtonSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SwitchWidget.SwitchSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.dropdown.DropdownWidget.DropdownEntryTranslationPrefix;
@@ -42,6 +45,42 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @IntroducedIn(value = "1.4.2", namespace = "moneymaker")
   public MoneyGameplayConfiguration gameplayConfiguration = new MoneyGameplayConfiguration();
 
+  @SettingSection(value = "account", center = true)
+
+  @MethodOrder(after = "gameplayConfiguration")
+  @ButtonSetting
+  public void createWebsiteAccount() {
+    MoneyMakerAddon addon = MoneyMakerAddon.instance();
+    if(addon.moneyChatClient().isAuthenticated()) {
+      JsonObject payload = new JsonObject();
+      payload.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+      payload.addProperty("username", addon.labyAPI().getName());
+      addon.moneyChatClient().sendPacket(new MoneyPacketAddonMessage("website_register", payload));
+      addon.labyAPI().minecraft().minecraftWindow().displayScreen(addon.tokenVerificationActivity());
+    } else {
+      addon.pushNotification(
+          Component.translatable("moneymaker.verification.title", TextColor.color(255, 255, 85)),
+          Component.translatable("moneymaker.verification.request.chatNotConnected", TextColor.color(255, 85, 85))
+      );
+    }
+  }
+  @MethodOrder(after = "createWebsiteAccount")
+  @ButtonSetting
+  public void linkDiscordAccount() {
+    MoneyMakerAddon addon = MoneyMakerAddon.instance();
+    if(addon.moneyChatClient().isAuthenticated()) {
+      JsonObject payload = new JsonObject();
+      payload.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
+      payload.addProperty("username", addon.labyAPI().getName());
+      addon.moneyChatClient().sendPacket(new MoneyPacketAddonMessage("discord_link", payload));
+      addon.labyAPI().minecraft().minecraftWindow().displayScreen(addon.tokenVerificationActivity());
+    } else {
+      addon.pushNotification(
+          Component.translatable("moneymaker.verification.title", TextColor.color(255, 255, 85)),
+          Component.translatable("moneymaker.verification.request.chatNotConnected", TextColor.color(255, 85, 85))
+      );
+    }
+  }
 
   @SettingSection(value = "other", center = true)
 

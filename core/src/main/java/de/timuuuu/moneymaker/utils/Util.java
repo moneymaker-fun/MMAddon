@@ -27,6 +27,8 @@ import net.labymod.api.models.OperatingSystem;
 
 public class Util {
 
+  public static final String DISCORD_INVITE_URL = "https://discord.moneymakeraddon.de/";
+
   public static HashMap<String, MoneyTimer> timers = new HashMap<>();
 
   public static String currentServer() {
@@ -64,7 +66,7 @@ public class Util {
 
   public static ButtonWidget discordButton() {
     ButtonWidget discordButton = ButtonWidget.i18n("moneymaker.ui.button.discord", SpriteCommon.DISCORD).addId("discord-button");
-    discordButton.setPressable(() -> OperatingSystem.getPlatform().openUrl("https://discord.moneymakeraddon.de/"));
+    discordButton.setPressable(() -> OperatingSystem.getPlatform().openUrl(DISCORD_INVITE_URL));
     return discordButton;
   }
 
