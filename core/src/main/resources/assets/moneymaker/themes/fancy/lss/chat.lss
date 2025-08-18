@@ -17,14 +17,14 @@
 
 .hide-online-switch {
   top: 8;
-  left: 150;
+  left: 160;
   height: 12;
   width: 20;
 }
 
 .hide-online-title {
   top: 10;
-  left: 172;
+  left: 182;
   font-size: 0.8;
 }
 
