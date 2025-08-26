@@ -12,6 +12,7 @@ import java.util.Objects;
 import net.labymod.api.Laby;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
+import net.labymod.api.util.StringUtil;
 
 public class TickListener {
 
@@ -87,7 +88,7 @@ public class TickListener {
         mobsLine = ChatUtil.stripColor(mobsLine);
 
         if(rankingLine.startsWith("Ranking: ")) {
-          if(!(rankingLine.contains("Lädt") || rankingLine.contains("Loading") || rankingLine.isBlank() || rankingLine.contains("%"))) {
+          if(StringUtil.isNumeric(rankingLine.split(" ")[2])) {
             this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
                 .replace(".", "").replace(",", ""), this.getClass()));
           }
