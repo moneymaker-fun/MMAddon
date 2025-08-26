@@ -252,17 +252,19 @@
         "title": "%s muten",
         "message": "Geschriebene Nachricht des Spielers",
         "reason": "Gebe einen Grund für den Mute an",
+        "duration": "Dauer des Mutes",
         "send": "Senden",
         "close": "Schließen",
         "invalid": {
           "title": "Ungültiges Mute-Formular",
           "noStaff": "Du bist kein Teammitglied",
           "noReason": "Du musst einen Grund für den Mute angeben",
-          "chatError": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten"
+          "chatError": "Es ist ein Fehler beim kontaktieren des Chat-Servers aufgetreten",
+          "invalidDuration": "Die angegebene Dauer des Mutes ist ungültig"
         },
         "success": {
           "title": "Der Mute wurde gesendet",
-          "text": "%s wurde erfolgreich gemutet.\nGrund: %s"
+          "text": "%s wurde erfolgreich gemutet.\nGrund: %s\nDauer: %s"
         }
       },
       "ui": {
@@ -587,7 +589,7 @@
         "messageDeleted": "Diese Nachricht wurde gelöscht.",
         "muted": {
           "title": "Du wurdest aus dem Chat gemutet.",
-          "reason": "Grund: "
+          "info": "Grund: %s | Dauer: %s"
         },
         "button": {
           "report": "Melden",

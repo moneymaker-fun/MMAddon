@@ -1,10 +1,8 @@
-@import super();
-
 .container {
   left: 50%;
   top: 50%;
   width: 300;
-  height: 150;
+  height: 185;
   alignment-x: center;
   alignment-y: center;
   filter: blur(25);
@@ -78,6 +76,25 @@
         alignment-x: center;
       }
 
+    }
+
+    .duration-container {
+      width: 100%;
+      height: fit-content;
+      margin-left: 15;
+      margin-right: 15;
+
+      .duration-title {
+        margin-top: 10;
+        margin-bottom: 5;
+        alignment-x: center;
+      }
+
+      .duration-input {
+        width: 100%;
+        height: 15;
+        alignment-x: center;
+      }
     }
 
     .button-container {

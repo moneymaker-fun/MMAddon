@@ -179,8 +179,8 @@
     font-size: 1.4;
   }
 
-  .chat-muted-reason {
-    bottom: 20%;
+  .chat-muted-info {
+    bottom: 17%;
     alignment-x: center;
     text-color: dark_red;
     font-size: 1.0;

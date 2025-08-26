@@ -252,17 +252,19 @@
         "title": "Mute %s",
         "message": "Written message of the player",
         "reason": "Enter the reason for the mute",
+        "duration": "Duration of the mute",
         "send": "Send",
         "close": "Close",
         "invalid": {
           "title": "Invalid Mute Form",
           "noStaff": "You are not a staff member",
           "noReason": "You must provide a reason for the mute",
-          "chatError": "There was an error while contacting the Chat-Server"
+          "chatError": "There was an error while contacting the Chat-Server",
+          "invalidDuration": "The duration of the mute is invalid"
         },
         "success": {
           "title": "Mute has been sent",
-          "text": "%s has been successfully muted.\nReason: %s"
+          "text": "%s has been successfully muted.\nReason: %s\nDuration: %s"
         }
       },
       "ui": {
@@ -587,7 +589,7 @@
         "messageDeleted": "This message has been deleted.",
         "muted": {
           "title": "You have been muted from the chat.",
-          "reason": "Reason: "
+          "info": "Reason: %s | Duration: %s"
         },
         "button": {
           "report": "Report",

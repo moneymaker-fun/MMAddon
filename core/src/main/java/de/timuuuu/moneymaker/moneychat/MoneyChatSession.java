@@ -63,6 +63,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
 
   private boolean muted;
   private String muteReason;
+  private long muteDuration;
 
   private final Map<String, MessageListener> messageListeners;
 
@@ -151,6 +152,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
     if(this.moneyChatClient.addon().labyAPI().getUniqueId().equals(packet.targetUUID())) {
       this.muted = true;
       this.muteReason = packet.reason();
+      this.muteDuration = packet.duration();
       this.addon.chatActivity().addCustomChatMessage(Component.translatable("moneymaker.mute.ui.muted", NamedTextColor.RED));
       this.addon.chatActivity().reloadScreen();
     }
@@ -264,6 +266,10 @@ public class MoneyChatSession extends MoneyPacketHandler {
 
   public String muteReason() {
     return muteReason;
+  }
+
+  public long muteDuration() {
+    return muteDuration;
   }
 
 }

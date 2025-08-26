@@ -12,14 +12,16 @@ public class PacketUserMute extends MoneyPacket {
   private UUID targetUUID;
   private String targetUsername;
   private String reason;
+  private long duration;
 
   public PacketUserMute(UUID uuid, String username, UUID targetUUID, String targetUsername,
-      String reason) {
+      String reason, long duration) {
     this.uuid = uuid;
     this.username = username;
     this.targetUUID = targetUUID;
     this.targetUsername = targetUsername;
     this.reason = reason;
+    this.duration = duration;
   }
 
   public PacketUserMute() {}
@@ -31,6 +33,7 @@ public class PacketUserMute extends MoneyPacket {
     this.targetUUID = packetBuffer.readUUID();
     this.targetUsername = packetBuffer.readString();
     this.reason = packetBuffer.readString();
+    this.duration = packetBuffer.readLong();
   }
 
   @Override
@@ -40,6 +43,7 @@ public class PacketUserMute extends MoneyPacket {
     packetBuffer.writeUUID(this.targetUUID);
     packetBuffer.writeString(this.targetUsername);
     packetBuffer.writeString(this.reason);
+    packetBuffer.writeLong(this.duration);
   }
 
   @Override
@@ -65,5 +69,9 @@ public class PacketUserMute extends MoneyPacket {
 
   public String reason() {
     return reason;
+  }
+
+  public long duration() {
+    return duration;
   }
 }

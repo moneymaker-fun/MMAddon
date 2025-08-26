@@ -2,6 +2,7 @@ package de.timuuuu.moneymaker.activities;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.popup.ChatRulesActivity;
+import de.timuuuu.moneymaker.activities.popup.MuteActivity;
 import de.timuuuu.moneymaker.activities.widgets.ChatMessageWidget;
 import de.timuuuu.moneymaker.activities.widgets.OnlineEntryWidget;
 import de.timuuuu.moneymaker.group.GroupService;
@@ -10,7 +11,6 @@ import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketMessage;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserMute;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketUserUnmute;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
@@ -204,9 +204,12 @@ public class ChatActivity extends SimpleActivity {
     if(this.addon.moneyChatClient().isAuthenticated()) {
       if(this.addon.moneyChatClient().session().muted() & !Util.isStaff(this.labyAPI.getUniqueId())) {
         ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.muted.title").addId("chat-muted-title");
-        ComponentWidget reasonWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.reason").append(Component.text(this.addon.moneyChatClient().session().muteReason()))).addId("chat-muted-reason");
+        ComponentWidget infoWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.info",
+            Component.text(this.addon.moneyChatClient().session().muteReason(), NamedTextColor.YELLOW),
+            Component.text(net.labymod.api.util.TimeUnit.parseToString(this.addon.moneyChatClient().session().muteDuration()), NamedTextColor.YELLOW)
+        )).addId("chat-muted-info");
         inputContainer.addChild(componentWidget);
-        inputContainer.addChild(reasonWidget);
+        inputContainer.addChild(infoWidget);
       } else {
         inputContainer.addChild(chatInput);
       }
@@ -302,7 +305,17 @@ public class ChatActivity extends SimpleActivity {
           return;
         }
 
-        this.addon.moneyChatClient().sendPacket(new PacketUserMute(this.labyAPI.getUniqueId(), this.labyAPI.getName(), uuid, playerName, reason));
+        this.addon.labyAPI().minecraft().executeNextTick(() -> this.addon.labyAPI().minecraft().minecraftWindow().displayScreen(new MuteActivity(
+            this.addon,
+            this.addon.labyAPI().getUniqueId(),
+            this.addon.labyAPI().getName(),
+            playerName,
+            uuid,
+            this.addon.labyAPI().minecraft().minecraftWindow().currentScreen(),
+            reason
+        )));
+
+        /*this.addon.moneyChatClient().sendPacket(new PacketUserMute(this.labyAPI.getUniqueId(), this.labyAPI.getName(), uuid, playerName, reason));
         this.addCustomChatMessage(
             Component.text("Du hast ", NamedTextColor.GRAY)
                 .append(Component.text(playerName, NamedTextColor.YELLOW))
@@ -311,7 +324,7 @@ public class ChatActivity extends SimpleActivity {
         this.addCustomChatMessage(
             Component.text("Grund: ", NamedTextColor.GRAY)
                 .append(Component.text(reason, NamedTextColor.YELLOW))
-        );
+        );*/
       } else {
         this.addCustomChatMessage(Component.text("Bitte nutze /mute <Spieler> <Grund>", NamedTextColor.RED));
         return;
