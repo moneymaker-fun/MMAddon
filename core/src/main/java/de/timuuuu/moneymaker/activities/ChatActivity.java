@@ -206,7 +206,7 @@ public class ChatActivity extends SimpleActivity {
         ComponentWidget componentWidget = ComponentWidget.i18n("moneymaker.ui.chat.muted.title").addId("chat-muted-title");
         ComponentWidget infoWidget = ComponentWidget.component(Component.translatable("moneymaker.ui.chat.muted.info",
             Component.text(this.addon.moneyChatClient().session().muteReason(), NamedTextColor.YELLOW),
-            Component.text(net.labymod.api.util.TimeUnit.parseToString(this.addon.moneyChatClient().session().muteDuration()), NamedTextColor.YELLOW)
+            Component.text(net.labymod.api.util.TimeUnit.parseToString((this.addon.moneyChatClient().session().muteDuration() - System.currentTimeMillis())), NamedTextColor.YELLOW)
         )).addId("chat-muted-info");
         inputContainer.addChild(componentWidget);
         inputContainer.addChild(infoWidget);
