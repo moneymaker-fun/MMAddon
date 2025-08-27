@@ -4,6 +4,7 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.BoosterActivity;
 import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.event.MoneyChatDisconnectEvent;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketLeaderboard;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.events.MineSwitchEvent;
@@ -54,12 +55,13 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onDisconnect(ServerDisconnectEvent event) {
-    /*if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
+    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
         event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
         event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
-      //TODO: Move Leaderboard to Rest API
-      //this.addon.chatClient().util().sendLeaderboard(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
-    }*/
+      if(this.addon.moneyChatClient().isAuthenticated()) {
+        this.addon.moneyChatClient().sendPacket(new PacketLeaderboard(this.addon.labyAPI().getUniqueId(), this.addon.labyAPI().getName(), this.addon));
+      }
+    }
 
     this.addon.addonUtil().resetValues(true);
 
@@ -93,13 +95,11 @@ public class MoneyAddonListener {
           Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
 
+      this.addon.moneyChatClient().sendPacket(new PacketLeaderboard(this.addon.labyAPI().getUniqueId(), this.addon.labyAPI().getName(), this.addon));
 
     }
 
     AddonUtil.playerStatus.remove(event.previousSession().getUniqueId());
-
-    //TODO: Move Leaderboard to Rest API
-    //this.addon.chatClient().util().sendLeaderboard(event.previousSession().getUniqueId().toString(), event.previousSession().getUsername());
 
     this.addon.addonUtil().ranking(0);
     this.addon.addonUtil().breakGoalBlocks(0);
@@ -129,9 +129,9 @@ public class MoneyAddonListener {
           Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), GroupService.getGroup("user"),
           "OFFLINE", MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
+
+      this.addon.moneyChatClient().sendPacket(new PacketLeaderboard(this.addon.labyAPI().getUniqueId(), this.addon.labyAPI().getName(), this.addon));
     }
-    //TODO: Move Leaderboard to Rest API
-    //this.addon.chatClient().util().sendLeaderboard(this.addon.labyAPI().getUniqueId().toString(), this.addon.labyAPI().getName());
     this.addon.moneyChatClient().disconnect(Initiator.SERVER, "Game Shutdown", "Game Shutdown");
     if(this.addon.configuration().exportBoosterOnShutdown().get()) {
       BoosterActivity.writeLinkedListToCSV(true);
