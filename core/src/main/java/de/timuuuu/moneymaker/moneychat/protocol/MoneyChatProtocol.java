@@ -6,6 +6,7 @@ import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
+import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketLeaderboard;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketVerificationToken;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionResponse;
@@ -28,8 +29,6 @@ public class MoneyChatProtocol {
 
     private final Map<Integer, Class<? extends MoneyPacket>> packets = new HashMap<>();
 
-    // Add Player Status Retrieve Packet
-
     public MoneyChatProtocol() {
       register(0, MoneyPacketLogin.class); // C -> S
       register(1, MoneyPacketEncryptionRequest.class); // S -> C
@@ -45,8 +44,11 @@ public class MoneyChatProtocol {
       register(11, PacketUserRankUpdate.class); // S -> C
       register(12, PacketAddonStatistics.class); // C -> S
       register(13, MoneyPacketDisconnect.class); // C <-> S
+
       register(14, MoneyPacketPing.class); // S -> C
       register(15, MoneyPacketPong.class); // C -> S
+
+      register(16, PacketLeaderboard.class); // C -> S
 
       register(20, MoneyPacketAddonMessage.class); // C <-> S
 
