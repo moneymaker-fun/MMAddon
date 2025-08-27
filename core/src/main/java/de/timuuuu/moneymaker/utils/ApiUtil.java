@@ -40,7 +40,7 @@ public class ApiUtil {
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
-        .addHeader("User-Agent", "MoneyMaker LabyMod 4 Addon")
+        .userAgent("MoneyMaker LabyMod 4 Addon")
         .execute(response -> {
           if(response.getStatusCode() != 200 || response.hasException()) {
             return;
@@ -218,7 +218,7 @@ public class ApiUtil {
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
-        .addHeader("User-Agent", "MoneyMaker LabyMod 4 Addon")
+        .userAgent("MoneyMaker LabyMod 4 Addon")
         .execute(response -> {
           if (response.getStatusCode() != 200 || response.hasException()) {
             this.addon.addonSettings().setFallbackCoordinates(true);
@@ -295,7 +295,7 @@ public class ApiUtil {
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
-        .addHeader("User-Agent", "MoneyMaker LabyMod 4 Addon")
+        .userAgent("MoneyMaker LabyMod 4 Addon")
         .execute(response -> {
           if(response.getStatusCode() != 200 || response.hasException()) {
             this.addon.pushNotification(Component.text("Chat History", NamedTextColor.DARK_RED), Component.text("Failed to load Chat History from Server", NamedTextColor.RED));
@@ -339,7 +339,7 @@ public class ApiUtil {
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
-        .addHeader("User-Agent", "MoneyMaker LabyMod 4 Addon")
+        .userAgent("MoneyMaker LabyMod 4 Addon")
         .execute(response -> {
           if(response.getStatusCode() != 200 || response.hasException()) {
             this.addon.pushNotification(Component.text("Leaderboard", NamedTextColor.DARK_RED), Component.text("Failed to load Leaderboard from Server", NamedTextColor.RED));
