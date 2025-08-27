@@ -14,15 +14,15 @@ public class AddonUtil {
     this.addon = addon;
   }
 
-  private String currentEvent = "NONE";
+  private MoneyMakerEvent currentEvent = MoneyMakerEvent.NONE;
   private String motd = "";
   private boolean motdPriority = false;
 
-  public String currentEvent() {
+  public MoneyMakerEvent currentEvent() {
     return currentEvent;
   }
 
-  public void currentEvent(String currentEvent) {
+  public void currentEvent(MoneyMakerEvent currentEvent) {
     this.currentEvent = currentEvent;
   }
 
@@ -409,6 +409,38 @@ public class AddonUtil {
     public void maxY(float maxY) {
       this.maxY = maxY;
     }
+  }
+
+  public MoneyMakerEvent eventByName(String internalName) {
+    MoneyMakerEvent event = MoneyMakerEvent.NONE;
+    for(MoneyMakerEvent events : MoneyMakerEvent.values()) {
+      if(event.internalName().equals(internalName)) {
+        event = events;
+      }
+    }
+    return event;
+  }
+
+  public enum MoneyMakerEvent {
+    NONE("none"),
+    VALENTINE("valentine"),
+    EASTER("easter"),
+    SUMMER("summer"),
+    CARIBBEAN("caribbean"),
+    HALLOWEEN("halloween"),
+    CHRISTMAS("christmas"),
+    ALL("all");
+
+    private final String internalName;
+
+    MoneyMakerEvent(String internalName) {
+      this.internalName = internalName;
+    }
+
+    public String internalName() {
+      return internalName;
+    }
+
   }
 
 }

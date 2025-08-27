@@ -37,5 +37,14 @@
         "contains": "entfernt"
       }
     }
+  },
+  "event": {
+    "now": "[MoneyMaker] You now have ",
+    "booster": "[MoneyMaker] You have earned a",
+    "valentine": " flowers",
+    "easter": " easter eggs",
+    "summer": " fruits",
+    "halloween": " candies",
+    "christmas": " gifts"
   }
 }

@@ -37,5 +37,14 @@
         "contains": "entfernt"
       }
     }
+  },
+  "event": {
+    "now": "[MoneyMaker] Du besitzt nun ",
+    "booster": "[MoneyMaker] Du hast einen Booster im Wert von",
+    "valentine": " Blumen",
+    "easter": " Ostereier",
+    "summer": " Früchte",
+    "halloween": " Süßigkeiten",
+    "christmas": " Geschenke"
   }
 }
