@@ -4,9 +4,9 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import net.labymod.api.client.chat.prefix.ChatPrefix;
+import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.render.font.RenderableComponent;
-import net.labymod.api.client.render.matrix.Stack;
 import net.labymod.api.configuration.labymod.chat.AdvancedChatMessage;
 import net.labymod.api.configuration.labymod.chat.ChatTab;
 import net.labymod.api.mojang.GameProfile;
@@ -21,7 +21,7 @@ public class MoneyChatPrefix implements ChatPrefix {
   }
 
   @Override
-  public void render(Stack stack, float x, float y, AdvancedChatMessage advancedChatMessage, RenderableComponent[] renderableComponents, int index, int subIndex, int lineHeight, float textOffset, double scale, int alpha) {
+  public void render(ScreenContext context, float x, float y, AdvancedChatMessage advancedChatMessage, RenderableComponent[] renderableComponents, int index, int subIndex, int lineHeight, float textOffset, double scale, int alpha) {
       if(index == 0 && subIndex == 0) {
         GameProfile gameProfile = this.getProfileFromMessage(advancedChatMessage);
         if(gameProfile == null) return;
@@ -30,7 +30,7 @@ public class MoneyChatPrefix implements ChatPrefix {
         MoneyPlayer moneyPlayer = AddonUtil.playerStatus.get(gameProfile.getUniqueId());
         double headSize = 8.0 * scale;
         int margin = 1;
-        moneyPlayer.group().getIcon().render(stack, x + (float) margin, y + textOffset, (float) headSize);
+        moneyPlayer.group().getIcon().render(context.stack(), x + (float) margin, y + textOffset, (float) headSize);
       }
   }
 

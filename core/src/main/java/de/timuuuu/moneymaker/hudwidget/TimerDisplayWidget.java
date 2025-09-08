@@ -13,7 +13,7 @@ import net.labymod.api.client.gui.hud.hudwidget.HudWidgetConfig;
 import net.labymod.api.client.gui.hud.hudwidget.SimpleHudWidget;
 import net.labymod.api.client.gui.hud.position.HudSize;
 import net.labymod.api.client.gui.icon.Icon;
-import net.labymod.api.client.gui.mouse.MutableMouse;
+import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.gui.screen.widget.widgets.input.SliderWidget.SliderSetting;
 import net.labymod.api.client.gui.screen.widget.widgets.input.color.ColorPickerWidget.ColorPickerSetting;
 import net.labymod.api.client.render.font.ComponentRenderer;
@@ -41,27 +41,27 @@ public class TimerDisplayWidget extends SimpleHudWidget<TimerHudWidgetConfig> {
   }
 
   @Override
-  public void render(Stack stack, MutableMouse mouse, float partialTicks, boolean isEditorContext, HudSize size) {
+  public void render(RenderPhase renderPhase, ScreenContext context, boolean isEditorContext, HudSize size) {
     size.setHeight(0F);
     size.setWidth(0F);
 
     if(isEditorContext) {
-      this.renderTimers(this.dummyTimers, stack, size);
+      this.renderTimers(this.dummyTimers, context.stack(), size);
       return;
     }
 
     if(!this.addon.addonUtil().connectedToMoneyMaker()) {
-      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_timer_display.notConnected"), stack, size);
+      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_timer_display.notConnected"), context.stack(), size);
       return;
     }
 
     List<MoneyTimer> timers = new ArrayList<>(Util.timers.values());
     if(timers.isEmpty()) {
-      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_timer_display.noTimers"), stack, size);
+      this.renderComponent(Component.translatable("moneymaker.hudWidget.mm_timer_display.noTimers"), context.stack(), size);
       return;
     }
 
-    this.renderTimers(timers, stack, size);
+    this.renderTimers(timers, context.stack(), size);
   }
 
   private void renderComponent(Component component, Stack stack, HudSize size) {

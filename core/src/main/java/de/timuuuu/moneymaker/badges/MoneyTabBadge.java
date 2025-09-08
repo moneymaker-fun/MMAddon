@@ -4,8 +4,8 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.group.Group;
 import de.timuuuu.moneymaker.utils.AddonUtil;
 import net.labymod.api.client.entity.player.badge.renderer.BadgeRenderer;
+import net.labymod.api.client.gui.screen.ScreenContext;
 import net.labymod.api.client.network.NetworkPlayerInfo;
-import net.labymod.api.client.render.matrix.Stack;
 
 public class MoneyTabBadge extends BadgeRenderer {
 
@@ -16,10 +16,10 @@ public class MoneyTabBadge extends BadgeRenderer {
   }
 
   @Override
-  public void render(Stack stack, float x, float y, NetworkPlayerInfo player) {
+  public void render(ScreenContext context, float x, float y, NetworkPlayerInfo player) {
     Group group = this.visibleRank(player);
     if(group != null) {
-      group.getIcon().render(stack, x, y, 8.0F);
+      group.getIcon().render(context.stack(), x, y, 8.0F);
     }
   }
 
