@@ -47,6 +47,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @SettingSection(value = "account", center = true)
 
+  @IntroducedIn(value = "1.7.0", namespace = "moneymaker")
   @MethodOrder(after = "gameplayConfiguration")
   @ButtonSetting
   public void createWebsiteAccount() {
@@ -64,6 +65,8 @@ public class MoneyMakerConfiguration extends AddonConfig {
       );
     }
   }
+
+  @IntroducedIn(value = "1.7.0", namespace = "moneymaker")
   @MethodOrder(after = "createWebsiteAccount")
   @ButtonSetting
   public void linkDiscordAccount() {
