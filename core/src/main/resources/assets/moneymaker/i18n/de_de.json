@@ -524,6 +524,10 @@
           "reset": {
             "command": "/mm-reset <booster, arbeiter, geröll, all>",
             "description": " Setzt die gesammelten Daten zurück"
+          },
+          "verify": {
+            "command": "/mm-verify <discord, website>",
+            "description": " Verifiziert deinen Account mit deinem Discord Account oder deinem Webseiten Account"
           }
         }
       },

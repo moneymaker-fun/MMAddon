@@ -80,7 +80,10 @@ public class StartActivity extends SimpleActivity {
         .append(Component.translatable("moneymaker.ui.start.commands.timer.description", NamedTextColor.GOLD))
         .append(Component.text("\n"))
         .append(Component.translatable("moneymaker.ui.start.commands.reset.command", NamedTextColor.AQUA))
-        .append(Component.translatable("moneymaker.ui.start.commands.reset.description", NamedTextColor.GOLD));
+        .append(Component.translatable("moneymaker.ui.start.commands.reset.description", NamedTextColor.GOLD))
+        .append(Component.text("\n"))
+        .append(Component.translatable("moneymaker.ui.start.commands.verify.command", NamedTextColor.AQUA))
+        .append(Component.translatable("moneymaker.ui.start.commands.verify.description", NamedTextColor.GOLD));
     commandsContainer.addChild(ComponentWidget.component(commands).addId("command-list"));
 
     DivWidget timerContainer = new DivWidget().addId("timer-container");

@@ -524,6 +524,10 @@
           "reset": {
             "command": "/mm-reset <booster, miners, debris, all> ",
             "description": " Reset the collected data"
+          },
+          "verify": {
+            "command": "/mm-verify <discord, website>",
+            "description": " Verify your account with your discord account or your website account"
           }
         }
       },
