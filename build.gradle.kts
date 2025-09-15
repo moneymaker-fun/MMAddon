@@ -37,7 +37,6 @@ labyMod {
         description = "Adds some features to the MoneyMaker IdleGame on GommeHD.net"
         minecraftVersion = "*"
         version = System.getenv().getOrDefault("VERSION", addonVersion)
-        releaseChannel = ReleaseChannels.SNAPSHOT
     }
 
 }
