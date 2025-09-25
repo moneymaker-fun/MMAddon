@@ -54,6 +54,7 @@ public class MoneyChatClient {
   private boolean doNotConnect;
   private long lastConnectTriesReset;
   private String lastDisconnectReason;
+  private int failedAuthenticationTries;
 
   public MoneyChatClient(MoneyMakerAddon addon, SessionAccessor sessionAccessor, EventBus eventBus) {
     this.addon = addon;
@@ -61,6 +62,7 @@ public class MoneyChatClient {
     this.timeNextConnect = TimeUtil.getMillis();
     this.lastConnectTriesReset = 0L;
     this.sessionAccessor = sessionAccessor;
+    this.failedAuthenticationTries = 0;
 
     eventBus.registerListener(this);
   }
@@ -77,6 +79,10 @@ public class MoneyChatClient {
         if (this.state != MoneyChatState.OFFLINE && durationKeepAlive > 25000L) {
           this.disconnect(Initiator.CLIENT, I18n.translate("moneymaker.ui.chat.protocol.disconnect.timeout"), "Timeout");
           this.addon.chatActivity().reloadScreen();
+        }
+
+        if (this.state == MoneyChatState.LOGIN && durationConnect < 0 && this.failedAuthenticationTries < 3) {
+          this.sendPacket(new MoneyPacketLogin(this.addon.labyAPI().getName(), this.addon.labyAPI().getUniqueId()));
         }
 
         if (this.state == MoneyChatState.OFFLINE && !this.doNotConnect && durationConnect < 0L) {
@@ -239,6 +245,18 @@ public class MoneyChatClient {
 
   public String getLastDisconnectReason() {
     return lastDisconnectReason;
+  }
+
+  public void timeNextConnect(long timeNextConnect) {
+    this.timeNextConnect = timeNextConnect;
+  }
+
+  public void increaseFailedAuthenticationTries() {
+    this.failedAuthenticationTries++;
+  }
+
+  public void resetFailedAuthenticationTries() {
+    this.failedAuthenticationTries = 0;
   }
 
   public enum MoneyChatState {

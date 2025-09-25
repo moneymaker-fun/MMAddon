@@ -43,6 +43,7 @@ import net.labymod.api.client.component.serializer.plain.PlainTextComponentSeria
 import net.labymod.api.client.session.MinecraftAuthenticator;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.util.logging.Logging;
+import net.labymod.api.util.time.TimeUtil;
 import javax.crypto.SecretKey;
 import java.security.PublicKey;
 import java.util.HashMap;
@@ -120,6 +121,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
   public void handle(MoneyPacketLoginComplete packet) {
     this.moneyChatClient.updateState(MoneyChatState.PLAY);
     this.authenticated = true;
+    this.moneyChatClient.resetFailedAuthenticationTries();
     this.moneyChatClient.keepAlive();
     this.moneyChatClient.addon().chatActivity().reloadScreen();
 
@@ -245,7 +247,9 @@ public class MoneyChatSession extends MoneyPacketHandler {
     this.authenticated = false;
     this.premium = false;
     this.moneyChatClient.updateState(MoneyChatState.LOGIN);
-    //this.labyConnect.fireEventSync(new LabyConnectRejectAuthenticationEvent(this.labyConnect));
+    this.moneyChatClient.increaseFailedAuthenticationTries();
+    long delay = (long)((double)1000.0F * Math.random() * (double)60.0F);
+    this.moneyChatClient.timeNextConnect(TimeUtil.getMillis() + 10000L + delay);
   }
 
   public boolean isAuthenticated() {
