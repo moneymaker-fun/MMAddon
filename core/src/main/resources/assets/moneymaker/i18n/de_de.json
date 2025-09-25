@@ -593,7 +593,7 @@
         "messageDeleted": "Diese Nachricht wurde gelöscht.",
         "muted": {
           "title": "Du wurdest aus dem Chat gemutet.",
-          "info": "Grund: %s | Dauer: %s"
+          "info": "Grund: %s | Verbleibende Zeit: %s"
         },
         "button": {
           "report": "Melden",

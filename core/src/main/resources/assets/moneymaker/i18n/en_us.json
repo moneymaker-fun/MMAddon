@@ -593,7 +593,7 @@
         "messageDeleted": "This message has been deleted.",
         "muted": {
           "title": "You have been muted from the chat.",
-          "info": "Reason: %s | Duration: %s"
+          "info": "Reason: %s | Remaining Time: %s"
         },
         "button": {
           "report": "Report",
