@@ -26,6 +26,7 @@ import net.labymod.api.util.io.web.request.Request;
 public class ChatRulesActivity extends SimpleActivity {
 
   public static JsonObject CACHED_RULES;
+  private static String CACHED_LANGUAGE;
 
   private MoneyMakerAddon addon;
 
@@ -127,12 +128,12 @@ public class ChatRulesActivity extends SimpleActivity {
   }
 
   public static void create(MoneyMakerAddon addon, ScreenInstance previousScreen, boolean updateConfiguration, Consumer<ChatRulesActivity> callback) {
-    if(CACHED_RULES != null) {
+    if(CACHED_RULES != null && (CACHED_LANGUAGE != null && CACHED_LANGUAGE.equals(addon.labyAPI().minecraft().options().getCurrentLanguage()))) {
       addon.labyAPI().minecraft().executeNextTick(() -> callback.accept(new ChatRulesActivity(addon, previousScreen, updateConfiguration, CACHED_RULES)));
       return;
     }
     Request.ofGson(JsonObject.class)
-        .url(ApiUtil.BASE_URL + "/chat/rules/")
+        .url(ApiUtil.BASE_URL + "/chat/rules/?lang=" + addon.labyAPI().minecraft().options().getCurrentLanguage())
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
@@ -143,6 +144,7 @@ public class ChatRulesActivity extends SimpleActivity {
           }
           addon.labyAPI().minecraft().executeNextTick(() -> callback.accept(new ChatRulesActivity(addon, previousScreen, updateConfiguration, response.get())));
           CACHED_RULES = response.get();
+          CACHED_LANGUAGE = addon.labyAPI().minecraft().options().getCurrentLanguage();
         });
   }
 
