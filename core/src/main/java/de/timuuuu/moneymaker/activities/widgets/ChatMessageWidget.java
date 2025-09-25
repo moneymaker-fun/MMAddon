@@ -127,6 +127,13 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
               });
               header.addEntry(muteButton);
             }
+
+            ButtonWidget deleteButton = ButtonWidget.deleteButton().addId("delete-button");
+            deleteButton.setPressable(() -> {
+              this.addon.moneyChatClient().sendPacket(new PacketMessageDelete(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), this.chatMessage.messageId()));
+            });
+            header.addEntry(deleteButton);
+
           }
 
           // User is normal - add Report button
@@ -153,14 +160,6 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
         }
 
       }
-    }
-
-    if(this.chatMessage != null && !this.chatMessage.deleted()) {
-      ButtonWidget deleteButton = ButtonWidget.deleteButton().addId("delete-button");
-      deleteButton.setPressable(() -> {
-        this.addon.moneyChatClient().sendPacket(new PacketMessageDelete(Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), this.chatMessage.messageId()));
-      });
-      header.addEntry(deleteButton);
     }
 
     flex.addChild(header);
