@@ -192,7 +192,7 @@
   top: 10;
   left: 10;
   right: 0;
-  bottom: 5;
+  bottom: 10;
 
   Scrollbar {
     left: 0;
