@@ -29,7 +29,7 @@ import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
-import net.labymod.api.event.client.lifecycle.GameShutdownEvent;
+import net.labymod.api.event.client.lifecycle.ShutdownEvent;
 import net.labymod.api.event.client.network.server.ServerDisconnectEvent;
 import net.labymod.api.event.client.network.server.ServerLoginEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
@@ -122,7 +122,7 @@ public class MoneyAddonListener {
   }
 
   @Subscribe
-  public void onShutdown(GameShutdownEvent event) {
+  public void onShutdown(ShutdownEvent event) {
     if(this.addon.moneyChatClient().isAuthenticated()) {
       this.addon.moneyChatClient().sendPacket(new PacketAddonStatistics("remove", Laby.labyAPI().getUniqueId(), Laby.labyAPI().getName(), "", "", false));
       this.addon.moneyChatClient().sendPacket(new PacketPlayerStatus(
