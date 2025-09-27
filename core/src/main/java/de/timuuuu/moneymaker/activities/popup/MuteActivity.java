@@ -153,7 +153,8 @@ public class MuteActivity extends SimpleActivity {
       return;
     }
 
-    this.addon.moneyChatClient().sendPacket(new PacketUserMute(this.executorUUID, this.executorName, this.uuid, this.userName, reasonInput.getText(), this.chatMessage != null ? this.chatMessage.messageId() : "-", duration));
+    this.addon.moneyChatClient().sendPacket(new PacketUserMute(this.executorUUID, this.executorName, this.uuid, this.userName,
+        reasonInput.getText(), this.chatMessage != null ? this.chatMessage.messageId() : "-", duration));
 
     Laby.labyAPI().minecraft().minecraftWindow().displayScreen(this.previousScreen);
     this.addon.pushNotification(
