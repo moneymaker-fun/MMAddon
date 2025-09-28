@@ -9,7 +9,6 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.scoreboard.ScoreboardScoreUpdateEvent;
-import net.labymod.api.util.StringUtil;
 
 import java.io.IOException;
 
@@ -46,7 +45,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.BROKEN_BLOCKS.score() && this.addon.addonUtil().inFarming()) {
       String scoreName = ChatUtil.stripColor(event.score().getName()).replace(".", "").replace(",", "");
-      if(!StringUtil.isNumeric(scoreName)) return;
+      if(this.addon.addonUtil().ignoredRankingValues().contains(scoreName)) return;
       try {
         int blocks = Util.parseInteger(scoreName, this.getClass());
         this.addon.addonUtil().currentBrokenBlocks(blocks);
@@ -77,6 +76,8 @@ public class ScoreBoardListener {
     }
 
     if(event.score().getValue() == MoneyScore.PICKAXE_LEVEL.score() && this.addon.addonUtil().inFarming()) {
+      String scoreName = ChatUtil.stripColor(event.score().getName());
+      if(this.addon.addonUtil().ignoredRankingValues().contains(scoreName)) return;
       try {
         this.addon.addonUtil().pickaxeLevel(Util.parseInteger(ChatUtil.stripColor(event.score().getName()), this.getClass()));
       } catch (NumberFormatException ignored) {}
@@ -84,7 +85,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.PICKAXE_RANKING.score() && this.addon.addonUtil().inFarming()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
-      if(!StringUtil.isNumeric(scoreName)) return;
+      if(this.addon.addonUtil().ignoredRankingValues().contains(scoreName)) return;
       if(scoreName.startsWith(this.addon.chatMessageLoader().message("scoreBoard.place"))) {
         this.addon.addonUtil().pickaxeRanking(Util.parseInteger(scoreName
             .replace(this.addon.chatMessageLoader().message("scoreBoard.place") + " ", "")
@@ -94,7 +95,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.RANK.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
-      if(!StringUtil.isNumeric(scoreName)) return;
+      if(this.addon.addonUtil().ignoredRankingValues().contains(scoreName)) return;
       if(scoreName.startsWith(this.addon.chatMessageLoader().message("scoreBoard.place"))) {
         this.addon.addonUtil().ranking(Util.parseInteger(scoreName.
             replace(this.addon.chatMessageLoader().message("scoreBoard.place") + " ", "")
@@ -105,7 +106,7 @@ public class ScoreBoardListener {
 
     if(event.score().getValue() == MoneyScore.BALANCE.score() && this.addon.addonUtil().connectedToMoneyMaker()) {
       String scoreName = ChatUtil.stripColor(event.score().getName());
-      if(!StringUtil.isNumeric(scoreName)) return;
+      if(this.addon.addonUtil().ignoredRankingValues().contains(scoreName)) return;
       this.addon.addonUtil().balance(scoreName);
 
       try {
@@ -142,9 +143,7 @@ public class ScoreBoardListener {
           }
         }
 
-      } catch (NumberFormatException ignored) {
-
-      }
+      } catch (NumberFormatException ignored) {}
 
     }
 

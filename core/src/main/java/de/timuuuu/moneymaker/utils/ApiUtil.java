@@ -56,18 +56,23 @@ public class ApiUtil {
             }
           }
 
-          if (object.has("availableLanguages")) {
-            if(object.get("availableLanguages").isJsonArray()) {
-              JsonArray array = object.get("availableLanguages").getAsJsonArray();
-              array.forEach(jsonElement -> {
-                if(jsonElement.isJsonObject()) {
-                  JsonObject languageObject = jsonElement.getAsJsonObject();
-                  if(languageObject.has("name") && languageObject.has("language")) {
-                    this.addon.chatMessageLoader().availableLanguages.put(languageObject.get("name").getAsString(), languageObject.get("language").getAsString());
-                  }
+          if (object.has("availableLanguages") && object.get("availableLanguages").isJsonArray()) {
+            object.get("availableLanguages").getAsJsonArray().forEach(jsonElement -> {
+              if(jsonElement.isJsonObject()) {
+                JsonObject languageObject = jsonElement.getAsJsonObject();
+                if(languageObject.has("name") && languageObject.has("language")) {
+                  this.addon.chatMessageLoader().availableLanguages.put(languageObject.get("name").getAsString(), languageObject.get("language").getAsString());
                 }
-              });
-            }
+              }
+            });
+          }
+
+          if(object.has("ignoredRankingValues") && object.get("ignoredRankingValues").isJsonArray()) {
+            object.get("ignoredRankingValues").getAsJsonArray().forEach(jsonElement -> {
+              if(jsonElement.isJsonPrimitive()) {
+                this.addon.addonUtil().ignoredRankingValues().add(jsonElement.getAsString());
+              }
+            });
           }
 
           if (object.has("settings") && object.get("settings").isJsonObject()) {

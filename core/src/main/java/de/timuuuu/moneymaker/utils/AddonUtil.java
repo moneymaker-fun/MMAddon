@@ -3,7 +3,9 @@ package de.timuuuu.moneymaker.utils;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.group.Group;
 import net.labymod.api.util.I18n;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class AddonUtil {
@@ -17,6 +19,8 @@ public class AddonUtil {
   private MoneyMakerEvent currentEvent = MoneyMakerEvent.NONE;
   private String motd = "";
   private boolean motdPriority = false;
+
+  private List<String> ignoredRankingValues = new ArrayList<>();
 
   public MoneyMakerEvent currentEvent() {
     return currentEvent;
@@ -40,6 +44,10 @@ public class AddonUtil {
 
   public void motdPriority(boolean motdPriority) {
     this.motdPriority = motdPriority;
+  }
+
+  public List<String> ignoredRankingValues() {
+    return ignoredRankingValues;
   }
 
   public static HashMap<UUID, MoneyPlayer> playerStatus = new HashMap<>();
