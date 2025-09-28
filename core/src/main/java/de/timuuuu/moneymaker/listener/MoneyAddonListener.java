@@ -95,7 +95,7 @@ public class MoneyAddonListener {
           Util.currentServer(), MoneyMakerAddon.instance().addonInfo().getVersion(), Laby.labyAPI().minecraft().getVersion(),
           Laby.labyAPI().labyModLoader().isAddonDevelopmentEnvironment(), this.addon.configuration().chatConfiguration.hideOnlineStatus.get()));
 
-      this.addon.moneyChatClient().sendPacket(new PacketLeaderboard(this.addon.labyAPI().getUniqueId(), this.addon.labyAPI().getName(), this.addon));
+      this.addon.moneyChatClient().sendPacket(new PacketLeaderboard(event.previousSession().getUniqueId(), event.previousSession().getUsername(), this.addon));
 
     }
 
