@@ -5,13 +5,13 @@ import net.labymod.api.event.Event;
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
-public class SwordTickEvent implements Event {
+public class HotbarItemTickEvent implements Event {
 
   private String displayName;
   private List<String> loreList;
   private TextVersion textVersion;
 
-  public SwordTickEvent(String displayName, List<String> loreList, @NotNull TextVersion textVersion) {
+  public HotbarItemTickEvent(String displayName, List<String> loreList, @NotNull TextVersion textVersion) {
     this.displayName = displayName;
     this.loreList = loreList;
     this.textVersion = textVersion;
