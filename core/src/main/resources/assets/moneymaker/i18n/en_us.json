@@ -655,8 +655,14 @@
           "rank": "Sword Rank",
           "kills": "Sword Kills"
         },
-        "showIcons": {
-          "name": "Show with icons"
+        "showRankingDifference": {
+          "name": "Show Rank Difference"
+        }
+      },
+      "mm_pickaxe_stats": {
+        "name": "Sword Statistics",
+        "display": {
+          "rank": "Pickaxe Rank"
         },
         "showRankingDifference": {
           "name": "Show Rank Difference"

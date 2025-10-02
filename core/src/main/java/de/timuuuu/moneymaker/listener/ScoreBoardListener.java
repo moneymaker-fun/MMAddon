@@ -90,6 +90,10 @@ public class ScoreBoardListener {
         this.addon.addonUtil().pickaxeRanking(Util.parseInteger(scoreName
             .replace(this.addon.chatMessageLoader().message("scoreBoard.place") + " ", "")
             .replace(".", "").replace(",", ""), this.getClass()));
+
+        if(this.addon.addonUtil().pickaxeRanking() != 0 && this.addon.addonUtil().savedPickaxeRanking() == 0) {
+          this.addon.addonUtil().savedPickaxeRanking(this.addon.addonUtil().pickaxeRanking());
+        }
       }
     }
 

@@ -656,8 +656,14 @@
           "rank": "Schwert Rang",
           "kills": "Schwert Kills"
         },
-        "showIcons": {
-          "name": "Mit Icons anzeigen"
+        "showRankingDifference": {
+          "name": "Zeige Rang Differenz"
+        }
+      },
+      "mm_pickaxe_stats": {
+        "name": "Spitzhacken Statistiken",
+        "display": {
+          "rank": "Spitzhacken Rang"
         },
         "showRankingDifference": {
           "name": "Zeige Rang Differenz"

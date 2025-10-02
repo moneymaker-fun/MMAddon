@@ -29,6 +29,7 @@ import de.timuuuu.moneymaker.hudwidget.farming.BoosterCountWidget;
 import de.timuuuu.moneymaker.hudwidget.farming.BreakGoalWidget;
 import de.timuuuu.moneymaker.hudwidget.farming.KillCountWidget;
 import de.timuuuu.moneymaker.hudwidget.farming.LatestBoosterDisplayWidget;
+import de.timuuuu.moneymaker.hudwidget.farming.PickaxeStatsWidget;
 import de.timuuuu.moneymaker.hudwidget.farming.SwordStatsWidget;
 import de.timuuuu.moneymaker.listener.ChatReceiveListener;
 import de.timuuuu.moneymaker.listener.EntityRenderListener;
@@ -157,6 +158,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new DebrisTimerWidget(this));
     labyAPI().hudWidgetRegistry().register(new WorkerPriceWidget(this));
     labyAPI().hudWidgetRegistry().register(new SwordStatsWidget(this));
+    labyAPI().hudWidgetRegistry().register(new PickaxeStatsWidget(this));
     labyAPI().hudWidgetRegistry().register(new KillCountWidget(this));
     labyAPI().hudWidgetRegistry().register(new TimerDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new LatestBoosterDisplayWidget(this));
