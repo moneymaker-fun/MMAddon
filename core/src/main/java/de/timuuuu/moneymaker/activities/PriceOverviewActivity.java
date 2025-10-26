@@ -7,6 +7,7 @@ import java.util.List;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
+import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.activity.AutoActivity;
 import net.labymod.api.client.gui.screen.activity.Link;
@@ -50,10 +51,22 @@ public class PriceOverviewActivity extends SimpleActivity {
         String name = entry.split(";")[0];
         String cost = entry.split(";")[1];
         TextColor textColor = NamedTextColor.GRAY;
+        boolean completed = false;
         if(entry.contains("Geröll")) {
           textColor = NamedTextColor.YELLOW;
         }
-        list.addChild(ComponentWidget.text(name + " ➡ " + cost, textColor));
+        if(entry.startsWith("Arbeiter")) {
+          int workerNumber = Integer.parseInt(name.replace("Arbeiter ", ""));
+          if(this.addon.addonUtil().workerCount() >= workerNumber) {
+            textColor = NamedTextColor.GREEN;
+            completed = true;
+          }
+        }
+        if(completed) {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost + " ✔", textColor, TextDecoration.STRIKETHROUGH)));
+        } else {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost, textColor)));
+        }
       });
       goldContainer.addChild(new ScrollWidget(list, new ListSession<>()).addId("gold-scroll"));
     }
@@ -71,10 +84,22 @@ public class PriceOverviewActivity extends SimpleActivity {
         String name = entry.split(";")[0];
         String cost = entry.split(";")[1];
         TextColor textColor = NamedTextColor.GRAY;
+        boolean completed = false;
         if(entry.contains("Geröll")) {
           textColor = NamedTextColor.YELLOW;
         }
-        list.addChild(ComponentWidget.text(name + " ➡ " + cost, textColor));
+        if(entry.startsWith("Arbeiter")) {
+          int workerNumber = Integer.parseInt(name.replace("Arbeiter ", ""));
+          if(this.addon.addonUtil().workerCount() >= workerNumber) {
+            textColor = NamedTextColor.GREEN;
+            completed = true;
+          }
+        }
+        if(completed) {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost + " ✔", textColor, TextDecoration.STRIKETHROUGH)));
+        } else {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost, textColor)));
+        }
       });
       coalContainer.addChild(new ScrollWidget(list, new ListSession<>()).addId("coal-scroll"));
     }
@@ -92,10 +117,22 @@ public class PriceOverviewActivity extends SimpleActivity {
         String name = entry.split(";")[0];
         String cost = entry.split(";")[1];
         TextColor textColor = NamedTextColor.GRAY;
+        boolean completed = false;
         if(entry.contains("Geröll")) {
           textColor = NamedTextColor.YELLOW;
         }
-        list.addChild(ComponentWidget.text(name + " ➡ " + cost, textColor));
+        if(entry.startsWith("Arbeiter")) {
+          int workerNumber = Integer.parseInt(name.replace("Arbeiter ", ""));
+          if(this.addon.addonUtil().workerCount() >= workerNumber) {
+            textColor = NamedTextColor.GREEN;
+            completed = true;
+          }
+        }
+        if(completed) {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost + " ✔", textColor, TextDecoration.STRIKETHROUGH)));
+        } else {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost, textColor)));
+        }
       });
       ironContainer.addChild(new ScrollWidget(list, new ListSession<>()).addId("iron-scroll"));
     }
@@ -113,10 +150,22 @@ public class PriceOverviewActivity extends SimpleActivity {
         String name = entry.split(";")[0];
         String cost = entry.split(";")[1];
         TextColor textColor = NamedTextColor.GRAY;
+        boolean completed = false;
         if(entry.contains("Geröll")) {
           textColor = NamedTextColor.YELLOW;
         }
-        list.addChild(ComponentWidget.text(name + " ➡ " + cost, textColor));
+        if(entry.startsWith("Arbeiter")) {
+          int workerNumber = Integer.parseInt(name.replace("Arbeiter ", ""));
+          if(this.addon.addonUtil().workerCount() >= workerNumber) {
+            textColor = NamedTextColor.GREEN;
+            completed = true;
+          }
+        }
+        if(completed) {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost + " ✔", textColor, TextDecoration.STRIKETHROUGH)));
+        } else {
+          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost, textColor)));
+        }
       });
       lapisContainer.addChild(new ScrollWidget(list, new ListSession<>()).addId("lapis-scroll"));
     }
