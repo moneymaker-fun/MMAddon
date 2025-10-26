@@ -38,6 +38,7 @@ public class ChatMessageLoader {
   private void loadMessages(String namespace, String selectedLanguage, Map<String, String> target) throws IOException {
     selectedLanguage = selectedLanguage.toLowerCase(Locale.ENGLISH);
     if (ChatMessageLoader.selectedLanguage == null || !ChatMessageLoader.selectedLanguage.equals(selectedLanguage)) {
+      messages.clear();
       ChatMessageLoader.selectedLanguage = selectedLanguage;
     }
 
