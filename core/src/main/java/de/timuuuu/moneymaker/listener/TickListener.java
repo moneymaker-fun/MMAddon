@@ -91,41 +91,41 @@ public class TickListener {
           rankingLine = ChatUtil.stripColor(rankingLine);
           mobsLine = ChatUtil.stripColor(mobsLine);
 
-          if(rankingLine.startsWith("Ranking: ")) {
+          if(rankingLine.startsWith(this.addon.chatMessageLoader().message("item.ranking"))) {
             if(StringUtil.isNumeric(rankingLine.split(" ")[2])) {
               this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
                   .replace(".", "").replace(",", ""), this.getClass()));
             }
           }
 
-          if(mobsLine.startsWith("Getötete Mobs: ")) {
-            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Getötete Mobs: ", "")
+          if(mobsLine.startsWith(this.addon.chatMessageLoader().message("item.killedMobs"))) {
+            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace(this.addon.chatMessageLoader().message("item.killedMobs"), "")
                 .replace(".", "").replace(",", ""), this.getClass()));
           }
 
-          if(mobsLine.startsWith("Killed mobs: ")) {
+          /*if(mobsLine.startsWith("Killed mobs: ")) {
             this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
                 .replace(".", "").replace(",", ""), this.getClass()));
-          }
+          }*/
 
         } else {
 
-          if(rankingLine.contains("Ranking: ")) {
+          if(rankingLine.contains(this.addon.chatMessageLoader().message("item.ranking"))) {
             List<String> line = Util.getTextFromJsonObject(rankingLine);
             if(line.size() != 3) return;
             if(line.get(1) == null) return;
             String text = line.get(1);
-            if(text.contains("Platz ")) {
-              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
+            if(text.contains(this.addon.chatMessageLoader().message("item.place"))) {
+              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace(this.addon.chatMessageLoader().message("item.place"), "")
                   .replace(".", "").replace(",", "").strip(), this.getClass()));
             }
-            if(text.contains("Rank ")) {
+            /*if(text.contains("Rank ")) {
               this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
                   .replace(".", "").replace(",", "").strip(), this.getClass()));
-            }
+            }*/
           }
 
-          if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
+          if(mobsLine.contains(this.addon.chatMessageLoader().message("item.killedMobs"))) {
             List<String> line = Util.getTextFromJsonObject(mobsLine);
             if(line.size() != 2) return;
             if(line.get(1) == null) return;
@@ -157,10 +157,9 @@ public class TickListener {
       if(pickaxeTickCount >= this.addon.addonSettings().CHECK_TICK()) {
         pickaxeTickCount = 0;
 
-        if(event.getLoreList().size() < 4) return;
-        if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
-        String rankingLine = event.getLoreList().get(2);
-        String mobsLine = event.getLoreList().get(3);
+        if(event.getLoreList().size() < 10) return;
+        if(event.getLoreList().get(9) == null) return;
+        String chanceLine = event.getLoreList().get(9);
 
       /*
       §bStatistiken: [Statistiken:]
@@ -170,67 +169,33 @@ public class TickListener {
 
         if(event.textVersion() == TextVersion.RAW) {
 
-          rankingLine = ChatUtil.stripColor(rankingLine);
-          mobsLine = ChatUtil.stripColor(mobsLine);
+          chanceLine = ChatUtil.stripColor(chanceLine);
 
-          if(rankingLine.startsWith("Ranking: ")) {
-            if(StringUtil.isNumeric(rankingLine.split(" ")[2])) {
-              this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
-                  .replace(".", "").replace(",", ""), this.getClass()));
+          if(chanceLine.startsWith(this.addon.chatMessageLoader().message("item.boosterChance"))) {
+            if(chanceLine.split(" ")[3] != null) {
+              String chance = chanceLine.split(" ")[3];
+              this.addon.addonUtil().pickaxeBoosterChance(chance.contains("%") ? chance : chance + "%");
             }
-          }
-
-          if(mobsLine.startsWith("Getötete Mobs: ")) {
-            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Getötete Mobs: ", "")
-                .replace(".", "").replace(",", ""), this.getClass()));
-          }
-
-          if(mobsLine.startsWith("Killed mobs: ")) {
-            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
-                .replace(".", "").replace(",", ""), this.getClass()));
           }
 
         } else {
 
-          if(rankingLine.contains("Ranking: ")) {
-            List<String> line = Util.getTextFromJsonObject(rankingLine);
-            if(line.size() != 3) return;
+          //this.addon.logger().info("changeLine: " + chanceLine);
+          //changeLine: {"extra":[{"italic":false,"color":"gray","text":"Chance auf Booster: "},
+          // {"italic":false,"color":"yellow","text":"0,785 % "},
+          // {"italic":false,"color":"gray","text":"("},
+          // {"bold":true,"italic":false,"color":"green","text":"↑ "},
+          // {"italic":false,"color":"green","text":"+"},
+          // {"italic":false,"color":"yellow","text":"0 %"},
+          // {"italic":false,"color":"gray","text":")"}],"text":""}
+          if(chanceLine.contains(this.addon.chatMessageLoader().message("item.boosterChance"))) {
+            List<String> line = Util.getTextFromJsonObject(chanceLine);
+            if(line.size() != 7) return;
             if(line.get(1) == null) return;
-            String text = line.get(1);
-            if(text.contains("Platz ")) {
-              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
-                  .replace(".", "").replace(",", "").strip(), this.getClass()));
-            }
-            if(text.contains("Rank ")) {
-              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
-                  .replace(".", "").replace(",", "").strip(), this.getClass()));
-            }
-          }
-
-          if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
-            List<String> line = Util.getTextFromJsonObject(mobsLine);
-            if(line.size() != 2) return;
-            if(line.get(1) == null) return;
-            this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
+            this.addon.addonUtil().pickaxeBoosterChance(line.get(1));
           }
 
         }
-
-        if(this.addon.addonUtil().swordMobs() != 0) {
-          if(this.addon.addonUtil().mobKills() == 0) {
-            this.addon.addonUtil().mobKills(this.addon.addonUtil().swordMobs());
-          } else {
-            int sessionKills = this.addon.addonUtil().swordMobs() - this.addon.addonUtil().mobKills();
-            if(sessionKills >= 0) {
-              this.addon.addonUtil().sessionKills(sessionKills);
-            }
-          }
-        }
-
-        if(this.addon.addonUtil().swordRanking() != 0 && this.addon.addonUtil().savedSwordRanking() == 0) {
-          this.addon.addonUtil().savedSwordRanking(this.addon.addonUtil().swordRanking());
-        }
-
       }
     }
 

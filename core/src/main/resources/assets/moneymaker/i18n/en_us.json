@@ -662,7 +662,8 @@
       "mm_pickaxe_stats": {
         "name": "Sword Statistics",
         "display": {
-          "rank": "Pickaxe Rank"
+          "rank": "Pickaxe Rank",
+          "chance": "Booster Chance"
         },
         "showRankingDifference": {
           "name": "Show Rank Difference"

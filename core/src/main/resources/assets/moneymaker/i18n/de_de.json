@@ -663,7 +663,8 @@
       "mm_pickaxe_stats": {
         "name": "Spitzhacken Statistiken",
         "display": {
-          "rank": "Spitzhacken Rang"
+          "rank": "Spitzhacken Rang",
+          "chance": "Booster Chance"
         },
         "showRankingDifference": {
           "name": "Zeige Rang Differenz"

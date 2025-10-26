@@ -2,6 +2,12 @@
   "scoreBoard": {
     "place": "Rank"
   },
+  "item": {
+    "ranking": "Ranking: ",
+    "place": "Rank ",
+    "killedMobs": "Killed mobs: ",
+    "boosterChance": "Chance for booster: "
+  },
   "chat": {
     "prefix": "[MoneyMaker]",
     "spacerLine": "[MoneyMaker] eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",

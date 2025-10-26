@@ -69,6 +69,8 @@ public class AddonUtil {
     pickaxeLevel = 0;
     pickaxeRanking = 0;
     savedPickaxeRanking = 0;
+    savedPickaxeRankingString = "";
+    pickaxeBoosterChance = "";
     brokenBlocks = 0;
     sessionBlocks = 0;
     this.addon.addonSettings().breakGoalEnabled(false);
@@ -96,6 +98,8 @@ public class AddonUtil {
   private int pickaxeLevel = 0;
   private int pickaxeRanking = 0;
   private int savedPickaxeRanking = 0;
+  private String savedPickaxeRankingString = "";
+  private String pickaxeBoosterChance = "";
 
   private int brokenBlocks = 0;
   private int sessionBlocks = 0;
@@ -212,6 +216,22 @@ public class AddonUtil {
 
   public void savedPickaxeRanking(int savedPickaxeRanking) {
     this.savedPickaxeRanking = savedPickaxeRanking;
+  }
+
+  public String savedPickaxeRankingString() {
+    return savedPickaxeRankingString;
+  }
+
+  public void savedPickaxeRankingString(String savedPickaxeRankingString) {
+    this.savedPickaxeRankingString = savedPickaxeRankingString;
+  }
+
+  public String pickaxeBoosterChance() {
+    return pickaxeBoosterChance;
+  }
+
+  public void pickaxeBoosterChance(String pickaxeBoosterChance) {
+    this.pickaxeBoosterChance = pickaxeBoosterChance;
   }
 
   public int brokenBlocks() {

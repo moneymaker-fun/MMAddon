@@ -94,6 +94,8 @@ public class ScoreBoardListener {
         if(this.addon.addonUtil().pickaxeRanking() != 0 && this.addon.addonUtil().savedPickaxeRanking() == 0) {
           this.addon.addonUtil().savedPickaxeRanking(this.addon.addonUtil().pickaxeRanking());
         }
+      } else {
+        this.addon.addonUtil().savedPickaxeRankingString(scoreName);
       }
     }
 
