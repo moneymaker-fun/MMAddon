@@ -545,6 +545,7 @@
         "title": "MoneyMaker Leaderboard",
         "liveDataInfo": "This leaderboard is not based on live data,\nso duplicate ranking and out-of-date information may occur.",
         "update": "Update",
+        "lastUpdate": "Last Update: %s",
         "toggleBlocks": {
           "enabled": "Shown own blocks",
           "disabled": "Hide own blocks"

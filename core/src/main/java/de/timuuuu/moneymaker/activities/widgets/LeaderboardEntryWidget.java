@@ -1,6 +1,5 @@
 package de.timuuuu.moneymaker.activities.widgets;
 
-import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
@@ -13,24 +12,23 @@ import java.util.UUID;
 
 public class LeaderboardEntryWidget extends HorizontalListWidget {
 
-  private MoneyMakerAddon addon;
-
   private UUID uuid;
   private String playerName;
   private int ranking;
   private int blocks;
   private int pickaxeRanking;
   private int swordRanking;
+  private String lastUpdate;
 
-  public LeaderboardEntryWidget(MoneyMakerAddon addon, UUID uuid, String playerName, int ranking,
-      int blocks, int pickaxeRanking, int swordRanking) {
-    this.addon = addon;
+  public LeaderboardEntryWidget(UUID uuid, String playerName, int ranking,
+      int blocks, int pickaxeRanking, int swordRanking, String lastUpdate) {
     this.uuid = uuid;
     this.playerName = playerName;
     this.ranking = ranking;
     this.blocks = blocks;
     this.pickaxeRanking = pickaxeRanking;
     this.swordRanking = swordRanking;
+    this.lastUpdate = lastUpdate;
   }
 
   @Override
@@ -49,7 +47,6 @@ public class LeaderboardEntryWidget extends HorizontalListWidget {
     this.addEntry(ComponentWidget.component(Component.text(this.blocks != -2 ? Util.format(this.blocks) : "-")).addId("blocks"));
     this.addEntry(ComponentWidget.component(Component.text(Util.format(this.pickaxeRanking))).addId("pickaxe-ranking"));
     this.addEntry(ComponentWidget.component(Component.text(Util.format(this.swordRanking))).addId("sword-ranking"));
-
   }
 
   public String playerName() {
@@ -70,6 +67,10 @@ public class LeaderboardEntryWidget extends HorizontalListWidget {
 
   public int swordRanking() {
     return swordRanking;
+  }
+
+  public String lastUpdate() {
+    return lastUpdate;
   }
 
 }

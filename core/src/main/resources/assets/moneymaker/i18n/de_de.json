@@ -545,6 +545,7 @@
         "title": "MoneyMaker Bestenliste",
         "liveDataInfo": "Bei dieser Bestenliste handelt es sich nicht um Live Daten,\ndaher kann es zu doppelt belegen Plätzen und nicht aktuellen Informationen kommen.",
         "update": "Aktualisieren",
+        "lastUpdate": "Letzte Aktualisierung: %s",
         "toggleBlocks": {
           "enabled": "Eigene Blöcke anzeigen",
           "disabled": "Eigene Blöcke verstecken"

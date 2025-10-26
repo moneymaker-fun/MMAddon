@@ -358,13 +358,13 @@ public class ApiUtil {
               if(object.has("UUID") && object.has("UserName") && object.has("Ranking")
                   && object.has("Blocks") && object.has("Pickaxe_Ranking") && object.has("Sword_Ranking")) {
                 this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.leaderboardActivity().entries().add(new LeaderboardEntryWidget(
-                    this.addon,
                     UUID.fromString(object.get("UUID").getAsString()),
                     object.get("UserName").getAsString(),
                     object.get("Ranking").getAsInt(),
                     object.get("Blocks").getAsInt(),
                     object.get("Pickaxe_Ranking").getAsInt(),
-                    object.get("Sword_Ranking").getAsInt()
+                    object.get("Sword_Ranking").getAsInt(),
+                    object.get("LastUpdate").getAsString()
                 )));
               }
             }
