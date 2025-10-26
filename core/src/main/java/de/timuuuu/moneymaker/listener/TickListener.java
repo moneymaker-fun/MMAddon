@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.EventUtil.Item;
 import de.timuuuu.moneymaker.utils.ChatUtil;
 import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.HotbarItemTickEvent;
@@ -23,6 +24,7 @@ public class TickListener {
   }
 
   private int swordTickCount = 0;
+  private int pickaxeTickCount = 0;
   private int generalTickCount = 0;
 
   @Subscribe
@@ -65,16 +67,18 @@ public class TickListener {
   }
 
   @Subscribe
-  public void onSwordTick(HotbarItemTickEvent event) {
+  public void onHotbarItemTick(HotbarItemTickEvent event) {
     if(!this.addon.addonUtil().inFarming()) return;
-    swordTickCount++;
-    if(swordTickCount >= this.addon.addonSettings().CHECK_TICK()) {
-      swordTickCount = 0;
 
-      if(event.getLoreList().size() < 4) return;
-      if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
-      String rankingLine = event.getLoreList().get(2);
-      String mobsLine = event.getLoreList().get(3);
+    if(event.item() == Item.SWORD) {
+      swordTickCount++;
+      if(swordTickCount >= this.addon.addonSettings().CHECK_TICK()) {
+        swordTickCount = 0;
+
+        if(event.getLoreList().size() < 4) return;
+        if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
+        String rankingLine = event.getLoreList().get(2);
+        String mobsLine = event.getLoreList().get(3);
 
       /*
       §bStatistiken: [Statistiken:]
@@ -82,70 +86,154 @@ public class TickListener {
       §7Getötete Mobs: §e103 [Getötete Mobs: 103]
       */
 
-      if(event.textVersion() == TextVersion.RAW) {
+        if(event.textVersion() == TextVersion.RAW) {
 
-        rankingLine = ChatUtil.stripColor(rankingLine);
-        mobsLine = ChatUtil.stripColor(mobsLine);
+          rankingLine = ChatUtil.stripColor(rankingLine);
+          mobsLine = ChatUtil.stripColor(mobsLine);
 
-        if(rankingLine.startsWith("Ranking: ")) {
-          if(StringUtil.isNumeric(rankingLine.split(" ")[2])) {
-            this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
+          if(rankingLine.startsWith("Ranking: ")) {
+            if(StringUtil.isNumeric(rankingLine.split(" ")[2])) {
+              this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
+                  .replace(".", "").replace(",", ""), this.getClass()));
+            }
+          }
+
+          if(mobsLine.startsWith("Getötete Mobs: ")) {
+            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Getötete Mobs: ", "")
                 .replace(".", "").replace(",", ""), this.getClass()));
           }
-        }
 
-        if(mobsLine.startsWith("Getötete Mobs: ")) {
-          this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Getötete Mobs: ", "")
-              .replace(".", "").replace(",", ""), this.getClass()));
-        }
-
-        if(mobsLine.startsWith("Killed mobs: ")) {
-          this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
-              .replace(".", "").replace(",", ""), this.getClass()));
-        }
-
-      } else {
-
-        if(rankingLine.contains("Ranking: ")) {
-          List<String> line = Util.getTextFromJsonObject(rankingLine);
-          if(line.size() != 3) return;
-          if(line.get(1) == null) return;
-          String text = line.get(1);
-          if(text.contains("Platz ")) {
-            this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
-                .replace(".", "").replace(",", "").strip(), this.getClass()));
+          if(mobsLine.startsWith("Killed mobs: ")) {
+            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
+                .replace(".", "").replace(",", ""), this.getClass()));
           }
-          if(text.contains("Rank ")) {
-            this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
-                .replace(".", "").replace(",", "").strip(), this.getClass()));
-          }
-        }
 
-        if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
-          List<String> line = Util.getTextFromJsonObject(mobsLine);
-          if(line.size() != 2) return;
-          if(line.get(1) == null) return;
-          this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
-        }
-
-      }
-
-      if(this.addon.addonUtil().swordMobs() != 0) {
-        if(this.addon.addonUtil().mobKills() == 0) {
-          this.addon.addonUtil().mobKills(this.addon.addonUtil().swordMobs());
         } else {
-          int sessionKills = this.addon.addonUtil().swordMobs() - this.addon.addonUtil().mobKills();
-          if(sessionKills >= 0) {
-            this.addon.addonUtil().sessionKills(sessionKills);
+
+          if(rankingLine.contains("Ranking: ")) {
+            List<String> line = Util.getTextFromJsonObject(rankingLine);
+            if(line.size() != 3) return;
+            if(line.get(1) == null) return;
+            String text = line.get(1);
+            if(text.contains("Platz ")) {
+              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
+                  .replace(".", "").replace(",", "").strip(), this.getClass()));
+            }
+            if(text.contains("Rank ")) {
+              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
+                  .replace(".", "").replace(",", "").strip(), this.getClass()));
+            }
+          }
+
+          if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
+            List<String> line = Util.getTextFromJsonObject(mobsLine);
+            if(line.size() != 2) return;
+            if(line.get(1) == null) return;
+            this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
+          }
+
+        }
+
+        if(this.addon.addonUtil().swordMobs() != 0) {
+          if(this.addon.addonUtil().mobKills() == 0) {
+            this.addon.addonUtil().mobKills(this.addon.addonUtil().swordMobs());
+          } else {
+            int sessionKills = this.addon.addonUtil().swordMobs() - this.addon.addonUtil().mobKills();
+            if(sessionKills >= 0) {
+              this.addon.addonUtil().sessionKills(sessionKills);
+            }
           }
         }
-      }
 
-      if(this.addon.addonUtil().swordRanking() != 0 && this.addon.addonUtil().savedSwordRanking() == 0) {
-        this.addon.addonUtil().savedSwordRanking(this.addon.addonUtil().swordRanking());
-      }
+        if(this.addon.addonUtil().swordRanking() != 0 && this.addon.addonUtil().savedSwordRanking() == 0) {
+          this.addon.addonUtil().savedSwordRanking(this.addon.addonUtil().swordRanking());
+        }
 
+      }
     }
+
+    if(event.item() == Item.PICKAXE) {
+      pickaxeTickCount++;
+      if(pickaxeTickCount >= this.addon.addonSettings().CHECK_TICK()) {
+        pickaxeTickCount = 0;
+
+        if(event.getLoreList().size() < 4) return;
+        if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
+        String rankingLine = event.getLoreList().get(2);
+        String mobsLine = event.getLoreList().get(3);
+
+      /*
+      §bStatistiken: [Statistiken:]
+      §7Ranking: §6§6Platz 9.472 §7(Getötete Mobs) [Ranking: Platz 9.472 (Getötete Mobs)]
+      §7Getötete Mobs: §e103 [Getötete Mobs: 103]
+      */
+
+        if(event.textVersion() == TextVersion.RAW) {
+
+          rankingLine = ChatUtil.stripColor(rankingLine);
+          mobsLine = ChatUtil.stripColor(mobsLine);
+
+          if(rankingLine.startsWith("Ranking: ")) {
+            if(StringUtil.isNumeric(rankingLine.split(" ")[2])) {
+              this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
+                  .replace(".", "").replace(",", ""), this.getClass()));
+            }
+          }
+
+          if(mobsLine.startsWith("Getötete Mobs: ")) {
+            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Getötete Mobs: ", "")
+                .replace(".", "").replace(",", ""), this.getClass()));
+          }
+
+          if(mobsLine.startsWith("Killed mobs: ")) {
+            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
+                .replace(".", "").replace(",", ""), this.getClass()));
+          }
+
+        } else {
+
+          if(rankingLine.contains("Ranking: ")) {
+            List<String> line = Util.getTextFromJsonObject(rankingLine);
+            if(line.size() != 3) return;
+            if(line.get(1) == null) return;
+            String text = line.get(1);
+            if(text.contains("Platz ")) {
+              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Platz ", "")
+                  .replace(".", "").replace(",", "").strip(), this.getClass()));
+            }
+            if(text.contains("Rank ")) {
+              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
+                  .replace(".", "").replace(",", "").strip(), this.getClass()));
+            }
+          }
+
+          if(mobsLine.contains("Getötete Mobs: ") || mobsLine.contains("Killed mobs: ")) {
+            List<String> line = Util.getTextFromJsonObject(mobsLine);
+            if(line.size() != 2) return;
+            if(line.get(1) == null) return;
+            this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
+          }
+
+        }
+
+        if(this.addon.addonUtil().swordMobs() != 0) {
+          if(this.addon.addonUtil().mobKills() == 0) {
+            this.addon.addonUtil().mobKills(this.addon.addonUtil().swordMobs());
+          } else {
+            int sessionKills = this.addon.addonUtil().swordMobs() - this.addon.addonUtil().mobKills();
+            if(sessionKills >= 0) {
+              this.addon.addonUtil().sessionKills(sessionKills);
+            }
+          }
+        }
+
+        if(this.addon.addonUtil().swordRanking() != 0 && this.addon.addonUtil().savedSwordRanking() == 0) {
+          this.addon.addonUtil().savedSwordRanking(this.addon.addonUtil().swordRanking());
+        }
+
+      }
+    }
+
 
     /*
     Lore-List:

@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.v1_12_2.mixins;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.EventUtil.Item;
 import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.HotbarItemTickEvent;
 import java.util.ArrayList;
@@ -27,19 +28,35 @@ public class SwordTickMixin {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     EntityPlayer player = Minecraft.getMinecraft().player;
     if(player != null) {
-      ItemStack itemStack = player.inventory.getStackInSlot(0);
-      if(itemStack != null) {
-        if(itemStack.getTagCompound() != null) {
-          NBTTagCompound compoundTag = itemStack.getTagCompound().getCompoundTag("display");
-          String name = itemStack.getDisplayName();
+
+      ItemStack swordItem = player.inventory.getStackInSlot(Item.SWORD.slotNumber());
+      if(swordItem != null) {
+        if(swordItem.getTagCompound() != null) {
+          NBTTagCompound compoundTag = swordItem.getTagCompound().getCompoundTag("display");
+          String name = swordItem.getDisplayName();
           List<String> loreList = new ArrayList<>();
           NBTTagList listTag = compoundTag.getTagList("Lore", 8);
           for(int i = 0; i != listTag.tagCount(); i++) {
             loreList.add(listTag.getStringTagAt(i));
           }
-          Laby.fireEvent(new HotbarItemTickEvent(name, loreList, TextVersion.RAW));
+          Laby.fireEvent(new HotbarItemTickEvent(Item.SWORD, name, loreList, TextVersion.RAW));
         }
       }
+
+      ItemStack pickaxeItem = player.inventory.getStackInSlot(Item.PICKAXE.slotNumber());
+      if(pickaxeItem != null) {
+        if(pickaxeItem.getTagCompound() != null) {
+          NBTTagCompound compoundTag = pickaxeItem.getTagCompound().getCompoundTag("display");
+          String name = pickaxeItem.getDisplayName();
+          List<String> loreList = new ArrayList<>();
+          NBTTagList listTag = compoundTag.getTagList("Lore", 8);
+          for(int i = 0; i != listTag.tagCount(); i++) {
+            loreList.add(listTag.getStringTagAt(i));
+          }
+          Laby.fireEvent(new HotbarItemTickEvent(Item.PICKAXE, name, loreList, TextVersion.RAW));
+        }
+      }
+
     }
   }
 

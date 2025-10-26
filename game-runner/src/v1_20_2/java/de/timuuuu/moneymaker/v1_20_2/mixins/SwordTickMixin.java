@@ -1,6 +1,7 @@
 package de.timuuuu.moneymaker.v1_20_2.mixins;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.EventUtil.Item;
 import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.HotbarItemTickEvent;
 import java.util.ArrayList;
@@ -27,17 +28,31 @@ public class SwordTickMixin {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     Player player = Minecraft.getInstance().player;
     if(player != null) {
-      ItemStack itemStack = player.getInventory().getItem(0);
-      if(itemStack != ItemStack.EMPTY) {
-        CompoundTag compoundTag = itemStack.getOrCreateTagElement("display");
+
+      ItemStack swordItem = player.getInventory().getItem(Item.SWORD.slotNumber());
+      if(swordItem != ItemStack.EMPTY) {
+        CompoundTag compoundTag = swordItem.getOrCreateTagElement("display");
         String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
         List<String> loreList = new ArrayList<>();
         ListTag listTag = compoundTag.getList(ItemStack.TAG_LORE, 8);
         for(int i = 0; i != listTag.size(); i++) {
           loreList.add(listTag.getString(i));
         }
-        Laby.fireEvent(new HotbarItemTickEvent(name, loreList, TextVersion.JSON));
+        Laby.fireEvent(new HotbarItemTickEvent(Item.SWORD, name, loreList, TextVersion.JSON));
       }
+
+      ItemStack pickaxeItem = player.getInventory().getItem(Item.PICKAXE.slotNumber());
+      if(pickaxeItem != ItemStack.EMPTY) {
+        CompoundTag compoundTag = pickaxeItem.getOrCreateTagElement("display");
+        String name = compoundTag.getString(ItemStack.TAG_DISPLAY_NAME);
+        List<String> loreList = new ArrayList<>();
+        ListTag listTag = compoundTag.getList(ItemStack.TAG_LORE, 8);
+        for(int i = 0; i != listTag.size(); i++) {
+          loreList.add(listTag.getString(i));
+        }
+        Laby.fireEvent(new HotbarItemTickEvent(Item.PICKAXE, name, loreList, TextVersion.JSON));
+      }
+
     }
   }
 
