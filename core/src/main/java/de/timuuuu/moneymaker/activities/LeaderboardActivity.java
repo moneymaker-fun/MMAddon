@@ -133,45 +133,103 @@ public class LeaderboardActivity extends SimpleActivity {
         }
       }
 
-      ButtonWidget sortTypeButton = ButtonWidget.component(
-          Component.translatable("moneymaker.ui.leaderboard.sorting.button", NamedTextColor.YELLOW)
-              .append(Component.text(" - ", NamedTextColor.DARK_GRAY))
-              .append(Component.translatable("moneymaker.ui.leaderboard.header." + this.sorting.translation(), NamedTextColor.GOLD))
-      ).addId("sort-type-button");
-      sortTypeButton.setPressable(() -> {
-        switch (this.sorting) {
-          case RANKING -> this.sorting = SortType.BLOCKS;
-          case BLOCKS -> this.sorting = SortType.PICKAXE;
-          case PICKAXE -> this.sorting = SortType.SWORD;
-          case SWORD -> this.sorting = SortType.USERNAME;
-          case USERNAME -> this.sorting = SortType.RANKING;
-        }
-        this.reload();
-      });
-
-      container.addChild(sortTypeButton);
-
-      ButtonWidget sortDirectionButton = ButtonWidget.component(
-          Component.translatable("moneymaker.ui.leaderboard.sorting.button", NamedTextColor.YELLOW)
-              .append(Component.text(" - ", NamedTextColor.DARK_GRAY))
-              .append(Component.translatable("moneymaker.ui.leaderboard.sorting." + this.sortDirection.translation(), NamedTextColor.GOLD))
-      ).addId("sort-direction-button");
-      sortDirectionButton.setPressable(() -> {
-        switch (this.sortDirection) {
-          case DESC -> this.sortDirection = SortDirection.ASC;
-          case ASC -> this.sortDirection = SortDirection.DESC;
-        }
-        this.reload();
-      });
-
-      container.addChild(sortDirectionButton);
-
       HorizontalListWidget header = new HorizontalListWidget().addId("header");
-      header.addEntry(ComponentWidget.i18n("moneymaker.ui.leaderboard.header.username").addId("username", (this.sorting == SortType.USERNAME ? "active" : "")));
-      header.addEntry(ComponentWidget.i18n("moneymaker.ui.leaderboard.header.ranking").addId("ranking", (this.sorting == SortType.RANKING ? "active" : "")));
-      header.addEntry(ComponentWidget.i18n("moneymaker.ui.leaderboard.header.blocks").addId("blocks", (this.sorting == SortType.BLOCKS ? "active" : "")));
-      header.addEntry(ComponentWidget.i18n("moneymaker.ui.leaderboard.header.pickaxe").addId("pickaxe-ranking", (this.sorting == SortType.PICKAXE ? "active" : "")));
-      header.addEntry(ComponentWidget.i18n("moneymaker.ui.leaderboard.header.sword").addId("sword-ranking", (this.sorting == SortType.SWORD ? "active" : "")));
+
+      Component username = Component.translatable("moneymaker.ui.leaderboard.header.username");
+      if(this.sorting == SortType.USERNAME) {
+        username.append(this.sortDirection == SortDirection.DESC ? Component.text(" ▲") : Component.text(" ▼"));
+      }
+      ComponentWidget usernameWidget = ComponentWidget.component(username);
+      usernameWidget.setPressable(() -> {
+        if(this.sorting == SortType.USERNAME) {
+          if(this.sortDirection == SortDirection.ASC) {
+            this.sortDirection = SortDirection.DESC;
+          } else {
+            this.sortDirection = SortDirection.ASC;
+          }
+        } else {
+          this.sorting = SortType.USERNAME;
+        }
+        this.reload();
+      });
+
+      Component ranking = Component.translatable("moneymaker.ui.leaderboard.header.ranking");
+      if(this.sorting == SortType.RANKING) {
+        ranking.append(this.sortDirection == SortDirection.DESC ? Component.text(" ▲") : Component.text(" ▼"));
+      }
+      ComponentWidget rankingWidget = ComponentWidget.component(ranking);
+      rankingWidget.setPressable(() -> {
+        if(this.sorting == SortType.RANKING) {
+          if(this.sortDirection == SortDirection.ASC) {
+            this.sortDirection = SortDirection.DESC;
+          } else {
+            this.sortDirection = SortDirection.ASC;
+          }
+        } else {
+          this.sorting = SortType.RANKING;
+        }
+        this.reload();
+      });
+
+      Component blocks = Component.translatable("moneymaker.ui.leaderboard.header.blocks");
+      if(this.sorting == SortType.BLOCKS) {
+        blocks.append(this.sortDirection == SortDirection.DESC ? Component.text(" ▲") : Component.text(" ▼"));
+      }
+      ComponentWidget blocksWidget = ComponentWidget.component(blocks);
+      blocksWidget.setPressable(() -> {
+        if(this.sorting == SortType.BLOCKS) {
+          if(this.sortDirection == SortDirection.ASC) {
+            this.sortDirection = SortDirection.DESC;
+          } else {
+            this.sortDirection = SortDirection.ASC;
+          }
+        } else {
+          this.sorting = SortType.BLOCKS;
+        }
+        this.reload();
+      });
+
+      Component pickaxe = Component.translatable("moneymaker.ui.leaderboard.header.pickaxe");
+      if(this.sorting == SortType.PICKAXE) {
+        pickaxe.append(this.sortDirection == SortDirection.DESC ? Component.text(" ▲") : Component.text(" ▼"));
+      }
+      ComponentWidget pickaxeWidget = ComponentWidget.component(pickaxe);
+      pickaxeWidget.setPressable(() -> {
+        if(this.sorting == SortType.PICKAXE) {
+          if(this.sortDirection == SortDirection.ASC) {
+            this.sortDirection = SortDirection.DESC;
+          } else {
+            this.sortDirection = SortDirection.ASC;
+          }
+        } else {
+          this.sorting = SortType.PICKAXE;
+        }
+        this.reload();
+      });
+
+      Component sword = Component.translatable("moneymaker.ui.leaderboard.header.sword");
+      if(this.sorting == SortType.SWORD) {
+        sword.append(this.sortDirection == SortDirection.DESC ? Component.text(" ▲") : Component.text(" ▼"));
+      }
+      ComponentWidget swordWidget = ComponentWidget.component(sword);
+      swordWidget.setPressable(() -> {
+        if(this.sorting == SortType.SWORD) {
+          if(this.sortDirection == SortDirection.ASC) {
+            this.sortDirection = SortDirection.DESC;
+          } else {
+            this.sortDirection = SortDirection.ASC;
+          }
+        } else {
+          this.sorting = SortType.SWORD;
+        }
+        this.reload();
+      });
+
+      header.addEntry(usernameWidget.addId("username", (this.sorting == SortType.USERNAME ? "active" : "")));
+      header.addEntry(rankingWidget.addId("ranking", (this.sorting == SortType.RANKING ? "active" : "")));
+      header.addEntry(blocksWidget.addId("blocks", (this.sorting == SortType.BLOCKS ? "active" : "")));
+      header.addEntry(pickaxeWidget.addId("pickaxe-ranking", (this.sorting == SortType.PICKAXE ? "active" : "")));
+      header.addEntry(swordWidget.addId("sword-ranking", (this.sorting == SortType.SWORD ? "active" : "")));
 
       container.addChild(header);
 

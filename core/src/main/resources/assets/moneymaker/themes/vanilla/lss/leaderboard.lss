@@ -14,8 +14,8 @@
   renderer: "DirtBackground";
 
   .liveData-info {
-    top: 7;
-    left: 130;
+    top: 10;
+    left: 10;
     font-size: 0.8;
     text-color: gray;
   }
