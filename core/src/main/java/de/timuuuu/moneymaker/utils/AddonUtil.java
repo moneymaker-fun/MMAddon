@@ -452,7 +452,7 @@ public class AddonUtil {
   public MoneyMakerEvent eventByName(String internalName) {
     MoneyMakerEvent event = MoneyMakerEvent.NONE;
     for(MoneyMakerEvent events : MoneyMakerEvent.values()) {
-      if(event.internalName().equals(internalName)) {
+      if(events.internalName().equals(internalName)) {
         event = events;
       }
     }
