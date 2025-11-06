@@ -21,33 +21,27 @@ public class MoneyIconTag extends IconTag {
     this.addon = addon;
   }
 
+  @Override
   public void begin(EntitySnapshot snapshot) {
     this.group = this.getVisibleGroup(snapshot);
     super.begin(snapshot);
   }
 
+  @Override
   public boolean isVisible() {
     return this.group != null && super.isVisible();
   }
 
-  public Icon getIcon() {
+  @Override
+  public Icon getIcon(EntitySnapshot snapshot) {
     return this.group != null ? this.group.getIcon() : GroupService.DEFAULT_GROUP.getIcon();
   }
 
   private @Nullable Group getVisibleGroup(EntitySnapshot snapshot) {
-    if(!this.visible(snapshot)) {
-      this.addon.logger().info("IconTag is not visible");
-      return null;
-    }
-    if(!snapshot.has(MoneyMakerKeys.MONEY_PLAYER)) {
-      this.addon.logger().info("EntitySnapshot does not have MoneyPlayerSnapshot");
-      return null;
-    }
+    if(!this.visible(snapshot)) return null;
+    if(!snapshot.has(MoneyMakerKeys.MONEY_PLAYER)) return null;
     MoneyPlayerSnapshot moneyPlayerSnapshot = snapshot.get(MoneyMakerKeys.MONEY_PLAYER);
-    if(moneyPlayerSnapshot.getMoneyPlayer() == null) {
-      this.addon.logger().info("MoneyPlayerSnapshot does not have MoneyPlayer");
-      return null;
-    }
+    if(moneyPlayerSnapshot.getMoneyPlayer() == null) return null;
     Group group = moneyPlayerSnapshot.getMoneyPlayer().group();
     return group.getDisplayType() == GroupDisplay.BOTH || group.getDisplayType() == GroupDisplay.BESIDE_NAME ? group : null;
   }
