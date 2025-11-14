@@ -669,6 +669,9 @@
         },
         "showRankingDifference": {
           "name": "Zeige Rang Differenz"
+        },
+        "showAverageChance": {
+          "name": "Zeige Durchschnittliche Chance"
         }
       },
       "mm_kill_counter": {
