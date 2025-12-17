@@ -1,5 +1,3 @@
-import net.labymod.labygradle.common.extension.model.labymod.ReleaseChannels
-
 plugins {
     id("net.labymod.labygradle")
     id("net.labymod.labygradle.addon")
@@ -37,7 +35,6 @@ labyMod {
         description = "Adds some features to the MoneyMaker IdleGame on GommeHD.net"
         minecraftVersion = "*"
         version = System.getenv().getOrDefault("VERSION", addonVersion)
-        releaseChannel = ReleaseChannels.SNAPSHOT
     }
 
 }
