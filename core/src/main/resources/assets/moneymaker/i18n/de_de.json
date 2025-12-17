@@ -458,6 +458,9 @@
           "name": "Benachrichtigung",
           "description": "Erhalte eine Benachrichtigung bei neuen Nachrichten über den Addon Chat"
         },
+        "hideChatConnectionNotifications": {
+          "name": "Chat Verbindung Benachrichtigungen verstecken"
+        },
         "notificationSound": {
           "name": "Benachrichtigungston",
           "description": "Erhalte einen Benachrichtigungston bei neuen Nachrichten über den Addon Chat"

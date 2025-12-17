@@ -458,6 +458,9 @@
           "name": "Notifications",
           "description": "Receive notification of new messages via the addon chat"
         },
+        "hideChatConnectionNotifications": {
+          "name": "Hide Chat Connection Notifications"
+        },
         "notificationSound": {
           "name": "Notification sound",
           "description": "Receive a notification sound for new messages via the addon chat"

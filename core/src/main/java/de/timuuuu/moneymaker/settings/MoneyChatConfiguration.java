@@ -33,6 +33,10 @@ public class MoneyChatConfiguration extends Config {
   @SwitchSetting
   private final ConfigProperty<Boolean> notification = new ConfigProperty<>(true);
 
+  @SpriteSlot(y = 4)
+  @SwitchSetting
+  private final ConfigProperty<Boolean> hideChatConnectionNotifications = new ConfigProperty<>(false);
+
   @SettingRequires("notification")
   @SpriteSlot(y = 4, x = 1)
   @SwitchSetting
@@ -61,6 +65,10 @@ public class MoneyChatConfiguration extends Config {
 
   public ConfigProperty<Boolean> notification() {
     return notification;
+  }
+
+  public ConfigProperty<Boolean> hideChatConnectionNotifications() {
+    return hideChatConnectionNotifications;
   }
 
   public ConfigProperty<Boolean> notificationSound() {
