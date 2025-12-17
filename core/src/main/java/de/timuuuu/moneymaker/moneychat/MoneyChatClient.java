@@ -127,7 +127,6 @@ public class MoneyChatClient {
             this.addon.chatActivity().reloadScreen();
             this.sendPacket(new MoneyPacketLogin(this.addon.labyAPI().getName(), this.addon.labyAPI().getUniqueId()));
           } catch (Exception e) {
-            e.printStackTrace();
             this.updateState(MoneyChatState.OFFLINE);
           }
 
