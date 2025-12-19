@@ -147,7 +147,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
 
   @IntroducedIn(value = "1.6.0", namespace = "moneymaker")
   @SwitchSetting
-  private final ConfigProperty<Boolean> showMOTD = new ConfigProperty<>(true);
+  private final ConfigProperty<Boolean> displayJoinMessage = new ConfigProperty<>(true);
 
   // Settings Getters
 
@@ -184,8 +184,8 @@ public class MoneyMakerConfiguration extends AddonConfig {
     return showTotalBoostMessage;
   }
 
-  public ConfigProperty<Boolean> showMOTD() {
-    return showMOTD;
+  public ConfigProperty<Boolean> displayJoinMessage() {
+    return displayJoinMessage;
   }
 
   // Internal Settings

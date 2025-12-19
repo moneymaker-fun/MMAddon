@@ -17,8 +17,7 @@ public class AddonUtil {
   }
 
   private MoneyMakerEvent currentEvent = MoneyMakerEvent.NONE;
-  private String motd = "";
-  private boolean motdPriority = false;
+  private MoneyMakerJoinMessage joinMessage = null;
 
   private List<String> ignoredRankingValues = new ArrayList<>();
 
@@ -30,20 +29,12 @@ public class AddonUtil {
     this.currentEvent = currentEvent;
   }
 
-  public String motd() {
-    return motd;
+  public MoneyMakerJoinMessage getJoinMessage() {
+    return joinMessage;
   }
 
-  public void motd(String motd) {
-    this.motd = motd;
-  }
-
-  public boolean motdPriority() {
-    return motdPriority;
-  }
-
-  public void motdPriority(boolean motdPriority) {
-    this.motdPriority = motdPriority;
+  public void setJoinMessage(MoneyMakerJoinMessage joinMessage) {
+    this.joinMessage = joinMessage;
   }
 
   public List<String> ignoredRankingValues() {
@@ -479,6 +470,31 @@ public class AddonUtil {
       return internalName;
     }
 
+  }
+
+  public static class MoneyMakerJoinMessage {
+
+    String message;
+    String url;
+    boolean priority;
+
+    public MoneyMakerJoinMessage(String message, String url, boolean priority) {
+      this.message = message;
+      this.url = url;
+      this.priority = priority;
+    }
+
+    public String getMessage() {
+      return message;
+    }
+
+    public String getUrl() {
+      return url;
+    }
+
+    public boolean isPriority() {
+      return priority;
+    }
   }
 
 }

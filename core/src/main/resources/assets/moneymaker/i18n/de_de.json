@@ -50,7 +50,10 @@
           "info": "Bitte beachte, dass nur Booster erfasst werden,\ndie aktuell im Inventar sichtbar sind."
         }
       },
-      "motd": "Nachricht des Tages"
+      "joinMessage": {
+        "message": "Willkommen in MoneyMaker! Aktuelle Nachrichten",
+        "hover_url": "Öffne die folgende URL in deinem Browser: %s"
+      }
     },
     "discordPresence": {
       "mine": {
@@ -372,9 +375,9 @@
         "name": "Gesamt Booster Nachricht anzeigen",
         "description": "Zeigt eine Nachricht im Chat mit dem gesamt Boost deiner Booster im Booster-Inventar an, wenn du das Booster-Inventar schließt"
       },
-      "showMOTD": {
-        "name": "Zeige Nachricht des Tages",
-        "description": "Zeigt die Nachricht des Tages im Chat wenn du MoneyMaker betrittst"
+      "displayJoinMessage": {
+        "name": "Zeige Info Nachricht",
+        "description": "Zeigt eine Nachricht im Chat an sobald du MoneyMaker betrittst. Diese Nachricht wird nur einmal pro Spielsitzung angezeigt und enthält z.B. aktuelle Nachrichten, wie Update Changelogs"
       },
 
       "gameplayConfiguration": {

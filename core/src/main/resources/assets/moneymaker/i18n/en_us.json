@@ -50,7 +50,10 @@
           "info": "Please not that only boosters are recorded\nthat are currently visible in the inventory."
         }
       },
-      "motd": "Message of the Day"
+      "joinMessage": {
+        "message": "Welcome to MoneyMaker! Current news",
+        "hover_url": "Open the following URL in your browser: %s"
+      }
     },
     "discordPresence": {
       "mine": {
@@ -372,9 +375,9 @@
         "name": "Show total boost message",
         "description": "Displays a message in chat with the total boost of your boosters in the booster inventory when you close the booster inventory"
       },
-      "showMOTD": {
-        "name": "Show Message of the day",
-        "description": "Displays the message of the day when joining MoneyMaker"
+      "displayJoinMessage": {
+        "name": "Show Info Join Message",
+        "description": "A message will appear in the chat as soon as you enter MoneyMaker. This message will only be displayed once per game session and contains, for example, current news such as update changelogs."
       },
 
       "gameplayConfiguration": {

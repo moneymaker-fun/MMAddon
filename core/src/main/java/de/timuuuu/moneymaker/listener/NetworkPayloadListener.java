@@ -15,7 +15,7 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
+import net.labymod.api.client.component.serializer.legacy.LegacyComponentSerializer;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.network.server.NetworkPayloadEvent;
 import net.labymod.api.util.concurrent.task.Task;
@@ -28,7 +28,7 @@ public class NetworkPayloadListener {
   private final MoneyMakerAddon addon;
 
   private boolean langInfoOpened = false;
-  private boolean motdSent = false;
+  private boolean joinMessageSent = false;
 
   public NetworkPayloadListener(MoneyMakerAddon addon) {
     this.addon = addon;
@@ -127,15 +127,21 @@ public class NetworkPayloadListener {
                   }
                 }
 
-                if(!this.addon.addonUtil().motd().isEmpty() && !this.motdSent) {
-                  boolean show = this.addon.configuration().showMOTD().get();
-                  if(this.addon.addonUtil().motdPriority()) {
+                if(this.addon.addonUtil().getJoinMessage() != null && !this.joinMessageSent) {
+                  boolean show = this.addon.configuration().displayJoinMessage().get();
+                  if(this.addon.addonUtil().getJoinMessage().isPriority()) {
                     show = true;
                   }
                   if(show) {
-                    this.motdSent = true;
-                    this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.motd", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
-                    this.addon.displayMessage(PlainTextComponentSerializer.plainUrl().deserialize(this.addon.addonUtil().motd()));
+                    this.joinMessageSent = true;
+                    this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.text.joinMessage.message", NamedTextColor.GREEN)).append(Component.text(":", NamedTextColor.DARK_GRAY)));
+                    Component joinMessage = this.addon.prefix.copy().append(LegacyComponentSerializer.legacySection().deserialize(this.addon.addonUtil().getJoinMessage().getMessage()));
+                    if(this.addon.addonUtil().getJoinMessage().getUrl() != null) {
+                      joinMessage.clickEvent(ClickEvent.openUrl(this.addon.addonUtil().getJoinMessage().getUrl()));
+                      joinMessage.hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.text.joinMessage.hover_url", NamedTextColor.GRAY,
+                          Component.text(this.addon.addonUtil().getJoinMessage().getUrl(), NamedTextColor.YELLOW))));
+                    }
+                    this.addon.displayMessage(joinMessage);
                   }
                 }
 

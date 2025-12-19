@@ -20,6 +20,7 @@ import de.timuuuu.moneymaker.event.hudwidget.ValentineEventWidget;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.AddonUtil.MoneyMakerEvent;
+import de.timuuuu.moneymaker.utils.AddonUtil.MoneyMakerJoinMessage;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.util.io.web.request.Request;
@@ -42,18 +43,17 @@ public class ApiUtil {
         .readTimeout(5000)
         .userAgent("MoneyMaker LabyMod 4 Addon")
         .execute(response -> {
-          if(response.getStatusCode() != 200 || response.hasException()) {
-            return;
-          }
+          if(response.getStatusCode() != 200 || response.hasException()) return;
 
           JsonObject object = response.get();
 
-          if (object.has("motd") && object.get("motd").isJsonObject()) {
-            JsonObject motd = object.get("motd").getAsJsonObject();
-            if(motd.has("text") && motd.has("priority")) {
-              this.addon.addonUtil().motd(motd.get("text").getAsString());
-              this.addon.addonUtil().motdPriority(motd.get("priority").getAsBoolean());
-            }
+          if (object.has("joinMessage") && object.get("joinMessage").isJsonObject()) {
+            JsonObject joinMessage = object.get("joinMessage").getAsJsonObject();
+            this.addon.addonUtil().setJoinMessage(new MoneyMakerJoinMessage(
+                joinMessage.has("text") ? joinMessage.get("text").getAsString() : null,
+                joinMessage.has("url") ? joinMessage.get("url").getAsString() : null,
+                joinMessage.has("priority") && joinMessage.get("priority").getAsBoolean()
+            ));
           }
 
           if (object.has("availableLanguages") && object.get("availableLanguages").isJsonArray()) {
