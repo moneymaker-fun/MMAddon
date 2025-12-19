@@ -222,20 +222,22 @@ public class MoneyChatSession extends MoneyPacketHandler {
   @Override
   public void handle(PacketVerificationToken packet) {
     if(packet.type() != null && packet.token() != null) {
-      if(this.addon.tokenVerificationActivity().isScreenOpened()) {
-        this.addon.tokenVerificationActivity().setToken(packet.type(), packet.token());
-        return;
-      }
-      if(packet.type() == TokenType.WEBSITE) {
-        this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.chat.website.success", NamedTextColor.GREEN)));
-        this.addon.displayMessage(PlainTextComponentSerializer.plainUrl().deserialize("https://moneymakeraddon.de/register?token=" + packet.token()).color(NamedTextColor.YELLOW));
-      } else {
-        this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.chat.discord.success", NamedTextColor.GREEN)));
-        Component tokenComponent = Component.translatable("moneymaker.verification.chat.discord.token", NamedTextColor.GRAY, Component.text(packet.token(), NamedTextColor.YELLOW));
-        tokenComponent.hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.verification.chat.discord.tokenHover", NamedTextColor.GRAY)));
-        tokenComponent.clickEvent(ClickEvent.copyToClipboard(packet.token()));
-        this.addon.displayMessage(this.addon.prefix.copy().append(tokenComponent));
-      }
+      Laby.labyAPI().minecraft().executeNextTick(() -> {
+        if(this.addon.tokenVerificationActivity().isScreenOpened()) {
+          this.addon.tokenVerificationActivity().setToken(packet.type(), packet.token());
+          return;
+        }
+        if(packet.type() == TokenType.WEBSITE) {
+          this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.chat.website.success", NamedTextColor.GREEN)));
+          this.addon.displayMessage(PlainTextComponentSerializer.plainUrl().deserialize("https://moneymakeraddon.de/register?token=" + packet.token()).color(NamedTextColor.YELLOW));
+        } else {
+          this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.chat.discord.success", NamedTextColor.GREEN)));
+          Component tokenComponent = Component.translatable("moneymaker.verification.chat.discord.token", NamedTextColor.GRAY, Component.text(packet.token(), NamedTextColor.YELLOW));
+          tokenComponent.hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.verification.chat.discord.tokenHover", NamedTextColor.GRAY)));
+          tokenComponent.clickEvent(ClickEvent.copyToClipboard(packet.token()));
+          this.addon.displayMessage(this.addon.prefix.copy().append(tokenComponent));
+        }
+      });
     }
   }
 
