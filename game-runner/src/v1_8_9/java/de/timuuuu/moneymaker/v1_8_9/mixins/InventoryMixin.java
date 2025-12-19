@@ -4,13 +4,11 @@ import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
-import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import net.labymod.api.Laby;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -65,7 +63,7 @@ public class InventoryMixin {
     Laby.fireEvent(new InventoryClickEvent(clickedSlot.inventory.getName(), clickedSlot.slotNumber, itemName, loreList, TextVersion.RAW));
   }
 
-  @Inject(
+  /*@Inject(
       method = {"onGuiClosed"},
       at = {@At("HEAD")}
   )
@@ -76,6 +74,6 @@ public class InventoryMixin {
       inventoryName = ((IInventory) inventorySlots).getName();
     }
     Laby.fireEvent(new InventoryCloseEvent(inventoryName));
-  }
+  }*/
 
 }
