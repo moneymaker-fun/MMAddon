@@ -62,11 +62,7 @@ public class PriceOverviewActivity extends SimpleActivity {
             completed = true;
           }
         }
-        if(completed) {
-          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost + " ✔", textColor, TextDecoration.STRIKETHROUGH)));
-        } else {
-          list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost, textColor)));
-        }
+        list.addChild(ComponentWidget.component(Component.text(name + " ➡ " + cost + (completed ? " ✔" : ""), textColor)));
       });
       goldContainer.addChild(new ScrollWidget(list, new ListSession<>()).addId("gold-scroll"));
     }
