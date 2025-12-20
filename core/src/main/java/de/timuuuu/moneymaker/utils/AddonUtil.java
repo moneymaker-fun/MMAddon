@@ -452,13 +452,12 @@ public class AddonUtil {
 
   public enum MoneyMakerEvent {
     NONE("none"),
-    VALENTINE("valentine"),
-    EASTER("easter"),
-    SUMMER("summer"),
-    CARIBBEAN("caribbean"),
-    HALLOWEEN("halloween"),
-    CHRISTMAS("christmas"),
-    ALL("all");
+    VALENTINE("valentine"), // Flowers
+    EASTER("easter"), // Easter eggs
+    SUMMER("summer"), // Fruits
+    CARIBBEAN("caribbean"), // Fruits
+    HALLOWEEN("halloween"), // Candies
+    CHRISTMAS("christmas"); // Gifts
 
     private final String internalName;
 

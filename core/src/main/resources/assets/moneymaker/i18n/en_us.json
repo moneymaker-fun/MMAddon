@@ -711,25 +711,16 @@
         "name": "Activated Boosters"
       },
 
-      "mm_event_easter": {
-        "name": "Event - Easter",
-        "display": "Easter Eggs"
-      },
-      "mm_event_valentine": {
-        "name": "Event - Valentine",
-        "display": "Flowers"
-      },
-      "mm_event_fruits": {
-        "name": "Event - Fruits",
-        "display": "Fruits"
-      },
-      "mm_event_halloween": {
-        "name": "Event - Halloween",
-        "display": "Candies"
-      },
-      "mm_event_christmas": {
-        "name": "Event - Christmas",
-        "display": "Gifts"
+      "mm_event": {
+        "name": "MoneyMaker Event",
+        "display": {
+          "valentine": "Flowers",
+          "easter": "Easter Eggs",
+          "summer": "Fruits",
+          "caribbean": "Fruits",
+          "halloween": "Candies",
+          "christmas": "Gifts"
+        }
       }
     }
   }

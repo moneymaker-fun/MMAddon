@@ -1,12 +1,6 @@
 package de.timuuuu.moneymaker.event;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.event.hudwidget.ChristmasEventWidget;
-import de.timuuuu.moneymaker.event.hudwidget.EasterEventWidget;
-import de.timuuuu.moneymaker.event.hudwidget.FruitsHudWidget;
-import de.timuuuu.moneymaker.event.hudwidget.HalloweenEventWidget;
-import de.timuuuu.moneymaker.event.hudwidget.ValentineEventWidget;
-import de.timuuuu.moneymaker.utils.AddonUtil.MoneyMakerEvent;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.event.Priority;
 import net.labymod.api.event.Subscribe;
@@ -31,7 +25,7 @@ public class EventChatListener {
         String count = plain.replace(this.addon.chatMessageLoader().message("event.now"), "")
             .replace(this.addon.chatMessageLoader().message("event.easter"), "");
         try {
-          EasterEventWidget.eggs = Util.parseInteger(count, this.getClass());
+          EventHudWidget.collectibles = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -39,7 +33,7 @@ public class EventChatListener {
         String count = plain.replace(this.addon.chatMessageLoader().message("event.now"), "")
             .replace(this.addon.chatMessageLoader().message("event.valentine"), "");
         try {
-          ValentineEventWidget.flowers = Util.parseInteger(count, this.getClass());
+          EventHudWidget.collectibles = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -47,7 +41,7 @@ public class EventChatListener {
         String count = plain.replace(this.addon.chatMessageLoader().message("event.now"), "")
             .replace(this.addon.chatMessageLoader().message("event.summer"), "");
         try {
-          FruitsHudWidget.fruits = Util.parseInteger(count, this.getClass());
+          EventHudWidget.collectibles = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -55,7 +49,7 @@ public class EventChatListener {
         String count = plain.replace(this.addon.chatMessageLoader().message("event.now"), "")
             .replace(this.addon.chatMessageLoader().message("event.halloween"), "");
         try {
-          HalloweenEventWidget.candies = Util.parseInteger(count, this.getClass());
+          EventHudWidget.collectibles = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
@@ -63,30 +57,14 @@ public class EventChatListener {
         String count = plain.replace(this.addon.chatMessageLoader().message("event.now"), "")
             .replace(this.addon.chatMessageLoader().message("event.christmas"), "");
         try {
-          ChristmasEventWidget.gifts = Util.parseInteger(count, this.getClass());
+          EventHudWidget.collectibles = Util.parseInteger(count, this.getClass());
         } catch (NumberFormatException ignored) {}
       }
 
     }
 
-    if(plain.startsWith(this.addon.chatMessageLoader().message("event.booster"))) {
-
-      if(this.addon.addonUtil().currentEvent() == MoneyMakerEvent.VALENTINE && ValentineEventWidget.flowers >= 5) {
-        ValentineEventWidget.flowers -= 5;
-      }
-      if(this.addon.addonUtil().currentEvent() == MoneyMakerEvent.EASTER && EasterEventWidget.eggs >= 5) {
-        EasterEventWidget.eggs -= 5;
-      }
-      if((this.addon.addonUtil().currentEvent() == MoneyMakerEvent.SUMMER || this.addon.addonUtil().currentEvent() == MoneyMakerEvent.CARIBBEAN) && FruitsHudWidget.fruits >= 5) {
-        FruitsHudWidget.fruits -= 5;
-      }
-      if(this.addon.addonUtil().currentEvent() == MoneyMakerEvent.HALLOWEEN && HalloweenEventWidget.candies >= 5) {
-        HalloweenEventWidget.candies -= 5;
-      }
-      if(this.addon.addonUtil().currentEvent() == MoneyMakerEvent.CHRISTMAS && ChristmasEventWidget.gifts >= 5) {
-        ChristmasEventWidget.gifts -= 5;
-      }
-
+    if(plain.startsWith(this.addon.chatMessageLoader().message("event.booster")) && EventHudWidget.collectibles >= 5) {
+        EventHudWidget.collectibles -= 5;
     }
 
   }

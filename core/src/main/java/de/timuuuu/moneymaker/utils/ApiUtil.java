@@ -12,11 +12,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import de.timuuuu.moneymaker.event.EventChatListener;
-import de.timuuuu.moneymaker.event.hudwidget.ChristmasEventWidget;
-import de.timuuuu.moneymaker.event.hudwidget.EasterEventWidget;
-import de.timuuuu.moneymaker.event.hudwidget.FruitsHudWidget;
-import de.timuuuu.moneymaker.event.hudwidget.HalloweenEventWidget;
-import de.timuuuu.moneymaker.event.hudwidget.ValentineEventWidget;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.AddonUtil.MoneyMakerEvent;
@@ -81,40 +76,9 @@ public class ApiUtil {
             if (settingsObject.has("event")) {
               MoneyMakerEvent event = this.addon.addonUtil().eventByName(settingsObject.get("event").getAsString());
               this.addon.addonUtil().currentEvent(event);
-
               if(event != MoneyMakerEvent.NONE) {
                 this.addon.logger().info("[MoneyMaker - Event] Loaded Event Type '" + event + "' as current Event");
                 this.addon.labyAPI().eventBus().registerListener(new EventChatListener(this.addon));
-
-                if(event == MoneyMakerEvent.VALENTINE) {
-                  this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new ValentineEventWidget(this.addon)));
-                  this.addon.logger().info("Registered Valentine Event Widget...");
-                }
-                if(event == MoneyMakerEvent.EASTER) {
-                  this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new EasterEventWidget(this.addon)));
-                  this.addon.logger().info("Registered Easter Event Widget...");
-                }
-                if(event == MoneyMakerEvent.SUMMER || event == MoneyMakerEvent.CARIBBEAN) {
-                  this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new FruitsHudWidget(this.addon)));
-                  this.addon.logger().info("Registered Summer/Caribbean Event Widget...");
-                }
-                if(event == MoneyMakerEvent.HALLOWEEN) {
-                  this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new HalloweenEventWidget(this.addon)));
-                  this.addon.logger().info("Registered Halloween Event Widget...");
-                }
-                if(event == MoneyMakerEvent.CHRISTMAS) {
-                  this.addon.labyAPI().minecraft().executeOnRenderThread(() -> this.addon.labyAPI().hudWidgetRegistry().register(new ChristmasEventWidget(this.addon)));
-                  this.addon.logger().info("Registered Christmas Event Widget...");
-                }
-                if(event == MoneyMakerEvent.ALL) {
-                  this.addon.labyAPI().minecraft().executeOnRenderThread(() -> {
-                    this.addon.labyAPI().hudWidgetRegistry().register(new ValentineEventWidget(this.addon));
-                    this.addon.labyAPI().hudWidgetRegistry().register(new EasterEventWidget(this.addon));
-                    this.addon.labyAPI().hudWidgetRegistry().register(new FruitsHudWidget(this.addon));
-                    this.addon.labyAPI().hudWidgetRegistry().register(new HalloweenEventWidget(this.addon));
-                    this.addon.labyAPI().hudWidgetRegistry().register(new ChristmasEventWidget(this.addon));
-                  });
-                }
               }
             }
 

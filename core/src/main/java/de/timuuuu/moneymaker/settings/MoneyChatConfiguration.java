@@ -33,6 +33,7 @@ public class MoneyChatConfiguration extends Config {
   @SwitchSetting
   private final ConfigProperty<Boolean> notification = new ConfigProperty<>(true);
 
+  @IntroducedIn(namespace = "moneymaker", value = "1.7.3")
   @SpriteSlot(y = 4)
   @SwitchSetting
   private final ConfigProperty<Boolean> hideChatConnectionNotifications = new ConfigProperty<>(false);
