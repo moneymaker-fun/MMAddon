@@ -18,9 +18,9 @@ public class MoneyTabBadge extends BadgeRenderer {
   @Override
   public void render(ScreenContext context, float x, float y, NetworkPlayerInfo player) {
     Group group = this.visibleRank(player);
-    if(group != null) {
-      context.canvas().submitIcon(group.getIcon(), x +1, y, 8.0F, 8.0F);
-    }
+    if(group == null) return;
+    if(group.getIcon() == null) return;
+    context.canvas().submitIcon(group.getIcon(), x +1, y, 8.0F, 8.0F);
   }
 
   @Override

@@ -34,7 +34,8 @@ public class MoneyIconTag extends IconTag {
 
   @Override
   public Icon getIcon(EntitySnapshot snapshot) {
-    return this.group != null ? this.group.getIcon() : GroupService.DEFAULT_GROUP.getIcon();
+    if(this.group == null) return GroupService.DEFAULT_GROUP.getIcon();
+    return this.group.getIcon() != null ? this.group.getIcon() : GroupService.DEFAULT_GROUP.getIcon();
   }
 
   private @Nullable Group getVisibleGroup(EntitySnapshot snapshot) {

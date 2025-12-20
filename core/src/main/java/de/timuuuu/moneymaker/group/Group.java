@@ -51,8 +51,10 @@ public class Group {
       this.displayType = GroupDisplay.NONE;
     }
     if(this.iconName != null) {
-      this.icon = Icon.texture(
-          ResourceLocation.create("moneymaker", "textures/" + this.iconName + ".png"));
+      ResourceLocation iconLocation = ResourceLocation.create("moneymaker", "textures/" + this.iconName + ".png");
+      if(iconLocation.exists()) {
+        this.icon = Icon.texture(iconLocation);
+      }
     }
     try {
       if(this.colorHex != null && !this.colorHex.isEmpty()) {
