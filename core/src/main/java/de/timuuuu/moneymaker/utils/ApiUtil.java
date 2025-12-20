@@ -32,7 +32,7 @@ public class ApiUtil {
 
   public void loadSettings() {
     Request.ofGson(JsonObject.class)
-        .url(BASE_URL + "/settings/")
+        .url(BASE_URL + "/settings")
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
@@ -183,7 +183,7 @@ public class ApiUtil {
   public void loadCoordinates() {
     AtomicBoolean failed = new AtomicBoolean(false);
     Request.ofGson(JsonObject.class)
-        .url(BASE_URL + "/locations/")
+        .url(BASE_URL + "/locations")
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
@@ -260,7 +260,7 @@ public class ApiUtil {
   public void loadChatHistory() {
     if(!this.addon.configuration().chatConfiguration.loadChatHistory().get()) return;
     Request.ofGson(JsonArray.class)
-        .url(BASE_URL + "/chat/history/")
+        .url(BASE_URL + "/chat/history")
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
@@ -304,7 +304,7 @@ public class ApiUtil {
   public void loadLeaderboard(boolean update) {
     this.addon.leaderboardActivity().entries().clear();
     Request.ofGson(JsonArray.class)
-        .url(BASE_URL + "/leaderboard/")
+        .url(BASE_URL + "/leaderboard")
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)

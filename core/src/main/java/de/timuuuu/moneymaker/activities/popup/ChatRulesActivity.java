@@ -133,7 +133,7 @@ public class ChatRulesActivity extends SimpleActivity {
       return;
     }
     Request.ofGson(JsonObject.class)
-        .url(ApiUtil.BASE_URL + "/chat/rules/?lang=" + addon.labyAPI().minecraft().options().getCurrentLanguage())
+        .url(ApiUtil.BASE_URL + "/chat/rules?lang=" + addon.labyAPI().minecraft().options().getCurrentLanguage())
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)

@@ -18,7 +18,7 @@ public class GroupService {
     groups.clear();
     groups.put("user", DEFAULT_GROUP);
     Request.ofGson(JsonObject.class)
-        .url(ApiUtil.BASE_URL + "/groups/")
+        .url(ApiUtil.BASE_URL + "/groups")
         .async()
         .connectTimeout(5000)
         .readTimeout(5000)
