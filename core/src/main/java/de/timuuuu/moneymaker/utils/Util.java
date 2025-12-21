@@ -100,12 +100,13 @@ public class Util {
   }
 
   public static int parseInteger(String input, Class clazz) throws NumberFormatException {
-    try {
+    return Integer.parseInt(input);
+    /*try {
       return Integer.parseInt(input);
     } catch (NumberFormatException numberFormatException) {
       MoneyMakerAddon.instance().logger().warn("Unable to parse Input to Integer (Input: '" + input + "', Used in '" + clazz.getName() + "')");
       throw numberFormatException;
-    }
+    }*/
   }
 
   public static boolean isAdmin(UUID uuid) {
