@@ -1,0 +1,196 @@
+1.7.4 - WIP
+
+1.7.3 - 20.12.2025
++ Added Support for 1.21.11
++ Added Setting to Hide Addon Chat Connection Notifications
+* Fixed Total boosters message not working in 1.8.9-1.12.2
+* Fixed Timer and Latest Boosters Hud Widgets not being displayed
+~ Changed Event Hud Widgets into one single Widget
+
+1.7.2 - 15.11.2025
++ Added Support for 1.21.10
++ Added Pickaxe Stats Widget with Show Rank difference Option like the Sword Stats Widget
++ Added Progress Tracking to Price Overview UI
+~ Update Text and Icon Tag to new Render System
+
+1.7.1 - 29.09.2025
+~ Improved authentication stability to Chat Backend
+* Fixed not able to connect to Servers in 1.8.9 - 1.16.5
+* Fixed Leaderboard and some Widgets not updating correctly
+
+1.7.0 - 15.09.2025
++ Recoded full Chat Backend
++ Added Option to Hide online Status in Chat Tab
++ Added 'Ask in Chat' Option to counter resets when leaving the farming cave
++ Added Command '/mm-verify' to create an account for the Website & link Discord Account
++ Added Option to create an Account for the Website & link the Discord Account in the Addon Settings
+~ Refined Addon Chat UI
++ Added Support for 1.21.8
+
+1.6.7 - 31.03.2025
++ Added Setting 'Show current Location with Details' to Chat Settings & Discord RPC Settings
++ Added Support for 1.21.5
+* Fix Exception on close
+
+1.6.6 - 09.12.24
+* Fixed Version
+
+1.6.5 - 09.12.24
++ Added support for 1.21.3 and 1.21.4
++ Added Setting to change Notification type for Online/Offline Messages
++ Added Setting to Show Custom Game Mode Change Notifications
+~ Icon & Text Tag will now be hidden when sneaking
+
+1.6.4 - 17.09.24
+~ Backend Changes
+
+1.6.3 - 12.08.24
++ Added support for 1.21.1
+
+1.6.2 - 29.07.24
+* Fixed a Bug that can crash the "Paper Doll" Widget
+* Fixed a Bug that can crash the game
+
+1.6.1 - 23.06.24
++ Added Support for 1.21
+* Links in MOTD are now clickable
+
+1.6.0 - 09.05.2024
++ Added Support for 1.20.5 & 1.20.6
++ Added Leaderboard to UI
++ Added Price Overview to UI
++ Added Setting 'Reset data on profile switch'
++ Added Setting 'Show Cave Level' to Chat Settings & Discord RPC Settings
++ Added MOTD when joining MoneyMaker
++ Added Indicator Icons to Minecraft Chat
+* Fixed Total boosters message not being sent when boosters are above 1.000
+* Fixed Addon Chat Online/Offline Notifications not shown anymore
+* Fixed an render issue & click issue in inventories
+~ Moved addon commands to UI 'Main Menu'
+
+1.5.0 - 01.04.2024
++ Added Leaderboard Feature
++ Added message of total boost when closing Booster Inventory
++ Added Setting 'Show Total Boost Message'
++ Added Setting 'Show Booster Icon' in Gameplay Settings
++ Added Hud Widgets for MoneyMaker Events (Only available during event)
+~ Moved alle Gameplay related settings to own category
+~ Links in the Addon Chat are now clickable
+* Fixed wrong detection of debris price
+* Fixed Worker Price / Debris Price showing "N/A" when Balance is under K
+
+1.4.1 - 03.03.2024
++ Added colored Indicator Icons to Tablist/Beside Playername
++ Added current Mining Cave level to Discord RPC & Addon Chat
+* Fixed Debris price not showing in some mines
+* Fixed Setting 'Data processing speed' not working sometimes
+~ Cracked users are no longer able to connect to the MoneyMaker Addon Chat Server
+
+1.4.0 - 21.02.2024
++ Added new Setting 'Load Chat History'
++ Added Reply button in new addon chat message notification
++ Added little booster icon to the shorted booster message
++ Added Found date of boosters to Booster UI
++ Added Sort by Found time to Booster UI
+~ The message color of the shorted booster message depends now on the found booster
+~ Redesigned farmed booster list
+~ Made some design changes in the Main menu of the MoneyMaker Tab
+* Fixed Setting 'Hide Buy and Sell message of workers' not working when using german
+* Fixed crash when sword ranking take long to load
+* Fixed LanguageInfo open twice
+* Fixed missing translations in chat rules
+* Fixed Sword Statistics Widget not working anymore
+* Fixed Chat History in wrong order
+
+1.3.0 - 06.02.2024
++ Added Setting 'Show Widgets always'
++ Added Setting 'Data processing speed'
++ Added 'Show Rank Difference' Setting to Sword-Stats Widget
++ Added some missing icons to the addon settings
++ Added Addon Chat rules popup
++ Added Addon Chat Message History (last 50 messages)
+~ Online/Offline messages will now only be shown if a user connects to/disconnects from MoneyMaker
+* Fixed crash when receiving booster chat message sent by a player
+* Fixed Discord RPC not correctly updating current server
+* Fixed frame drops when receiving new addon chat message
+* (1.8.9 - 1.12.2) Fixed crash when sword ranking is taking long to load
+~ Debris Price Widget now shows 'Unlock Workplace' when not all required workplaces unlocked
+~ Debris Costs reached notification will now only show if all required workplaces are unlocked
+- Removed Setting 'Show with icons' from Sword Stats Widget
+
+
+1.2.3 - 19.01.2024
+- Added setting to change the behavior of counter resets when leaving the farming cave
+- Added language info popup on first moneymaker join instead of unsupported language message
+- Fixed crash in latest version due to code change in the LabyMod API
+
+1.2.2 - 10.01.2024
+- Fixed chat messages not being recognized by the addon anymore
+- Changed release channel to production
+
+1.2.1 - 09.01.2024
+- Added Button to clear booster list
+- Fixed addon chat messages stacking
+- Fixed Addon Chat buttons not working
+- Addon Chat Notifications will now only be shown in MoneyMaker
+
+1.2.0 - 04.01.2024
+- Added 1.20.4 support again
+- Fixed Kill Counter not counting when kills are above 1.000
+- Internal changes
+- Changed all Widgets to Text Widgets
+- Booster Export File will now be saved in {game-dir}/MoneyMaker
+
+1.1.4 - 30.12.2023
+- Fixed Feedback not not being sent
+
+1.1.3 - 30.12.2023
+- Added Setting to export farmed boosters when closing the game
+- Added InGame Feedback Form
+- Added Report function for Addon Chat
+- Added Formatting to numbers
+- Added Farmed Session Blocks to Discord RPC
+- Changed UI Design in vanilla theme
+- Fixed Chat scrolling on new messages
+- Fixed Discord RPC not updating correctly
+- Fixed Chat UI not updating corrently when getting muted
+- Removed 1.20.4 support
+- Removed Updater (Addon will be available in the LabyMod Addon Store)
+
+0.0.6 - 15.12.23
+- Added Setting to hide Buy and sell messages of workers
+- Added Support for 1.20.4
+- Fixed Chat server not working in 1.8-1.18
+- Fixed Chat Input Field getting cleared on new message
+
+0.0.5 - 25.11.2023
+- Added Settings for all tags from the addon
+- Added Setting to Hide Empty messages and divider messages
+- Added Icons to Addon Settings
+- Added Average Boosters per Blocks to Booster Overview
+- Fixed Sorting in Online List in chat
+- Fixed Activated Boosters widget not working
+- Changed /mm-reset Command
+- Changed Custom Discord Rich Presence Settings
+
+0.0.4 - 04.11.2023
+- Changed displayed value in break goal widget
+- Added Custom Discord Rich Presence
+- Online chat users will now only be shown if chat server is online
+- Added Information tab
+- Reorganized Addon Settings
+- Fixed hide upgrade message not working in english
+- Added Activated Boosters Widget (displays automatically actiavted boosters - full booster inventory) [Requested by Yol0man44]
+- [Internal] Changed Widget IDs - Widgets must be added in the Editor again
+
+0.0.3 - 26.10.2023
+- Fixed error/crash in chat
+- Added Discord button to Main menu
+
+0.0.2 - 23.10.2023
+- Added support for 1.20.2
+- Added new Setting 'Hide Effect Message'
+- Fixed wrong message color on clickable timers
+
+0.0.1 - 22.10.2023
+- Complete Recode, Better Performance, new Widgets, Support for all new Minecraft versions up to 1.20.1 and a lot more.
