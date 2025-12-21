@@ -1,4 +1,5 @@
 1.7.4 - WIP
+* Fixed Typo in Pickaxe Statistics Widget
 
 1.7.3 - 20.12.2025
 + Added Support for 1.21.11
