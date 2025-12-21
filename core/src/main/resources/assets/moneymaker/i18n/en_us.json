@@ -667,7 +667,7 @@
         }
       },
       "mm_pickaxe_stats": {
-        "name": "Sword Statistics",
+        "name": "Pickaxe Statistics",
         "display": {
           "rank": "Pickaxe Rank",
           "chance": "Booster Chance"
