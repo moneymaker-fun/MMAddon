@@ -104,6 +104,7 @@ public class ChatReceiveListener {
             Component boosterComponent = Component.text(boosterString + " ", color);
             message.append(boosterComponent);
 
+            // Icon no longer displayed in Chat
             if(this.addon.configuration().gameplayConfiguration.showBoosterIcon().get()) {
               message.append(Component.icon(BoosterUtil.getIcon(booster), 10)).append(Component.text(" "));
             }
