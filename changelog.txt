@@ -1,5 +1,7 @@
 1.7.4 - WIP
 * Fixed Typo in Pickaxe Statistics Widget
+* Adjusted booster boost calculation in Booster UI for multiple booster amounts
++ Enhanced DebrisTimerWidget to display real-time end. Can be disabled in the Widget Settings
 
 1.7.3 - 20.12.2025
 + Added Support for 1.21.11
