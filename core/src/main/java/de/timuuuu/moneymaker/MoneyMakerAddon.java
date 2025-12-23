@@ -14,9 +14,9 @@ import de.timuuuu.moneymaker.badges.MoneyTabBadge;
 import de.timuuuu.moneymaker.badges.MoneyTextTag;
 import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.commands.ResetCommand;
+import de.timuuuu.moneymaker.commands.TestCommand;
 import de.timuuuu.moneymaker.commands.TimerCommand;
 import de.timuuuu.moneymaker.commands.VerifyCommand;
-import de.timuuuu.moneymaker.event.EventHudWidget;
 import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
@@ -137,6 +137,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.registerCommand(new TimerCommand(this));
     this.registerCommand(new ResetCommand(this));
     this.registerCommand(new VerifyCommand(this));
+    this.registerCommand(new TestCommand(this));
 
     this.registerListener(new NetworkPayloadListener(this));
     this.registerListener(new ChatReceiveListener(this));
@@ -166,7 +167,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     labyAPI().hudWidgetRegistry().register(new TimerDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new LatestBoosterDisplayWidget(this));
     labyAPI().hudWidgetRegistry().register(new ActivatedBoosterWidget(this));
-    labyAPI().hudWidgetRegistry().register(new EventHudWidget(this));
 
     labyAPI().tagRegistry().registerAfter("labymod_role", "moneymaker_text", PositionType.ABOVE_NAME, new MoneyTextTag(this));
     labyAPI().tagRegistry().register("moneymaker_icon", PositionType.RIGHT_TO_NAME, new MoneyIconTag(this));

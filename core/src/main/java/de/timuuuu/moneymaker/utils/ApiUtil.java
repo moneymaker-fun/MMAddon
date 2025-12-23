@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.activities.PriceOverviewActivity.MineData;
 import de.timuuuu.moneymaker.activities.widgets.LeaderboardEntryWidget;
+import de.timuuuu.moneymaker.event.EventHudWidget;
 import de.timuuuu.moneymaker.moneychat.util.MoneyChatMessage;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -79,6 +80,7 @@ public class ApiUtil {
               if(event != MoneyMakerEvent.NONE) {
                 this.addon.logger().info("[MoneyMaker - Event] Loaded Event Type '" + event + "' as current Event");
                 this.addon.labyAPI().eventBus().registerListener(new EventChatListener(this.addon));
+                this.addon.labyAPI().hudWidgetRegistry().register(new EventHudWidget(this.addon));
               }
             }
 
