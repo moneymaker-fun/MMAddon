@@ -651,7 +651,11 @@
         "unlock_last_miner": "Arbeitsplatz freischalten"
       },
       "mm_debris_timer": {
-        "name": "Geröll Timer"
+        "name": "Geröll Timer",
+        "realTime": "Geröll Ende",
+        "showRealTimeEnd": {
+          "name": "Zeige Geröll Endzeit an"
+        }
       },
       "mm_worker_price": {
         "name": "Arbeitsplatz Preis anzeigen",

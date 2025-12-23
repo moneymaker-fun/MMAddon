@@ -650,7 +650,11 @@
         "unlock_last_miner": "Unlock Workplace"
       },
       "mm_debris_timer": {
-        "name": "Debris Timer"
+        "name": "Debris Timer",
+        "realTime": "Debris End",
+        "showRealTimeEnd": {
+          "name": "Show Debris End Time"
+        }
       },
       "mm_worker_price": {
         "name": "Show worker price",
