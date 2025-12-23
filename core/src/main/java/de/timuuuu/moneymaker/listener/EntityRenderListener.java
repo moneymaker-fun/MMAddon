@@ -1,10 +1,13 @@
 package de.timuuuu.moneymaker.listener;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.hudwidget.DebrisTimerWidget;
 import de.timuuuu.moneymaker.utils.ChatUtil;
 import de.timuuuu.moneymaker.event.ArmorStandRenderEvent;
 import de.timuuuu.moneymaker.settings.AddonSettings;
 import de.timuuuu.moneymaker.utils.Util;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 import net.labymod.api.client.entity.Entity;
 import net.labymod.api.event.Subscribe;
@@ -62,12 +65,12 @@ public class EntityRenderListener {
           time = time.replace(" Minuten", "").replace(" Minute", "").replace(" minutes", "").replace(" minute", "");
           time = time.replace(" ", ":");
           time = time + ":00";
-          if(this.addon.addonUtil().debrisTime() == 0 & !timerRunning) {
+          if(this.addon.addonUtil().debrisTime() == 0 && this.debrisTask == null) {
             this.addon.addonUtil().debrisTime(Util.timeToInt(time, true));
             startDebrisTask();
           }
         } else {
-          if(this.addon.addonUtil().debrisTime() == 0 & !timerRunning) {
+          if(this.addon.addonUtil().debrisTime() == 0 && this.debrisTask == null) {
             this.addon.addonUtil().debrisTime(Util.timeToInt(time, false));
             startDebrisTask();
           }
@@ -79,16 +82,18 @@ public class EntityRenderListener {
 
   }
 
-  private boolean timerRunning = false;
   private Task debrisTask;
 
-  private void startDebrisTask() {
-    this.timerRunning = true;
+  public void startDebrisTask() {
+    if(this.debrisTask != null) return;
+    Calendar cal = Calendar.getInstance();
+    cal.add(Calendar.SECOND, this.addon.addonUtil().debrisTime());
+    DebrisTimerWidget.realTime = new SimpleDateFormat("HH:mm").format(cal.getTime());
     this.debrisTask = Task.builder(() -> {
       this.addon.addonUtil().debrisTime(this.addon.addonUtil().debrisTime() -1);
       if(this.addon.addonUtil().debrisTime() <= 0) {
         debrisTask.cancel();
-        timerRunning = false;
+        stopDebrisTask();
       }
     }).repeat(1, TimeUnit.SECONDS).build();
     this.debrisTask.execute();
@@ -97,7 +102,7 @@ public class EntityRenderListener {
   public void stopDebrisTask() {
     if(this.debrisTask == null) return;
     this.debrisTask.cancel();
-    this.timerRunning = false;
+    this.debrisTask = null;
     this.addon.addonUtil().debrisTime(0);
   }
 
