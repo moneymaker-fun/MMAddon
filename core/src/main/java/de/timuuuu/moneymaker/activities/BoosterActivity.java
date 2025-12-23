@@ -49,7 +49,7 @@ public class BoosterActivity extends SimpleActivity {
     this.document.addChild(titleWidget);
 
     AtomicInteger boost = new AtomicInteger(0);
-    Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost()));
+    Booster.boosterList().forEach(booster -> boost.getAndAdd(booster.boost() * booster.amount()));
 
     DivWidget container = new DivWidget().addId("container");
 
