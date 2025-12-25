@@ -178,6 +178,7 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onMoneyChatDisconnect(MoneyChatDisconnectEvent event) {
+    AddonUtil.playerStatus.clear();
     if(event.getInitiator() != Initiator.USER && !this.addon.configuration().chatConfiguration.hideChatConnectionNotifications().get()) {
       this.addon.pushNotification(
           Component.translatable("moneymaker.notification.chat.title", TextColor.color(255, 255, 85)),
