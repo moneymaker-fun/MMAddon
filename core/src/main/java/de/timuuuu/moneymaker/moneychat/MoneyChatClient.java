@@ -12,6 +12,7 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.client.session.Session.Type;
@@ -182,8 +183,8 @@ public class MoneyChatClient {
     this.sendPacket(packet, null);
   }
 
-  public void sendPacket(MoneyPacket packet, Consumer<NioSocketChannel> callback) {
-    NioSocketChannel channel = this.getChannel();
+  public void sendPacket(MoneyPacket packet, Consumer<SocketChannel> callback) {
+    SocketChannel channel = this.getChannel();
     if (channel != null && channel.isActive()) {
       if (channel.eventLoop().inEventLoop()) {
         channel.writeAndFlush(packet).addListeners(ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
