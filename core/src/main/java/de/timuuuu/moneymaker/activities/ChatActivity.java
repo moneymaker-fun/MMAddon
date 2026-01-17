@@ -263,10 +263,12 @@ public class ChatActivity extends SimpleActivity {
         this.chatInput.setEditable(false);
         this.chatInput.addId("blocked");
         Task.builder(() -> {
-          this.chatInput.setEditable(true);
-          this.chatInput.removeId("blocked");
           this.reloadScreen();
-          this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
+          this.addon.labyAPI().minecraft().executeNextTick(() -> {
+            this.chatInput.setFocused(true);
+            this.chatInput.setEditable(true);
+            this.chatInput.removeId("blocked");
+          });
         }).delay(3, TimeUnit.SECONDS).build().execute();
       } else {
         this.addon.labyAPI().minecraft().executeNextTick(() -> this.chatInput.setFocused(true));
