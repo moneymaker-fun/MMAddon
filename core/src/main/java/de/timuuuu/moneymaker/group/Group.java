@@ -1,5 +1,6 @@
 package de.timuuuu.moneymaker.group;
 
+import net.labymod.api.Laby;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
@@ -51,10 +52,12 @@ public class Group {
       this.displayType = GroupDisplay.NONE;
     }
     if(this.iconName != null) {
-      ResourceLocation iconLocation = ResourceLocation.create("moneymaker", "textures/" + this.iconName + ".png");
-      if(iconLocation.exists()) {
-        this.icon = Icon.texture(iconLocation);
-      }
+      Laby.labyAPI().minecraft().executeOnRenderThread(() -> {
+        ResourceLocation iconLocation = ResourceLocation.create("moneymaker", "textures/" + this.iconName + ".png");
+        if(iconLocation.exists()) {
+          this.icon = Icon.texture(iconLocation);
+        }
+      });
     }
     try {
       if(this.colorHex != null && !this.colorHex.isEmpty()) {
@@ -131,6 +134,28 @@ public class Group {
 
   public String getChatPrefix() {
     return chatPrefix;
+  }
+
+  @Override
+  public String toString() {
+    return "Group{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", displayName='" + displayName + '\'' +
+        ", colorHex='" + colorHex + '\'' +
+        ", minecraftColor='" + minecraftColor + '\'' +
+        ", tagName='" + tagName + '\'' +
+        ", displayTypeName='" + displayTypeName + '\'' +
+        ", iconName='" + iconName + '\'' +
+        ", icon=" + icon +
+        ", iconUrl='" + iconUrl + '\'' +
+        ", isAdmin=" + isAdmin +
+        ", isStaff=" + isStaff +
+        ", displayType=" + displayType +
+        ", color=" + color +
+        ", textColor=" + textColor +
+        ", chatPrefix='" + chatPrefix + '\'' +
+        '}';
   }
 
   public enum GroupDisplay {
