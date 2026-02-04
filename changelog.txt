@@ -1,4 +1,4 @@
-1.7.5 - WIP
+1.7.5 - 04.02.2026
 * Fixed Groups not loading correctly
 
 1.7.4 - 06.01.2026
