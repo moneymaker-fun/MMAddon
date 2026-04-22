@@ -1,3 +1,6 @@
+1.7.6 - 22.04.2026
++ Added Support for 26.1, 26.1.1 and 26.1.2
+
 1.7.5 - 04.02.2026
 * Fixed Groups not loading correctly
 
