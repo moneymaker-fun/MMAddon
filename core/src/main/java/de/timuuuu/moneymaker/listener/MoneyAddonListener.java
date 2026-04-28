@@ -27,6 +27,7 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextColor;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.client.network.server.ServerAddress;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.ShutdownEvent;
@@ -35,6 +36,7 @@ import net.labymod.api.event.client.network.server.ServerLoginEvent;
 import net.labymod.api.event.client.session.SessionUpdateEvent;
 import net.labymod.api.util.I18n;
 import net.labymod.api.util.concurrent.task.Task;
+import net.labymod.api.util.io.LabyExecutors;
 
 public class MoneyAddonListener {
 
@@ -46,18 +48,20 @@ public class MoneyAddonListener {
 
   @Subscribe
   public void onServerLogin(ServerLoginEvent event) {
-    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
-        event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
-        event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
-      this.addon.apiUtil().loadChatHistory();
+    ServerAddress serverAddress = event.serverData().address();
+    if(serverAddress.matches("gommehd.net", 25565, true) ||
+        serverAddress.matches("gommehd.fun", 25565, true) ||
+        serverAddress.matches("moneymaker.gg", 25565, true)) {
+      LabyExecutors.executeBackgroundTask(() -> this.addon.apiUtil().loadChatHistory());
     }
   }
 
   @Subscribe
   public void onDisconnect(ServerDisconnectEvent event) {
-    if(event.serverData().actualAddress().matches("gommehd.net", 25565, true) ||
-        event.serverData().actualAddress().matches("gommehd.fun", 25565, true) ||
-        event.serverData().actualAddress().matches("moneymaker.gg", 25565, true)) {
+    ServerAddress serverAddress = event.serverData().address();
+    if(serverAddress.matches("gommehd.net", 25565, true) ||
+        serverAddress.matches("gommehd.fun", 25565, true) ||
+        serverAddress.matches("moneymaker.gg", 25565, true)) {
       if(this.addon.moneyChatClient().isAuthenticated()) {
         this.addon.moneyChatClient().sendPacket(new PacketLeaderboard(this.addon.labyAPI().getUniqueId(), this.addon.labyAPI().getName(), this.addon));
       }
