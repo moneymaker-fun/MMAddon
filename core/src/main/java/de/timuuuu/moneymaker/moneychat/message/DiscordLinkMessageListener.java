@@ -23,7 +23,7 @@ public class DiscordLinkMessageListener implements MessageListener {
       String status = object.get("status").getAsString();
       if(status.equals("failed") && object.has("reason")) {
         String reason = object.get("reason").getAsString();
-        if(this.addon.tokenVerificationActivity().isScreenOpened()) {
+        if(this.addon.tokenVerificationActivity().isOpened()) {
           this.addon.tokenVerificationActivity().setError(reason);
           return;
         }

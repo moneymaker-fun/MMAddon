@@ -125,6 +125,11 @@ public class TokenVerificationActivity extends SimpleActivity {
     this.document.addChild(container);
   }
 
+  public boolean isOpened() {
+    if(this.parent == null) return false;
+    return this.isScreenOpened();
+  }
+
   public void setToken(TokenType tokenType, String token) {
     this.tokenType = tokenType;
     this.token = token;
