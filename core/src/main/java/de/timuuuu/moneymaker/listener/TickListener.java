@@ -3,16 +3,21 @@ package de.timuuuu.moneymaker.listener;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.EventUtil.Item;
 import de.timuuuu.moneymaker.utils.ChatUtil;
-import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.HotbarItemTickEvent;
 import de.timuuuu.moneymaker.events.CaveLevelChangeEvent;
 import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.Util;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import net.labymod.api.Laby;
+import net.labymod.api.client.component.Component;
+import net.labymod.api.client.component.TextComponent;
 import net.labymod.api.event.Subscribe;
 import net.labymod.api.event.client.lifecycle.GameTickEvent;
+import net.labymod.api.loader.MinecraftVersions;
 import net.labymod.api.util.StringUtil;
 
 public class TickListener {
@@ -66,6 +71,8 @@ public class TickListener {
     }
   }
 
+  // 1.8.9: [0:"",1:"§bStatistiken:",2:"§7Ranking: §6§6Top 43 % §7(Getötete Mobs)",3:"§7Getötete Mobs: §e118"]
+  // 1.21.4 and newer: [empty, literal{Statistiken:}[style={color=aqua,!italic}], empty[siblings=[literal{Ranking: }[style={color=gray,!italic}], literal{Top 43 % }[style={color=gold,!italic}], literal{(Getötete Mobs)}[style={color=gray,!italic}]]], empty[siblings=[literal{Getötete Mobs: }[style={color=gray,!italic}], literal{118}[style={color=yellow,!italic}]]]]
   @Subscribe
   public void onHotbarItemTick(HotbarItemTickEvent event) {
     if(!this.addon.addonUtil().inFarming()) return;
@@ -75,63 +82,68 @@ public class TickListener {
       if(swordTickCount >= this.addon.addonSettings().CHECK_TICK()) {
         swordTickCount = 0;
 
-        if(event.getLoreList().size() < 4) return;
-        if(event.getLoreList().get(2) == null || event.getLoreList().get(3) == null) return;
-        String rankingLine = event.getLoreList().get(2);
-        String mobsLine = event.getLoreList().get(3);
+        String rankingLine = null;
+        String mobsLine = null;
 
-      /*
-      §bStatistiken: [Statistiken:]
-      §7Ranking: §6§6Platz 9.472 §7(Getötete Mobs) [Ranking: Platz 9.472 (Getötete Mobs)]
-      §7Getötete Mobs: §e103 [Getötete Mobs: 103]
-      */
+        if(MinecraftVersions.V1_8_9.isCurrent()) {
+          if(event.getLoreList() != null) {
+            Matcher rankingMatcher = Pattern
+                .compile(this.addon.chatMessageLoader().message("item.ranking") + "(.*?)\"")
+                .matcher(event.getLoreList().toString());
 
-        if(event.textVersion() == TextVersion.RAW) {
+            if (rankingMatcher.find()) {
+              rankingLine = rankingMatcher.group(1);
+            }
 
-          rankingLine = ChatUtil.stripColor(rankingLine);
-          mobsLine = ChatUtil.stripColor(mobsLine);
+            Matcher mobsMatcher = Pattern
+                .compile(this.addon.chatMessageLoader().message("item.killedMobs") + "(.*?)\"")
+                .matcher(event.getLoreList().toString());
 
-          if(rankingLine.startsWith(this.addon.chatMessageLoader().message("item.ranking"))) {
-            if(StringUtil.isNumeric(rankingLine.split(" ")[2])) {
-              this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine.split(" ")[2]
-                  .replace(".", "").replace(",", ""), this.getClass()));
+            if (mobsMatcher.find()) {
+              mobsLine = mobsMatcher.group(1);
             }
           }
-
-          if(mobsLine.startsWith(this.addon.chatMessageLoader().message("item.killedMobs"))) {
-            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace(this.addon.chatMessageLoader().message("item.killedMobs"), "")
-                .replace(".", "").replace(",", ""), this.getClass()));
-          }
-
-          /*if(mobsLine.startsWith("Killed mobs: ")) {
-            this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace("Killed mobs: ", "")
-                .replace(".", "").replace(",", ""), this.getClass()));
-          }*/
-
         } else {
+          if(event.getLoreList() != null && event.getLoreList() instanceof ArrayList<?> loreList) {
+            if(loreList.size() < 4) return;
 
-          if(rankingLine.contains(this.addon.chatMessageLoader().message("item.ranking"))) {
-            List<String> line = Util.getTextFromJsonObject(rankingLine);
-            if(line.size() != 3) return;
-            if(line.get(1) == null) return;
-            String text = line.get(1);
-            if(text.contains(this.addon.chatMessageLoader().message("item.place"))) {
-              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace(this.addon.chatMessageLoader().message("item.place"), "")
-                  .replace(".", "").replace(",", "").strip(), this.getClass()));
-            }
-            /*if(text.contains("Rank ")) {
-              this.addon.addonUtil().swordRanking(Util.parseInteger(text.replace("Rank ", "")
-                  .replace(".", "").replace(",", "").strip(), this.getClass()));
-            }*/
+            Object rankingLore = loreList.get(2);
+            if(rankingLore == null) return;
+            Component rankingComponent = this.addon.labyAPI().minecraft().componentMapper().fromMinecraftComponent(rankingLore);
+            if(rankingComponent == null) return;
+            List<Component> rankingChildren = rankingComponent.getChildren();
+            if(rankingChildren == null || rankingChildren.isEmpty()) return;
+            TextComponent rankingTextComponent = (TextComponent) rankingChildren.get(1);
+            rankingLine = rankingTextComponent.getText();
+
+            Object mobsLore = loreList.get(3);
+            if(mobsLore == null) return;
+            Component mobsComponent = this.addon.labyAPI().minecraft().componentMapper().fromMinecraftComponent(mobsLore);
+            if(mobsComponent == null) return;
+            List<Component> mobsChildren = mobsComponent.getChildren();
+            if(mobsChildren == null || mobsChildren.isEmpty()) return;
+            TextComponent mobsTextComponent = (TextComponent) mobsChildren.get(1);
+            mobsLine = mobsTextComponent.getText();
           }
+        }
 
-          if(mobsLine.contains(this.addon.chatMessageLoader().message("item.killedMobs"))) {
-            List<String> line = Util.getTextFromJsonObject(mobsLine);
-            if(line.size() != 2) return;
-            if(line.get(1) == null) return;
-            this.addon.addonUtil().swordMobs(Util.parseInteger(line.get(1).replace(".", "").replace(",", ""), this.getClass()));
+        rankingLine = ChatUtil.stripColor(rankingLine);
+        mobsLine = ChatUtil.stripColor(mobsLine);
+
+        if(rankingLine != null) {
+          rankingLine = rankingLine
+              .replaceAll("§.", "")
+              .replace(addon.chatMessageLoader().message("item.place"), "")
+              .replaceAll("\\s*\\([^)]*\\)", "")
+              .trim();
+          if(StringUtil.isNumeric(rankingLine)) {
+            this.addon.addonUtil().swordRanking(Util.parseInteger(rankingLine
+                .replace(".", "").replace(",", ""), this.getClass()));
           }
+        }
 
+        if(mobsLine != null) {
+          this.addon.addonUtil().swordMobs(Util.parseInteger(mobsLine.replace(".", "").replace(",", ""), this.getClass()));
         }
 
         if(this.addon.addonUtil().swordMobs() != 0) {
@@ -157,58 +169,25 @@ public class TickListener {
       if(pickaxeTickCount >= this.addon.addonSettings().CHECK_TICK()) {
         pickaxeTickCount = 0;
 
-        if(event.getLoreList().size() < 10) return;
-        if(event.getLoreList().get(9) == null) return;
-        String chanceLine = event.getLoreList().get(9);
+        //if(event.getLoreList().size() < 10) return;
+        //if(event.getLoreList().get(9) == null) return;
+        String chanceLine = ""; //event.getLoreList().get(9);
 
       /*
       §bStatistiken: [Statistiken:]
       §7Ranking: §6§6Platz 9.472 §7(Getötete Mobs) [Ranking: Platz 9.472 (Getötete Mobs)]
       §7Getötete Mobs: §e103 [Getötete Mobs: 103]
       */
+        chanceLine = ChatUtil.stripColor(chanceLine);
 
-        if(event.textVersion() == TextVersion.RAW) {
-
-          chanceLine = ChatUtil.stripColor(chanceLine);
-
-          if(chanceLine.startsWith(this.addon.chatMessageLoader().message("item.boosterChance"))) {
-            if(chanceLine.split(" ")[3] != null) {
-              String chance = chanceLine.split(" ")[3];
-              this.addon.addonUtil().pickaxeBoosterChance(chance.contains("%") ? chance : chance + "%");
-            }
+        if(chanceLine.startsWith(this.addon.chatMessageLoader().message("item.boosterChance"))) {
+          if(chanceLine.split(" ")[3] != null) {
+            String chance = chanceLine.split(" ")[3];
+            this.addon.addonUtil().pickaxeBoosterChance(chance.contains("%") ? chance : chance + "%");
           }
-
-        } else {
-
-          //this.addon.logger().info("changeLine: " + chanceLine);
-          //changeLine: {"extra":[{"italic":false,"color":"gray","text":"Chance auf Booster: "},
-          // {"italic":false,"color":"yellow","text":"0,785 % "},
-          // {"italic":false,"color":"gray","text":"("},
-          // {"bold":true,"italic":false,"color":"green","text":"↑ "},
-          // {"italic":false,"color":"green","text":"+"},
-          // {"italic":false,"color":"yellow","text":"0 %"},
-          // {"italic":false,"color":"gray","text":")"}],"text":""}
-          if(chanceLine.contains(this.addon.chatMessageLoader().message("item.boosterChance"))) {
-            List<String> line = Util.getTextFromJsonObject(chanceLine);
-            if(line.size() != 7) return;
-            if(line.get(1) == null) return;
-            this.addon.addonUtil().pickaxeBoosterChance(line.get(1));
-          }
-
         }
       }
     }
-
-
-    /*
-    Lore-List:
-    Visualisation: https://jsonlint.com/
-
-    {"italic":false,"text":""},
-    {"italic":false,"color":"aqua","text":"Statistiken:"},
-    {"italic":false,"extra":[{"color":"gray","text":"Ranking: "},{"color":"gold","text":"Platz 215 "},{"color":"gray","text":"(Getötete Mobs)"}],"text":""},
-    {"italic":false,"extra":[{"color":"gray","text":"Getötete Mobs: "},{"color":"yellow","text":"6.243"}],"text":""}
-     */
 
   }
 

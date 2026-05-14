@@ -1,19 +1,15 @@
 package de.timuuuu.moneymaker.v26_1_1.mixins;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
-import java.util.ArrayList;
-import java.util.List;
 import net.labymod.api.Laby;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.component.ItemLore;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,18 +22,12 @@ public class InventoryMixin {
       method = {"extractSlot"},
       at = {@At("HEAD")}
   )
-  private void moneymaker$fireInventoryRender(GuiGraphicsExtractor $$0, Slot slot, int $$2, int $$3,
+  private void moneymaker$fireInventoryRender(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY,
       CallbackInfo ci) {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
     if(slot.getItem().get(DataComponents.CUSTOM_NAME) == null) return;
     String name = slot.getItem().get(DataComponents.CUSTOM_NAME).getString();
-    List<String> loreList = new ArrayList<>();
-    if(slot.getItem().get(DataComponents.LORE) == null) return;
-    ItemLore itemLore = slot.getItem().get(DataComponents.LORE);
-    for(int i = 0; i != itemLore.lines().size(); i++) {
-      loreList.add(itemLore.lines().get(i).getString());
-    }
-    Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name, loreList, TextVersion.RAW));
+    Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name));
   }
 
   @Inject(
@@ -50,13 +40,7 @@ public class InventoryMixin {
     if(slot == null) return;
     if(slot.getItem().get(DataComponents.CUSTOM_NAME) == null) return;
     String name = slot.getItem().get(DataComponents.CUSTOM_NAME).getString();
-    List<String> loreList = new ArrayList<>();
-    if(slot.getItem().get(DataComponents.LORE) == null) return;
-    ItemLore itemLore = slot.getItem().get(DataComponents.LORE);
-    for(int i = 0; i != itemLore.lines().size(); i++) {
-      loreList.add(itemLore.lines().get(i).getString());
-    }
-    Laby.fireEvent(new InventoryClickEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name, loreList, TextVersion.RAW));
+    Laby.fireEvent(new InventoryClickEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name));
   }
 
   @Inject(

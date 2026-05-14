@@ -18,11 +18,11 @@ public class ArmorStandMixin {
       method = {"extractRenderState(Lnet/minecraft/world/entity/decoration/ArmorStand;Lnet/minecraft/client/renderer/entity/state/ArmorStandRenderState;F)V"},
       at = {@At("HEAD")}
   )
-  private void moneymaker$fireArmorStandRender(ArmorStand armorStand, ArmorStandRenderState armorStandRenderState, float $$2, CallbackInfo ci) {
+  private void moneymaker$fireArmorStandRender(ArmorStand entity, ArmorStandRenderState state, float partialTicks, CallbackInfo ci) {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
-    if(armorStand.hasCustomName() && armorStand.getCustomName() != null) {
-      String customName = armorStand.getCustomName().getString();
-      Laby.fireEvent(new ArmorStandRenderEvent((net.labymod.api.client.entity.Entity) armorStand, customName));
+    if(entity.hasCustomName() && entity.getCustomName() != null) {
+      String customName = entity.getCustomName().getString();
+      Laby.fireEvent(new ArmorStandRenderEvent((net.labymod.api.client.entity.Entity) entity, customName));
     }
   }
 

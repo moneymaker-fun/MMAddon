@@ -20,12 +20,13 @@ public class ArmorStandMixin {
       method = {"render*"},
       at = {@At("HEAD")}
   )
-  private void moneymaker$fireArmorStandRender(Entity param0, double param1, double param2, double param3, float param4, PoseStack param5, MultiBufferSource param6, int param7, CallbackInfo ci) {
+  private void moneymaker$fireArmorStandRender(Entity $$0, double $$1, double $$2, double $$3, float $$4,
+      PoseStack $$5, MultiBufferSource $$6, int $$7, CallbackInfo ci) {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
-    if(param0.getType() == EntityType.ARMOR_STAND) {
-      if(param0.hasCustomName() && param0.getCustomName() != null) {
-        String customName = param0.getCustomName().getString();
-        Laby.fireEvent(new ArmorStandRenderEvent((net.labymod.api.client.entity.Entity) param0, customName));
+    if($$0.getType() == EntityType.ARMOR_STAND) {
+      if($$0.hasCustomName() && $$0.getCustomName() != null) {
+        String customName = $$0.getCustomName().getString();
+        Laby.fireEvent(new ArmorStandRenderEvent((net.labymod.api.client.entity.Entity) $$0, customName));
       }
     }
   }

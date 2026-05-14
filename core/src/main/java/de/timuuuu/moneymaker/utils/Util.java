@@ -1,18 +1,12 @@
 package de.timuuuu.moneymaker.utils;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.AddonUtil.FarmingCave;
 import de.timuuuu.moneymaker.utils.AddonUtil.MineType;
 import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -170,26 +164,6 @@ public class Util {
       secString = "0" + secString;
     }
     return hourString + ":" + minString + ":" + secString;
-  }
-
-  public static List<String> getTextFromJsonObject(String input) {
-    List<String> list = new ArrayList<>();
-    try {
-      JsonObject object = JsonParser.parseString(input).getAsJsonObject();
-      if(object.has("extra") && object.get("extra").isJsonArray()) {
-        JsonArray array = object.get("extra").getAsJsonArray();
-        for(int i = 0; i != array.size(); i++) {
-          if(array.get(i).isJsonObject()) {
-            if(array.get(i).getAsJsonObject().has("text")) {
-              list.add(array.get(i).getAsJsonObject().get("text").getAsString());
-            }
-          }
-        }
-      }
-    } catch (JsonSyntaxException ignored) {
-
-    }
-    return list;
   }
 
   public static String convertToReadableFormat(long milliseconds) {

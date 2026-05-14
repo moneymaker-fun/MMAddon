@@ -2,10 +2,7 @@ package de.timuuuu.moneymaker.v1_8_9.mixins;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.event.EventUtil.Item;
-import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.HotbarItemTickEvent;
-import java.util.ArrayList;
-import java.util.List;
 import net.labymod.api.Laby;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,12 +31,8 @@ public class SwordTickMixin {
         if(swordItem.getTagCompound() != null) {
           String name = swordItem.getDisplayName();
           NBTTagCompound compoundTag = swordItem.getTagCompound().getCompoundTag("display");
-          List<String> loreList = new ArrayList<>();
           NBTTagList listTag = compoundTag.getTagList("Lore", 8);
-          for(int i = 0; i != listTag.tagCount(); i++) {
-            loreList.add(listTag.getStringTagAt(i));
-          }
-          Laby.fireEvent(new HotbarItemTickEvent(Item.SWORD, name, loreList, TextVersion.RAW));
+          Laby.fireEvent(new HotbarItemTickEvent(Item.SWORD, name, listTag));
         }
       }
 
@@ -48,12 +41,8 @@ public class SwordTickMixin {
         if(pickaxeItem.getTagCompound() != null) {
           String name = pickaxeItem.getDisplayName();
           NBTTagCompound compoundTag = pickaxeItem.getTagCompound().getCompoundTag("display");
-          List<String> loreList = new ArrayList<>();
           NBTTagList listTag = compoundTag.getTagList("Lore", 8);
-          for(int i = 0; i != listTag.tagCount(); i++) {
-            loreList.add(listTag.getStringTagAt(i));
-          }
-          Laby.fireEvent(new HotbarItemTickEvent(Item.PICKAXE, name, loreList, TextVersion.RAW));
+          Laby.fireEvent(new HotbarItemTickEvent(Item.PICKAXE, name, listTag));
         }
       }
 

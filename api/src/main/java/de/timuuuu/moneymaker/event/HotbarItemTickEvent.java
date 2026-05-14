@@ -1,23 +1,19 @@
 package de.timuuuu.moneymaker.event;
 
 import de.timuuuu.moneymaker.event.EventUtil.Item;
-import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import net.labymod.api.event.Event;
 import org.jetbrains.annotations.NotNull;
-import java.util.List;
 
 public class HotbarItemTickEvent implements Event {
 
   private Item item;
   private String displayName;
-  private List<String> loreList;
-  private TextVersion textVersion;
+  private Object loreList;
 
-  public HotbarItemTickEvent(@NotNull Item item, String displayName, List<String> loreList, @NotNull TextVersion textVersion) {
+  public HotbarItemTickEvent(@NotNull Item item, String displayName, Object loreList) {
     this.item = item;
     this.displayName = displayName;
     this.loreList = loreList;
-    this.textVersion = textVersion;
   }
 
   public Item item() {
@@ -28,12 +24,8 @@ public class HotbarItemTickEvent implements Event {
     return displayName;
   }
 
-  public List<String> getLoreList() {
+  public Object getLoreList() {
     return loreList;
-  }
-
-  public TextVersion textVersion() {
-    return textVersion;
   }
 
 }

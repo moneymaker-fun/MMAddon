@@ -1,12 +1,7 @@
 package de.timuuuu.moneymaker.listener;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.ChatUtil;
-import de.timuuuu.moneymaker.event.EventUtil.TextVersion;
 import de.timuuuu.moneymaker.event.InventoryClickEvent;
 import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
 import de.timuuuu.moneymaker.event.InventoryCloseEvent;
@@ -46,18 +41,7 @@ public class InventoryListener {
 
     if(event.getInventoryName().equals("Server wechseln") || event.getInventoryName().equals("Switch server")) {
 
-      String mineName = null;
-      if(event.textVersion() == TextVersion.RAW) {
-        mineName = event.getItemName();
-      } else {
-        JsonElement element = JsonParser.parseString(event.getItemName());
-        if(element != null && element.isJsonObject()) {
-          JsonObject object = element.getAsJsonObject();
-          if(object.has("text")) {
-            mineName = object.get("text").getAsString();
-          }
-        }
-      }
+      String mineName =  event.getItemName();
 
       if(mineName != null) {
         MineType mineType = this.addon.addonUtil().mineByTranslation(mineName);
@@ -76,21 +60,7 @@ public class InventoryListener {
       if(event.getItemName().contains("Profil-Slot") || event.getItemName().contains("Profile slot") ||
           event.getItemName().contains("Event-Profil") || event.getItemName().contains("Event profile")) {
 
-        String newProfile = null;
-        if(event.textVersion() == TextVersion.RAW) {
-          newProfile = event.getItemName();
-        } else {
-          // {"italic":false,"color":"aqua","text":"Profil-Slot 1"}
-          try {
-            JsonElement element = JsonParser.parseString(event.getItemName());
-            if(element != null && element.isJsonObject()) {
-              JsonObject object = element.getAsJsonObject();
-              if(object.has("text")) {
-                newProfile = object.get("text").getAsString();
-              }
-            }
-          } catch (JsonSyntaxException ignored) {}
-        }
+        String newProfile =  event.getItemName();
 
         if(newProfile != null) {
           if(!this.currentProfile.equals(newProfile)) {
@@ -112,15 +82,7 @@ public class InventoryListener {
     AtomicInteger boost = new AtomicInteger(0);
     if(!alreadyRendered.isEmpty()) {
       alreadyRendered.forEach(slotItem -> {
-        String strippedName = null;
-        if(slotItem.textVersion() == TextVersion.RAW) {
-          strippedName = ChatUtil.stripColor(slotItem.getName()); // +150 % Booster (1)
-        } else {
-          List<String> rawName = Util.getTextFromJsonObject(slotItem.getName()); // "+2.000 % Booster ","(4)"
-          if(rawName.size() == 2) {
-            strippedName = rawName.get(0) + rawName.get(1);
-          }
-        }
+        String strippedName =  ChatUtil.stripColor(slotItem.getName()); // +150 % Booster (1)
         if(strippedName != null) { // Should be: DE > +80 % Booster (5) | EN > +70% booster (3)
           String booster = strippedName.replace("+", "").replace(".", "").replace(",", "").replace("%", "")
               .replace("Booster", "").replace("booster", "").replace(" ", ""); // Should be: 80(5)
@@ -148,61 +110,13 @@ public class InventoryListener {
     if(!(event.getDisplayName().contains("Booster") || event.getDisplayName().contains("booster"))) return;
     if(!this.addon.configuration().showTotalBoostMessage().get()) return;
 
-    // 1.8 - 1.12
-    // Display Name: §b+150 % Booster §7(1)
-    /* Lore:
-    [
-    §7,
-    §7Auswirkung: §e+100 %,
-    §7Dauer: §e1 Stunde,
-     ,
-     §eBooster §7erhöhen deinen,
-     §eGesamtgewinn §7in der Mine,
-     §7beim Geldeingang auf dein Konto,
-      ,
-      §a<Klicke zum Einsetzen>,
-      §a<Rechtsklick zum Bearbeiten>
-      ]
-     */
-
-    if(event.textVersion() == TextVersion.RAW) {
-      if(event.getLoreList().size() >= 9) {
-        String displayName = event.getDisplayName();
-        String durationLore = event.getLoreList().get(2);
-        SlotItem slotItem = new SlotItem(displayName, durationLore, event.textVersion());
-        if(!alreadyRendered.contains(slotItem)) {
-          alreadyRendered.add(slotItem);
-        }
-      }
-      return;
-    }
-
-    if(event.getLoreList().size() >= 9) {
+    if(event.getDisplayName() != null) {
       String displayName = event.getDisplayName();
-      String durationLore = event.getLoreList().get(2);
-      SlotItem slotItem = new SlotItem(displayName, durationLore, event.textVersion());
+      SlotItem slotItem = new SlotItem(displayName);
       if(!alreadyRendered.contains(slotItem)) {
         alreadyRendered.add(slotItem);
       }
     }
-
-    // 1.16+
-    // Display Name:  {"italic":false,"extra":[{"color":"aqua","text":"+2.000 % Booster "},{"color":"gray","text":"(4)"}],"text":""}
-    /* Lore:
-    [
-    {"italic":false,"text":""},
-    {"italic":false,"extra":[{"color":"gray","text":"Auswirkung: "},{"color":"yellow","text":"+50 %"}],"text":""},
-    {"italic":false,"extra":[{"color":"gray","text":"Dauer: "},{"color":"yellow","text":"30 Minuten"}],"text":""},
-    {"italic":false,"text":""},
-    {"italic":false,"extra":[{"color":"yellow","text":"Booster "},{"color":"gray","text":"erhöhen deinen"}],"text":""},
-    {"italic":false,"extra":[{"color":"yellow","text":"Gesamtgewinn "},{"color":"gray","text":"in der Mine"}],"text":""},
-    {"italic":false,"color":"gray","text":"beim Geldeingang auf dein Konto"},
-    {"italic":false,"text":""},
-    {"italic":false,"color":"green","text":"\u003cKlicke zum Einsetzen\u003e"},
-    {"italic":false,"color":"green","text":"\u003cRechtsklick zum Bearbeiten\u003e"}
-    ]
-     */
-
   }
 
   @Subscribe
@@ -244,31 +158,19 @@ public class InventoryListener {
   private static class SlotItem {
 
     private String name;
-    private String lore;
-    private TextVersion textVersion;
 
-    public SlotItem(String name, String lore, TextVersion textVersion) {
+    public SlotItem(String name) {
       this.name = name;
-      this.lore = lore;
-      this.textVersion = textVersion;
     }
 
     public String getName() {
       return name;
     }
 
-    public String getLore() {
-      return lore;
-    }
-
-    public TextVersion textVersion() {
-      return textVersion;
-    }
-
     @Override
     public boolean equals(Object object) {
       if(object instanceof SlotItem other) {
-          return other.getName().equals(this.name) && other.getLore().equals(this.lore) && other.textVersion().equals(this.textVersion);
+          return other.getName().equals(this.name);
       }
       return false;
     }
