@@ -14,20 +14,20 @@ import net.labymod.api.configuration.settings.annotation.SettingSection;
 @SpriteTexture("sprite/settings")
 public class MoneyChatConfiguration extends Config {
 
-  @SettingSection(value = "general", center = true)
+  @SettingSection(value = "general")
 
   @IntroducedIn(namespace = "moneymaker", value = "1.4.0")
   @SpriteSlot(x = 1)
   @SwitchSetting
   private final ConfigProperty<Boolean> loadChatHistory = new ConfigProperty<>(true);
 
-  @SettingSection(value = "privacy", center = true)
+  @SettingSection(value = "privacy")
 
   @IntroducedIn(namespace = "moneymaker", value = "1.7.0")
   @SwitchSetting
   private final ConfigProperty<Boolean> showDetailedLocation = new ConfigProperty<>(true);
 
-  @SettingSection(value = "notifications", center = true)
+  @SettingSection(value = "notifications")
 
   @SpriteSlot(y = 4)
   @SwitchSetting

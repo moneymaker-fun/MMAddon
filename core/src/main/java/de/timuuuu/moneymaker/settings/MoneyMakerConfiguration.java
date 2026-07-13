@@ -26,7 +26,7 @@ import net.labymod.api.util.MethodOrder;
 @SpriteTexture("sprite/settings")
 public class MoneyMakerConfiguration extends AddonConfig {
 
-  @SettingSection(value = "general", center = true)
+  @SettingSection(value = "general")
 
   @SpriteSlot()
   @SwitchSetting
@@ -45,7 +45,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @IntroducedIn(value = "1.4.2", namespace = "moneymaker")
   public MoneyGameplayConfiguration gameplayConfiguration = new MoneyGameplayConfiguration();
 
-  @SettingSection(value = "account", center = true)
+  @SettingSection(value = "account")
 
   @IntroducedIn(value = "1.7.0", namespace = "moneymaker")
   @MethodOrder(after = "gameplayConfiguration")
@@ -85,7 +85,7 @@ public class MoneyMakerConfiguration extends AddonConfig {
     }
   }
 
-  @SettingSection(value = "other", center = true)
+  @SettingSection(value = "other")
 
   @MethodOrder(before = "showCustomGameSwitchNotifications")
   @ButtonSetting

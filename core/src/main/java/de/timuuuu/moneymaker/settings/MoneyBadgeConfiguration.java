@@ -13,7 +13,7 @@ import net.labymod.api.util.Color;
 @SpriteTexture("sprite/settings")
 public class MoneyBadgeConfiguration extends Config {
 
-  @SettingSection(value = "general", center = true)
+  @SettingSection(value = "general")
 
   @SpriteSlot(y = 7)
   @SwitchSetting
@@ -32,7 +32,7 @@ public class MoneyBadgeConfiguration extends Config {
   @SwitchSetting
   private ConfigProperty<Boolean> chatIcon = new ConfigProperty<>(true);
 
-  @SettingSection(value = "customization", center = true)
+  @SettingSection(value = "customization")
 
   @SpriteSlot(y = 7, x = 3)
   @ColorPickerSetting(chroma = true)
