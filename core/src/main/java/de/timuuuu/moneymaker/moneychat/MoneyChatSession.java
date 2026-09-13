@@ -10,7 +10,6 @@ import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.MoneyChatState;
 import de.timuuuu.moneymaker.moneychat.message.DiscordLinkMessageListener;
 import de.timuuuu.moneymaker.moneychat.message.MessageListener;
-import de.timuuuu.moneymaker.moneychat.message.WebsiteRegistrationMessageListener;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketAddonMessage;
@@ -39,7 +38,6 @@ import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
-import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.client.session.MinecraftAuthenticator;
 import net.labymod.api.client.session.Session;
 import net.labymod.api.util.logging.Logging;
@@ -81,7 +79,6 @@ public class MoneyChatSession extends MoneyPacketHandler {
 
   private void registerMessageListeners() {
     this.messageListeners.put("unauthenticated", (MessageListener) -> this.resetAuthentication());
-    this.messageListeners.put("website_register", new WebsiteRegistrationMessageListener(this.moneyChatClient.addon()));
     this.messageListeners.put("discord_link", new DiscordLinkMessageListener(this.moneyChatClient.addon()));
   }
 
@@ -227,10 +224,7 @@ public class MoneyChatSession extends MoneyPacketHandler {
           this.addon.tokenVerificationActivity().setToken(packet.type(), packet.token());
           return;
         }
-        if(packet.type() == TokenType.WEBSITE) {
-          this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.chat.website.success", NamedTextColor.GREEN)));
-          this.addon.displayMessage(PlainTextComponentSerializer.plainUrl().deserialize("https://moneymakeraddon.de/register?token=" + packet.token()).color(NamedTextColor.YELLOW));
-        } else {
+        if(packet.type() == TokenType.DISCORD) {
           this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.chat.discord.success", NamedTextColor.GREEN)));
           Component tokenComponent = Component.translatable("moneymaker.verification.chat.discord.token", NamedTextColor.GRAY, Component.text(packet.token(), NamedTextColor.YELLOW));
           tokenComponent.hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.verification.chat.discord.tokenHover", NamedTextColor.GRAY)));

@@ -75,12 +75,6 @@ public class TokenVerificationActivity extends SimpleActivity {
     if(this.tokenType != null && this.token != null) {
       content.addChild(ComponentWidget.i18n("moneymaker.verification.activity.tokenGenerated").addId("info-token-text"));
       content.addChild(ComponentWidget.component(Component.translatable("moneymaker.verification.activity.token", Component.text(this.token, NamedTextColor.YELLOW))).addId("info-token"));
-      if(this.tokenType == TokenType.WEBSITE) {
-        content.addChild(ComponentWidget.i18n("moneymaker.verification.activity.website.infoText").addId("info-website-text"));
-        ButtonWidget websiteButton = ButtonWidget.i18n("moneymaker.verification.activity.website.openButton").addId("website-button");
-        websiteButton.setPressable(() -> OperatingSystem.getPlatform().openUri("https://moneymakeraddon.de/register?token=" + this.token));
-        content.addChild(websiteButton);
-      }
       if(tokenType == TokenType.DISCORD) {
         container.addId("discord-container");
         ButtonWidget copyCodeButton = ButtonWidget.i18n("moneymaker.verification.activity.discord.copyToken").addId("copy-token-button");
@@ -150,7 +144,6 @@ public class TokenVerificationActivity extends SimpleActivity {
   }
 
   public enum TokenType {
-    WEBSITE("website"),
     DISCORD("discord");
 
     private final String name;

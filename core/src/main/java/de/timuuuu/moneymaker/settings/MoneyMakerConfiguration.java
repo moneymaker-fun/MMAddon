@@ -50,25 +50,6 @@ public class MoneyMakerConfiguration extends AddonConfig {
   @IntroducedIn(value = "1.7.0", namespace = "moneymaker")
   @MethodOrder(after = "gameplayConfiguration")
   @ButtonSetting
-  public void createWebsiteAccount() {
-    MoneyMakerAddon addon = MoneyMakerAddon.instance();
-    if(addon.moneyChatClient().isAuthenticated()) {
-      JsonObject payload = new JsonObject();
-      payload.addProperty("uuid", addon.labyAPI().getUniqueId().toString());
-      payload.addProperty("username", addon.labyAPI().getName());
-      addon.moneyChatClient().sendPacket(new MoneyPacketAddonMessage("website_register", payload));
-      addon.labyAPI().minecraft().minecraftWindow().displayScreen(addon.tokenVerificationActivity());
-    } else {
-      addon.pushNotification(
-          Component.translatable("moneymaker.verification.title", TextColor.color(255, 255, 85)),
-          Component.translatable("moneymaker.verification.request.chatNotConnected", TextColor.color(255, 85, 85))
-      );
-    }
-  }
-
-  @IntroducedIn(value = "1.7.0", namespace = "moneymaker")
-  @MethodOrder(after = "createWebsiteAccount")
-  @ButtonSetting
   public void linkDiscordAccount() {
     MoneyMakerAddon addon = MoneyMakerAddon.instance();
     if(addon.moneyChatClient().isAuthenticated()) {

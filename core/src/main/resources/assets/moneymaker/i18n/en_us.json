@@ -102,16 +102,13 @@
     },
     "verification": {
       "title": "MoneyMaker Verification",
-      "commandUsage": "Please use /mm-verify <discord, website>",
+      "commandUsage": "Please use /mm-verify discord",
       "request": {
         "chatNotConnected": "You are currently not connected to the chat server.",
         "sent": "A request to our Server has been sent, awaiting server response",
         "failed": "Failed to create an token for your account. Reason: %s"
       },
       "chat": {
-        "website": {
-          "success": "Your token has been create successfully. Please finish your registration at the following link:"
-        },
         "discord": {
           "success": "Your token has been create successfully. Please join our Discord to link your Discord Account",
           "token": "Your token is: %s",
@@ -127,10 +124,6 @@
         "tokenGenerated": "Your Token has been generated. Do not share this Token with anyone!",
         "token": "Token: %s",
         "discordButton": "Join Discord",
-        "website": {
-          "infoText": "Please use this Token to register your Minecraft Account on our Website by clicking on the Button below.",
-          "openButton": "Open Website"
-        },
         "discord": {
           "copyToken": "Copy Token",
           "copied": "Your Token has been copied to your Clipboard.",
@@ -319,11 +312,6 @@
 
       "enabled": {
         "name": "Enabled"
-      },
-      "createWebsiteAccount": {
-        "name": "Create Website Account",
-        "description": "Create an Account for our Website for submitting Feedback and other features",
-        "text": "Create"
       },
       "linkDiscordAccount": {
         "name": "Link Discord Account",
@@ -532,8 +520,8 @@
             "description": " Reset the collected data"
           },
           "verify": {
-            "command": "/mm-verify <discord, website>",
-            "description": " Verify your account with your discord account or your website account"
+            "command": "/mm-verify discord",
+            "description": " Verify your Minecraft Account with your Discord Account"
           }
         }
       },
