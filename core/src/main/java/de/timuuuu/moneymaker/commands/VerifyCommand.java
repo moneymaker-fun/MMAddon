@@ -29,6 +29,7 @@ public class VerifyCommand extends Command {
                 payload.addProperty("uuid", this.labyAPI.getUniqueId().toString());
                 payload.addProperty("username", this.labyAPI.getName());
                 this.addon.moneyChatClient().sendPacket(new MoneyPacketAddonMessage("discord_link", payload));
+              } else {
                 this.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.commandUsage", TextColor.color(255, 85, 85))));
               }
             } else {
