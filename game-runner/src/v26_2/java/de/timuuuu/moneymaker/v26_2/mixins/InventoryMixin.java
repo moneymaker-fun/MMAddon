@@ -1,0 +1,58 @@
+package de.timuuuu.moneymaker.v26_2.mixins;
+
+import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.event.InventoryClickEvent;
+import de.timuuuu.moneymaker.event.InventoryCloseEvent;
+import de.timuuuu.moneymaker.event.InventoryRenderSlotEvent;
+import net.labymod.api.Laby;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.inventory.ContainerInput;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.component.ItemLore;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin({AbstractContainerScreen.class})
+public class InventoryMixin {
+
+  @Inject(
+      method = {"extractSlot"},
+      at = {@At("HEAD")}
+  )
+  private void moneymaker$fireInventoryRender(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY,
+      CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
+    if(slot.getItem().get(DataComponents.CUSTOM_NAME) == null && slot.getItem().get(DataComponents.LORE) == null) return;
+    String name = slot.getItem().get(DataComponents.CUSTOM_NAME).getString();
+    ItemLore itemLore = slot.getItem().get(DataComponents.LORE);
+    if(itemLore == null) return;
+    Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name));
+  }
+
+  @Inject(
+      method = {"slotClicked"},
+      at = {@At("HEAD")}
+  )
+  private void moneymaker$fireInventoryClick(Slot slot, int slotId, int buttonNum,
+      ContainerInput containerInput, CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
+    if(slot == null) return;
+    if(slot.getItem().get(DataComponents.CUSTOM_NAME) == null) return;
+    String name = slot.getItem().get(DataComponents.CUSTOM_NAME).getString();
+    Laby.fireEvent(new InventoryClickEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name));
+  }
+
+  @Inject(
+      method = {"removed"},
+      at = {@At("HEAD")}
+  )
+  private void moneymaker$fireInventoryClose(CallbackInfo ci) {
+    if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
+    Laby.fireEvent(new InventoryCloseEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString()));
+  }
+
+}
