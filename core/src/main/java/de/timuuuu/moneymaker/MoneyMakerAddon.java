@@ -7,7 +7,6 @@ import de.timuuuu.moneymaker.activities.PriceOverviewActivity;
 import de.timuuuu.moneymaker.activities.navigation.MainActivity;
 import de.timuuuu.moneymaker.activities.StartActivity;
 import de.timuuuu.moneymaker.activities.navigation.MoneyMakerNavigationElement;
-import de.timuuuu.moneymaker.activities.popup.TokenVerificationActivity;
 import de.timuuuu.moneymaker.badges.MoneyChatPrefix;
 import de.timuuuu.moneymaker.badges.MoneyIconTag;
 import de.timuuuu.moneymaker.badges.MoneyTabBadge;
@@ -16,7 +15,6 @@ import de.timuuuu.moneymaker.boosters.BoosterUtil;
 import de.timuuuu.moneymaker.commands.ResetCommand;
 import de.timuuuu.moneymaker.commands.TestCommand;
 import de.timuuuu.moneymaker.commands.TimerCommand;
-import de.timuuuu.moneymaker.commands.VerifyCommand;
 import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.hudwidget.BalanceWidget;
 import de.timuuuu.moneymaker.hudwidget.DebrisPriceWidget;
@@ -83,8 +81,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
   private ChatActivity chatActivity;
   private StartActivity startActivity;
 
-  private TokenVerificationActivity tokenVerificationActivity;
-
   private DiscordAPI discordAPI;
   private ApiUtil apiUtil;
 
@@ -127,8 +123,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     this.chatActivity = new ChatActivity(this);
     this.mainActivity = new MainActivity(this);
 
-    this.tokenVerificationActivity = new TokenVerificationActivity(this);
-
     this.moneyChatClient = new MoneyChatClient(this, this.labyAPI().minecraft().sessionAccessor(), this.labyAPI().eventBus());
     this.moneyChatClient.prepareAsync();
 
@@ -138,7 +132,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
     this.registerCommand(new TimerCommand(this));
     this.registerCommand(new ResetCommand(this));
-    this.registerCommand(new VerifyCommand(this));
     this.registerCommand(new TestCommand(this));
 
     this.registerListener(new NetworkPayloadListener(this));
@@ -264,10 +257,6 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
 
   public StartActivity startActivity() {
     return startActivity;
-  }
-
-  public TokenVerificationActivity tokenVerificationActivity() {
-    return tokenVerificationActivity;
   }
 
   public EntityRenderListener entityRenderListener() {

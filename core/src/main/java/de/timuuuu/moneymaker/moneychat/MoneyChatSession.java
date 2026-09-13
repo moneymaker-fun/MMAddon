@@ -1,14 +1,12 @@
 package de.timuuuu.moneymaker.moneychat;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
-import de.timuuuu.moneymaker.activities.popup.TokenVerificationActivity.TokenType;
 import de.timuuuu.moneymaker.events.MoneyChatReceiveEvent;
 import de.timuuuu.moneymaker.events.MoneyPlayerStatusEvent;
 import de.timuuuu.moneymaker.group.Group;
 import de.timuuuu.moneymaker.group.GroupService;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.Initiator;
 import de.timuuuu.moneymaker.moneychat.MoneyChatClient.MoneyChatState;
-import de.timuuuu.moneymaker.moneychat.message.DiscordLinkMessageListener;
 import de.timuuuu.moneymaker.moneychat.message.MessageListener;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacket;
 import de.timuuuu.moneymaker.moneychat.protocol.MoneyPacketHandler;
@@ -18,7 +16,6 @@ import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketPong;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketAddonStatistics;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketClearChat;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.MoneyPacketDisconnect;
-import de.timuuuu.moneymaker.moneychat.protocol.packets.PacketVerificationToken;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionRequest;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketEncryptionResponse;
 import de.timuuuu.moneymaker.moneychat.protocol.packets.auth.MoneyPacketLoginComplete;
@@ -35,8 +32,6 @@ import de.timuuuu.moneymaker.utils.Util;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import net.labymod.api.Laby;
 import net.labymod.api.client.component.Component;
-import net.labymod.api.client.component.event.ClickEvent;
-import net.labymod.api.client.component.event.HoverEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.session.MinecraftAuthenticator;
 import net.labymod.api.client.session.Session;
@@ -79,7 +74,6 @@ public class MoneyChatSession extends MoneyPacketHandler {
 
   private void registerMessageListeners() {
     this.messageListeners.put("unauthenticated", (MessageListener) -> this.resetAuthentication());
-    this.messageListeners.put("discord_link", new DiscordLinkMessageListener(this.moneyChatClient.addon()));
   }
 
   protected void handlePacket(MoneyPacket packet) {
@@ -213,25 +207,6 @@ public class MoneyChatSession extends MoneyPacketHandler {
       listener.listen(packet.getJson());
     } else {
       LOGGER.debug("Unknown addon message {}", key);
-    }
-  }
-
-  @Override
-  public void handle(PacketVerificationToken packet) {
-    if(packet.type() != null && packet.token() != null) {
-      Laby.labyAPI().minecraft().executeNextTick(() -> {
-        if(this.addon.tokenVerificationActivity().isScreenOpened()) {
-          this.addon.tokenVerificationActivity().setToken(packet.type(), packet.token());
-          return;
-        }
-        if(packet.type() == TokenType.DISCORD) {
-          this.addon.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.verification.chat.discord.success", NamedTextColor.GREEN)));
-          Component tokenComponent = Component.translatable("moneymaker.verification.chat.discord.token", NamedTextColor.GRAY, Component.text(packet.token(), NamedTextColor.YELLOW));
-          tokenComponent.hoverEvent(HoverEvent.showText(Component.translatable("moneymaker.verification.chat.discord.tokenHover", NamedTextColor.GRAY)));
-          tokenComponent.clickEvent(ClickEvent.copyToClipboard(packet.token()));
-          this.addon.displayMessage(this.addon.prefix.copy().append(tokenComponent));
-        }
-      });
     }
   }
 

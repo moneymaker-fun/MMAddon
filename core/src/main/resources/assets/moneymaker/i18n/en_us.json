@@ -100,38 +100,6 @@
         "date": "Last Update: "
       }
     },
-    "verification": {
-      "title": "MoneyMaker Verification",
-      "commandUsage": "Please use /mm-verify discord",
-      "request": {
-        "chatNotConnected": "You are currently not connected to the chat server.",
-        "sent": "A request to our Server has been sent, awaiting server response",
-        "failed": "Failed to create an token for your account. Reason: %s"
-      },
-      "chat": {
-        "discord": {
-          "success": "Your token has been create successfully. Please join our Discord to link your Discord Account",
-          "token": "Your token is: %s",
-          "tokenHover": "Click to copy the token to your clipboard"
-        }
-      },
-      "activity": {
-        "serverWaiting": "Waiting for Chat Server response...",
-        "serverResponseInfo": "If the Popup does not update in a few seconds, please contact us via Discord.",
-        "error": "There was an error while creating your token. Please contact us via Discord.",
-        "errorReason": "Reason: %s",
-        "closeInfo": "Please close the Window only after you have used your Token.",
-        "tokenGenerated": "Your Token has been generated. Do not share this Token with anyone!",
-        "token": "Token: %s",
-        "discordButton": "Join Discord",
-        "discord": {
-          "copyToken": "Copy Token",
-          "copied": "Your Token has been copied to your Clipboard.",
-          "infoText1": "1. Join Our Discord Server",
-          "infoText2": "2. Use the Command '/link' in the Channel %s"
-        }
-      }
-    },
     "notification": {
       "booster-export": {
         "title": "Booster-Export",
@@ -302,9 +270,6 @@
         "general": {
           "name": "General Settings"
         },
-        "account": {
-          "name": "Account Connections"
-        },
         "other": {
           "name": "Other Settings"
         }
@@ -312,11 +277,6 @@
 
       "enabled": {
         "name": "Enabled"
-      },
-      "linkDiscordAccount": {
-        "name": "Link Discord Account",
-        "description": "Link your Minecraft Account to your Discord Account so that ranks can be synchronized and to use other features",
-        "text": "Link"
       },
       "showBlocksInLeaderboard": {
         "name": "Show own Blocks in Leaderboard",
