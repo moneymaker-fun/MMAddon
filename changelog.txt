@@ -3,6 +3,10 @@ GommeHD.net removed the support for Minecraft versions 1.9 - 1.21.3.
 To adapt those changes, we have also partially removed the support for those versions,
 the addon will still work in all available Minecraft Versions but some features will be missing.
 
++ Added support for Minecraft Version 26.2
+- Removed feature for linking Discord Account and creating an account on the Website
+(This will be handled by our the Website in the future)
+
 ~ Internal changes
 
 1.7.6 - 22.04.2026
