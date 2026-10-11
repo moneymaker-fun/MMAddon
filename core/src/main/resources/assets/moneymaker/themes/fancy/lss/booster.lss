@@ -119,8 +119,8 @@ Scroll {
 .clear-button {
   bottom: 10;
   left: 10;
+  right: 10;
   height: 15;
-  width: fit-content;
   padding-left: 3;
   padding-right: 3;
 }
@@ -128,8 +128,8 @@ Scroll {
 .export-button {
   bottom: 30;
   left: 10;
+  right: 10;
   height: 15;
-  width: fit-content;
   padding-left: 3;
   padding-right: 3;
 }

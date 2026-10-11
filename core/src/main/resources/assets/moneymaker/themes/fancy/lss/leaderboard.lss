@@ -71,7 +71,7 @@
     right: 10;
     space-between-entries: 1;
     height: fit-content;
-    border: 2 2 2 1 dark_gray;
+    border: 1 1 1 1 dark_gray;
 
     .active {
       text-color: yellow;
@@ -87,21 +87,21 @@
       width: 20%;
       height: 13;
       alignment-x: center;
-      border: 2 0 2 0 dark_gray;
+      border: 1 0 1 0 dark_gray;
     }
 
     .blocks {
       width: 20%;
       height: 100%;
       alignment-x: center;
-      border: 0 0 2 0 dark_gray;
+      border: 0 0 1 0 dark_gray;
     }
 
     .pickaxe-ranking {
       width: 20%;
       height: 100%;
       alignment-x: center;
-      border: 0 0 2 0 dark_gray;
+      border: 0 0 1 0 dark_gray;
     }
 
     .sword-ranking {
@@ -136,7 +136,7 @@
         width: 90%;
         height: 13;
 
-        border: 2 1 2 1 dark_gray;
+        border: 1 1 1 1 dark_gray;
 
         .user {
           height: 14;
@@ -160,21 +160,21 @@
           width: 20%;
           height: 13;
           alignment-x: center;
-          border: 2 0 2 0 dark_gray;
+          border: 1 0 1 0 dark_gray;
         }
 
         .blocks {
           width: 20%;
           height: 13;
           alignment-x: center;
-          border: 0 0 2 0 dark_gray;
+          border: 0 0 1 0 dark_gray;
         }
 
         .pickaxe-ranking {
           width: 20%;
           height: 13;
           alignment-x: center;
-          border: 0 0 2 0 dark_gray;
+          border: 0 0 1 0 dark_gray;
         }
 
         .sword-ranking {

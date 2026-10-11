@@ -8,7 +8,7 @@
 .chat-reconnect-button {
   width: fit-content;
   top: 8;
-  left: 95;
+  left: 100;
   padding: 1 5 1 5;
   height: 10;
   background-color: red !important;
@@ -17,14 +17,14 @@
 
 .hide-online-switch {
   top: 8;
-  left: 160;
+  left: 200;
   height: 12;
   width: 20;
 }
 
 .hide-online-title {
   top: 10;
-  left: 182;
+  left: 225;
   font-size: 0.8;
 }
 
@@ -87,6 +87,12 @@
 
   .placeholder {
     margin: 5 0 -5 0;
+  }
+
+  .status-hidden {
+    background-color: rgba(255, 85, 85, 0.05);
+    border-radius: 5;
+    padding: 3 0 0 2;
   }
 
   OnlineEntry {

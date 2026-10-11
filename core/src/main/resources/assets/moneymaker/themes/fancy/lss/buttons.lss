@@ -42,7 +42,7 @@
 
 .leaderboard-button {
   bottom: 2;
-  right: 70;
+  right: 80;
   width: fit-content;
   padding-left: 3;
   padding-right: 3;
