@@ -1,7 +1,9 @@
 package de.timuuuu.moneymaker.commands;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
+import de.timuuuu.moneymaker.activities.popup.LanguageInfoActivity;
 import de.timuuuu.moneymaker.utils.Util;
+import net.labymod.api.Laby;
 import net.labymod.api.client.chat.command.Command;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.format.TextColor;
@@ -35,13 +37,14 @@ public class TestCommand extends Command {
                 this.displayMessage("[MoneyMaker] +50 % Booster (15 Minuten)");
                 this.displayMessage("[MoneyMaker]");
                 this.displayMessage("[MoneyMaker] eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+              } else if(args[0].equalsIgnoreCase("language-info")) {
+                Laby.labyAPI().minecraft().executeNextTick(() -> Laby.labyAPI().minecraft().minecraftWindow().displayScreen(new LanguageInfoActivity(this.addon, Laby.labyAPI().minecraft().minecraftWindow().currentScreen())));
               } else {
-                this.displayMessage("Invalid Argument. (debug-debris, stop-debris-task)");
+                this.displayMessage("Invalid Argument. (debug-debris, stop-debris-task, get-booster, language-info)");
               }
             } else {
               this.displayMessage("Insufficient Arguments.");
             }
-
           } else {
             this.displayMessage(this.addon.prefix.copy().append(Component.translatable("moneymaker.command.notConnected", TextColor.color(255, 85, 85))));
           }
