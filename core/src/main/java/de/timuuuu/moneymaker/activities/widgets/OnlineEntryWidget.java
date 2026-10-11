@@ -12,7 +12,6 @@ import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.gui.icon.Icon;
 import net.labymod.api.client.gui.lss.property.annotation.AutoWidget;
 import net.labymod.api.client.gui.screen.Parent;
-import net.labymod.api.client.gui.screen.widget.attributes.BorderRadius;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
@@ -20,7 +19,6 @@ import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
 import net.labymod.api.client.gui.tooltip.Tooltip;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.user.group.Group;
-import net.labymod.api.util.Color;
 import net.labymod.api.util.I18n;
 
 @AutoWidget
@@ -57,9 +55,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
       this.addId("placeholder");
     }
     if(this.hideOnlineStatus) {
-      backgroundColor().set(Color.ofRGB(15, 17, 21).get());
-      setBorderRadius(new BorderRadius(5, 5, 5, 5));
-      paddingTop().set(3.0f);
+      this.addId("status-hidden");
       tooltip(Tooltip.text(Component.text("User has hidden his Online Status")));
     }
 
@@ -117,7 +113,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
       }
       Component component = Component.text("➥ ", NamedTextColor.DARK_GRAY)
               .append(Component.text("Server", NamedTextColor.GRAY))
-              .append(Component.text(":", NamedTextColor.DARK_GRAY))
+              .append(Component.text(": ", NamedTextColor.DARK_GRAY))
               .append(Component.text(server, NamedTextColor.GRAY));
       data.addEntry(ComponentWidget.component(component).addId("currentServer"));
     }
