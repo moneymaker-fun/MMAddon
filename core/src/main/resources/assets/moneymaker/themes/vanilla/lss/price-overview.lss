@@ -10,8 +10,9 @@
   bottom: 20;
   left: 20;
   right: 20;
-  box-shadow: classic left top right bottom;
-  renderer: "DirtBackground";
+  border: 1;
+  border-color: var(--background-color-border);
+  background-color: var(--background-color);
 }
 
 .gold-container {
@@ -19,8 +20,9 @@
   bottom: 10;
   left: 10;
   width: 23%;
-  box-shadow: classic left top right bottom;
-  renderer: "DirtBackground";
+  border: 1;
+  border-color: var(--background-color-border);
+  background-color: rgba(255, 170, 0, 0.1);
 
   .gold-title {
     top: 5;
@@ -67,8 +69,9 @@
   bottom: 10;
   left: 26%;
   width: 23%;
-  box-shadow: classic left top right bottom;
-  renderer: "DirtBackground";
+  border: 1;
+  border-color: var(--background-color-border);
+  background-color: rgba(0, 0, 0, 0.4);
 
   .coal-title {
     top: 5;
@@ -115,8 +118,9 @@
   bottom: 10;
   right: 26%;
   width: 23%;
-  box-shadow: classic left top right bottom;
-  renderer: "DirtBackground";
+  border: 1;
+  border-color: var(--background-color-border);
+  background-color: rgba(170, 170, 170, 0.1);
 
   .iron-title {
     top: 5;
@@ -163,8 +167,9 @@
   bottom: 10;
   right: 10;
   width: 23%;
-  box-shadow: classic left top right bottom;
-  renderer: "DirtBackground";
+  border: 1;
+  border-color: var(--background-color-border);
+  background-color: rgba(85, 85, 255, 0.1);
 
   .lapis-title {
     top: 5;

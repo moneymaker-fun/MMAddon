@@ -5,8 +5,9 @@
   height: 150;
   alignment-x: center;
   alignment-y: center;
-  box-shadow: classic left top right bottom;
-  renderer: "DirtBackground";
+  border: 1;
+  border-color: var(--background-color-border);
+  background-color: var(--background-color);
 
   .header {
     left: 50%;
