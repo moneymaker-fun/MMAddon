@@ -5,6 +5,7 @@ import de.timuuuu.moneymaker.utils.AddonUtil;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
 import net.labymod.api.client.chat.prefix.ChatPrefix;
 import net.labymod.api.client.gui.screen.ScreenContext;
+import net.labymod.api.client.network.ClientPacketListener;
 import net.labymod.api.client.network.NetworkPlayerInfo;
 import net.labymod.api.client.render.font.RenderableComponent;
 import net.labymod.api.configuration.labymod.chat.AdvancedChatMessage;
@@ -39,8 +40,9 @@ public class MoneyChatPrefix implements ChatPrefix {
   public boolean isVisible(ChatTab chatTab, AdvancedChatMessage advancedChatMessage) {
     if(!this.addon.configuration().badgeConfiguration.chatIcon().get()) return false;
     if(!this.addon.addonUtil().connectedToMoneyMaker()) return false;
-    if(this.getProfileFromMessage(advancedChatMessage) == null) return false;
-    return AddonUtil.playerStatus.containsKey(this.getProfileFromMessage(advancedChatMessage).getUniqueId());
+    GameProfile profile = this.getProfileFromMessage(advancedChatMessage);
+    if(profile == null) return false;
+    return AddonUtil.playerStatus.containsKey(profile.getUniqueId());
   }
 
   @Override
@@ -57,8 +59,9 @@ public class MoneyChatPrefix implements ChatPrefix {
     if(!message.contains(":")) return null;
     String rawName = message.split(":")[0].split("\\)")[1];
     String userName = rawName.replace(" ", "");
-    if(this.addon.labyAPI().minecraft().getClientPacketListener() == null) return null;
-    NetworkPlayerInfo info = this.addon.labyAPI().minecraft().getClientPacketListener().getNetworkPlayerInfo(userName);
+    ClientPacketListener packetListener = this.addon.labyAPI().minecraft().getClientPacketListener();
+    if(packetListener == null) return null;
+    NetworkPlayerInfo info = packetListener.getNetworkPlayerInfo(userName);
     if(info == null) return null;
     return info.profile();
   }

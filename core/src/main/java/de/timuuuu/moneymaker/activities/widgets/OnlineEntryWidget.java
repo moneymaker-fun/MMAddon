@@ -2,25 +2,28 @@ package de.timuuuu.moneymaker.activities.widgets;
 
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import de.timuuuu.moneymaker.utils.MoneyPlayer;
+import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import de.timuuuu.moneymaker.utils.Util;
 import net.labymod.api.Laby;
-import net.labymod.api.Textures.SpriteLabyMod;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.client.gui.lss.property.annotation.AutoWidget;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.attributes.BorderRadius;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
+import net.labymod.api.client.gui.tooltip.Tooltip;
 import net.labymod.api.client.resources.ResourceLocation;
 import net.labymod.api.user.group.Group;
 import net.labymod.api.util.Color;
 import net.labymod.api.util.I18n;
 
+@AutoWidget
 public class OnlineEntryWidget extends FlexibleContentWidget {
 
   private MoneyMakerAddon addon;
@@ -57,7 +60,7 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
       backgroundColor().set(Color.ofRGB(15, 17, 21).get());
       setBorderRadius(new BorderRadius(5, 5, 5, 5));
       paddingTop().set(3.0f);
-      setHoverComponent(Component.text("User has hidden his Online Status"));
+      tooltip(Tooltip.text(Component.text("User has hidden his Online Status")));
     }
 
     entry.addEntry(new IconWidget(!this.placeholder ? Icon.head(this.player.uuid()) : Icon.texture(
@@ -67,11 +70,11 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
 
       Group labyRank = Laby.references().gameUserService().gameUser(player.uuid()).visibleGroup();
       if(!labyRank.isDefault()) {
-        IconWidget labyIconWidget = new IconWidget(SpriteLabyMod.WHITE_WOLF_HIGH_RES).addId("labymod-rank");
+        IconWidget labyIconWidget = new IconWidget(SpriteCommon.LABY_ICON).addId("labymod-rank");
         labyIconWidget.color().set(labyRank.getColor().getRGB());
         if(labyRank.getTagName() != null) {
-          labyIconWidget.setHoverComponent(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
-              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor())));
+          labyIconWidget.tooltip(Tooltip.text(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor()))));
         }
         entry.addEntry(labyIconWidget);
       }
@@ -79,8 +82,8 @@ public class OnlineEntryWidget extends FlexibleContentWidget {
       if(this.player.group().isStaff()) {
         IconWidget staffIconWidget = new IconWidget(this.player.group().getIcon()).addId("mma-rank");
         if(this.player.group().getTagName() != null) {
-          staffIconWidget.setHoverComponent(Component.text("MoneyMaker-Addon", NamedTextColor.YELLOW).decorate(
-              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(this.player.group().getTagName()).color(this.player.group().getTextColor())));
+          staffIconWidget.tooltip(Tooltip.text(Component.text("MoneyMaker-Addon", NamedTextColor.YELLOW).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(this.player.group().getTagName()).color(this.player.group().getTextColor()))));
         }
         entry.addEntry(staffIconWidget);
       }

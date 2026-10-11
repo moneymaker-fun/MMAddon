@@ -36,7 +36,7 @@ public class NetworkPayloadListener {
 
   @Subscribe
   public void onNetworkPayload(NetworkPayloadEvent event) {
-    if(event.identifier().getNamespace().equals("labymod3") & event.identifier().getPath().equals("main")) {
+    if(event.identifier().getNamespace().equals("labymod3") && event.identifier().getPath().equals("main")) {
       try {
         PayloadReader reader = new PayloadReader(event.getPayload());
         String messageKey = reader.readString();

@@ -65,11 +65,11 @@ public class ChatReportActivity extends SimpleActivity {
     messageInputWidget.setText(this.chatMessage.message());
 
     ComponentWidget reasonTitleWidget = ComponentWidget.i18n("moneymaker.report.form.reason.title").addId("reason-title");
-    DropdownWidget<ReportReason> reasonDropdownWidget = DropdownWidget.create(ReportReason.SPAM, reason -> {
-      this.reportReason = reason;
-    }).addId("reason-input");
-    reasonDropdownWidget.setTranslationKeyPrefix("moneymaker.report.form.reason.type");
+    DropdownWidget<ReportReason> reasonDropdownWidget = new DropdownWidget<>().addId("reason-input");
     reasonDropdownWidget.addAll(ReportReason.values());
+    reasonDropdownWidget.setSelected(ReportReason.SPAM);
+    reasonDropdownWidget.setTranslationKeyPrefix("moneymaker.report.form.reason.type");
+    reasonDropdownWidget.setChangeListener(reason -> this.reportReason = reason);
 
     ButtonWidget sendButton = ButtonWidget.i18n("moneymaker.report.form.send").addId("send-button");
     sendButton.setPressable(() -> {

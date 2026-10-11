@@ -161,7 +161,7 @@ public class BoosterActivity extends SimpleActivity {
           Component.translatable("moneymaker.notification.booster-export.saved", TextColor.color(85, 255, 85)),
           Component.translatable("moneymaker.notification.booster-export.open-folder"), () -> OperatingSystem.getPlatform().openFile(folder));
     } catch (IOException exception) {
-      exception.printStackTrace();
+      MoneyMakerAddon.instance().logger().error("Failed to export boosters", exception);
     }
   }
 

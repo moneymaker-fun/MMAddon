@@ -9,13 +9,13 @@ import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import de.timuuuu.moneymaker.utils.Util;
 import java.util.UUID;
 import net.labymod.api.Laby;
-import net.labymod.api.Textures.SpriteLabyMod;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.component.event.ClickEvent;
 import net.labymod.api.client.component.format.NamedTextColor;
 import net.labymod.api.client.component.format.TextDecoration;
 import net.labymod.api.client.component.serializer.plain.PlainTextComponentSerializer;
 import net.labymod.api.client.gui.icon.Icon;
+import net.labymod.api.client.gui.lss.property.annotation.AutoWidget;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.widget.Widget;
 import net.labymod.api.client.gui.screen.widget.widgets.ComponentWidget;
@@ -24,8 +24,10 @@ import net.labymod.api.client.gui.screen.widget.widgets.layout.FlexibleContentWi
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.HorizontalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.layout.list.VerticalListWidget;
 import net.labymod.api.client.gui.screen.widget.widgets.renderer.IconWidget;
+import net.labymod.api.client.gui.tooltip.Tooltip;
 import net.labymod.api.user.group.Group;
 
+@AutoWidget
 public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleContentWidget | Default > HorizontalListWidget
 
   private MoneyMakerAddon addon;
@@ -63,11 +65,11 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
 
       Group labyRank = Laby.references().gameUserService().gameUser(chatMessage.uuid()).visibleGroup();
       if(!labyRank.isDefault()) {
-        IconWidget labyIconWidget = new IconWidget(SpriteLabyMod.WHITE_WOLF_HIGH_RES).addId("labymod-rank");
+        IconWidget labyIconWidget = new IconWidget(SpriteCommon.LABY_ICON).addId("labymod-rank");
         labyIconWidget.color().set(labyRank.getColor().getRGB());
         if(labyRank.getTagName() != null) {
-          labyIconWidget.setHoverComponent(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
-              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor())));
+          labyIconWidget.tooltip(Tooltip.text(Component.text("LABYMOD", NamedTextColor.WHITE).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(labyRank.getTagName()).color(labyRank.getTextColor()))));
         }
         header.addEntry(labyIconWidget);
       }
@@ -75,8 +77,8 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
       if(chatMessage.group().isStaff()) {
         IconWidget staffIconWidget = new IconWidget(chatMessage.group().getIcon()).addId("mma-rank");
         if(chatMessage.group().getTagName() != null) {
-          staffIconWidget.setHoverComponent(Component.text("MoneyMaker-Addon", NamedTextColor.YELLOW).decorate(
-              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(chatMessage.group().getTagName()).color(chatMessage.group().getTextColor())));
+          staffIconWidget.tooltip(Tooltip.text(Component.text("MoneyMaker-Addon", NamedTextColor.YELLOW).decorate(
+              TextDecoration.BOLD).append(Component.text(" ")).append(Component.text(chatMessage.group().getTagName()).color(chatMessage.group().getTextColor()))));
         }
         header.addEntry(staffIconWidget);
       }
@@ -91,7 +93,7 @@ public class ChatMessageWidget extends FlexibleContentWidget { // FlexibleConten
     header.addEntry(ComponentWidget.text(time).addId("timestamp"));
     if(this.chatMessage != null && this.chatMessage.fromServerCache()) {
       ComponentWidget cacheInfoWidget = ComponentWidget.component(Component.icon(SpriteCommon.EXCLAMATION_MARK, 5)).addId("cache-info");
-      cacheInfoWidget.setHoverComponent(Component.translatable("moneymaker.ui.chat.info.cache"));
+      cacheInfoWidget.tooltip(Tooltip.text(Component.translatable("moneymaker.ui.chat.info.cache")));
       header.addEntry(cacheInfoWidget);
     }
     if(Util.isStaff(uuid)) {

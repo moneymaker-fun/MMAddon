@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import de.timuuuu.moneymaker.MoneyMakerAddon;
 import java.util.function.Consumer;
 import de.timuuuu.moneymaker.utils.ApiUtil;
-import net.labymod.api.Textures.SpriteCommon;
+import de.timuuuu.moneymaker.utils.MoneyTextures.SpriteCommon;
 import net.labymod.api.client.component.Component;
 import net.labymod.api.client.gui.screen.Parent;
 import net.labymod.api.client.gui.screen.ScreenInstance;
@@ -52,7 +52,7 @@ public class ChatRulesActivity extends SimpleActivity {
     header.addEntry(titleWidget);
 
     if(!this.updateConfiguration) {
-      IconWidget closeButton = new IconWidget(SpriteCommon.SMALL_X_WITH_SHADOW).addId("close-button");
+      IconWidget closeButton = new IconWidget(SpriteCommon.CLOSE).addId("close-button");
       closeButton.setPressable(() -> closeScreen(false));
       header.addEntry(closeButton);
     }
