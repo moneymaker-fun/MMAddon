@@ -1,0 +1,133 @@
+.title {
+  alignment-x: center;
+  text-color: green;
+  font-size: 1.5;
+  top: 0;
+}
+
+.total-boost {
+  left: 5;
+  top: 30;
+  font-size: 1.0;
+}
+
+.average-boosters {
+  left: 5;
+  top: 45;
+  font-size: 0.8;
+}
+
+.boosters-per-block {
+  left: 5;
+  top: 65;
+  font-size: 0.8;
+}
+
+.container {
+  top: 20;
+  bottom: 20;
+  left: 20;
+  width: 75%;
+  renderer: "Card";
+  background-color: var(--background-color);
+  border-color: var(--background-color-border);
+  border-radius: var(--border-radius);
+  border-thickness: var(--border-thickness);
+}
+
+.side-container {
+  top: 20;
+  bottom: 20;
+  right: 20;
+  width: 18%;
+  renderer: "Card";
+  background-color: var(--background-color);
+  border-color: var(--background-color-border);
+  border-radius: var(--border-radius);
+  border-thickness: var(--border-thickness);
+}
+
+.booster-grid {
+  left: 20;
+  top: 50;
+  width: 100%;
+  padding-right: 10;
+  height: fit-content;
+  space-between-entries: 10;
+  tiles-per-line: 5;
+  tile-height: 70;
+
+  Booster {
+    renderer: "Card";
+    background-color: var(--surface-2);
+    border-radius: var(--radius-card);
+    border-color: rgba(255, 255, 85, 0.4);
+
+    .amount {
+      left: 5;
+      top: 5;
+    }
+
+    .icon {
+      alignment-x: center;
+      alignment-y: center;
+      top: 30;
+      height: 32;
+      width: 32;
+    }
+
+    .boost {
+      alignment-x: center;
+      bottom: 5;
+    }
+
+    .date {
+      top: 5;
+      right: 5;
+      font-size: 0.6;
+    }
+
+  }
+
+}
+
+Scroll {
+   top: 10;
+   left: 10;
+   right: 0;
+   height: 90%;
+
+   Scrollbar {
+      left: 0;
+      top: 0;
+      width: 5;
+      height: 100%;
+      margin-right: 5;
+   }
+}
+
+.sort-button {
+  top: 5;
+  left: 5;
+  right: 5;
+  height: 16;
+}
+
+.clear-button {
+  bottom: 5;
+  left: 5;
+  right: 5;
+  height: 16;
+  padding-left: 3;
+  padding-right: 3;
+}
+
+.export-button {
+  bottom: 23;
+  left: 5;
+  right: 5;
+  height: 16;
+  width: fit-content;
+  padding-left: 3;
+  padding-right: 3;
+}

@@ -1,0 +1,342 @@
+.chat-title {
+  alignment-x: center;
+  text-color: green;
+  font-size: 1.5;
+  top: 0;
+}
+
+.chat-reconnect-button {
+  width: fit-content;
+  top: 8;
+  left: 100;
+  padding: 1 5 1 5;
+  height: 10;
+
+  Component {
+    font-size: 0.9;
+  }
+
+}
+
+.hide-online-switch {
+  top: 8;
+  left: 200;
+  height: 12;
+  width: 20;
+}
+
+.hide-online-title {
+  top: 10;
+  left: 225;
+  font-size: 0.8;
+}
+
+.rules-button {
+  width: fit-content;
+  top: 8;
+  right: 20;
+  padding: 1 5 1 5;
+  height: 10;
+  border-color: dark_red !important;
+}
+
+.chat-status {
+  font-size: 0.8;
+  top: 10;
+  left: 20;
+}
+
+.chat-online-text {
+  top: 10;
+  right: 14%;
+}
+
+.chat-container {
+  top: 20;
+  bottom: 35;
+  left: 20;
+  width: 63%;
+  renderer: "Card";
+  background-color: var(--background-color);
+  border-color: var(--background-color-border);
+  border-radius: var(--border-radius);
+  border-thickness: var(--border-thickness);
+}
+
+.online-container {
+  top: 20;
+  bottom: 35;
+  width: 30%;
+  right: 20;
+  renderer: "Card";
+  background-color: var(--background-color);
+  border-color: var(--background-color-border);
+  border-radius: var(--border-radius);
+  border-thickness: var(--border-thickness);
+}
+
+.online-scroll {
+  top: 5;
+  left: 5;
+  right: 5;
+  bottom: 5;
+
+  .online-list {
+    height: fit-content;
+    width: 100%;
+  }
+
+  .placeholder {
+    margin: 5 0 -5 0;
+  }
+
+  .status-hidden {
+    background-color: rgba(15, 17, 21, 0.5);
+    border-radius: 5;
+    padding: 3 0 0 2;
+  }
+
+  OnlineEntry {
+    height: 22;
+    width: 100%;
+
+    .head {
+      height: 10;
+      width: 100%;
+
+      .labymod-rank {
+        width: 10;
+        height: 10;
+      }
+
+      .mma-rank {
+        padding: 0 2 0 1;
+        width: 10;
+        height: 10;
+      }
+
+      .avatar {
+        padding: 0 2 0 2;
+        width: 10;
+        height: 10;
+      }
+
+      .userName {
+        font-size: 1.0;
+      }
+
+      .versions {
+        font-size: 0.6;
+      }
+
+    }
+
+    .data {
+      margin-top: 5;
+
+      .currentServer {
+        margin-left: 5;
+        text-color: rgb(150, 150, 150);
+      }
+
+    }
+
+
+  }
+
+  Scrollbar {
+    left: 0;
+    top: 0;
+    width: 5;
+    height: 100%;
+    margin-right: 5;
+  }
+}
+
+.input-container {
+  bottom: 0;
+  left: 20;
+  right: 20;
+  height: 30;
+  renderer: "Card";
+  background-color: var(--background-color);
+  border-color: var(--background-color-border);
+  border-radius: var(--border-radius);
+  border-thickness: var(--border-thickness);
+
+  .chat-input {
+    bottom: 6;
+    left: 10;
+    right: 10;
+    submit-button: true;
+  }
+
+  .chat-error {
+    bottom: 25%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.5;
+  }
+
+  .chat-muted-title {
+    bottom: 40%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.4;
+  }
+
+  .chat-muted-info {
+    bottom: 17%;
+    alignment-x: center;
+    text-color: dark_red;
+    font-size: 1.0;
+  }
+
+}
+
+.chat-scroll {
+  top: 10;
+  left: 10;
+  right: 0;
+  bottom: 10;
+
+  Scrollbar {
+    left: 0;
+    top: 0;
+    width: 5;
+    height: 100%;
+    margin-right: 5;
+  }
+
+  .chat-messages {
+    top: 0;
+    space-between-entries: 5;
+    width: 90%;
+    height: fit-content;
+
+    ChatMessage {
+      width: 90%;
+      height: fit-content;
+      padding-bottom: 5;
+
+      .flex {
+        top: 0;
+        width: 100%;
+        height: fit-content;
+      }
+
+      .message-header {
+        height: 10;
+        width: 100%;
+
+        .avatar {
+          padding: 0 2 0 2;
+          width: 10;
+          height: 10;
+        }
+
+        .mma-rank {
+          padding: 0 2 0 1;
+          width: 8;
+          height: 8;
+        }
+
+        .sender {
+          margin-top: 1;
+          font-weight: 175;
+          font-size: 0.9;
+        }
+
+        .labymod-rank {
+          width: 8;
+          height: 8;
+        }
+
+        .timestamp {
+          margin: 0 0 1 0;
+          alignment-y: bottom;
+          text-color: rgb(150, 150, 150);
+          font-size: 0.525;
+        }
+
+        .cache-info {
+          margin: 0 1 -2 0;
+        }
+
+        .message-id {
+          text-color: rgb(150, 150, 150);
+          font-size: 0.525;
+          alignment-y: bottom;
+          margin: 0 0 1 0;
+        }
+
+        .deleted-info {
+          text-color: rgb(150, 150, 150);
+          font-size: 0.525;
+          alignment-y: bottom;
+          margin: 0 0 1 0;
+        }
+
+        .mute-button {
+          height: 9;
+          width: 20;
+          padding: -1 2 0.5 1;
+          margin: 2 0 0 0;
+
+          .button-text {
+            font-size: 0.6 !important;
+            text-color: red !important;
+          }
+
+        }
+
+        .report-button {
+          height: 9;
+          width: fit-content;
+          padding: -1 2 0.5 1;
+          margin: 2 0 0 0;
+
+          .button-text {
+            font-size: 0.6 !important;
+            text-color: red !important;
+          }
+
+        }
+
+        .delete-button {
+          height: 9;
+          width: fit-content;
+          padding: 0 3 0 2;
+          margin: 2 0 0 0;
+
+          .button-icon {
+            height: 7;
+            alignment-y: bottom;
+            padding: 0 0 1 1;
+          }
+
+        }
+
+      }
+
+      .message-content {
+        width: 90%;
+        height: fit-content;
+        margin-right: 10;
+
+        .component-message {
+          padding: 2 3 2 2;
+          border-radius: 0 5 5 5;
+          font-size: 0.8;
+          background-color: rgb(40, 45, 60);
+        }
+
+        .deleted {
+          background-color: rgba(150, 0, 0, 0.2);
+        }
+
+      }
+
+    }
+  }
+}
