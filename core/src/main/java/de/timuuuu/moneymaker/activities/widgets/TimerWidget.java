@@ -42,7 +42,7 @@ public class TimerWidget extends HorizontalListWidget {
         .append(Component.text(this.timer.minutes() + "m", NamedTextColor.YELLOW))
         .append(Component.text(" - ", NamedTextColor.DARK_GRAY))
         .append(Component.text(this.timer.remainingTime(), NamedTextColor.GOLD))
-        .append(Component.text("]", NamedTextColor.DARK_GRAY))
+        .append(Component.text("] ", NamedTextColor.DARK_GRAY))
         .append(Component.text(this.timer.name(), NamedTextColor.YELLOW));
     this.addEntry(ComponentWidget.component(component).addId("timer-name"));
   }
