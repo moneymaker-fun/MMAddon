@@ -6,20 +6,20 @@
 }
 
 .total-boost {
-  left: 5;
-  top: 25;
+  left: 10;
+  top: 30;
   font-size: 1;
 }
 
 .average-boosters {
-  left: 5;
-  top: 40;
+  left: 10;
+  top: 45;
   font-size: 0.8;
 }
 
 .boosters-per-block {
-  left: 5;
-  top: 60;
+  left: 10;
+  top: 65;
   font-size: 0.8;
 }
 
@@ -31,6 +31,7 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 }
 
 .side-container {
@@ -41,6 +42,7 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 }
 
 .booster-grid {
@@ -103,22 +105,22 @@ Scroll {
 
 .sort-button {
   height: 15;
-  left: 5;
-  right: 5;
+  left: 10;
+  right: 10;
   padding-right: 3;
-  top: 5;
+  top: 10;
 }
 
 .clear-button {
-  bottom: 5;
-  left: 5;
-  right: 5;
+  bottom: 10;
+  left: 10;
+  right: 10;
   height: 15;
 }
 
 .export-button {
-  bottom: 25;
-  left: 5;
-  right: 5;
+  bottom: 30;
+  left: 10;
+  right: 10;
   height: 15;
 }

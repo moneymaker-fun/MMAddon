@@ -13,6 +13,7 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 
   .break-goal-title {
     text-color: yellow;
@@ -53,6 +54,7 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 
   .commands-title {
     top: 10;
@@ -75,11 +77,12 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 }
 
 .timer-title {
   text-color: green;
-  top: 5;
+  top: 10;
   left: 50;
 }
 
@@ -88,7 +91,7 @@
   width: 100%;
   tile-height: 20;
   tiles-per-line: 1;
-  top: 10;
+  top: 15;
   left: 10;
 }
 

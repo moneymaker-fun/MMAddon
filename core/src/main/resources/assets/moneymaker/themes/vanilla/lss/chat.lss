@@ -55,6 +55,7 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 }
 
 .online-container {
@@ -65,6 +66,7 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 }
 
 .online-scroll {
@@ -158,6 +160,7 @@
   border: 1;
   border-color: var(--background-color-border);
   background-color: var(--background-color);
+  renderer: "PopupWindow";
 
   .chat-input {
     bottom: 25%;
