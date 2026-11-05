@@ -140,6 +140,7 @@ public class MoneyAddonListener {
     if(this.addon.configuration().exportBoosterOnShutdown().get()) {
       BoosterActivity.writeLinkedListToCSV(true);
     }
+    this.addon.moneyChatClient().shutdown();
   }
 
   private long lastMineUpdate = System.currentTimeMillis();

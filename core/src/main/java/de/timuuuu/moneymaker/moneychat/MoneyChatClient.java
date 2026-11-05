@@ -179,6 +179,32 @@ public class MoneyChatClient {
 
   }
 
+  public void shutdown() {
+    this.doNotConnect = true;
+
+    try {
+      SocketChannel channel = this.getChannel();
+      if (channel != null && channel.isOpen()) {
+        if (channel.eventLoop().inEventLoop()) {
+          channel.close();
+        } else {
+          channel.eventLoop().execute(channel::close);
+        }
+      }
+    } catch (Throwable ignored) {}
+
+    if (this.session != null) {
+      this.session.dispose();
+      this.session = null;
+    }
+
+    this.updateState(MoneyChatState.OFFLINE);
+
+    this.timeoutExecutor.shutdownNow();
+    this.executor.shutdownNow();
+    this.nioEventLoopGroup.shutdownGracefully(0L, 2L, TimeUnit.SECONDS);
+  }
+
   public void sendPacket(MoneyPacket packet) {
     this.sendPacket(packet, null);
   }
