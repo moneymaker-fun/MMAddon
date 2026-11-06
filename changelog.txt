@@ -5,7 +5,6 @@ the addon will still work in all available Minecraft Versions but some features 
 
 + Added support for Minecraft Version 26.2 and 26.3
 - Removed feature for linking Discord Account and creating an account on the Website
-(This will be handled by our the Website in the future)
 + Styled UI for new Laby Client Theme
 
 ~ Internal changes
