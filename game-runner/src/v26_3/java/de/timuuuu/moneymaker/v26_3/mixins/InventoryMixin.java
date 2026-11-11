@@ -10,7 +10,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.component.ItemLore;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,10 +25,8 @@ public class InventoryMixin {
   private void moneymaker$fireInventoryRender(GuiGraphicsExtractor graphics, Slot slot, int mouseX, int mouseY,
       CallbackInfo ci) {
     if(!MoneyMakerAddon.instance().addonUtil().connectedToMoneyMaker()) return;
-    if(slot.getItem().get(DataComponents.CUSTOM_NAME) == null && slot.getItem().get(DataComponents.LORE) == null) return;
+    if(slot.getItem().get(DataComponents.CUSTOM_NAME) == null) return;
     String name = slot.getItem().get(DataComponents.CUSTOM_NAME).getString();
-    ItemLore itemLore = slot.getItem().get(DataComponents.LORE);
-    if(itemLore == null) return;
     Laby.fireEvent(new InventoryRenderSlotEvent(((AbstractContainerScreen<?>) (Object) this).getTitle().getString(), slot.getContainerSlot(), name));
   }
 
