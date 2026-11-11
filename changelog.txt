@@ -1,3 +1,6 @@
+1.8.1 - 12.11.2026
+* Fixed possible NullPointerException
+
 1.8.0 - 07.11.2026
 GommeHD.net removed the support for Minecraft versions 1.8.9 - 1.21.10.
 To adapt those changes, we have also partially removed the support for those versions,

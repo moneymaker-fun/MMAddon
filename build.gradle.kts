@@ -3,7 +3,7 @@ plugins {
     id("net.labymod.labygradle.addon")
 }
 
-val addonVersion = "1.8.0"
+val addonVersion = "1.8.1"
 
 val versions = providers.gradleProperty("net.labymod.minecraft-versions").get().split(";")
 

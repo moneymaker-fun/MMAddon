@@ -103,6 +103,7 @@ public class MoneyMakerAddon extends LabyAddon<MoneyMakerConfiguration> {
     Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion(1, 7, 5), "2026-02-04"));
     Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion(1, 7, 6), "2026-04-22"));
     Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion(1, 8, 0), "2026-11-07"));
+    Laby.references().revisionRegistry().register(new SimpleRevision("moneymaker", new SemanticVersion(1, 8, 1), "2026-11-12"));
   }
 
   @Override
